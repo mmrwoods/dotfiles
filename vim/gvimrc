@@ -3,3 +3,28 @@ set encoding=utf-8                " Use UTF-8 everywhere.
 set guioptions-=T                 " Hide toolbar.
 set background=light              " Background.
 colorscheme eclipse               " Familiar, and easily distinguishable from terminal windows
+
+" WIP - RadRails colours
+hi String guifg=#2a00ff gui=none
+hi Number guifg=#0080ff gui=none
+hi Comment guifg=#658173 gui=none
+hi Special guifg=#2a00ff gui=none
+hi Type guifg=#a4357a gui=none
+hi Constant guifg=#a4357a gui=none " applies to nil, self etc.
+hi rubyDefine guifg=#a4357a gui=bold
+hi rubyAccess guifg=#a4357a gui=bold
+hi rubyBeginEnd guifg=#a4357a gui=bold
+hi rubyControl guifg=#a4357a gui=bold
+hi rubyBoolean guifg=#a4357a gui=none
+hi rubyFunction guifg=#683821 gui=none
+hi rubyIdentifier guifg=#683821 gui=none
+hi rubyConditional guifg=#a4357a gui=bold
+hi rubyComment guifg=#658173 gui=none
+hi rubyString guifg=#2a00ff gui=none
+"hi rubyInteger guifg=#0080ff gui=none
+"hi rubyFloat guifg=#0080ff gui=none
+hi rubyGlobalVariable guifg=#ff0000 gui=none
+hi rubyRegExpSpecial guifg=#5a1ea0 gui=none
+hi rubySymbol guifg=#ff4040 gui=bold
+hi rubyClassVariable guifg=#004080 gui=bold
+hi rubyInstanceVariable guifg=#004080 gui=bold
