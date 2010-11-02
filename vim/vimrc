@@ -57,6 +57,11 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLo
 set t_Co=256
 colorscheme wombat256mod
 
+"let TList_Auto_Open = 1
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Show_One_File = 1
+"let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
+
 " Tab mappings.
 map <leader>tt :tabnew<cr>
 map <leader>te :tabedit

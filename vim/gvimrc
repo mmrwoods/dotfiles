@@ -4,6 +4,8 @@ set guioptions-=T                 " Hide toolbar.
 set background=light              " Background.
 colorscheme eclipse               " Familiar, and easily distinguishable from terminal windows
 
+set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
+
 " WIP - RadRails colours
 hi String guifg=#2a00ff gui=none
 hi Number guifg=#0080ff gui=none
