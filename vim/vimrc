@@ -37,7 +37,7 @@ set number                        " Show line numbers.
 set ruler                         " Show cursor position.
 
 set incsearch                     " Highlight matches as you type.
-set hlsearch                      " Highlight matches.
+"set hlsearch                      " Highlight matches.
 
 set nowrap                        " Turn off line wrapping.
 set scrolloff=3                   " Show 3 lines of context around the cursor.
@@ -72,6 +72,12 @@ map <leader>tp :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
+
+" Buffer mappings.
+map <C-right> <ESC>:bn<CR>
+map <C-left> <ESC>:bp<CR>
+map <D-right> <ESC>:bn<CR>
+map <D-left> <ESC>:bp<CR>
 
 " Uncomment to use Jamis Buck's file opening plugin
 "map <Leader>t :FuzzyFinderTextMate<Enter>
