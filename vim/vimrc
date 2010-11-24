@@ -76,14 +76,16 @@ map <leader>tm :tabmove
 " Buffer mappings.
 map <C-right> <ESC>:bn<CR>
 map <C-left> <ESC>:bp<CR>
-map <D-right> <ESC>:bn<CR>
-map <D-left> <ESC>:bp<CR>
 
 " Uncomment to use Jamis Buck's file opening plugin
-"map <Leader>t :FuzzyFinderTextMate<Enter>
+"map <Leader>f :FuzzyFinderTextMate<Enter>
 
 " Toggle taglist with <leader>t
 map <leader>t :TlistToggle<Enter>
+
+" Toggle NERDTree with <leader>n
+map <leader>n :NERDTreeToggle<Enter>
+
 
 " Controversial...swap colon and semicolon for easier commands
 "nnoremap ; :
