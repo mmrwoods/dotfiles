@@ -6,6 +6,15 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
+" MacVim disables cocoa key bindings (see http://groups.google.com/group/vim_mac/browse_thread/thread/4d5a957e8b8ba214/36a3ab1d94a86bee)
+if has("mac")
+  " for some reason map doesn't work
+  imap § #
+  cmap § #
+  nmap § #
+  vmap § #
+endif
+
 " WIP - RadRails colours
 hi String guifg=#2a00ff gui=none
 hi Number guifg=#0080ff gui=none
