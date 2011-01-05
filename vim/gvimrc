@@ -6,13 +6,51 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
-" MacVim disables cocoa key bindings (see http://groups.google.com/group/vim_mac/browse_thread/thread/4d5a957e8b8ba214/36a3ab1d94a86bee)
 if has("mac")
-  " for some reason map doesn't work
+  " MacVim disables cocoa key bindings, but I want double S / section sign
+  " mapped to hash. For some reason map doesn't work, so...
   imap § #
   cmap § #
   nmap § #
   vmap § #
+
+  " spacehi plugin doesn't highlight tabs consistently in MacVim. Looks
+  " like there's some clash between the syntax matches created by MacVim
+  " and spacehi. Simple solution, use match functions instead.
+  function SpaceHi()
+    execute("highlight spacehiTab " . g:spacehi_tabcolor)
+    let b:spaceHiMatchTabs = matchadd('spaceHiTab', '\t')
+    execute("highlight spacehiTrailingSpace " . g:spacehi_spacecolor)
+    let b:spaceHiMatchTrailingSpace = matchadd('spaceHiTrailingSpace', '\s\+$')
+    let b:spacehi = 1
+  endfunction
+
+  function NoSpaceHi()
+    if exists('b:spaceHiMatchTabs')
+      call matchdelete(b:spaceHiMatchTabs)
+    endif
+    if exists('b:spaceHiMatchTrailingSpace')
+      call matchdelete(b:spaceHiMatchTrailingSpace)
+    endif
+    let b:spacehi = 0
+  endfunction
+
+  function ToggleSpaceHi()
+    if exists("b:spacehi") && b:spacehi
+      call NoSpaceHi()
+      echo "spacehi off"
+    else
+      call SpaceHi()
+      echo "spacehi on"
+    endif
+  endfunction
+
+  com! SpaceHi call SpaceHi()
+  com! NoSpaceHi call NoSpaceHi()
+  com! ToggleSpaceHi call ToggleSpaceHi()
+
+  map! <silent> <F3> ToggleSpaceHi<CR>
+
 endif
 
 " WIP - RadRails colours
