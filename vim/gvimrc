@@ -19,24 +19,24 @@ if has("mac")
   " and spacehi. Simple solution, use match functions instead.
   function SpaceHi()
     execute("highlight spacehiTab " . g:spacehi_tabcolor)
-    let b:spaceHiMatchTabs = matchadd('spaceHiTab', '\t')
+    let w:spaceHiMatchTabs = matchadd('spaceHiTab', '\t')
     execute("highlight spacehiTrailingSpace " . g:spacehi_spacecolor)
-    let b:spaceHiMatchTrailingSpace = matchadd('spaceHiTrailingSpace', '\s\+$')
-    let b:spacehi = 1
+    let w:spaceHiMatchTrailingSpace = matchadd('spaceHiTrailingSpace', '\s\+$')
+    let w:spacehi = 1
   endfunction
 
   function NoSpaceHi()
-    if exists('b:spaceHiMatchTabs')
-      call matchdelete(b:spaceHiMatchTabs)
+    if exists('w:spaceHiMatchTabs')
+      call matchdelete(w:spaceHiMatchTabs)
     endif
-    if exists('b:spaceHiMatchTrailingSpace')
-      call matchdelete(b:spaceHiMatchTrailingSpace)
+    if exists('w:spaceHiMatchTrailingSpace')
+      call matchdelete(w:spaceHiMatchTrailingSpace)
     endif
-    let b:spacehi = 0
+    let w:spacehi = 0
   endfunction
 
   function ToggleSpaceHi()
-    if exists("b:spacehi") && b:spacehi
+    if exists("w:spacehi") && w:spacehi
       call NoSpaceHi()
       echo "spacehi off"
     else
