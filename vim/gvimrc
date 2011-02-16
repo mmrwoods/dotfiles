@@ -6,10 +6,6 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
-" hmm, not sure about this, seems a little OTT
-source $VIMRUNTIME/mswin.vim
-behave mswin
-
 if has("mac")
   " MacVim disables cocoa key bindings, but I want double S / section sign
   " mapped to hash. For some reason map doesn't work, so...
@@ -54,6 +50,13 @@ if has("mac")
   com! ToggleSpaceHi call ToggleSpaceHi()
 
   map! <silent> <F3> ToggleSpaceHi<CR>
+
+else
+
+  " windows keyboard shortcuts for gvim (a bit of a sledgehammer, but it'll do for now)
+  source $VIMRUNTIME/mswin.vim
+  " disable mswin mouse and select behaviour (mswin.vim sets this)
+  behave xterm
 
 endif
 
