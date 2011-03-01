@@ -23,6 +23,12 @@ if [ `which gnome-open` ]; then
   alias open="gnome-open"
 fi
 
+# because I keep forgetting how to do it in Linux
+if [ ! `which pbcopy` ] && [ `which xclip` ]; then
+  alias pbcopy="xclip -selection clipboard"
+  alias pbpaste="xclip -o -selection clipboard"
+fi
+
 PS1='\u@\h \W$(__git_ps1 "[%s]")\$ '
 
 set -o vi
