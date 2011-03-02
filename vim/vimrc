@@ -86,6 +86,9 @@ map <leader>t :TlistToggle<Enter>
 " Toggle NERDTree with <leader>n
 map <leader>n :NERDTreeToggle<Enter>
 
+" Toggle ZoomWin with <leader>z
+map <leader>z :ZoomWin<Enter>
+
 "if has("autocmd")
 "  :autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html :let save_cursor = getpos(".") | %s/\s\+$//e |  call setpos('.', save_cursor)
 "endif
