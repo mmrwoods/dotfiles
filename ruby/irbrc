@@ -1,20 +1,18 @@
 require 'rubygems'
 require 'irb/completion'
 
-load_failures = []
-load_libs = {
-  'wirble' => Proc.new { Wirble.init ; Wirble.colorize },
-  'hirb' => Proc.new { Hirb::View.enable }
-}
-
-load_libs.each do |lib, config|
-  begin
-    require lib
-    config.call unless config.nil?
-  rescue LoadError
-    load_failures << lib
-  end
+def try_require(lib)
+  require lib
+  yield if block_given?
+rescue LoadError
+  warn "irbrc warning: " + $!.message
 end
 
-warn "irbrc warning: failed to load " + load_failures.join(', ') unless load_failures.empty?
+try_require 'wirble' do
+  Wirble.init
+  Wirble.colorize
+end
 
+try_require 'hirb' do
+  Hirb::View.enable
+end
