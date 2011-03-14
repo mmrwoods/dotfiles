@@ -13,6 +13,42 @@ try_require 'wirble' do
   Wirble.colorize
 end
 
+try_require 'awesome_print' do
+  alias pp ap
+  # from http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick
+  unless IRB.version.include?('DietRB')
+    IRB::Irb.class_eval do
+      def output_value
+        ap @context.last_value,
+              :multiline => false,
+               :plain  => false,
+               :indent => 2,
+               :color => {
+                   :array      => :white,
+                   :bignum     => :blue,
+                   :class      => :yellow,
+                   :date       => :greenish,
+                   :falseclass => :red,
+                   :fixnum     => :blue,
+                   :float      => :blue,
+                   :hash       => :gray,
+                   :nilclass   => :red,
+                   :string     => :yellowish,
+                   :symbol     => :cyanish,
+                   :time       => :greenish,
+                   :trueclass  => :green
+               }
+      end
+    end
+  else # MacRuby
+    IRB.formatter = Class.new(IRB::Formatter) do
+      def inspect_object(object)
+        object.ai
+      end
+    end.new
+  end
+end
+
 try_require 'hirb' do
   Hirb::View.enable
 end
