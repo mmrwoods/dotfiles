@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'irb/completion'
 
+IRB.conf[:PROMPT_MODE]  = :SIMPLE
+
 def try_require(lib)
   require lib
   yield if block_given?
@@ -11,6 +13,10 @@ end
 try_require 'wirble' do
   Wirble.init
   Wirble.colorize
+  Wirble::Colorize::Color::COLORS.merge!({
+    # hack wirble to use light rather than dark blue
+    :blue => '1;34'
+  })
 end
 
 try_require 'awesome_print' do
