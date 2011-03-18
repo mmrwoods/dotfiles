@@ -6,6 +6,9 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
+" leader m maximizes the gui container window (kind of)
+map <leader>m :set lines=999 columns=999<Enter>
+
 if has("mac")
   " MacVim disables cocoa key bindings, but I want double S / section sign
   " mapped to hash. For some reason map doesn't work, so...
