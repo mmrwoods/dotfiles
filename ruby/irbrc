@@ -10,40 +10,30 @@ rescue LoadError
   warn "irbrc warning: " + $!.message
 end
 
-try_require 'wirble' do
-  Wirble.init
-  Wirble.colorize
-  Wirble::Colorize::Color::COLORS.merge!({
-    # hack wirble to use light rather than dark blue
-    :blue => '1;34'
-  })
-end
-
 try_require 'awesome_print' do
   alias pp ap
-  # from http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick
   unless IRB.version.include?('DietRB')
     IRB::Irb.class_eval do
       def output_value
         ap @context.last_value,
               :multiline => false,
-               :plain  => false,
-               :indent => 2,
-               :color => {
-                   :array      => :white,
-                   :bignum     => :blue,
-                   :class      => :yellow,
-                   :date       => :greenish,
-                   :falseclass => :red,
-                   :fixnum     => :blue,
-                   :float      => :blue,
-                   :hash       => :gray,
-                   :nilclass   => :red,
-                   :string     => :yellowish,
-                   :symbol     => :cyanish,
-                   :time       => :greenish,
-                   :trueclass  => :green
-               }
+              :plain  => false,
+              :indent => 2,
+              :color => {
+                  :array      => :white,
+                  :bignum     => :blue,
+                  :class      => :yellow,
+                  :date       => :greenish,
+                  :falseclass => :purple,
+                  :fixnum     => :blue,
+                  :float      => :blue,
+                  :hash       => :gray,
+                  :nilclass   => :redish,
+                  :string     => :cyanish,
+                  :symbol     => :cyan,
+                  :time       => :greenish,
+                  :trueclass  => :purple
+              }
       end
     end
   else # MacRuby
@@ -56,5 +46,5 @@ try_require 'awesome_print' do
 end
 
 try_require 'hirb' do
-  Hirb::View.enable
+  extend Hirb::Console
 end
