@@ -13,6 +13,12 @@ rescue LoadError
   warn "irbrc warning: " + $!.message
 end
 
+# fix irb history on osx (and hopefully not break things elsewhere)
+try_require 'wirble' do
+  Wirble.init :history_path => IRB.conf[:HISTORY_FILE], :history_size => IRB.conf[:SAVE_HISTORY]
+end
+
+# pretty colours makes output easier to read
 try_require 'awesome_print' do
   alias pp ap
   unless IRB.version.include?('DietRB')
@@ -48,6 +54,7 @@ try_require 'awesome_print' do
   end
 end
 
+# add hirb console methods to main object
 try_require 'hirb' do
   extend Hirb::Console
 end
