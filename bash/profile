@@ -29,6 +29,11 @@ if [ ! `which pbcopy` ] && [ `which xclip` ]; then
   alias pbpaste="xclip -o -selection clipboard"
 fi
 
-PS1='\u@\h \W$(__git_ps1 "[%s]")\$ '
+export PS1='\u@\h \W$(__git_ps1 "[%s]")\$ '
+
+# if some kind of xterm, use prompt command to set window title
+if [ "${TERM%%-*}" == xterm ]; then
+  export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+fi
 
 set -o vi
