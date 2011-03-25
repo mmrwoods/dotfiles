@@ -47,11 +47,11 @@ alias hs='history'
 
 # current gems dir (works with rvm and bundler)
 gems() {
-  bundle list > /dev/null
+  bundle config > /dev/null
   eval $(
     if [ $? -eq 0 ]; then
       echo "bundle exec "
     fi
-    echo "gem env | fgrep -A 1 'GEM PATHS' | awk 'NR==2' | sed 's/[^/]*//'"
+    echo "ruby -r rubygems -e 'puts Gem.path.detect{|d| not d.include?(\".gem\") }'"
   )
 }
