@@ -44,3 +44,14 @@ alias grep='grep --color=auto'
 
 alias be='bundle exec'
 alias hs='history'
+
+# current gems dir (works with rvm and bundler)
+gems() {
+  bundle list > /dev/null
+  eval $(
+    if [ $? -eq 0 ]; then
+      echo "bundle exec "
+    fi
+    echo "gem env | fgrep -A 1 'GEM PATHS' | awk 'NR==2' | sed 's/[^/]*//'"
+  )
+}
