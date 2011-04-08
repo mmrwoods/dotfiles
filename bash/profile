@@ -45,6 +45,8 @@ alias grep='grep --color=auto'
 alias be='bundle exec'
 alias hs='history'
 
+alias cuke='cucumber'
+
 # current gems dir (works with rvm and bundler)
 gems() {
   bundle config > /dev/null
