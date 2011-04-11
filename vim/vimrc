@@ -89,6 +89,9 @@ map <leader>n :NERDTreeToggle<Enter>
 " Toggle ZoomWin with <leader>z
 map <leader>z :ZoomWin<Enter>
 
+" Set filetype to ruby if unknown (i.e. files without extension or shebang line)
+au BufNewFile,BufRead * if &ft == '' | set ft=ruby | endif
+
 "if has("autocmd")
 "  :autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html :let save_cursor = getpos(".") | %s/\s\+$//e |  call setpos('.', save_cursor)
 "endif
