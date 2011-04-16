@@ -4,7 +4,7 @@ require 'irb/completion'
 IRB.conf[:PROMPT_MODE]  = :SIMPLE
 IRB.conf[:SAVE_HISTORY] = 25
 IRB.conf[:HISTORY_FILE] = IRB.rc_file('_history')
-IRB.conf[:HISTORY_FILE] << '_rails' if ENV['RAILS_ENV'] && ENV['RAILS_ENV'] == 'development'
+IRB.conf[:HISTORY_FILE] << '_rails' if ENV['RAILS_ENV']
 
 def try_require(lib)
   require lib
