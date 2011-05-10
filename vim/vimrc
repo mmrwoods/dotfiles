@@ -74,8 +74,17 @@ map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 
 " Buffer mappings.
-map <C-right> <ESC>:bn<CR>
-map <C-left> <ESC>:bp<CR>
+map <C-home> <ESC>:bn<CR>
+map <C-end> <ESC>:bp<CR>
+
+" Window mappings
+map <leader>ww :wincmd w<CR>
+map <leader>ws :wincmd s<CR>
+map <leader>wv :wincmd v<CR>
+map <silent> <C-Up> :wincmd k<CR>
+map <silent> <C-Down> :wincmd j<CR>
+map <silent> <C-Left> :wincmd h<CR>
+map <silent> <C-Right> :wincmd l<CR>
 
 " Go to File (command-t plugin)
 map <Leader>f :CommandT<Enter>
