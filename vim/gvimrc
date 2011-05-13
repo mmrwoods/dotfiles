@@ -62,7 +62,14 @@ if has("mac")
 
   map! <silent> <F3> ToggleSpaceHi<CR>
 
-else
+endif
+
+if has("gui_gtk")
+
+  " always show tabline on laptop screen
+  if system("/usr/bin/xrandr | awk -F',' '/Screen 0/ {gsub(\"( |current)\",\"\");printf $2}'") == "1024x768"
+    set showtabline=2
+  endif
 
   " windows keyboard shortcuts for gvim (a bit of a sledgehammer, but it'll do for now)
   source $VIMRUNTIME/mswin.vim
