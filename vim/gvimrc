@@ -9,6 +9,20 @@ set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and d
 " open maximized
 set lines=999 columns=999
 
+" automagically save session on vim close, and reload when opening
+set sessionoptions=blank,buffers,curdir,folds,help,options,tabpages,winsize,winpos,resize
+function SaveSession()
+  execute 'mksession! $HOME/dotfiles/vim/.session'
+endfunction
+function LoadSession()
+  if argc() == 0 " only load session when vim executed without any arguments
+    execute 'source $HOME/dotfiles/vim/.session'
+  endif
+endfunction
+autocmd VimEnter * call LoadSession()
+autocmd VimLeave * call SaveSession()
+
+
 if has("mac")
 
   " macvim container window gets screwed up after opening and
