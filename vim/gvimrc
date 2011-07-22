@@ -15,7 +15,7 @@ function SaveSession()
   execute 'mksession! $HOME/dotfiles/vim/.session'
 endfunction
 function LoadSession()
-  if argc() == 0 && filereadable('$HOME/dotfiles/vim/.session') " only load session when vim executed without any arguments
+  if argc() == 0 && filereadable($HOME . '/dotfiles/vim/.session') " only load session when vim executed without any arguments
     execute 'source $HOME/dotfiles/vim/.session'
   endif
 endfunction
