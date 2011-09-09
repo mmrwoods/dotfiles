@@ -5,14 +5,18 @@ export LSCOLORS=ExFxCxDxBxEgedabagacad
 export EDITOR=vim
 
 # bash-completion for OSX
-if [ $SHELL = "/bin/bash" ]; then
-  if [ -f /opt/local/etc/bash_completion ]; then
-      . /opt/local/etc/bash_completion
-  fi
-  type __git_ps1 >& /dev/null
-  if [ $? -ne 0 ]; then
-    source ~/dotfiles/bash/git-completion.sh
-  fi
+if [ `which brew` ] && [ -f `brew --prefix`/etc/bash_completion ]; then
+  # homebrew
+  . `brew --prefix`/etc/bash_completion
+elif [ -f /opt/local/etc/bash_completion ]; then
+  # macports
+  . /opt/local/etc/bash_completion
+fi
+
+# git completion and prompt
+type __git_ps1 >& /dev/null
+if [ $? -ne 0 ]; then
+  source ~/dotfiles/bash/git-completion.sh
 fi
 
 # use gnome-open rather than openvt
