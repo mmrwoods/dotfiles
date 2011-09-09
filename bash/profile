@@ -19,6 +19,9 @@ if [ $? -ne 0 ]; then
   source ~/dotfiles/bash/git-completion.sh
 fi
 
+GIT_PS1_SHOWDIRTYSTATE=1
+PS1='\w$(__git_ps1 "[%s]")\$ '
+
 # use gnome-open rather than openvt
 if [ `which gnome-open` ]; then
   alias open="gnome-open"
@@ -29,8 +32,6 @@ if [ ! `which pbcopy` ] && [ `which xclip` ]; then
   alias pbcopy="xclip -selection clipboard"
   alias pbpaste="xclip -o -selection clipboard"
 fi
-
-PS1='\u@\h \W$(__git_ps1 "[%s]")\$ '
 
 # if some kind of xterm, use prompt command to set window title
 if [ "${TERM%%-*}" == xterm ]; then
