@@ -2,15 +2,15 @@ export TERM='xterm-color'
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxEgedabagacad
 
-export EDITOR=vim
+EDITOR=vim
 
 # bash-completion for OSX
 if [ `which brew` ] && [ -f `brew --prefix`/etc/bash_completion ]; then
   # homebrew
-  . `brew --prefix`/etc/bash_completion
+  source `brew --prefix`/etc/bash_completion
 elif [ -f /opt/local/etc/bash_completion ]; then
   # macports
-  . /opt/local/etc/bash_completion
+  source /opt/local/etc/bash_completion
 fi
 
 # git completion and prompt
@@ -30,11 +30,11 @@ if [ ! `which pbcopy` ] && [ `which xclip` ]; then
   alias pbpaste="xclip -o -selection clipboard"
 fi
 
-export PS1='\u@\h \W$(__git_ps1 "[%s]")\$ '
+PS1='\u@\h \W$(__git_ps1 "[%s]")\$ '
 
 # if some kind of xterm, use prompt command to set window title
 if [ "${TERM%%-*}" == xterm ]; then
-  export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+  PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 fi
 
 set -o vi
