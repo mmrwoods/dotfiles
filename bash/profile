@@ -4,23 +4,36 @@ export LSCOLORS=ExFxCxDxBxEgedabagacad
 
 EDITOR=vim
 
-# bash-completion for OSX
-if [ `which brew` ] && [ -f `brew --prefix`/etc/bash_completion ]; then
-  # homebrew
-  source `brew --prefix`/etc/bash_completion
-elif [ -f /opt/local/etc/bash_completion ]; then
-  # macports
-  source /opt/local/etc/bash_completion
-fi
+# Bash specific, i.e. not bourne shell compatible stuff goes here.
+# Allows file be sourced from .profile, without causing problems
+# when sudo is configured to keep the HOME env variable and target
+# user's shell is bourne compatible, but not bash.
+if [ $SHELL = '/bin/bash' ]; then
 
-# git completion and prompt
-type __git_ps1 >& /dev/null
-if [ $? -ne 0 ]; then
-  source ~/dotfiles/bash/git-completion.sh
-fi
+  # bash-completion for OSX
+  if [ `which brew` ] && [ -f `brew --prefix`/etc/bash_completion ]; then
+    # homebrew
+    source `brew --prefix`/etc/bash_completion
+  elif [ -f /opt/local/etc/bash_completion ]; then
+    # macports
+    source /opt/local/etc/bash_completion
+  fi
 
-GIT_PS1_SHOWDIRTYSTATE=1
-PS1='\w$(__git_ps1 "[%s]")\$ '
+  # git completion and prompt
+  type __git_ps1 >& /dev/null
+  if [ $? -ne 0 ]; then
+    source ~/dotfiles/bash/git-completion.sh
+  fi
+
+  GIT_PS1_SHOWDIRTYSTATE=1
+  PS1='\w$(__git_ps1 "[%s]")\$ '
+
+  # if some kind of xterm, use prompt command to set window title
+  if [ "${TERM%%-*}" == xterm ]; then
+    PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+  fi
+
+fi
 
 # use gnome-open rather than openvt
 if [ `which gnome-open` ]; then
@@ -31,11 +44,6 @@ fi
 if [ ! `which pbcopy` ] && [ `which xclip` ]; then
   alias pbcopy="xclip -selection clipboard"
   alias pbpaste="xclip -o -selection clipboard"
-fi
-
-# if some kind of xterm, use prompt command to set window title
-if [ "${TERM%%-*}" == xterm ]; then
-  PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 fi
 
 set -o vi
