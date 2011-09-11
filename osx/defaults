@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sudo cp ~/dotfiles/osx/loginhook /usr/local/bin/
+sudo defaults write com.apple.loginwindow LoginHook /usr/local/bin/loginhook
+
+sudo cp ~/dotfiles/osx/logouthook /usr/local/bin/
+sudo defaults write com.apple.loginwindow LogoutHook /usr/local/bin/logouthook

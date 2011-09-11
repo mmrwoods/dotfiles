@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# unmute sound
+osascript -e 'set volume without output muted'

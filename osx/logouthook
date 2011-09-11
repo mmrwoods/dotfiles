@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# mute sound on logout to kill annoying mac startup chime
+osascript -e 'set volume with output muted'
