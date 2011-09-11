@@ -1,7 +1,40 @@
 #!/bin/sh
 
+
+# login and logout hooks, currently just used to mute sound on logout and unmute on login
+# note/warning: login/logout hooks are executed by root
+
 sudo cp ~/dotfiles/osx/loginhook /usr/local/bin/
 sudo defaults write com.apple.loginwindow LoginHook /usr/local/bin/loginhook
 
 sudo cp ~/dotfiles/osx/logouthook /usr/local/bin/
 sudo defaults write com.apple.loginwindow LogoutHook /usr/local/bin/logouthook
+
+
+# some useful settings cribbed from https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+
+# Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Automatically open a new Finder window when a volume is mounted
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Disable Safari’s thumbnail cache for History and Top Sites
+defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+
+# Enable Safari’s debug menu
+defaults write com.apple.Safari IncludeDebugMenu -bool true
+
+# Remove useless icons from Safari’s bookmarks bar
+defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+
+# Disable send and reply animations in Mail.app
+defaults write com.apple.Mail DisableReplyAnimations -bool true
+defaults write com.apple.Mail DisableSendAnimations -bool true
+
+# Kill affected applications
+for app in Safari Finder Dock Mail; do killall "$app"; done
