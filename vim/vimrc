@@ -62,6 +62,10 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Show_One_File = 1
 "let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
 
+" Delete key deletes without saving to buffer (well, it does save to a buffer, but the blackhole buffer)
+nmap <Del> "_d
+vmap <Del> "_d
+
 " Tab mappings.
 map <leader>tt :tabnew<cr>
 map <leader>te :tabedit
