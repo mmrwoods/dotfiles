@@ -1,6 +1,7 @@
 export TERM='xterm-color'
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxEgedabagacad
+export PATH=$PATH:$HOME/bin
 
 EDITOR=vim
 
