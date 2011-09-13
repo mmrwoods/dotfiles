@@ -6,6 +6,8 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
+set clipboard=unnamed             " Use system clipboard as unamed register to allow easy copying and pasting
+
 " open maximized
 set lines=999 columns=999
 
