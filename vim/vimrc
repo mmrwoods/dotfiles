@@ -62,7 +62,7 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Show_One_File = 1
 "let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
 
-" Delete key deletes without saving to buffer (well, it does save to a buffer, but the blackhole buffer)
+" Delete key sends text to blackhole register
 nmap <Del> "_d
 vmap <Del> "_d
 
