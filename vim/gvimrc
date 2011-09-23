@@ -6,7 +6,6 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
-set clipboard=unnamed             " Use system clipboard as unamed register to allow easy copying and pasting
 
 " open maximized
 set lines=999 columns=999
@@ -24,8 +23,10 @@ endfunction
 autocmd VimEnter * call LoadSession()
 autocmd VimLeave * call SaveSession()
 
-
 if has("mac")
+
+  " Use system clipboard as unamed register to allow easy copying and pasting
+  set clipboard=unnamed
 
   " macvim container window gets screwed up after opening and
   " closing tabs, so map leader m to maximize (um, kind of)
@@ -96,16 +97,7 @@ if has("gui_gtk")
     " yank to and paste from X11 clipboard if possible
     set clipboard=unnamedplus
   catch /E474:/ " invalid argument before vim 7.3.074
-    " hack older versions of gvim to mimick use of X11 clipboard
-    " update cut, copy and paste mappings to use unnamed register
-    vnoremap <C-X> "*x
-    vnoremap <S-Del> "*x
-    vnoremap <C-C> "*y
-    vnoremap <C-Insert> "*y
-    map <C-V> "*gP
-    map <S-Insert> "*gP
-    " copy clipboard selection register to unnamed register when gvim gains gui focus
-    autocmd FocusGained * let @*=@+
+    " do nothing, we don't need to warn about every unavailable option
   endtry
 
 endif
