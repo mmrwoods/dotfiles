@@ -63,8 +63,8 @@ let Tlist_Show_One_File = 1
 "let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
 
 " Delete key sends text to blackhole register
-nmap <Del> "_d
-vmap <Del> "_d
+nmap <Del> "_x
+vmap <Del> "_x
 
 " Tab mappings.
 map <leader>tt :tabnew<cr>
