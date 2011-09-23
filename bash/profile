@@ -3,7 +3,7 @@ export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxEgedabagacad
 export PATH=$PATH:$HOME/bin
 
-EDITOR=vim
+export EDITOR=vim
 
 # Bash specific, i.e. not bourne shell compatible stuff goes here.
 # Allows file be sourced from .profile, without causing problems
