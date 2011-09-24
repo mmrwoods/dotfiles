@@ -6,22 +6,11 @@ colorscheme eclipse               " Familiar, and easily distinguishable from te
 
 set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
 
-
 " open maximized
 set lines=999 columns=999
 
-" automagically save session on vim close, and reload when opening
-set sessionoptions=blank,buffers,curdir,folds,help,options,tabpages,winsize,winpos,resize
-function SaveSession()
-  execute 'mksession! $HOME/dotfiles/vim/.session'
-endfunction
-function LoadSession()
-  if argc() == 0 && filereadable($HOME . '/dotfiles/vim/.session') " only load session when vim executed without any arguments
-    execute 'source $HOME/dotfiles/vim/.session'
-  endif
-endfunction
-autocmd VimEnter * call LoadSession()
-autocmd VimLeave * call SaveSession()
+" save session data on exit
+let sessionman_save_on_exit=1
 
 if has("mac")
 

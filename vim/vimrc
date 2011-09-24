@@ -57,6 +57,15 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLo
 set t_Co=256
 colorscheme wombat256mod
 
+" store tabs, windows, buffers etc. in sessions
+set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize,winpos,resize
+
+" save globals with viminfo - sessionman stores last session info in global
+set viminfo='100,<50,s10,h,!
+
+" don't automatically save session on exit in non-gui vim
+let sessionman_save_on_exit=0
+
 "let TList_Auto_Open = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_Show_One_File = 1
