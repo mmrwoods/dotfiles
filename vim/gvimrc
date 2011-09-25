@@ -82,12 +82,10 @@ if has("gui_gtk")
   " disable mswin mouse and select behaviour (mswin.vim sets this)
   behave xterm
 
-  try
-    " yank to and paste from X11 clipboard if possible
+  " yank to and paste from X11 clipboard if possible
+  if v:version >= 704 || v:version == 703 && has("patch074")
     set clipboard=unnamedplus
-  catch /E474:/ " invalid argument before vim 7.3.074
-    " do nothing, we don't need to warn about every unavailable option
-  endtry
+  endif
 
 endif
 
