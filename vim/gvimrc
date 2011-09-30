@@ -9,9 +9,6 @@ set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and d
 " open maximized
 set lines=999 columns=999
 
-" save session data on exit
-let sessionman_save_on_exit=1
-
 if has("mac")
 
   " Use system clipboard as unamed register to allow easy copying and pasting
