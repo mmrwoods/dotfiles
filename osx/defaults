@@ -71,4 +71,4 @@ defaults write com.apple.Mail DisableSendAnimations -bool true
 chflags nohidden ~/Library
 
 # Kill affected applications
-for app in Safari Finder Dock Mail; do killall "$app"; done
+for app in Finder Dock SystemUIServer Safari Mail; do killall "$app"; done
