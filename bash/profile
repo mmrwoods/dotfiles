@@ -34,6 +34,14 @@ if [ $SHELL = '/bin/bash' ]; then
     PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
   fi
 
+  # use macvim's huge vim with ruby support on osx - https://github.com/mxcl/homebrew/issues/5148
+  if [ -x `which brew` ]; then
+    macvim_version=`brew list --versions macvim | sed 's/.* \([0-9\.\-]*\)$/\1/'`
+    if [ -n "${macvim_version}" ]; then
+      alias vim=`brew --prefix`/Cellar/macvim/${macvim_version}/MacVim.app/Contents/MacOS/Vim
+    fi
+  fi
+
 fi
 
 # use gnome-open rather than openvt
