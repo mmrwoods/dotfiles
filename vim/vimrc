@@ -75,6 +75,9 @@ let Tlist_Show_One_File = 1
 nmap <Del> "_x
 vmap <Del> "_x
 
+" map leader to comma so it's in the same position on all keyboards
+let mapleader = ","
+
 " Tab mappings.
 map <leader>tt :tabnew<cr>
 map <leader>te :tabedit
