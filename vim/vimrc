@@ -85,10 +85,12 @@ map <leader>tp :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
+map <C-Tab> :tabnext<cr>
 
 " Buffer mappings.
-map <C-home> <ESC>:bn<CR>
-map <C-end> <ESC>:bp<CR>
+map <C-home> :bn<CR>
+map <C-end> :bp<CR>
+map <leader>b :BufExplorer<CR>
 
 " Window mappings
 map <leader>ww :wincmd w<CR>
