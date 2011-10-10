@@ -12,6 +12,18 @@ set lines=999 columns=999
 " save session data on exit
 let sessionman_save_on_exit=1
 
+" load last session on enter, creating a default session if necessary
+function LoadSession()
+  if argc() == 0
+    if !filereadable($HOME . '/.vim/sessions/default')
+      execute 'SessionSaveAs default'
+    else
+      execute 'SessionOpenLast'
+    endif
+  endif
+endfunction
+autocmd VimEnter * call LoadSession()
+
 if has("mac")
 
   " Use system clipboard as unamed register to allow easy copying and pasting
