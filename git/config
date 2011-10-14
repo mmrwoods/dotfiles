@@ -1,9 +1,9 @@
 [apply]
   whitespace = fix
 [core]
-	editor = vim
-	autocrlf = input
+  editor = vim
+  autocrlf = input
   excludesfile = ~/.gitignore
-  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+  whitespace = space-before-tab,tab-in-indent,trailing-space
 [color]
-	ui = true
+  ui = true
