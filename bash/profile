@@ -5,6 +5,8 @@ export PATH=$PATH:$HOME/bin
 
 export EDITOR=vim
 
+export NODE_PATH=/usr/local/lib/node_modules
+
 # Bash specific, i.e. not bourne shell compatible stuff goes here.
 # Allows file be sourced from .profile, without causing problems
 # when sudo is configured to keep the HOME env variable and target
