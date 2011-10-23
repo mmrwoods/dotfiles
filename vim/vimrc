@@ -116,9 +116,6 @@ map <leader>n :NERDTreeToggle<Enter>
 " Toggle ZoomWin with <leader>z
 map <leader>z :ZoomWin<Enter>
 
-" Toggle SpaceHi with <leader>s
-map <leader>s :ToggleSpaceHi<Enter>
-
 " Set filetype to ruby if unknown (i.e. files without extension or shebang line)
 au BufNewFile,BufRead * if &ft == '' | set ft=ruby | endif
 
