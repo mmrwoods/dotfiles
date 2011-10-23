@@ -54,10 +54,13 @@ if has("mac")
   " spacehi plugin doesn't highlight tabs consistently in MacVim. Looks
   " like there's some clash between the syntax matches created by MacVim
   " and spacehi. Simple solution, use match functions instead.
+  " note: latest MacVim on Lion doesn't show the underline beneath spaces,
+  " hence the, hopefully temporary, hack below to set the tab and trailing
+  " space highlight colours to use solid backgrounds.
   function SpaceHi()
-    execute("highlight spacehiTab " . g:spacehi_tabcolor)
+    execute("highlight spacehiTab guibg=Red")
     let w:spaceHiMatchTabs = matchadd('spaceHiTab', '\t')
-    execute("highlight spacehiTrailingSpace " . g:spacehi_spacecolor)
+    execute("highlight spacehiTrailingSpace guibg=Yellow")
     let w:spaceHiMatchTrailingSpace = matchadd('spaceHiTrailingSpace', '\s\+$')
     let w:spacehi = 1
   endfunction
