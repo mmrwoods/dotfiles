@@ -13,16 +13,24 @@ set lines=999 columns=999
 let sessionman_save_on_exit=1
 
 " load last session on enter, creating a default session if necessary
-function LoadSession()
+function LoadSessionAndSetTitle()
+  " note - sessionman plugin stores last opened session name in g:LAST_SESSION
   if argc() == 0
     if !filereadable($HOME . '/.vim/sessions/default')
       execute 'SessionSaveAs default'
-    else
+    elseif exists('g:LAST_SESSION')
       execute 'SessionOpenLast'
+    else
+      execute 'SessionOpen default'
     endif
+  else
+    unlet g:LAST_SESSION
   endif
+  " note - always check for existence of g:LAST_SESSION when setting title, it
+  " may be cleared above, but will be re-created if a session is opened later.
+  let &titlestring = "%f - %{v:servername} %{exists('g:LAST_SESSION')?'('.(g:LAST_SESSION).')':''}"
 endfunction
-autocmd VimEnter * call LoadSession()
+autocmd VimEnter * call LoadSessionAndSetTitle()
 
 if has("mac")
 
