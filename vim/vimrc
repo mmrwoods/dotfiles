@@ -119,8 +119,11 @@ map <leader>z :ZoomWin<Enter>
 " Toggle SpaceHi with <leader><space>
 map <leader><space> :ToggleSpaceHi<Enter>
 
-" Set filetype to ruby if unknown (i.e. files without extension or shebang line)
-au BufNewFile,BufRead * if &ft == '' | set ft=ruby | endif
+" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+" add json syntax highlighting
+au BufNewFile,BufRead *.json set ft=javascript
 
 "if has("autocmd")
 "  :autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html :let save_cursor = getpos(".") | %s/\s\+$//e |  call setpos('.', save_cursor)
