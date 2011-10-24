@@ -15,7 +15,7 @@ let sessionman_save_on_exit=1
 " load last session on enter, creating a default session if necessary
 function LoadSessionAndSetTitle()
   " note - sessionman plugin stores last opened session name in g:LAST_SESSION
-  if argc() == 0
+  if argc() == 0 && v:servername == 'VIM'
     autocmd BufEnter * if &ft == '' | filetype detect
     if !filereadable($HOME . '/.vim/sessions/default')
       execute 'SessionSaveAs default'
