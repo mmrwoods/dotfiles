@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+bundles = [ 
+  "git://github.com/mileszs/ack.vim.git",
+  "git://github.com/vim-scripts/ZoomWin.git",
+  "git://github.com/kchmck/vim-coffee-script.git",
+  "git://github.com/tpope/vim-haml.git",
+  "git://github.com/scrooloose/nerdtree.git",
+  "git://github.com/scrooloose/nerdcommenter.git",
+  "git://github.com/vim-scripts/spacehi.vim.git",
+  "git://github.com/vim-scripts/bufexplorer.zip.git",
+  "git://github.com/vim-scripts/grep.vim.git",
+  "git://github.com/vim-scripts/hexman.vim.git",
+  "git://github.com/vim-scripts/sessionman.vim.git",
+  "git://github.com/vim-scripts/taglist.vim.git",
+  "git://github.com/tpope/vim-rails.git",
+  "git://github.com/wincent/Command-T.git",
+  "git://github.com/pangloss/vim-javascript.git",
+  "git://github.com/ervandew/supertab.git",
+  "git://github.com/tpope/vim-endwise.git",
+ ]
+
+bundles_dir = File.join(File.dirname(__FILE__), "bundle")
+
+FileUtils.rm_rf(bundles_dir)
+FileUtils.mkdir_p(bundles_dir)
+FileUtils.cd(bundles_dir)
+
+bundles.each do |url|
+  dir = url.split('/').last.sub(/^vim\-/,'').sub(/(\.zip|\.vim)?\.git$/, '')
+  puts "unpacking #{url} into #{dir}"
+  `env GIT_SSL_NO_VERIFY=true git clone #{url} #{dir}`
+  FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*"))
+end
+
+puts "Building ruby extensions for command-t plugin"
+Dir.chdir("Command-T/ruby/command-t/") do
+  puts `ruby extconf.rb`
+  puts `make` if $?.exitstatus == 0
+end
+
+print "Updating VIM Documentation... "
+`vim -c 'call pathogen#helptags()|q' 2>&1 > /dev/null`
+puts $?.exitstatus == 0 ? "OK" : "FAILED"

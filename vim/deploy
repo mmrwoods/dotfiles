@@ -5,5 +5,5 @@ for host in $@ ; do
   echo "Deploying to ${host}..."
   ssh -fT $host mkdir -p dotfiles
   scp -r $DIR ${host}:dotfiles/
-  ssh -fT $host ./dotfiles/vim/install.sh
+  ssh -fT $host ./dotfiles/vim/install
 done

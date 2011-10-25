@@ -1,3 +1,5 @@
+call pathogen#infect()
+
 set nocompatible                  " Must come first because it changes other options.
 
 set encoding=utf-8                " Force utf8
@@ -69,6 +71,9 @@ let sessionman_save_on_exit=0
 "let TList_Auto_Open = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_Show_One_File = 1
+if filereadable('/usr/local/bin/ctags')
+  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+endif
 "let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
 
 " Delete key sends text to blackhole register
