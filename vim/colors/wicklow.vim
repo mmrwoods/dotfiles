@@ -103,6 +103,8 @@ highlight rubyBoolean           guifg=#a4357a gui=none
 highlight rubyFunction          guifg=#683821 gui=none
 highlight rubyIdentifier        guifg=#683821 gui=none
 highlight rubyConditional       guifg=#a4357a gui=bold
+highlight rubyComment           guifg=#658173 gui=none
+highlight rubyString            guifg=#2a00ff gui=none
 highlight rubyGlobalVariable    guifg=#ff0000 gui=none
 highlight rubyRegExpSpecial     guifg=#5a1ea0 gui=none
 highlight rubySymbol            guifg=#ff4040 gui=bold
