@@ -56,7 +56,7 @@ highlight PMenuThumb ctermbg=white ctermfg=red
 " Other
 highlight Directory  gui=none guifg=#7050ff guibg=bg
 highlight LineNr     gui=none guifg=#6b6b6b guibg=#eeeeee
-highlight NonText    gui=none guifg=#707070 guibg=#e7e7e7
+highlight NonText    gui=none guifg=#707070 guibg=#eeeeee
 highlight SpecialKey gui=none guifg=#c0c0c0 guibg=bg
 highlight Title      gui=bold guifg=#0033cc guibg=bg
 highlight Visual     gui=none guifg=#804020 guibg=#ffc0a0
@@ -70,7 +70,7 @@ highlight Ignore        gui=none guifg=bg      guibg=bg
 highlight PreProc       gui=none guifg=#683821 guibg=bg
 highlight Special       gui=none guifg=#2a00ff guibg=bg
 highlight Statement     gui=bold guifg=#b64f90 guibg=bg
-highlight Todo          gui=none guifg=#ff5050 guibg=white
+highlight Todo          gui=none guifg=#ff5050 guibg=bg
 highlight Type          gui=none guifg=#a4357a guibg=bg
 highlight Underlined    gui=none guifg=blue    guibg=bg
 highlight String        gui=none guifg=#2a00ff guibg=bg
