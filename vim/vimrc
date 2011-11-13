@@ -95,6 +95,10 @@ map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 map <C-Tab> :tabnext<cr>
 
+" Session mappings
+map <leader>s :SessionList<CR>
+map <leader>ss :SessionSave<CR>
+
 " Buffer mappings.
 map <C-home> :bn<CR>
 map <C-end> :bp<CR>
