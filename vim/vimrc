@@ -68,6 +68,9 @@ set viminfo='100,<50,s10,h,!
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
+" Don't add the recent files menu from MRU plugin
+let MRU_Add_Menu = 0
+
 "let TList_Auto_Open = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_Show_One_File = 1
@@ -127,6 +130,9 @@ map <leader>z :ZoomWin<Enter>
 
 " Toggle SpaceHi with <leader><space>
 map <leader><space> :ToggleSpaceHi<Enter>
+
+" Open most recently used files list with <leader>r
+map <leader>r :MRU<Enter>
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
