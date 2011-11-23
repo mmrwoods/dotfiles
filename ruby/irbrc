@@ -23,6 +23,7 @@ rescue LoadError
 end
 
 # fix irb history on osx (and hopefully not break things elsewhere)
+# Note: gem install blackwinter-wirble
 try_require 'wirble' do
   Wirble.init :history_path => IRB.conf[:HISTORY_FILE], :history_size => IRB.conf[:SAVE_HISTORY]
 end
