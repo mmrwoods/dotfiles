@@ -49,6 +49,11 @@ if [ $SHELL = '/bin/bash' ]; then
 
 fi
 
+# add /usr/local/sbin to path if necessary
+if [ ! `echo $PATH | grep /usr/local/sbin` ]; then
+  PATH=$PATH:/usr/local/sbin
+fi
+
 # use gnome-open rather than openvt
 if [ `which gnome-open` ]; then
   alias open="gnome-open"
