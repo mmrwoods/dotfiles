@@ -103,6 +103,8 @@ if has("gui_gtk")
 
   " windows keyboard shortcuts for gvim (a bit of a sledgehammer, but it'll do for now)
   source $VIMRUNTIME/mswin.vim
+  " remap CTRL-Tab to tabnext (mswin.vim set this to next window)
+  map <C-Tab> :tabnext<cr>
   " disable mswin mouse and select behaviour (mswin.vim sets this)
   behave xterm
 
