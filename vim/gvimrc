@@ -24,7 +24,7 @@ function LoadSessionAndSetTitle()
     else
       execute 'SessionOpen default'
     endif
-  else
+  elseif exists('g:LAST_SESSION')
     unlet g:LAST_SESSION
   endif
   " note - always check for existence of g:LAST_SESSION when setting title, it
