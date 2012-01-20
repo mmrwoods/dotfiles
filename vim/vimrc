@@ -155,3 +155,13 @@ au BufNewFile,BufRead *.json set ft=javascript
 " autocmd FileType ruby setlocal foldmethod=syntax
 " autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
 
+function SetWorkingDir()
+  if argc() != 0
+    if isdirectory(argv(0))
+      exec 'cd' argv(0)
+    elseif filereadable(argv(0))
+      exec 'cd %:h'
+    end
+  endif
+endfunction
+autocmd VimEnter * call SetWorkingDir()
