@@ -47,6 +47,9 @@ if [ $SHELL = '/bin/bash' ]; then
     fi
   fi
 
+  # hack ssh completion, which for some bizarre reason fails when a host alias begins with t (no, I haven't figured out why yet)
+  complete -W "$(echo `fgrep "Host " ~/.ssh/config | cut -f 2 -d ' '`)" ssh scp
+
 fi
 
 # add /usr/local/sbin to path if necessary
