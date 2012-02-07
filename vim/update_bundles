@@ -23,7 +23,8 @@ bundles = [
   "git://github.com/vim-scripts/mru.vim.git",
   "git://github.com/vim-scripts/dbext.vim.git",
   "git://github.com/tpope/vim-markdown.git",
-  "git://github.com/juvenn/mustache.vim.git"
+  "git://github.com/juvenn/mustache.vim.git",
+  "git://github.com/mattn/gist-vim.git"
  ]
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")

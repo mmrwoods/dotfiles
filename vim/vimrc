@@ -68,6 +68,9 @@ set viminfo='100,<50,s10,h,!
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
+" show private gists when listing mine
+let g:gist_show_privates = 1
+
 " Don't add the recent files menu from MRU plugin
 let MRU_Add_Menu = 0
 
