@@ -122,6 +122,10 @@ map <silent> <C-Right> :wincmd l<CR>
 " Go to File (command-t plugin)
 map <Leader>f :CommandT<Enter>
 
+" Hard wrap selected text in visual mode with <leader>f
+" Note: uses extenal fold command, column width is 80
+vmap <leader>f :!fold -s<CR>
+
 " Toggle taglist with <leader>t
 map <leader>t :TlistToggle<Enter>
 
