@@ -82,8 +82,8 @@ alias grep='grep --color=auto'
 alias be='bundle exec'
 alias hs='history'
 
-alias becukey='bundle exec cucumber'
-alias cuke='cucumber'
+alias becukey='bundle exec cucumber -r features'
+alias cuke='cucumber -r features'
 
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
