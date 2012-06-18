@@ -75,9 +75,9 @@ fi
 
 set -o vi
 
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias grep='grep --color=auto'
+alias egrep='egrep --color=auto --exclude=tags'
+alias fgrep='fgrep --color=auto --exclude=tags'
+alias grep='grep --color=auto --exclude=tags'
 
 alias be='bundle exec'
 alias hs='history'
