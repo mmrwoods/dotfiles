@@ -75,15 +75,19 @@ fi
 
 set -o vi
 
+alias hs='history'
+
 alias egrep='egrep --color=auto --exclude=tags'
 alias fgrep='fgrep --color=auto --exclude=tags'
 alias grep='grep --color=auto --exclude=tags'
 
+alias b='bundle'
+alias bi='bundle install'
 alias be='bundle exec'
-alias hs='history'
 
-alias becukey='bundle exec cucumber -r features'
-alias cuke='cucumber -r features'
+alias c='cucumber -r features'
+alias cw='cucumber -r features -p wip'
+alias r='rspec spec'
 
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
