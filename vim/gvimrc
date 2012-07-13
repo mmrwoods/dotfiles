@@ -36,7 +36,7 @@ autocmd VimEnter * call LoadSessionAndSetTitle()
 if has("mac")
 
   " Set the guifont
-  set guifont=Mensch:h12,Menlo:h12,Monaco:h12
+  set guifont=Mensch,Menlo,Monaco
 
   " Use system clipboard as unamed register to allow easy copying and pasting
   set clipboard=unnamed
