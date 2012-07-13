@@ -87,6 +87,7 @@ alias be='bundle exec'
 
 alias c='cucumber -r features'
 alias cw='cucumber -r features -p wip'
+alias cj='cucumber -r features --tags ~@javascript'
 alias r='rspec spec'
 
 if [ -f /usr/local/bin/ctags ]; then
