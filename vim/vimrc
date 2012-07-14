@@ -115,11 +115,11 @@ map <leader>bp :bp<CR>
 
 " Window mappings
 " opening new splits
-map <leader>w :wincmd v\|wincmd w<CR>
-map <leader>ws :wincmd s\|wincmd w<CR>
-map <leader>wv :wincmd v\|wincmd w<CR>
+map <silent> <leader>w :wincmd v\|wincmd w<CR>
+map <silent> <leader>ws :wincmd s\|wincmd w<CR>
+map <silent> <leader>wv :wincmd v\|wincmd w<CR>
 " rudimentary movement
-map <leader>ww :wincmd w<CR>
+map <silent> <leader>ww :wincmd w<CR>
 " movemement with arrow keys
 map <silent> <C-Up> :wincmd k<CR>
 map <silent> <C-Down> :wincmd j<CR>
