@@ -100,6 +100,7 @@ map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 map <C-Tab> :tabnext<cr>
+map <S-C-Tab> :tabprevious<cr>
 
 " Session mappings
 map <leader>s :SessionList<CR>
@@ -108,26 +109,42 @@ map <leader>ss :SessionSave<CR>
 " Buffer mappings.
 map <C-home> :bn<CR>
 map <C-end> :bp<CR>
-map <leader>b :BufExplorer<CR>
+map <leader>bb :BufExplorer<CR>
+map <leader>bn :bn<CR>
+map <leader>bp :bp<CR>
 
 " Window mappings
+" opening new splits
+map <leader>w :wincmd v\|wincmd w<CR>
+map <leader>ws :wincmd s\|wincmd w<CR>
+map <leader>wv :wincmd v\|wincmd w<CR>
+" rudimentary movement
 map <leader>ww :wincmd w<CR>
-map <leader>ws :wincmd s<CR>
-map <leader>wv :wincmd v<CR>
+" movemement with arrow keys
 map <silent> <C-Up> :wincmd k<CR>
 map <silent> <C-Down> :wincmd j<CR>
 map <silent> <C-Left> :wincmd h<CR>
 map <silent> <C-Right> :wincmd l<CR>
+" movement with hjkl
+map <silent> <C-k> :wincmd k<CR>
+map <silent> <C-j> :wincmd j<CR>
+map <silent> <C-h> :wincmd h<CR>
+map <silent> <C-l> :wincmd l<CR>
 
 " Go to File (command-t plugin)
-map <Leader>f :CommandT<Enter>
+nnoremap <silent> <Leader>f :CommandT<CR>
+nnoremap <silent> <Leader>t :CommandT<CR>
+nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
 
 " Hard wrap selected text in visual mode with <leader>f
 " Note: uses extenal fold command, column width is 80
 vmap <leader>f :!fold -s<CR>
 
 " Toggle taglist with <leader>t
-map <leader>t :TlistToggle<Enter>
+map <leader>tt :TlistToggle<Enter>
 
 " Toggle NERDTree with <leader>n
 map <leader>n :NERDTreeToggle<Enter>
@@ -140,6 +157,12 @@ map <leader><space> :ToggleSpaceHi<Enter>
 
 " Open most recently used files list with <leader>r
 map <leader>r :MRU<Enter>
+
+if has("spell")
+  " toggle spelling use ,sp
+  imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
+  nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
+endif
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
