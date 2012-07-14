@@ -185,12 +185,8 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html,*haml,*.markdown,*.feature :call <SID>StripTrailingWhitespaces()
 
-" Controversial...swap colon and semicolon for easier commands
-"nnoremap ; :
-"nnoremap : ;
-
-"vnoremap ; :
-"vnoremap : ;
+" Allow semi-colon to stand in for colon
+nnoremap ; :
 
 " Automatic fold settings for specific files. Uncomment to use.
 " autocmd FileType ruby setlocal foldmethod=syntax
