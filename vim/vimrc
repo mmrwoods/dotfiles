@@ -170,9 +170,20 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set f
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
 
-"if has("autocmd")
-"  :autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html :let save_cursor = getpos(".") | %s/\s\+$//e |  call setpos('.', save_cursor)
-"endif
+" Vimcast 4 - Tidying Whitespace
+" Function and autocmd to strip trailing whitespace from files when saving
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html,*haml,*.markdown,*.feature :call <SID>StripTrailingWhitespaces()
 
 " Controversial...swap colon and semicolon for easier commands
 "nnoremap ; :
