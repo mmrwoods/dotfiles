@@ -143,8 +143,8 @@ nmap <leader>l :set list!<CR>
 " Note: uses extenal fold command, column width is 80
 vmap <leader>f :!fold -s<CR>
 
-" Toggle taglist with <leader>t
-map <leader>tt :TlistToggle<Enter>
+" Toggle taglist (outline view) with <leader>o
+map <leader>o :TlistToggle<Enter>
 
 " Toggle NERDTree with <leader>n
 map <leader>n :NERDTreeToggle<Enter>
