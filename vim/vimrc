@@ -59,6 +59,9 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLo
 set t_Co=256
 colorscheme wombat256mod
 
+" use F2 to toggle paste mode and safely paste multiple lines in terminal vim
+set pastetoggle=<F2>
+
 " store tabs, windows, buffers etc. in sessions
 set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize,winpos,resize
 
