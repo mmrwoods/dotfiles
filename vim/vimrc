@@ -112,7 +112,7 @@ map <leader>ss :SessionSave<CR>
 " Buffer mappings.
 map <C-home> :bn<CR>
 map <C-end> :bp<CR>
-map <leader>bb :BufExplorer<CR>
+map <leader>b :BufExplorer<CR>
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 
@@ -137,7 +137,7 @@ map <silent> <C-l> :wincmd l<CR>
 " Go to File (command-t plugin)
 nnoremap <silent> <Leader>f :CommandT<CR>
 nnoremap <silent> <Leader>t :CommandT<CR>
-nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+nnoremap <silent> <Leader>tb :CommandTBuffer<CR>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
