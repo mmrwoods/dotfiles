@@ -57,7 +57,9 @@ set laststatus=2                  " Show the status line all the time
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-40(\ \ char:\ %03.3b\/%02.2B\ \ col:\ %c-%v\ \ line:\ %l-%L\ %)\ %P
 
 set t_Co=256
-colorscheme wombat256mod
+"colorscheme wombat256mod
+set background=dark
+colorscheme solarized
 
 " use F2 to toggle paste mode and safely paste multiple lines in terminal vim
 set pastetoggle=<F2>
