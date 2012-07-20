@@ -101,8 +101,6 @@ map <leader>tc :tabclose<cr>
 map <leader>to :tabonly<cr>
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprevious<cr>
-map <leader>tf :tabfirst<cr>
-map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 map <C-Tab> :tabnext<cr>
 map <S-C-Tab> :tabprevious<cr>
@@ -140,6 +138,7 @@ map <silent> <C-l> :wincmd l<CR>
 nnoremap <silent> <Leader>f :CommandT<CR>
 nnoremap <silent> <Leader>t :CommandT<CR>
 nnoremap <silent> <Leader>tb :CommandTBuffer<CR>
+nnoremap <Leader>tf :CommandTFlush<CR>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
