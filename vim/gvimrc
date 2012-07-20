@@ -35,6 +35,9 @@ autocmd VimEnter * call LoadSessionAndSetTitle()
 
 if has("mac")
 
+  " Toggle full-screen with Cmd+Enter
+  map <D-Enter> :set invfu<CR>
+
   " Set the guifont
   set guifont=Mensch,Menlo,Monaco
 
