@@ -133,12 +133,16 @@ map <silent> <C-k> :wincmd k<CR>
 map <silent> <C-j> :wincmd j<CR>
 map <silent> <C-h> :wincmd h<CR>
 map <silent> <C-l> :wincmd l<CR>
+" resize all windows with <leader>=
+map <silent> <leader>= :wincmd =<CR>
 
 " Go to File (command-t plugin)
-nnoremap <silent> <Leader>f :CommandT<CR>
 nnoremap <silent> <Leader>t :CommandT<CR>
 nnoremap <silent> <Leader>tb :CommandTBuffer<CR>
 nnoremap <Leader>tf :CommandTFlush<CR>
+
+" Shortcut to search files with ack
+nnoremap <Leader>f :Ack<Space>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
