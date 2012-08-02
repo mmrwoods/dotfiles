@@ -1,13 +1,29 @@
+--sort-files
+--color
+--follow
+
 --type-add
-html=.haml
+yaml=.yaml,.yml
+
+--type-add
+ruby=.haml,.rake,.rsel,.builder
+
+--type-add
+html=.html.erb,.html.haml
 
 --type-add
 css=.sass,.less,.scss
 
 --type-set
+cucumber=.feature
+
+--type-set
 ignorables=.log,.tmp,.pdf
+
 --ignore-dir=vendor
 --ignore-dir=log
 --ignore-dir=tmp
 --ignore-dir=doc
 --ignore-dir=coverage
+--ignore-dir=build
+--ignore-dir=data
