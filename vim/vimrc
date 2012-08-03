@@ -87,6 +87,9 @@ if filereadable('/usr/local/bin/ctags')
 endif
 "let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
 
+" Show relative rather than absolute paths by default in bufexplorer
+let g:bufExplorerShowRelativePath = 1
+
 " Delete key sends text to blackhole register
 nmap <Del> "_x
 vmap <Del> "_x
