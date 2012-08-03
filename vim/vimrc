@@ -119,6 +119,9 @@ map <leader>b :BufExplorer<CR>
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 
+" open alternate file with <leader>g
+nnoremap <Leader>g :e#<CR>
+
 " Window mappings
 " opening new splits
 map <silent> <leader>w :wincmd v\|wincmd w<CR>
