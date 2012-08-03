@@ -27,6 +27,7 @@ bundles = %w{
   git://github.com/mattn/gist-vim.git
   git://github.com/Raimondi/PickAColor.git
   git://github.com/altercation/vim-colors-solarized.git
+  https://github.com/vim-scripts/bufmru.vim
 }
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")
