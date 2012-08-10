@@ -197,7 +197,7 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-autocmd BufWritePre *.rb,*.erb,*.rhtml,*.html,*haml,*.markdown,*.feature :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.js,*.coffee,*.css,*.scss,*.less,*.rb,*.erb,*.rhtml,*.html,*haml,*.markdown,*.feature :call <SID>StripTrailingWhitespaces()
 
 " Allow semi-colon to stand in for colon
 nnoremap ; :
