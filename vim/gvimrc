@@ -39,7 +39,7 @@ if has("mac")
   map <D-Enter> :set invfu<CR>
 
   " Set the guifont
-  set guifont=Mensch,Menlo,Monaco
+  set guifont=Mensch:h12,Menlo:h12,Monaco:h12
 
   " Use system clipboard as unamed register to allow easy copying and pasting
   set clipboard=unnamed
