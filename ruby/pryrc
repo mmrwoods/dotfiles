@@ -20,9 +20,8 @@ rescue LoadError
 end
 
 if defined?(Rails)
-  try_require 'pry-rails' do
-    extend Rails::ConsoleMethods
-  end
+  extend Rails::ConsoleMethods
+  try_require 'pry-rails'
 end
 
 try_require 'awesome_print' do
