@@ -19,7 +19,11 @@ rescue LoadError
   warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
 end
 
-try_require 'pry-rails' if defined?(Rails)
+if defined?(Rails)
+  try_require 'pry-rails' do
+    extend Rails::ConsoleMethods
+  end
+end
 
 try_require 'awesome_print' do
   alias pp ap
