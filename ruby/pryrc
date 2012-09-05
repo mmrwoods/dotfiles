@@ -19,6 +19,8 @@ rescue LoadError
   warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
 end
 
+try_require 'pry-rails' if defined?(Rails)
+
 try_require 'awesome_print' do
   alias pp ap
   Pry.config.print = proc {|output, value| output.puts ap(value, :multiline => false) }
