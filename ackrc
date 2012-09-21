@@ -15,6 +15,9 @@ html=.html.erb,.html.haml
 css=.sass,.less,.scss
 
 --type-set
+markdown=.markdown,.md
+
+--type-set
 cucumber=.feature
 
 --type-set
