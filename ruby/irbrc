@@ -19,7 +19,12 @@ def try_require(lib,gem=lib)
   require lib
   yield if block_given?
 rescue LoadError
-  warn "irbrc warning: " + $!.message.sub(/\.$/,'') + ". You can install it by running 'gem install #{gem}'"
+  warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
+end
+
+try_require 'pry' do
+  Pry.start
+  exit
 end
 
 # fix irb history on osx (and hopefully not break things elsewhere)
