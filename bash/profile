@@ -44,6 +44,12 @@ if [ $SHELL = '/bin/bash' ]; then
     PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
   fi
 
+  # quick hack to create aliases for starting and stopping postgres
+  if [ `which brew` ] && [ -r `brew --prefix`/var/postgres ]; then
+    alias pg_start="pg_ctl -D $(brew --prefix)/var/postgres -l /usr/local/var/postgres/server.log start"
+    alias pg_stop="pg_ctl -D $(brew --prefix)/var/postgres stop -s -m fast"
+  fi
+
   # use macvim's huge vim with ruby support on osx - https://github.com/mxcl/homebrew/issues/5148
   if [ `which brew` ]; then
     macvim_version=`brew list --versions macvim | sed 's/.* \([0-9\.\-]*\)$/\1/'`
