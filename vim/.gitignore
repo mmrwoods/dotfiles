@@ -2,5 +2,7 @@
 *.*~
 *.swp
 bundle
+plugin
 sessions
+tmp
 ruby/command-t
