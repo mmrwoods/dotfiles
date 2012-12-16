@@ -121,6 +121,7 @@ map <leader>bp :bp<CR>
 
 " open alternate file with <leader>g
 nnoremap <Leader>g :e#<CR>
+nnoremap <Space> :e#<CR>
 
 " Window mappings
 " opening new splits
