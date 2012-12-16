@@ -119,7 +119,7 @@ map <leader>b :BufExplorer<CR>
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 
-" open alternate file with <leader>g
+" open alternate file
 nnoremap <Leader>g :e#<CR>
 nnoremap <Space> :e#<CR>
 
@@ -140,7 +140,7 @@ map <silent> <C-k> :wincmd k<CR>
 map <silent> <C-j> :wincmd j<CR>
 map <silent> <C-h> :wincmd h<CR>
 map <silent> <C-l> :wincmd l<CR>
-" resize all windows with <leader>=
+" resize all windows
 map <silent> <leader>= :wincmd =<CR>
 
 " Go to File (command-t plugin)
@@ -154,24 +154,23 @@ nnoremap <Leader>f :Ack<Space>
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
-" Hard wrap selected text in visual mode with <leader>f
-" Note: uses extenal fold command, column width is 80
+" Hard wrap selected text in visual mode using external fold command
 vmap <leader>f :!fold -s<CR>
 
-" Toggle taglist (outline view) with <leader>o
+" Toggle taglist (outline view)
 map <leader>o :TlistToggle<Enter>
 
-" Toggle NERDTree with <leader>n
+" Toggle NERDTree
 map <leader>n :NERDTreeToggle<Enter>
 
-" Toggle ZoomWin with <leader>z
+" Toggle ZoomWin
 map <leader>z :ZoomWin<Enter>
 
-" Toggle SpaceHi with <leader><space>
+" Toggle SpaceHi
 map <leader><space> :ToggleSpaceHi<Enter>
 
-" Open most recently used files list with <leader>r
-map <leader>r :MRU<Enter>
+" Open most recently used files
+map <leader>m :MRU<Enter>
 
 if has("spell")
   " toggle spelling use ,sp

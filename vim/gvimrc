@@ -45,8 +45,8 @@ if has("mac")
   set clipboard=unnamed
 
   " macvim container window gets screwed up after opening and
-  " closing tabs, so map leader m to maximize (um, kind of)
-  map <leader>m :set lines=999 columns=999<Enter>
+  " closing tabs, so map leader x to expand (um, kind of)
+  map <leader>x :set lines=999 columns=999<Enter>
   " addition - just autocmd it
   " TODO: remove the mapping if it turns out to be unnecessary
   autocmd TabEnter * set lines=999 columns=999
