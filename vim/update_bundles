@@ -25,6 +25,7 @@ bundles = %w{
   git://github.com/tpope/vim-markdown.git
   git://github.com/juvenn/mustache.vim.git
   git://github.com/mattn/gist-vim.git
+  git://github.com/mattn/webapi-vim.git
   git://github.com/Raimondi/PickAColor.git
   git://github.com/altercation/vim-colors-solarized.git
 }
