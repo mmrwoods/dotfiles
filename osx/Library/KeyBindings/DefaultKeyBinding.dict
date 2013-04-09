@@ -1,0 +1,33 @@
+/* save this file to ~/Library/KeyBindings/DefaultKeyBinding.dict */
+
+/*
+Prefixes for modifier keys...
+------------------------------
+    ~       Option key (⌥)
+    $       Shift key (⇧)
+    ^       Control key (⌃)
+    @       Command key (⌘)
+    #       keys on number pad
+*/
+
+{
+    /* home moves to the end of the line rather than the beginning of the document */
+    "\UF729"  = "moveToBeginningOfLine:";
+    "$\UF729" = "moveToBeginningOfLineAndModifySelection:";
+
+    /* end moves to the end of the line rather than the end of the document */
+    "\UF72B"  = "moveToEndOfLine:";
+    "$\UF72B" = "moveToEndOfLineAndModifySelection:";
+
+    /* page up and page down actually page up and down rather than scroll up and down */
+    "\UF72C"  = "pageUp:";
+    "\UF72D"  = "pageDown:";
+
+    /* shortcut to hash uses § symbol key */
+    "§" = ("insertText:", "#");
+    "~§" = ("insertText:", "§");
+
+    /* F13 duplicates backspace because I keep hitting it by accident */
+    "\UF710" = "deleteBackward:";
+
+}
