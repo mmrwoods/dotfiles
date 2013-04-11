@@ -4,7 +4,7 @@ dir=$(cd `dirname $0` && pwd)
 mkdir -p $dir/tmp
 
 cd ~
-ln -s $dir .vim
+ln -s $dir/ .vim
 ln -s $dir/vimrc .vimrc
 ln -s $dir/gvimrc .gvimrc
 
