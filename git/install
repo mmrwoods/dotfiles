@@ -1,0 +1,7 @@
+#!/bin/bash
+
+dir=$(cd `dirname $0` && pwd)
+
+git config --global include.path $dir/config
+
+cd ~ && ln -s $dir/ignore .gitignore

@@ -1,17 +1,8 @@
 #!/bin/sh
 
+# some useful settings, mostly cribbed from https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
-# login and logout hooks, currently just used to mute sound on logout and unmute on login
-# note/warning: login/logout hooks are executed by root
-
-sudo cp ~/dotfiles/osx/loginhook /usr/local/bin/
-sudo defaults write com.apple.loginwindow LoginHook /usr/local/bin/loginhook
-
-sudo cp ~/dotfiles/osx/logouthook /usr/local/bin/
-sudo defaults write com.apple.loginwindow LogoutHook /usr/local/bin/logouthook
-
-
-# some useful settings cribbed from https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 
 # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
