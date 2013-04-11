@@ -102,6 +102,9 @@ if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
 fi
 
+# make random password
+function mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | cut -c1-${1:-8} | tr -d '\n'; }
+
 # current gems dir (works with rvm and bundler)
 gems() {
   bundle config > /dev/null
