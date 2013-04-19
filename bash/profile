@@ -105,6 +105,9 @@ fi
 # make random password
 function mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | cut -c1-${1:-8} | tr -d '\n'; }
 
+# what is my ip again?
+function whatismyip() { curl -s http://icanhazip.com/ ; }
+
 # current gems dir (works with rvm and bundler)
 gems() {
   bundle config > /dev/null
