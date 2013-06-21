@@ -99,6 +99,12 @@ alias cq='bundle exec cucumber -r features --tags ~@javascript ~@slow'
 alias cj='bundle exec cucumber -r features --tags @javascript'
 alias r='bundle exec rspec spec'
 
+alias sc='spring cucumber -r features'
+alias scw='spring cucumber -r features -p wip'
+alias scq='spring cucumber -r features --tags ~@javascript ~@slow'
+alias scj='spring cucumber -r features --tags @javascript'
+alias sr='spring rspec spec'
+
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
 fi
