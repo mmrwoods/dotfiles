@@ -65,6 +65,9 @@ if [ $SHELL = '/bin/bash' ]; then
     complete -W "$(echo `fgrep "Host " ~/.ssh/config | cut -f 2 -d ' '`)" ssh
   fi
 
+  # reload bash shell (I always forget how)
+  alias reload="exec bash -l"
+
 fi
 
 # add /usr/local/sbin to path if necessary
@@ -112,10 +115,10 @@ if [ -f /usr/local/bin/ctags ]; then
 fi
 
 # make random password
-function mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | cut -c1-${1:-8} | tr -d '\n'; }
+mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | cut -c1-${1:-8} | tr -d '\n'; }
 
 # what is my ip again?
-function whatismyip() { curl -s http://icanhazip.com/ ; }
+whatismyip() { curl -s http://icanhazip.com/ ; }
 
 # current gems dir (works with rvm and bundler)
 gems() {
