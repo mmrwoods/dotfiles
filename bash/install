@@ -4,6 +4,6 @@ if test "$(uname)" == "Darwin" ; then
   brew install bash-completion
 fi
 
-if ! fgrep "source ~/dotfiles/bash/profile" ~/.profile 2>1 /dev/null; then
+if ! fgrep "source ~/dotfiles/bash/profile" ~/.profile 2>&1 /dev/null; then
   echo "source ~/dotfiles/bash/profile" >> ~/.profile
 fi
