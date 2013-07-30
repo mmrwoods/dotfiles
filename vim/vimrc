@@ -90,6 +90,15 @@ endif
 " Show relative rather than absolute paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
+" Ignore some files to make Command T load faster
+set wildignore+=*.gif,*.jpg,*.png
+set wildignore+=tmp/**
+set wildignore+=log/**
+set wildignore+=vendor/**
+set wildignore+=public/images/**
+set wildignore+=app/assets/fonts/**
+set wildignore+=coverage/**
+
 " Delete key sends text to blackhole register
 nmap <Del> "_x
 vmap <Del> "_x
