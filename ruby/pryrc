@@ -16,7 +16,9 @@ def try_require(lib,gem=lib)
   require lib
   yield if block_given?
 rescue LoadError
-  warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
+  cmd = "gem install #{gem}"
+  cmd = "rvm @global do #{cmd}" if system("which rvm &> /dev/null")
+  warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
 end
 
 if defined?(Rails) && Rails.version >= "3"
