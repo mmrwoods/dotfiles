@@ -34,8 +34,8 @@ if [ $SHELL = '/bin/bash' ]; then
   source ~/dotfiles/bash/rails.bash
 
   # rvm command completion
-  if [ -r ~/.rvm/scripts/completion ]; then
-    source ~/.rvm/scripts/completion
+  if [ -r $rvm_path/scripts/completion ]; then
+    source $rvm_path/scripts/completion
   fi
 
   GIT_PS1_SHOWDIRTYSTATE=1
