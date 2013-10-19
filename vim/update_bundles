@@ -32,6 +32,7 @@ bundles = %w{
   git://github.com/pthrasher/conqueterm-vim.git
   git://github.com/tpope/vim-eunuch.git
   git://github.com/kien/ctrlp.vim
+  git://github.com/tpope/vim-fugitive.git
 }
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")
