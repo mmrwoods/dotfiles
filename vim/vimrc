@@ -186,6 +186,20 @@ if has("spell")
   nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
 endif
 
+" Key bindings for using Command-T in terminal
+" See https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
+" set ttimeoutlen=50
+if &term =~ "xterm" || &term =~ "screen"
+  " as of March 2013, with current iTerm (1.0.0.20130319), tmux (1.8)
+  " and Vim (7.3, with patches 1-843), this is all I need:
+  let g:CommandTCancelMap     = ['<ESC>', '<C-c>']
+
+  " when I originally started using Command-T inside a terminal,
+  " I used to need these as well:
+  let g:CommandTSelectNextMap = ['<C-j>', '<ESC>OB']
+  let g:CommandTSelectPrevMap = ['<C-k>', '<ESC>OA']
+endif
+
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
 
