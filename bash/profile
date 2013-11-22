@@ -57,7 +57,7 @@ if [ $SHELL = '/bin/bash' ]; then
 
   # quick hack to create aliases for starting and stopping postgres
   if [ $has_brew ] && [ -r $brew_prefix/var/postgres ]; then
-    alias pg_start="pg_ctl -D $brewprefix/var/postgres -l /usr/local/var/postgres/server.log start"
+    alias pg_start="pg_ctl -D $brew_prefix/var/postgres -l $brew_prefix/var/postgres/server.log start"
     alias pg_stop="pg_ctl -D $brew_prefix/var/postgres stop -s -m fast"
   fi
 
