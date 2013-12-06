@@ -1,9 +1,15 @@
 #!/bin/bash
 
 DIR=$(cd `dirname $0` && pwd)
+
+git archive --prefix=vim/ --output=$DIR/tmp/vim.tar HEAD
+
 for host in $@ ; do
   echo "Deploying to ${host}..."
-  ssh -fT $host mkdir -p dotfiles
-  scp -r $DIR ${host}:dotfiles/
-  ssh -fT $host ./dotfiles/vim/install
+  set -x
+  ssh $host mkdir -p dotfiles
+  scp $DIR/tmp/vim.tar ${host}:dotfiles/
+  ssh $host "tar -xvf dotfiles/vim.tar -C dotfiles"
+  ssh $host "./dotfiles/vim/install"
+  set +x
 done
