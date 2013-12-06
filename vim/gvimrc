@@ -41,9 +41,6 @@ if has("mac")
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
 
-  " Use system clipboard as unamed register to allow easy copying and pasting
-  set clipboard=unnamed
-
   " macvim container window gets screwed up after opening and
   " closing tabs, so map leader x to expand (um, kind of)
   map <leader>x :set lines=999 columns=999<Enter>
@@ -105,18 +102,6 @@ if has("gui_gtk")
   " always show tabline on laptop screen
   if system("/usr/bin/xrandr | awk -F',' '/Screen 0/ {gsub(\"( |current)\",\"\");printf $2}'") == "1024x768"
     set showtabline=2
-  endif
-
-  " windows keyboard shortcuts for gvim (a bit of a sledgehammer, but it'll do for now)
-  source $VIMRUNTIME/mswin.vim
-  " remap CTRL-Tab to tabnext (mswin.vim set this to next window)
-  map <C-Tab> :tabnext<cr>
-  " disable mswin mouse and select behaviour (mswin.vim sets this)
-  behave xterm
-
-  " yank to and paste from X11 clipboard if possible
-  if v:version >= 704 || v:version == 703 && has("patch074")
-    set clipboard=unnamedplus
   endif
 
 endif

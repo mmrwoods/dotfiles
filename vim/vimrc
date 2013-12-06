@@ -200,10 +200,25 @@ if &term =~ "xterm" || &term =~ "screen"
   let g:CommandTSelectPrevMap = ['<C-k>', '<ESC>OA']
 endif
 
-" Make the mouse/trackpad work in terminal
-" Also taken from https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
-if has('mouse')
+if has('mouse') && has("clipboard")
   set mouse=a
+
+  " yank to and paste from system clipboard if possible
+  if has("x11") && ( v:version >= 704 || v:version == 703 && has("patch074") )
+    set clipboard=unnamedplus
+  else
+    set clipboard=unnamed
+  endif
+
+  " Use windows keyboard shortcuts (CTRL-c to yank to clipboard register etc.)
+  source $VIMRUNTIME/mswin.vim
+  " remap CTRL-Tab to tabnext (mswin.vim set this to next window)
+  map <C-Tab> :tabnext<cr>
+  " disable mswin mouse and select behaviour (mswin.vim sets this)
+  behave xterm
+
+  " Make the mouse/trackpad work in terminal
+  " Also from https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
   if &term =~ "xterm" || &term =~ "screen"
     " as of March 2013, this works:
     set ttymouse=xterm2
