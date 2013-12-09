@@ -262,7 +262,7 @@ function SetWorkingDir()
     if isdirectory(argv(0))
       exec 'cd' argv(0)
     elseif filereadable(argv(0))
-      exec 'cd %:h'
+      exec 'cd %:p:h'
     end
   endif
 endfunction
