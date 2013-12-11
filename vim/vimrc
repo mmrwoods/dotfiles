@@ -210,12 +210,20 @@ if has('mouse') && has("clipboard")
     set clipboard=unnamed
   endif
 
-  " Use windows keyboard shortcuts (CTRL-c to yank to clipboard register etc.)
-  source $VIMRUNTIME/mswin.vim
-  " remap CTRL-Tab to tabnext (mswin.vim set this to next window)
-  map <C-Tab> :tabnext<cr>
-  " disable mswin mouse and select behaviour (mswin.vim sets this)
-  behave xterm
+  " Use windows keyboard shortcuts (taken from mswin.vim)
+  " CTRL-X and SHIFT-Del are Cut
+  vmap <C-X> "+x
+  vmap <S-Del> "+x
+  " CTRL-C and CTRL-Insert are Copy
+  vmap <C-C> "+y
+  vmap <C-Insert> "+y
+  " CTRL-V and SHIFT-Insert are Paste
+  map <C-V> "+gP
+  map <S-Insert> "+gP
+  cmap <C-V> <C-R>+
+  cmap <S-Insert> <C-R>+
+  exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
+  exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
   " Make the mouse/trackpad work in terminal
   " Also from https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
