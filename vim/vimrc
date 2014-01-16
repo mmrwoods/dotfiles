@@ -157,7 +157,7 @@ nnoremap <silent> <Leader>tb :CommandTBuffer<CR>
 nnoremap <Leader>tf :CommandTFlush<CR>
 
 " Shortcut to search files with ack
-nnoremap <Leader>f :Ack<Space>
+nnoremap <Leader>f :Ack!<Space>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
