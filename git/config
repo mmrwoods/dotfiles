@@ -7,3 +7,5 @@
   whitespace = space-before-tab,tab-in-indent,trailing-space
 [color]
   ui = true
+[alias]
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
