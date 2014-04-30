@@ -37,7 +37,10 @@ if [ $SHELL = '/bin/bash' ]; then
   fi
 
   # rails command completion
-  source ~/dotfiles/bash/rails.bash
+  # TODO: try https://github.com/mernen/completion-ruby
+  if [ ${BASH_VERSINFO[0]} -ge 4 ]; then
+    source ~/dotfiles/bash/rails.bash
+  fi
 
   # rvm command completion
   if [ -r $rvm_path/scripts/completion ]; then
