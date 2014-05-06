@@ -13,7 +13,7 @@ export CUCUMBER_COLORS=comment=cyan
 
 # check if homebrew is installed and update path such that
 # homebrew binaries take precedence over system binaries
-if [ `which brew &> /dev/null` ]; then
+if which brew &> /dev/null; then
   has_brew=true
   brew_prefix=`brew --prefix`
   export PATH=$brew_prefix/bin:$brew_prefix/sbin:$PATH
@@ -87,12 +87,12 @@ if [ ! `echo $PATH | grep /usr/local/sbin` ]; then
 fi
 
 # use gnome-open rather than openvt
-if [ `which gnome-open &> /dev/null`]; then
+if which gnome-open &> /dev/null; then
   alias open="gnome-open"
 fi
 
 # because I keep forgetting how to do it in Linux
-if [ ! `which pbcopy &> /dev/null` ] && [ `which xclip &> /dev/null` ]; then
+if ! which pbcopy &> /dev/null && which xclip &> /dev/null; then
   alias pbcopy="xclip -selection clipboard"
   alias pbpaste="xclip -o -selection clipboard"
 fi
