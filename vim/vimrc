@@ -136,7 +136,10 @@ nnoremap <Leader>g :e#<CR>
 map <silent> <leader>w :wincmd v\|wincmd w<CR>
 map <silent> <leader>ws :wincmd s\|wincmd w<CR>
 map <silent> <leader>wv :wincmd v\|wincmd w<CR>
-" rudimentary movement
+" moving windows (rotate and exchange)
+map <silent> <leader>wr :wincmd r<CR>
+map <silent> <leader>wx :wincmd x<CR>
+" rudimentary navigation
 map <silent> <leader>ww :wincmd w<CR>
 " movemement with arrow keys
 map <silent> <C-Up> :wincmd k<CR>
