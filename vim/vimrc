@@ -262,7 +262,8 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-autocmd BufWritePre *.js,*.coffee,*.css,*.scss,*.less,*.rb,*.erb,*.rhtml,*.html,*haml,*.feature,*.scala :call <SID>StripTrailingWhitespaces()
+" FIXME: skip certain file types rather than include only specific file types
+autocmd BufWritePre *.pl,*.cron,*.js,*.coffee,*.css,*.scss,*.less,*.rb,*.erb,*.rhtml,*.html,*haml,*.feature,*.scala :call <SID>StripTrailingWhitespaces()
 
 " Allow semi-colon to stand in for colon
 nnoremap ; :
