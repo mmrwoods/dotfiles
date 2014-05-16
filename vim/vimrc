@@ -57,9 +57,12 @@ set laststatus=2                  " Show the status line all the time
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-(line:\ %l\ \ col:\ %c%)\ \ %3P
 
 set t_Co=256
-"colorscheme wombat256mod
 set background=dark
-colorscheme solarized
+if $SSH_CLIENT == ""
+  colorscheme solarized
+else
+  colorscheme jellybeans
+endif
 
 " use F2 to toggle paste mode and safely paste multiple lines in terminal vim
 set pastetoggle=<F2>

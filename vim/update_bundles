@@ -30,6 +30,7 @@ bundles = %w{
   git://github.com/mattn/gist-vim.git
   git://github.com/mattn/webapi-vim.git
   git://github.com/altercation/vim-colors-solarized.git
+  git://github.com/nanotech/jellybeans.vim.git
   git://github.com/derekwyatt/vim-scala.git
   git://github.com/pthrasher/conqueterm-vim.git
   git://github.com/tpope/vim-eunuch.git
