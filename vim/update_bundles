@@ -40,7 +40,7 @@ bundles = %w{
 }
 
 if vim_version >= 7.2
-  bundles + %w{
+  bundles.concat %w{
     git://github.com/Raimondi/PickAColor.git
     git://github.com/vim-scripts/ZoomWin.git
   }
