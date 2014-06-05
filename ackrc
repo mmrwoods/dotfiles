@@ -23,6 +23,8 @@ cucumber=.feature
 --type-set
 ignorables=.log,.tmp,.pdf
 
+--ignore-file=is:tags
+
 --ignore-dir=vendor
 --ignore-dir=log
 --ignore-dir=tmp
