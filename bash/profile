@@ -30,9 +30,8 @@ if [ $SHELL = '/bin/bash' ]; then
     source $brew_prefix/etc/bash_completion
   fi
 
-  # git completion and prompt
-  type __git_ps1 >& /dev/null
-  if [ $? -ne 0 ]; then
+  # git completion
+  if ! type __git_ps1 &> /dev/null; then
     source ~/dotfiles/bash/git-completion.sh
   fi
 
@@ -82,7 +81,7 @@ if [ $SHELL = '/bin/bash' ]; then
 fi
 
 # add /usr/local/sbin to path if necessary
-if [ ! `echo $PATH | grep /usr/local/sbin` ]; then
+if ! echo $PATH | grep /usr/local/sbin &> /dev/null; then
   PATH=$PATH:/usr/local/sbin
 fi
 
@@ -97,8 +96,10 @@ if ! which pbcopy &> /dev/null && which xclip &> /dev/null; then
   alias pbpaste="xclip -o -selection clipboard"
 fi
 
+# vi keyboard shortcuts
 set -o vi
 
+alias h='history'
 alias hs='history'
 
 alias egrep='egrep --color=auto --exclude=tags'
