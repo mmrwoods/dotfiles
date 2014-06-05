@@ -2,6 +2,9 @@
 
 dir=$(cd `dirname $0` && pwd)
 
+# symlink ctags config file
+cd ~ && ln -s $dir/ctags .ctags
+
 # Symlink rc files
 ls $dir/*rc | while read path; do ln -s $path ~/.$(basename $path); done
 
