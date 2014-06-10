@@ -7,22 +7,18 @@
   whitespace = space-before-tab,tab-in-indent,trailing-space
 [color]
   ui = true
+[branch]
+  autosetuprebase = always
 [alias]
   la = "!git config -l | grep alias | cut -c 7-" # list all aliases
-  a = add
-  b = branch
-  c = commit
-  d = diff
-  l = log
   aa = add -a
   au = add -u
   br = branch
   ba = branch -a
   ci = commit
   cv = commit -v
-  cva = commit -av
+  ca = commit -av
   cm = commit -m
-  cma = commit -am
   cl = clone
   co = checkout
   ch = checkout
@@ -47,9 +43,8 @@
   rh2 = reset --hard HEAD^^
   rsh1 = reset --hard HEAD^
   rsh2 = reset --hard HEAD^^
-  am = git commit --amend # breaks git-am
-  ama = git commit --amend -a
   l1 = log --oneline --decorate
   ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
   lg = log --oneline --abbrev-commit --all --graph --decorate --color
   mru = for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads
+  amend = commit --amend
