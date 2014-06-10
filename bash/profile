@@ -124,6 +124,38 @@ alias scj='spring cucumber -r features --tags @javascript'
 alias sr='spring rspec spec'
 alias srw='spring rspec spec --tag wip'
 
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias co='git checkout' # breaks RCS checkout
+alias gd='git diff'
+alias gl='git log'
+alias gr='git reset'
+alias gs='git status'
+alias gam='git commit --amend'
+alias gco='git checkout'
+alias gl1='git log --oneline --decorate'
+alias gpl='git pull'
+alias gpr='git pull --rebase'
+alias gps='git push'
+alias grh='git reset --hard'
+alias gsh='git show'
+
+__git_complete ga _git_add
+__git_complete gb _git_branch
+__git_complete gc _git_commit
+__git_complete co _git_checkout
+__git_complete gd _git_diff
+__git_complete gr _git_reset
+__git_complete gam _git_commit
+__git_complete gco _git_checkout
+__git_complete gpl _git_pull
+__git_complete gpr _git_pull
+__git_complete gps _git_push
+__git_complete grh _git_reset
+
+function gitrm() { git status | grep deleted | awk '{print$3}' | xargs git rm;}
+
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
 fi

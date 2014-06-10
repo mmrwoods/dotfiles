@@ -8,5 +8,48 @@
 [color]
   ui = true
 [alias]
+  la = "!git config -l | grep alias | cut -c 7-" # list all aliases
+  a = add
+  b = branch
+  c = commit
+  d = diff
+  l = log
+  aa = add -a
+  au = add -u
+  br = branch
+  ba = branch -a
+  ci = commit
+  cv = commit -v
+  cva = commit -av
+  cm = commit -m
+  cma = commit -am
+  cl = clone
+  co = checkout
+  ch = checkout
+  cb = checkout -b
+  cp = cherry-pick
+  df = diff
+  dc = diff --cached
+  dm = diff master
+  pl = pull
+  pr = pull --rebase
+  ps = push
+  sl = stash list
+  sa = stash apply
+  ss = stash save
+  st = status
+  sh = show
+  rs = reset
+  rs1 = reset HEAD^
+  rs2 = reset HEAD^^
+  rsh = reset --hard
+  rh1 = reset --hard HEAD^
+  rh2 = reset --hard HEAD^^
+  rsh1 = reset --hard HEAD^
+  rsh2 = reset --hard HEAD^^
+  am = git commit --amend # breaks git-am
+  ama = git commit --amend -a
+  l1 = log --oneline --decorate
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
   lg = log --oneline --abbrev-commit --all --graph --decorate --color
   mru = for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads
