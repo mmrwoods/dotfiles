@@ -147,7 +147,7 @@ if [ -f /usr/local/bin/ctags ]; then
 fi
 
 # make random password
-mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | cut -c1-${1:-20} | tr -d '\n'; }
+mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | tr -d '/+' | cut -c1-${1:-20} | tr -d '\n'; }
 
 # what is my ip again?
 whatismyip() { curl -s http://icanhazip.com/ ; }
