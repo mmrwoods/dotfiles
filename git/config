@@ -4,11 +4,34 @@
   editor = vim
   autocrlf = input
   excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  # warn about tabs and trailing spaces
   whitespace = space-before-tab,tab-in-indent,trailing-space
 [color]
   ui = true
 [branch]
+  # pull with rebase by default on new tracking branches
   autosetuprebase = always
+[branch "master"]
+  # pull with rebase by default on master
+  rebase = true
+[branch "develop"]
+  # pull with rebase by default on develop
+  rebase = true
+[advice]
+  # disable how to stage/unstage/add advice from git status
+  statusHints = false
+  # disable hints when pushing something not fast-forwardable
+  pushNonFastForward = false
+[push]
+  # push the current branch to its upstream branch by default
+  default = tracking
+[diff]
+  # allow git diff to detect renames and copies
+  renames = copies
+[merge]
+  # show diffstat at the end of a merge
+  stat = true
 [alias]
   la = "!git config -l | grep alias | cut -c 7-" # list all aliases
   aa = add -a
