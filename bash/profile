@@ -132,7 +132,9 @@ alias gb='git branch'
 alias gc='git commit'
 alias co='git checkout' # takes precedence over RCS checkout cmd in path
 alias gd='git diff'
+alias gf='git fetch'
 alias gl='git log'
+alias gp='git pull'
 alias gr='git reset'
 alias gs='git status' # takes precedence over ghostscript cmd in path
 
