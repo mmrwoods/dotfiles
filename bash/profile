@@ -124,6 +124,9 @@ alias scj='spring cucumber -r features --tags @javascript'
 alias sr='spring rspec spec'
 alias srw='spring rspec spec --tag wip'
 
+alias g='git'
+complete -o default -o nospace -F _git g
+
 alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
