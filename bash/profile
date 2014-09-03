@@ -78,6 +78,13 @@ if [ $SHELL = '/bin/bash' ]; then
   # reload bash shell (I always forget how)
   alias reload="exec bash -l"
 
+  # colourise output to stderr from git so I notice when something goes wrong
+  # taken from http://serverfault.com/questions/59262/bash-print-stderr-in-red-color
+  stderred() {
+    $@ 2> >(while read line; do printf "\e[01;31m$line\n\e[0m" >&2; done)
+  }
+  alias git="stderred git"
+
 fi
 
 # add /usr/local/sbin to path if necessary
