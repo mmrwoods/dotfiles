@@ -152,7 +152,7 @@ __git_complete co _git_checkout
 __git_complete gd _git_diff
 __git_complete gr _git_reset
 
-function gitrm() { git status | grep deleted | awk '{print$2}' | xargs git rm;}
+function gitrm() { git status | grep deleted | awk '{print$NF}' | xargs git rm;}
 
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
