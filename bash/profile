@@ -78,12 +78,18 @@ if [ $SHELL = '/bin/bash' ]; then
   # reload bash shell (I always forget how)
   alias reload="exec bash -l"
 
-  # colourise output to stderr from git so I notice when something goes wrong
-  # taken from http://serverfault.com/questions/59262/bash-print-stderr-in-red-color
-  stderred() {
-    "$@" 2> >(while read line; do printf "\e[01;31m$line\n\e[0m" >&2; done)
+  # highlight error output from git commands in red
+  # - highlights based on pattern match as stderr not only used for errors
+  # - only modifies output when both stderr and stdout are terminals
+  # - uses script command to ensure git sees output streams as terminals
+  git_err_red() {
+    if test -t 1 && test -t 2; then
+      script -q /dev/null ${1+"$@"} | sed -l -E $'s/(fatal|error).*/\e[31m&\e[m/'
+    else
+      "$@"
+    fi
   }
-  alias git="stderred git"
+  alias git="git_err_red git"
 
 fi
 
