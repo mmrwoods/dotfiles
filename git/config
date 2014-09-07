@@ -39,36 +39,28 @@
   ap = add -p
   br = branch
   ba = branch -a
-  ci = commit
-  cv = commit -v
-  ca = commit -av
-  cm = commit -m
-  cl = clone
+  ci = commit -v
   co = checkout
-  ch = checkout
   cb = checkout -b
   cp = cherry-pick
   df = diff
   dc = diff --cached
-  dm = diff master
-  pl = pull
+  dw = diff --word-diff
   pr = pull --rebase
-  ps = push
-  sl = stash list
-  sa = stash apply
-  ss = stash save
+  po = push origin
   st = status
   sh = show
   rs = reset
   rs1 = reset HEAD^
   rs2 = reset HEAD^^
-  rsh = reset --hard
-  rh1 = reset --hard HEAD^
-  rh2 = reset --hard HEAD^^
   rsh1 = reset --hard HEAD^
   rsh2 = reset --hard HEAD^^
-  l1 = log --oneline --decorate
-  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]\\ %C(cyan)(%ad)" --decorate --date=relative
-  lg = log --oneline --abbrev-commit --all --graph --decorate --color
-  mru = for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads
+  l1 = log --oneline
+  ls = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ad) %Cblue<%cn>%C(cyan)%d' --decorate --date=relative
+  lg = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ad) %Cblue<%cn>%C(cyan)%d' --decorate --date=relative --graph --all
+  mru = for-each-ref --count=10 --sort=-authordate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(authordate:relative)) %(color:blue)<%(authorname)> %(color:cyan)%(upstream:short)' refs/heads
   amend = commit --amend
+  branches = branch -vv
+  heads = for-each-ref --sort=-authordate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(authordate:relative)) %(color:blue)<%(authorname)> %(color:cyan)%(upstream:short)' refs/heads
+  tags = for-each-ref --sort=-taggerdate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(taggerdate:relative)) %(color:blue)<%(taggername)>' refs/tags
+  remotes = for-each-ref --sort=-authordate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(authordate:relative)) %(color:blue)<%(authorname)> %(color:cyan)%(upstream:short)' refs/remotes
