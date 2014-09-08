@@ -33,13 +33,17 @@
   # show diffstat at the end of a merge
   stat = true
 [alias]
-  la = "!git config -l | grep alias | cut -c 7-" # list all aliases
+  # list all aliases, taken from git wiki
+  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+
+  # fairly common shortcut alises
   aa = add -a
   au = add -u
   ap = add -p
   br = branch
   ba = branch -a
   ci = commit -v
+  ca = commit -va
   co = checkout
   cb = checkout -b
   cp = cherry-pick
@@ -56,11 +60,31 @@
   rsh1 = reset --hard HEAD^
   rsh2 = reset --hard HEAD^^
   l1 = log --oneline
-  ls = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ad) %Cblue<%cn>%C(cyan)%d' --decorate --date=relative
-  lg = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ad) %Cblue<%cn>%C(cyan)%d' --decorate --date=relative --graph --all
-  mru = for-each-ref --count=10 --sort=-authordate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(authordate:relative)) %(color:blue)<%(authorname)> %(color:cyan)%(upstream:short)' refs/heads
+  lp = log --patch --decorate
+
+  # list commits in current branch with relative author date, author name and refnames
+  ls = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ar) %Cblue<%an>%C(cyan)%d'
+
+  # list commits from all branches with text-based graphical representation of commit history
+  lg = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ar) %Cblue<%an>%C(cyan)%d' --graph --all
+
+  # detailed log of commits in current branch, showing what changed in each commit
+  wc = log --decorate --stat --format=fuller
+
+  # list recently active/committed branches, both local and remote
+  recent = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)±%(color:reset)%(subject) %(color:cyan)%(upstream:short)' --count=10 refs/{heads,remotes} | column -t -s±
+
+  # list most recently used/checked-out branches
+  mru = !git reflog --date=relative --no-decorate | grep --color=no 'checkout: moving from' | head -n 10 | sed s'/checkout: moving from.*to //' | sed s'/HEAD@{\\(.*\\)}:/(\\1)/'
+
+  # amend the last commit
   amend = commit --amend
-  branches = branch -vv
-  heads = for-each-ref --sort=-authordate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(authordate:relative)) %(color:blue)<%(authorname)> %(color:cyan)%(upstream:short)' refs/heads
-  tags = for-each-ref --sort=-taggerdate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(taggerdate:relative)) %(color:blue)<%(taggername)>' refs/tags
-  remotes = for-each-ref --sort=-authordate --format='%(color:yellow)%(refname:short) %(color:reset)%(subject) %(color:green)(%(authordate:relative)) %(color:blue)<%(authorname)> %(color:cyan)%(upstream:short)' refs/remotes
+
+  # list local branches order by committer date, but showing author name
+  branches = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:short) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
+
+  # roughly the same as above, but for remote branches
+  remotes = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:local)±%(color:blue)%(authorname)±%(color:reset)%(subject)' refs/remotes | column -t -s± | less -RFX
+
+  # again, roughly the same as above, but this time for tags
+  tags = !git for-each-ref --sort=-taggerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(taggerdate:local)±%(color:blue)%(taggername)±%(color:reset)%(subject)' refs/tags | column -t -s± | less -RFX
