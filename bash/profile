@@ -87,7 +87,7 @@ if [ $SHELL = '/bin/bash' ]; then
   # - currently relies on BSD sed, so only used with OSX (also sucks)
   if test $(uname) == Darwin; then
     git_err_red() {
-      if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|commit) ]]; then
+      if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|fetch) ]]; then
         script -q /dev/null ${1+"$@"} | sed -l -E $'s/^(fatal|error).*/\e[31m&\e[m/'
       else
         "$@"
