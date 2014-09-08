@@ -20,8 +20,7 @@ markdown=.markdown,.md
 --type-set
 cucumber=.feature
 
---type-set
-ignorables=.log,.tmp,.pdf
+--ignore-file=ext:log,tmp,pdf
 
 --ignore-file=is:tags
 
