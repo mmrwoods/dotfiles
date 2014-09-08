@@ -54,13 +54,12 @@
   po = push origin
   st = status
   sh = show
-  rs = reset
-  rs1 = reset HEAD^
-  rs2 = reset HEAD^^
-  rsh1 = reset --hard HEAD^
-  rsh2 = reset --hard HEAD^^
   l1 = log --oneline
   lp = log --patch --decorate
+
+  # reset aliases, pass number as argument to reset to a previous head, e.g. git rsh 2
+  rs = !bash -c 'git reset HEAD~${1:-0}' -
+  rsh = !bassh -c 'git reset --hard HEAD~${1:-0}' -
 
   # list commits in current branch with relative author date, author name and refnames
   ls = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ar) %Cblue<%an>%C(cyan)%d'
