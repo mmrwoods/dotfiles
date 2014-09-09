@@ -51,11 +51,13 @@
   dc = diff --cached
   dw = diff --word-diff
   pr = pull --rebase
-  po = push origin
   st = status
   sh = show
   l1 = log --oneline
   lp = log --patch --decorate
+  
+  # push current branch to origin
+  po = !bash -c 'git symbolic-ref --short HEAD | xargs git push origin'
 
   # reset aliases, pass number as argument to reset to a previous head, e.g. git rsh 2
   # TODO: fudge bash command completion for these aliases somehow
