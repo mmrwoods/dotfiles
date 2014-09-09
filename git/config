@@ -59,8 +59,8 @@
 
   # reset aliases, pass number as argument to reset to a previous head, e.g. git rsh 2
   # TODO: fudge bash command completion for these aliases somehow
-  rs = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then echo git reset --soft HEAD~${1:-0}; else echo git reset $@; fi'" -
-  rsh = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then echo git reset --hard HEAD~${1:-0}; else echo git reset $@; fi'" -
+  rs = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then git reset --soft HEAD~${1:-0}; else git reset --soft $@; fi'" -
+  rsh = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then git reset --hard HEAD~${1:-0}; else git reset --hard $@; fi'" -
 
   # list commits in current branch with relative author date, author name and refnames
   ls = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ar) %Cblue<%an>%C(cyan)%d'
