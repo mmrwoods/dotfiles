@@ -34,7 +34,7 @@
   stat = true
 [alias]
   # list all aliases, taken from git wiki
-  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | egrep --color '^\\w+'
 
   # fairly common shortcut alises
   aa = add -a
