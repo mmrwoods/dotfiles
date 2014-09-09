@@ -37,7 +37,7 @@
   aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | egrep --color '^\\w+'
 
   # fairly common shortcut alises
-  aa = add -a
+  aa = add -A
   au = add -u
   ap = add -p
   br = branch
