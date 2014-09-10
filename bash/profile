@@ -87,7 +87,7 @@ if [ $SHELL = '/bin/bash' ]; then
   # - currently relies on BSD sed, so only used with OSX (also sucks)
   if test $(uname) == Darwin; then
     git_err_red() {
-      if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|fetch) ]]; then
+      if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|fetch|po|toggle) ]]; then
         script -q /dev/null ${1+"$@"} | sed -l -E $'s/^(fatal|error).*/\e[31m&\e[m/'
       else
         "$@"
@@ -145,14 +145,14 @@ alias srw='spring rspec spec --tag wip'
 alias g='git'
 complete -o default -o nospace -F _git g
 
-alias ga='git add'
-alias gb='git branch'
+alias ga='git amend'
 alias gc='git commit -v'
 alias co='git checkout' # takes precedence over RCS checkout cmd in path
 alias gd='git diff'
 alias gf='git fetch'
 alias gl='git log --decorate --stat'
 alias gp='git pull --rebase'
+alias po='git po'
 alias gr='git recent'
 alias gs='git status' # takes precedence over ghostscript cmd in path
 alias gt='git toggle'
