@@ -59,6 +59,13 @@
   # push current branch to origin
   po = !bash -c 'git symbolic-ref --short HEAD | xargs git push origin'
 
+  # switch to most recently checked out ref
+  c- = checkout - # note: equivalent to checkout @{-1}
+
+  # switch to most recently checked out symbolic ref
+  # useful for toggling between a feature branch and the main branch
+  toggle = "!bash -c 'set -e; branch=$(git symbolic-ref --short HEAD); git reflog | egrep \"checkout: moving from .* to $branch\" | egrep -v \"from ($branch|head)\" | egrep -v \"from .{41,}\" | head -n1 | sed s\"/^.*from //\" | cut -f1 -d\" \" | xargs git checkout'"
+
   # reset aliases, pass number as argument to reset to a previous head, e.g. git rsh 2
   # TODO: fudge bash command completion for these aliases somehow
   rs = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then git reset --soft HEAD~${1:-0}; else git reset --soft $@; fi'" -
