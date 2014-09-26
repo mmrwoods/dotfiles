@@ -160,6 +160,11 @@ map <silent> <C-l> :wincmd l<CR>
 " resize all windows
 map <silent> <leader>= :wincmd =<CR>
 
+" Shortcut to redraw screen, workaround for rendering glitches
+" with quickfix windows on macvim, particularly affecting CtrlP
+" See https://code.google.com/p/macvim/issues/detail?id=409
+map <leader>, :redraw!<CR>
+
 " Go to File (command-t plugin)
 nnoremap <silent> <Leader>t :CommandT<CR>
 nnoremap <silent> <Leader>tb :CommandTBuffer<CR>
