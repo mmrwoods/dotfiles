@@ -73,6 +73,9 @@ set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize,winpos,resize
 " save globals with viminfo - sessionman stores last session info in global
 set viminfo='100,<50,s10,h,!
 
+" set list mode characters used to display whitespace
+set listchars=tab:→·,trail:·,eol:¶
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
@@ -165,7 +168,7 @@ nnoremap <Leader>tf :CommandTFlush<CR>
 " Shortcut to search files with ack
 nnoremap <Leader>f :Ack!<Space>
 
-" Shortcut to rapidly toggle `set list`
+" Toggle list mode (show whitespace characters)
 nmap <leader>l :set list!<CR>
 
 " Hard wrap selected text in visual mode using external fold command
@@ -262,8 +265,15 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-" FIXME: skip certain file types rather than include only specific file types
-autocmd BufWritePre *.pl,*.cron,*.js,*.coffee,*.css,*.scss,*.less,*.rb,*.erb,*.rhtml,*.html,*haml,*.feature,*.scala :call <SID>StripTrailingWhitespaces()
+" enable whitespace stripping for known file types by default
+autocmd FileType * let b:strip_trailing_whitespaces=1
+" disable whitespace stripping for other file types as needed
+autocmd FileType markdown let b:strip_trailing_whitespaces=0
+" strip whitespace when writing if option enabled for buffer
+autocmd BufWritePre *
+  \ if exists('b:strip_trailing_whitespaces') && b:strip_trailing_whitespaces |
+  \   call <SID>StripTrailingWhitespaces() |
+  \ endif
 
 " Allow semi-colon to stand in for colon
 nnoremap ; :
