@@ -269,7 +269,7 @@ endfunction
 autocmd FileType * let b:strip_trailing_whitespaces=1
 " disable whitespace stripping for other file types as needed
 autocmd FileType markdown let b:strip_trailing_whitespaces=0
-" strip whitespace when writing if option enabled for buffer
+" strip whitespace before writing if option enabled for buffer
 autocmd BufWritePre *
   \ if exists('b:strip_trailing_whitespaces') && b:strip_trailing_whitespaces |
   \   call <SID>StripTrailingWhitespaces() |
