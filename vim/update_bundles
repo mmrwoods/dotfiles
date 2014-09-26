@@ -37,6 +37,7 @@ bundles = %w{
   git://github.com/kien/ctrlp.vim
   git://github.com/tpope/vim-fugitive.git
   git://github.com/jlipps/vim-bda.git
+  git://github.com/depuracao/vim-rdoc.git
 }
 
 if vim_version >= 7.2
