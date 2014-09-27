@@ -19,7 +19,6 @@ bundles = %w{
   git://github.com/vim-scripts/sessionman.vim.git
   git://github.com/vim-scripts/taglist.vim.git
   git://github.com/tpope/vim-rails.git
-  git://github.com/wincent/Command-T.git
   git://github.com/pangloss/vim-javascript.git
   git://github.com/ervandew/supertab.git
   git://github.com/tpope/vim-endwise.git
@@ -34,7 +33,7 @@ bundles = %w{
   git://github.com/derekwyatt/vim-scala.git
   git://github.com/pthrasher/conqueterm-vim.git
   git://github.com/tpope/vim-eunuch.git
-  git://github.com/kien/ctrlp.vim
+  git://github.com/kien/ctrlp.vim.git
   git://github.com/tpope/vim-fugitive.git
   git://github.com/jlipps/vim-bda.git
   git://github.com/depuracao/vim-rdoc.git
@@ -58,12 +57,6 @@ bundles.each do |url|
   puts "unpacking #{url} into #{dir}"
   `env GIT_SSL_NO_VERIFY=true git clone #{url} #{dir}`
   FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*"))
-end
-
-puts "Building ruby extensions for command-t plugin"
-Dir.chdir("Command-T/ruby/command-t/") do
-  puts `ruby extconf.rb`
-  puts `make` if $?.exitstatus == 0
 end
 
 print "Updating VIM Documentation... "

@@ -96,7 +96,7 @@ endif
 " Show relative rather than absolute paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
-" Ignore some files to make Command T load faster
+" Ignore some files to make CtrlP load faster
 set wildignore+=*.gif,*.jpg,*.png
 set wildignore+=tmp/**
 set wildignore+=log/**
@@ -160,11 +160,6 @@ map <silent> <C-l> :wincmd l<CR>
 " resize all windows
 map <silent> <leader>= :wincmd =<CR>
 
-" Go to File (command-t plugin)
-nnoremap <silent> <Leader>t :CommandT<CR>
-nnoremap <silent> <Leader>tb :CommandTBuffer<CR>
-nnoremap <Leader>tf :CommandTFlush<CR>
-
 " Shortcut to search files with ack
 nnoremap <Leader>f :Ack!<Space>
 
@@ -193,20 +188,6 @@ if has("spell")
   " toggle spelling use ,sp
   imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
   nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
-endif
-
-" Key bindings for using Command-T in terminal
-" See https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
-" set ttimeoutlen=50
-if &term =~ "xterm" || &term =~ "screen"
-  " as of March 2013, with current iTerm (1.0.0.20130319), tmux (1.8)
-  " and Vim (7.3, with patches 1-843), this is all I need:
-  let g:CommandTCancelMap     = ['<ESC>', '<C-c>']
-
-  " when I originally started using Command-T inside a terminal,
-  " I used to need these as well:
-  let g:CommandTSelectNextMap = ['<C-j>', '<ESC>OB']
-  let g:CommandTSelectPrevMap = ['<C-k>', '<ESC>OA']
 endif
 
 " Workarounds for rendering glitches with quickfix windows on macvim
@@ -249,7 +230,7 @@ if has('mouse') && has("clipboard")
   exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
   " Make the mouse/trackpad work in terminal
-  " Also from https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
+  " See https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
   if &term =~ "xterm" || &term =~ "screen"
     " as of March 2013, this works:
     set ttymouse=xterm2
