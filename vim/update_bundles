@@ -15,7 +15,7 @@ bundles = %w{
   git://github.com/vim-scripts/spacehi.vim.git
   git://github.com/vim-scripts/bufexplorer.zip.git
   git://github.com/vim-scripts/sessionman.vim.git
-  git://github.com/vim-scripts/taglist.vim.git
+  git://github.com/majutsushi/tagbar.git
   git://github.com/tpope/vim-rails.git
   git://github.com/pangloss/vim-javascript.git
   git://github.com/ervandew/supertab.git

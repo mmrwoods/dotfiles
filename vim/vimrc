@@ -85,13 +85,10 @@ let g:gist_show_privates = 1
 " Don't add the recent files menu from MRU plugin
 let MRU_Add_Menu = 0
 
-"let TList_Auto_Open = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Show_One_File = 1
+" Make sure tagbar uses exuberant ctags
 if filereadable('/usr/local/bin/ctags')
-  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+  let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 endif
-"let tlist_spec_settings = 'Rspec;c:describe;d:context;f:it'
 
 " Show relative rather than absolute paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
@@ -169,8 +166,8 @@ nmap <leader>l :set list!<CR>
 " Hard wrap selected text in visual mode using external fold command
 vmap <leader>f :!fold -s<CR>
 
-" Toggle taglist (outline view)
-map <leader>o :TlistToggle<Enter>
+" Toggle tagbar (outline view)
+map <leader>o :TagbarToggle<Enter>
 
 " Toggle NERDTree
 map <leader>n :NERDTreeToggle<Enter>
