@@ -53,7 +53,7 @@ FileUtils.mkdir_p(bundles_dir)
 FileUtils.cd(bundles_dir)
 
 bundles.each do |url|
-  dir = url.split('/').last.sub(/^vim\-/,'').sub(/(\.zip|\.vim)?\.git$/, '')
+  dir = url.split('/').last.sub(/^vim\-/,'').gsub(/\.(zip|vim|git)/, '').sub(/\-vim$/,'')
   puts "unpacking #{url} into #{dir}"
   `env GIT_SSL_NO_VERIFY=true git clone #{url} #{dir}`
   FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*"))
