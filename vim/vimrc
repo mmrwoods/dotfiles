@@ -93,6 +93,9 @@ endif
 " Show relative rather than absolute paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
+" Close conqueterm buffer when program exits
+let g:ConqueTerm_CloseOnEnd = 1
+
 " Ignore some files to make CtrlP load faster
 set wildignore+=*.gif,*.jpg,*.png
 set wildignore+=tmp/**
@@ -186,6 +189,10 @@ if has("spell")
   imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
   nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
 endif
+
+" Open a login shell in a new split
+command Bash ConqueTermSplit bash -l
+map <leader>sh :Bash<CR>
 
 " Workarounds for rendering glitches with quickfix windows on macvim
 " See https://code.google.com/p/macvim/issues/detail?id=409
