@@ -96,6 +96,10 @@ let g:bufExplorerShowRelativePath = 1
 " Close conqueterm buffer when program exits
 let g:ConqueTerm_CloseOnEnd = 1
 
+" Let supertab guess the completion type from current context
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
 " Ignore some files to make CtrlP load faster
 set wildignore+=*.gif,*.jpg,*.png
 set wildignore+=tmp/**
