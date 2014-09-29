@@ -128,7 +128,8 @@ map <C-Tab> :tabnext<cr>
 map <S-C-Tab> :tabprevious<cr>
 
 " Session mappings
-map <leader>s :SessionList<CR>
+map <leader>s :SessionSave<CR>:SessionList<CR>
+map <leader>sl :SessionList<CR>
 map <leader>ss :SessionSave<CR>
 
 " Buffer mappings.
