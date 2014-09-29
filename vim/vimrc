@@ -201,8 +201,8 @@ map <leader>sh :Bash<CR>
 " Workarounds for rendering glitches with quickfix windows on macvim
 " See https://code.google.com/p/macvim/issues/detail?id=409
 "
-" Type ,, to quickly redraw screen when rendering has borked
-map <leader>, :redraw!<CR>
+" Shortcut to quickly redraw screen when rendering has borked
+map <leader>rd :redraw!<CR>
 " Automatically redraw screen when entering and exiting CtrlP
 let g:ctrlp_buffer_func = {
   \ 'enter': 'RedrawScreen',
