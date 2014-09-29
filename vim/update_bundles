@@ -33,6 +33,8 @@ bundles = %w{
   git://github.com/tpope/vim-fugitive.git
   git://github.com/jlipps/vim-bda.git
   git://github.com/depuracao/vim-rdoc.git
+  git://github.com/Raimondi/delimitMate.git
+  git://github.com/vim-scripts/closetag.vim.git
 }
 
 if vim_version >= 7.2
