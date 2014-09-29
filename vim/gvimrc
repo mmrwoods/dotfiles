@@ -55,46 +55,6 @@ if has("mac")
   nmap § #
   vmap § #
 
-  " spacehi plugin doesn't highlight tabs consistently in MacVim. Looks
-  " like there's some clash between the syntax matches created by MacVim
-  " and spacehi. Simple solution, use match functions instead.
-  " note: latest MacVim on Lion doesn't show the underline beneath spaces,
-  " hence the, hopefully temporary, hack below to set the tab and trailing
-  " space highlight colours to use solid backgrounds.
-  function SpaceHi()
-    execute("highlight spacehiTab guibg=Red")
-    let w:spaceHiMatchTabs = matchadd('spaceHiTab', '\t')
-    execute("highlight spacehiTrailingSpace guibg=Yellow")
-    let w:spaceHiMatchTrailingSpace = matchadd('spaceHiTrailingSpace', '\s\+$')
-    let w:spacehi = 1
-  endfunction
-
-  function NoSpaceHi()
-    if exists('w:spaceHiMatchTabs')
-      call matchdelete(w:spaceHiMatchTabs)
-    endif
-    if exists('w:spaceHiMatchTrailingSpace')
-      call matchdelete(w:spaceHiMatchTrailingSpace)
-    endif
-    let w:spacehi = 0
-  endfunction
-
-  function ToggleSpaceHi()
-    if exists("w:spacehi") && w:spacehi
-      call NoSpaceHi()
-      echo "spacehi off"
-    else
-      call SpaceHi()
-      echo "spacehi on"
-    endif
-  endfunction
-
-  com! SpaceHi call SpaceHi()
-  com! NoSpaceHi call NoSpaceHi()
-  com! ToggleSpaceHi call ToggleSpaceHi()
-
-  map! <silent> <F3> ToggleSpaceHi<CR>
-
 endif
 
 if has("gui_gtk")
