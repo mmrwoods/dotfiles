@@ -35,6 +35,7 @@ bundles = %w{
   git://github.com/depuracao/vim-rdoc.git
   git://github.com/Raimondi/delimitMate.git
   git://github.com/vim-scripts/closetag.vim.git
+  git://github.com/lilydjwg/colorizer.git
 }
 
 if vim_version >= 7.2
