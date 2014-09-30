@@ -98,7 +98,14 @@ let g:ConqueTerm_CloseOnEnd = 1
 
 " Let supertab guess the completion type from current context
 let g:SuperTabDefaultCompletionType = "context"
+" But use keyword completion if the context can't be determined
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" And fall back to keyword completion when omni completion fails
+autocmd FileType *
+  \ if &omnifunc != '' |
+  \   call SuperTabChain(&omnifunc, "<c-n>") |
+  \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+  \ endif
 
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
