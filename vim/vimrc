@@ -116,16 +116,22 @@ vmap <Del> "_x
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
-" Tab mappings.
-map <leader>tt :tabnew<cr>
-map <leader>te :tabedit
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
+" Tab mappings
+" opening new tabs
+map <leader><tab> :tabnew<cr>
+map <leader>t :tabnew<cr>
+" rudimentary navigation
+map <leader>tt :tabnext<cr>
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprevious<cr>
-map <leader>tm :tabmove
+" navigation with Ctrl-Tab (only works in gui vim)
 map <C-Tab> :tabnext<cr>
 map <S-C-Tab> :tabprevious<cr>
+" navigation and moving using arrow keys
+map <S-C-Up> :tabmove +1<cr>
+map <S-C-Down> :tabmove -1<cr>
+map <S-C-Right> :tabnext<cr>
+map <S-C-Left> :tabprevious<cr>
 
 " Session mappings
 map <leader>s :SessionSave<CR>:SessionList<CR>
@@ -133,8 +139,6 @@ map <leader>sl :SessionList<CR>
 map <leader>ss :SessionSave<CR>
 
 " Buffer mappings.
-map <C-home> :bn<CR>
-map <C-end> :bp<CR>
 map <leader>b :BufExplorer<CR>
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
@@ -152,6 +156,8 @@ map <silent> <leader>wr :wincmd r<CR>
 map <silent> <leader>wx :wincmd x<CR>
 " rudimentary navigation
 map <silent> <leader>ww :wincmd w<CR>
+map <silent> <leader>wn :wincmd w<CR>
+map <silent> <leader>wp :wincmd p<CR>
 " movemement with arrow keys
 map <silent> <C-Up> :wincmd k<CR>
 map <silent> <C-Down> :wincmd j<CR>
