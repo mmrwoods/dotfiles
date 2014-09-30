@@ -104,7 +104,6 @@ let g:SuperTabContextDefaultCompletionType = "<c-n>"
 autocmd FileType *
   \ if &omnifunc != '' |
   \   call SuperTabChain(&omnifunc, "<c-n>") |
-  \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
   \ endif
 
 " Don't automagically colorize text, use <leader>tc to toggle
