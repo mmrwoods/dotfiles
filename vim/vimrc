@@ -151,7 +151,7 @@ nnoremap <Leader>g :e#<CR>
 
 " Window mappings
 " opening new splits
-map <silent> <leader>w :wincmd v\|wincmd w<CR>
+map <silent> <expr> <leader>w expand('#')!='' ? ':wincmd v\|wincmd w\|e#<CR>' : ':wincmd v\|wincmd w<CR>'
 map <silent> <leader>ws :wincmd s\|wincmd w<CR>
 map <silent> <leader>wv :wincmd v\|wincmd w<CR>
 " moving windows (rotate and exchange)
