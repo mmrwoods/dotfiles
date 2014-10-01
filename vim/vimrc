@@ -54,7 +54,7 @@ set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-(line:\ %l\ \ col:\ %c%)\ \ %3P
+set statusline=%<%.99f\ %h%w%m%r\ %=\ %y\ %5p%%\ %-8(%4l\:%-3c%)
 
 set t_Co=256
 set background=dark
