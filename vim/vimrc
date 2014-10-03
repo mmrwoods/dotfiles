@@ -76,6 +76,12 @@ set viminfo='100,<50,s10,h,!
 " set list mode characters used to display whitespace
 set listchars=tab:→·,trail:·,eol:¶
 
+" Create new vertical splits to the right of the current window
+set splitright
+
+" Create new horizontal splits below the current window
+set splitbelow
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
@@ -157,9 +163,9 @@ nnoremap <Leader>g :e#<CR>
 
 " Window mappings
 " opening new splits
-map <silent> <expr> <leader>w expand('#')!='' ? ':wincmd v\|wincmd w\|e#<CR>' : ':wincmd v\|wincmd w<CR>'
-map <silent> <leader>ws :wincmd s\|wincmd w<CR>
-map <silent> <leader>wv :wincmd v\|wincmd w<CR>
+map <silent> <expr> <leader>w expand('#')!='' ? ':wincmd v\|e#<CR>' : ':wincmd v<CR>'
+map <silent> <leader>ws :wincmd s<CR>
+map <silent> <leader>wv :wincmd v<CR>
 " moving windows (rotate and exchange)
 map <silent> <leader>wr :wincmd r<CR>
 map <silent> <leader>wx :wincmd x<CR>
