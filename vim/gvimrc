@@ -1,13 +1,8 @@
-set antialias                     " MacVim: smooth fonts.
-set encoding=utf-8                " Use UTF-8 everywhere.
-set guioptions-=T                 " Hide toolbar.
-set background=light              " Background.
-" colorscheme wicklow               " Based on eclipse, and easily distinguishable from terminal windows
-
-set guicursor=n:blinkon0          " Stop the blinking cursor from blinking and distracting me in normal mode
-
-" open maximized
-set lines=999 columns=999
+set antialias                     " Smooth fonts
+set guioptions-=T                 " Hide toolbar
+set background=light              " Light background when using GUI
+set guicursor=n:blinkon0          " No blinking the cursor in normal mode
+set lines=999 columns=999         " Open maximized
 
 " save session data on exit
 let sessionman_save_on_exit=1

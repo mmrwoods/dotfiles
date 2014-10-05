@@ -1,70 +1,81 @@
 call pathogen#infect()
 
-set nocompatible                  " Must come first because it changes other options.
+set nocompatible                  " Disable vi compatibility (must come first)
 
 set encoding=utf-8                " Force utf8
 set nobomb                        " but don't bother with a BOM
 
-set nomodeline
+set nomodeline                    " No modelines (potential for security issues)
 
 set cursorline                    " Highlight the cursor line
 
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
-set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf
-
-" default to two spaces rather than tabs
-set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
 set ttyfast                       " Assume a fast terminal connection
 
-syntax enable                     " Turn on syntax highlighting.
-filetype plugin indent on         " Turn on file type detection.
+runtime macros/matchit.vim        " Load the matchit plugin
 
-runtime macros/matchit.vim        " Load the matchit plugin.
+syntax enable                     " Turn on syntax highlighting
+filetype plugin indent on         " Turn on file type detection and indentation
 
-set showcmd                       " Display incomplete commands.
-set showmode                      " Display the mode you're in.
+set autoindent                    " Auto-indent if no file type specific indent
 
-set backspace=indent,eol,start    " Intuitive backspacing.
+set expandtab ts=2 sts=2 sw=2     " Default to two-space indent, no tabs
 
-set hidden                        " Handle multiple buffers better.
+set showcmd                       " Show incomplete commands as you type
+set showmode                      " Show mode when insert, replace or visual
 
-set wildmenu                      " Enhanced command line completion.
-set wildmode=list:longest         " Complete files like a shell.
+set backspace=indent,eol,start    " Intuitive backspacing
 
-set ignorecase                    " Case-insensitive searching.
-set smartcase                     " But case-sensitive if expression contains a capital letter.
+set hidden                        " Allow hidden buffers with unsaved changes
 
-set number                        " Show line numbers.
-set ruler                         " Show cursor position.
+set wildmenu                      " Enhanced command line completion
+set wildmode=list:longest         " Complete files like a shell
 
-set incsearch                     " Highlight matches as you type.
-"set hlsearch                      " Highlight matches.
+set ignorecase                    " Ignore case when searching
+set smartcase                     " Except when search contains capital letters
 
-set nowrap                        " Turn off line wrapping.
-set scrolloff=3                   " Show 3 lines of context around the cursor.
+set number                        " Show line numbers in left margin
+set ruler                         " Show cursor position in default status line
+
+set incsearch                     " Highlight search match as you type
+set nohlsearch                    " But clear highlighting once search completed
+
+set nowrap                        " Turn off line wrapping by default
+set scrolloff=3                   " Show 3 lines of context around the cursor
 
 set title                         " Set the terminal's title
 
-set visualbell                    " No beeping.
+set visualbell                    " No beeping
 
-set nobackup                      " Don't make a backup before overwriting a file.
-set nowritebackup                 " And again.
+set confirm                       " Allow confirm to overwrite file
+
+set nobackup                      " Don't create backups before writing files
+set nowritebackup                 " Or while writing files
 set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
 set laststatus=2                  " Show the status line all the time
-" Useful status information at bottom of screen
-set statusline=%<%.99f\ %h%w%m%r\ %=\ %(%l\:%-c%)\ %y\ %P
 
-set t_Co=256
-set background=dark
+set splitright                    " Open vertical splits to the right
+set splitbelow                    " Open horizontal splits below
+
+set t_Co=256                      " Assume a 256 color terminal
+
+set background=dark               " Use dark background in terminal vim
 if $SSH_CLIENT == ""
-  colorscheme solarized
+  colorscheme solarized           " With solarized colour scheme locally
 else
-  colorscheme jellybeans
+  colorscheme jellybeans          " And jellybeans when running remotely
 endif
 
-" use F2 to toggle paste mode and safely paste multiple lines in terminal vim
+" Suffixes that can be ignored when completing file names
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+
+" Patterns that should be ignored when expanding wildcards
+set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf
+
+" Custom status line, show relative file path and file type
+set statusline=%<%.99f\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
+
+" toggle paste mode to safely paste from clipboard in terminal vim
 set pastetoggle=<F2>
 
 " store tabs, windows, buffers etc. in sessions
@@ -75,12 +86,6 @@ set viminfo='100,<50,s10,h,!
 
 " set list mode characters used to display whitespace
 set listchars=tab:→·,trail:·,eol:¶
-
-" Create new vertical splits to the right of the current window
-set splitright
-
-" Create new horizontal splits below the current window
-set splitbelow
 
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
@@ -115,7 +120,7 @@ autocmd FileType *
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
 
-" Ignore some files to make CtrlP load faster
+" Ignore some additional files to make CtrlP load faster
 set wildignore+=*.gif,*.jpg,*.png
 set wildignore+=tmp/**
 set wildignore+=log/**
@@ -124,12 +129,18 @@ set wildignore+=public/images/**
 set wildignore+=app/assets/fonts/**
 set wildignore+=coverage/**
 
+" map leader to comma so it's in the same position on all keyboards
+let mapleader = ","
+
 " Delete key sends text to blackhole register
 nmap <Del> "_x
 vmap <Del> "_x
 
-" map leader to comma so it's in the same position on all keyboards
-let mapleader = ","
+" Make Y act like D and C, i.e. yank until EOL rather than yank entire line
+map Y y$
+
+" Allow semi-colon to stand in for colon
+nnoremap ; :
 
 " Tab mappings
 " opening new tabs
@@ -162,8 +173,9 @@ map <leader>bp :bp<CR>
 nnoremap <Leader>g :e#<CR>
 
 " Window mappings
-" opening new splits
+" opening alternate file in new vertial split
 map <silent> <expr> <leader>w expand('#')!='' ? ':wincmd v\|e#<CR>' : ':wincmd v<CR>'
+" shortcuts for opening new splits
 map <silent> <leader>ws :wincmd s<CR>
 map <silent> <leader>wv :wincmd v<CR>
 " moving windows (rotate and exchange)
@@ -178,18 +190,13 @@ map <silent> <C-Up> :wincmd k<CR>
 map <silent> <C-Down> :wincmd j<CR>
 map <silent> <C-Left> :wincmd h<CR>
 map <silent> <C-Right> :wincmd l<CR>
-" movement with hjkl
-map <silent> <C-k> :wincmd k<CR>
-map <silent> <C-j> :wincmd j<CR>
-map <silent> <C-h> :wincmd h<CR>
-map <silent> <C-l> :wincmd l<CR>
 " resize all windows
 map <silent> <leader>= :wincmd =<CR>
 
 " Shortcut to search files with ack
 nnoremap <Leader>f :Ack!<Space>
 
-" Toggle list mode (show whitespace characters)
+" Toggle list mode (show whitespace using listchars)
 nmap <leader>l :set list!<CR>
 
 " Hard wrap selected text in visual mode using external fold command
@@ -223,9 +230,11 @@ map <leader>sh :Bash<CR>
 " Workarounds for rendering glitches with quickfix windows on macvim
 " See https://code.google.com/p/macvim/issues/detail?id=409
 "
-" Shortcut to quickly redraw screen when rendering has borked
-map <leader>rd :redraw!<CR>
-" Automatically redraw screen when entering and exiting CtrlP
+" Remap CTRL-L to clear screen before redrawing - fixes borked rendering
+" Also use to remove any search highlighting, a handy tip from vim wiki
+noremap <silent> <C-L> :nohl<CR>:redraw!<CR>
+
+" Automatically clear and redraw screen when entering and exiting CtrlP
 let g:ctrlp_buffer_func = {
   \ 'enter': 'RedrawScreen',
   \ 'exit':  'RedrawScreen',
@@ -272,7 +281,8 @@ if has('mouse') && has("clipboard")
 endif
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}
+  \ set ft=ruby |
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
@@ -280,15 +290,15 @@ au BufNewFile,BufRead *.json set ft=javascript
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving
 function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  %s/\s\+$//e
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
 endfunction
 " enable whitespace stripping for known file types by default
 autocmd FileType * let b:strip_trailing_whitespaces=1
@@ -300,13 +310,26 @@ autocmd BufWritePre *
   \   call <SID>StripTrailingWhitespaces() |
   \ endif
 
-" Allow semi-colon to stand in for colon
-nnoremap ; :
+" Subtly highlight long lines using background tones from solarized color scheme
+" TODO: customise based on textwidth, be less subtle, work without solarized
+if exists('g:colors_name') && g:colors_name == 'solarized'
+  autocmd FileType * highlight longLines ctermbg=black guibg=#eee8d5
+  autocmd FileType * match longLines /\%>80v.\+/
+endif
 
-" Automatic fold settings for specific files. Uncomment to use.
-" autocmd FileType ruby setlocal foldmethod=syntax
-" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+" Jump to last known cursor position when editing (except for git commits)
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
+  \   exe "normal! g`\"" |
+  \ endif
 
+" Diff a buffer with the file from which it was originally loaded
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+      \ | wincmd p | diffthis
+endif
+
+" Set working directory when opening vim to edit a particular file
 function SetWorkingDir()
   if argc() != 0
     if isdirectory(argv(0))
