@@ -196,6 +196,9 @@ map <silent> <leader>= :wincmd =<CR>
 " Shortcut to search files with ack
 nnoremap <Leader>f :Ack!<Space>
 
+" Run ctags to (re)generate tags file
+map <Leader>ct :!ctags -R .<CR>
+
 " Toggle list mode (show whitespace using listchars)
 nmap <leader>l :set list!<CR>
 
