@@ -202,9 +202,6 @@ map <Leader>ct :!ctags -R .<CR>
 " Toggle list mode (show whitespace using listchars)
 nmap <leader>l :set list!<CR>
 
-" Hard wrap selected text in visual mode using external fold command
-vmap <leader>f :!fold -s<CR>
-
 " Toggle tagbar (outline view)
 map <leader>o :TagbarToggle<Enter>
 
@@ -289,6 +286,9 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
+
+" Automatically wrap markdown text at 80 characters
+autocmd FileType markdown setlocal textwidth=80
 
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving
