@@ -217,11 +217,9 @@ map <leader><space> :ToggleSpaceHi<Enter>
 " Open most recently used files
 map <leader>m :MRU<Enter>
 
-if has("spell")
-  " toggle spelling use ,sp
-  imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
-  nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
-endif
+" Toggle spell checking
+imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
+nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
 
 " Open a login shell in a new split
 command Bash ConqueTermSplit bash -l
@@ -281,11 +279,14 @@ if has('mouse') && has("clipboard")
 endif
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}
+autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}
   \ set ft=ruby |
 
-" add json syntax highlighting
-au BufNewFile,BufRead *.json set ft=javascript
+" Add json syntax highlighting
+autocmd BufNewFile,BufRead *.json set filetype=javascript
+
+" Turn on spell checking by default for git commits
+autocmd FileType gitcommit setlocal spell spelllang=en_gb
 
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
