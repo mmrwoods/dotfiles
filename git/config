@@ -43,6 +43,7 @@
   br = branch
   ba = branch -a
   ci = commit -v
+  cv = commit -v
   ca = commit -va
   co = checkout
   cb = checkout -b
@@ -51,6 +52,7 @@
   dc = diff --cached
   dw = diff --word-diff
   pr = pull --rebase
+  rb = rebase
   st = status
   sh = show
   l1 = log --oneline

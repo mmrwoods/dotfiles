@@ -145,25 +145,27 @@ alias srw='spring rspec spec --tag wip'
 alias g='git'
 complete -o default -o nospace -F _git g
 
-alias ga='git amend'
+alias ga='git add'
 alias gc='git commit -v'
-alias co='git checkout' # takes precedence over RCS checkout cmd in path
 alias gd='git diff'
 alias gf='git fetch'
 alias gl='git log --decorate --stat'
-alias gp='git pull --rebase'
-alias po='git po'
-alias gr='git recent'
-alias gs='git status' # takes precedence over ghostscript cmd in path
-alias gt='git toggle'
-alias g-='git checkout -'
+alias gs='git status' # takes precedence over ghostscript in path
+alias gca='git commit -v -a'
+alias gdc='git diff --cached'
+alias gpo='git po' # push current branch to origin, see git config
+alias gpr='git pull --rebase'
+alias gsh='git show'
 
 __git_complete ga _git_add
-__git_complete gb _git_branch
 __git_complete gc _git_commit
-__git_complete co _git_checkout
 __git_complete gd _git_diff
-__git_complete gr _git_reset
+__git_complete gf _git_fetch
+__git_complete gl _git_log
+__git_complete gs _git_status
+__git_complete gca _git_commit
+__git_complete gdc _git_diff
+__git_complete gsh _git_show
 
 function gitrm() { git status | grep deleted | awk '{print$NF}' | xargs git rm;}
 
