@@ -225,21 +225,8 @@ nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
 command Bash ConqueTermSplit bash -l
 map <leader>sh :Bash<CR>
 
-" Workarounds for rendering glitches with quickfix windows on macvim
-" See https://code.google.com/p/macvim/issues/detail?id=409
-"
-" Remap CTRL-L to clear screen before redrawing - fixes borked rendering
-" Also use to remove any search highlighting, a handy tip from vim wiki
-noremap <silent> <C-L> :nohl<CR>:redraw!<CR>
-
-" Automatically clear and redraw screen when entering and exiting CtrlP
-let g:ctrlp_buffer_func = {
-  \ 'enter': 'RedrawScreen',
-  \ 'exit':  'RedrawScreen',
-  \ }
-function RedrawScreen()
-  exec 'redraw!'
-endfunction
+" Remove current search highlighting when redrawing screen
+map <C-L> :nohl<CR><C-L>
 
 if has('mouse') && has("clipboard")
   set mouse=a

@@ -50,6 +50,28 @@ if has("mac")
   nmap § #
   vmap § #
 
+  " Workarounds for rendering glitches with quickfix windows on macvim
+  " See https://code.google.com/p/macvim/issues/detail?id=409
+
+  " Remap CTRL-L to clear screen before redrawing - fixes borked rendering
+  " This may no longer be necessary, if the hacks below work as expected
+  map <silent> <C-L> :nohl<CR>:redraw!<CR>
+
+  " Clear and redraw screen when entering and exiting CtrlP buffer
+  let g:ctrlp_buffer_func = {
+    \ 'enter': 'RedrawScreen',
+    \ 'exit':  'RedrawScreen',
+    \ }
+  function RedrawScreen()
+    exec 'redraw!'
+  endfunction
+
+  " Clear and redraw screen when entering and exiting quixkfix windows
+  autocmd BufWinEnter,BufWinLeave *
+    \ if &ft == 'qf' |
+    \   exec 'redraw!' |
+    \ endif
+
 endif
 
 if has("gui_gtk")
