@@ -46,11 +46,14 @@ set title                         " Set the terminal's title
 
 set visualbell                    " No beeping
 
-set confirm                       " Allow confirm to overwrite file
+set confirm                       " Allow dialog to confirm an action
+set autoread                      " Skip confirm for file changed outside vim
+set writeany                      " Allow writing of any file without confirm
 
-set nobackup                      " Don't create backups before writing files
-set nowritebackup                 " Or while writing files
-set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
+set writebackup                   " Create backups before overwriting files
+set nobackup                      " But don't retain backups after writing
+set directory=$HOME/.vim/tmp//    " Keep swap files in one location
+set backupdir=$HOME/.vim/tmp//    " And backups in the same place
 
 set laststatus=2                  " Show the status line all the time
 
