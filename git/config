@@ -93,8 +93,17 @@
   # FIXME: this is horribly brittle, find a better solution
   mru = !git reflog --date=relative --no-decorate | grep --color=no 'checkout: moving from' | head -n 100 | sed s'/checkout: moving from.*to //' | sed s'/HEAD@{/(/' | sed s'/}:/)/' | fgrep -v 'head' | grep -v '[0-9a-z]\\{40\\}' | head -n 10
 
+  # remove changes from staging area
+  unstage = reset HEAD
+
+  # discard changes to current head
+  scrap = reset --hard HEAD
+
   # amend the last commit
   amend = commit --amend
+
+  # peek at the last commit
+  peek = log --patch --max-count=1
 
   # list local branches order by committer date, but showing author name
   branches = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:short) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
