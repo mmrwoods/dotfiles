@@ -82,6 +82,9 @@
   # detailed log of commits in current branch, showing what changed in each commit
   wc = log --decorate --stat --format=fuller
 
+  # remove deleted (I'm sure there's an easier way to do this, but this is what I do)
+  rd = !git status | grep deleted | awk '{print$NF}' | xargs git rm;}
+
   # list recently active/committed branches, both local and remote
   recent = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:short) %(color:reset)%(subject)' --count=10 refs/{heads,remotes} | sed s'/± /±/' | column -t -s± | less -RFX
 

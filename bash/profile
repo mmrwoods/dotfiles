@@ -156,6 +156,7 @@ alias gdc='git diff --cached'
 alias gpo='git po' # push current branch to origin, see git config
 alias gpr='git pull --rebase'
 alias gsh='git show'
+alias grd='git rd' # remove deleted files, see git config
 
 __git_complete ga _git_add
 __git_complete gc _git_commit
@@ -166,8 +167,6 @@ __git_complete gs _git_status
 __git_complete gca _git_commit
 __git_complete gdc _git_diff
 __git_complete gsh _git_show
-
-function gitrm() { git status | grep deleted | awk '{print$NF}' | xargs git rm;}
 
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
