@@ -146,25 +146,27 @@ alias g='git'
 complete -o default -o nospace -F _git g
 
 alias ga='git add'
-alias gc='git commit -v'
 alias gd='git diff'
 alias gf='git fetch'
 alias gl='git log --decorate --stat'
 alias gp='git peek' # peek at the last commit, see git config
 alias gs='git status' # takes precedence over ghostscript in path
 alias gca='git commit -v -a'
+alias gco='git checkout'
+alias gcv='git commit -v'
 alias gdc='git diff --cached'
 alias gpo='git po' # push current branch to origin, see git config
 alias gpr='git pull --rebase'
 alias grd='git rd' # remove deleted files, see git config
 
 __git_complete ga _git_add
-__git_complete gc _git_commit
 __git_complete gd _git_diff
 __git_complete gf _git_fetch
 __git_complete gl _git_log
 __git_complete gs _git_status
 __git_complete gca _git_commit
+__git_complete gco _git_checkout
+__git_complete gcv _git_commit
 __git_complete gdc _git_diff
 
 if [ -f /usr/local/bin/ctags ]; then
