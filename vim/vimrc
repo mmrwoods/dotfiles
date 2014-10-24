@@ -309,7 +309,7 @@ autocmd BufWritePre *
 if exists('g:colors_name') && g:colors_name == 'solarized'
   autocmd FileType * highlight longLines ctermbg=black guibg=#eee8d5
   autocmd FileType *
-    \ if &ft != 'qf' |
+    \ if &ft != 'qf' && &ft != '' |
     \   match longLines /\%>80v.\+/ |
     \ endif
 endif
