@@ -123,6 +123,9 @@ autocmd FileType *
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
 
+" Preserve missing EOL at end of text files
+let g:PreserveNoEOL = 1
+
 " Ignore some additional files to make CtrlP load faster
 set wildignore+=*.gif,*.jpg,*.png
 set wildignore+=tmp/**
