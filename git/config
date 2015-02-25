@@ -74,6 +74,9 @@
   rss = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then git reset --soft HEAD~${1:-0}; else git reset --soft $@; fi'" -
   rsh = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then git reset --hard HEAD~${1:-0}; else git reset --hard $@; fi'" -
 
+  # reset current branch to origin
+  rso = "!bash -c 'branch=$(git symbolic-ref --short HEAD) ; git stash save \"reset $branch to origin/$branch\" && git reset --hard origin/$branch'" -
+
   # list commits in current branch with relative author date, author name and refnames
   ls = log --pretty=format:'%C(yellow)%h %Creset%s %C(green)(%ar) %Cblue<%an>%C(cyan)%d'
 
