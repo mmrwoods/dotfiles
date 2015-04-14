@@ -106,7 +106,7 @@
   amend = commit --amend
 
   # peek at the last commit
-  peek = log --patch --max-count=1
+  peek = log --patch --stat --max-count=1
 
   # list local branches order by committer date, but showing author name
   branches = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:short) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
