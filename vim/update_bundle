@@ -37,6 +37,7 @@ repos = %w{
   git://github.com/vim-scripts/closetag.vim.git
   git://github.com/lilydjwg/colorizer.git
   git://github.com/vim-scripts/PreserveNoEOL.git
+  git://github.com/tpope/vim-bundler.git
 }
 
 if vim_version >= 7.2
