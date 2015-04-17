@@ -198,6 +198,8 @@ map <silent> <C-Left> :wincmd h<CR>
 map <silent> <C-Right> :wincmd l<CR>
 " resize all windows
 map <silent> <leader>= :wincmd =<CR>
+" jump to definition of keyword under cursor in next split
+nmap <silent> <C-\> :let word=expand("<cword>")<CR>:wincmd w<CR>:exec "tag" word<CR>
 
 " Shortcut to search files with ack
 nnoremap <Leader>f :Ack!<Space>
