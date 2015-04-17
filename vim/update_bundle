@@ -38,6 +38,7 @@ repos = %w{
   git://github.com/lilydjwg/colorizer.git
   git://github.com/vim-scripts/PreserveNoEOL.git
   git://github.com/tpope/vim-bundler.git
+  git://github.com/tpope/vim-cucumber.git
 }
 
 if vim_version >= 7.2
