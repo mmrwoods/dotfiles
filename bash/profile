@@ -153,6 +153,7 @@ alias gf='git fetch'
 alias gl='git log --decorate --stat'
 alias gp='git peek' # peek at the last commit, see git config
 alias gs='git status' # takes precedence over ghostscript in path
+alias gt='git toggle' # switch to previous branch, see git config
 alias gc-='git checkout -'
 alias gca='git commit -v -a'
 alias gco='git checkout'
