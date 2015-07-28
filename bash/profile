@@ -35,6 +35,9 @@ if [ $SHELL = '/bin/bash' ]; then
     source ~/dotfiles/bash/git-completion.sh
   fi
 
+  # capistrano command completion
+  source ~/dotfiles/bash/capistrano.bash
+
   # rails command completion
   # TODO: try https://github.com/mernen/completion-ruby
   if [ ${BASH_VERSINFO[0]} -ge 4 ]; then
