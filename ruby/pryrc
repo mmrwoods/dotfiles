@@ -12,22 +12,23 @@ Pry.commands.alias_command 'n', 'next' rescue nil
 # Custom prompt with ruby version and nesting level (stolen from https://github.com/skwp/dotfiles/blob/master/irb/pryrc)
 Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
 
+def bundle(gem)
+  return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
+  spec_path = Dir.glob("#{Gem.dir}/specifications/#{gem}-[0-9]*.gemspec").last
+  return if spec_path.nil?
+  spec = Gem::Specification.load spec_path
+  $LOAD_PATH.concat(Dir.glob("#{Gem.dir}/gems/#{gem}-[0-9]*/lib"))
+  spec.runtime_dependencies.each{ |dependency|
+    bundle(dependency.name)
+  }
+end
+
 def try_require(lib,gem=lib)
+  bundle(gem) if defined?(Bundler)
   require lib
   yield if block_given?
 rescue LoadError
-  cmd = "gem install #{gem}"
-  cmd = "rvm @global do #{cmd}" if system("which rvm &> /dev/null")
-  warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
-end
-
-# Add gems in global gemset to $LOAD_PATH when using bundler
-# See discussion at https://gist.github.com/794915
-if defined?(::Bundler)
-  global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
-  if global_gemset
-    $LOAD_PATH.concat Dir.glob("#{global_gemset}/gems/*/lib")
-  end
+  warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
 end
 
 if defined?(Rails) && Rails.version >= "3"

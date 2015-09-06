@@ -1,27 +1,28 @@
 require 'rubygems'
 require 'irb/completion'
 
-# Add gems in global gemset to $LOAD_PATH when using bundler
-# See discussion at https://gist.github.com/794915
-if defined?(::Bundler)
-  global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
-  if global_gemset
-    $LOAD_PATH.concat Dir.glob("#{global_gemset}/gems/*/lib")
-  end
-end
-
 IRB.conf[:PROMPT_MODE]  = :SIMPLE
 IRB.conf[:SAVE_HISTORY] = 25
 IRB.conf[:HISTORY_FILE] = IRB.rc_file('_history')
 IRB.conf[:HISTORY_FILE] << '_rails' if ENV['RAILS_ENV']
 
+def bundle(gem)
+  return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
+  spec_path = Dir.glob("#{Gem.dir}/specifications/#{gem}-[0-9]*.gemspec").last
+  return if spec_path.nil?
+  spec = Gem::Specification.load spec_path
+  $LOAD_PATH.concat(Dir.glob("#{Gem.dir}/gems/#{gem}-[0-9]*/lib"))
+  spec.runtime_dependencies.each{ |dependency|
+    bundle(dependency.name)
+  }
+end
+
 def try_require(lib,gem=lib)
+  bundle(gem) if defined?(Bundler)
   require lib
   yield if block_given?
 rescue LoadError
-  cmd = "gem install #{gem}"
-  cmd = "rvm @global do #{cmd}" if system("which rvm &> /dev/null")
-  warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
+  warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
 end
 
 try_require 'pry' do
