@@ -1,16 +1,18 @@
 # use vim to edit
 Pry.editor = 'vim'
 
-# solarized theme - see https://github.com/kyrylo/pry-theme
-Pry.config.theme = 'solarized'
+# Use project directory as prompt name if gem bundle loaded (e.g. rails console)
+Pry.config.prompt_name = File.basename(Bundler.environment.root) if defined?(Bundler)
 
-# debugging shortcuts - see pry-nav and pry-debugger
-Pry.commands.alias_command 'c', 'continue' rescue nil
-Pry.commands.alias_command 's', 'step' rescue nil
-Pry.commands.alias_command 'n', 'next' rescue nil
-
-# Custom prompt with ruby version and nesting level (stolen from https://github.com/skwp/dotfiles/blob/master/irb/pryrc)
-Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
+# Simplified prompts (copy of default prompt with input array size removed)
+Pry.prompt = [
+  proc { |target_self, nest_level, pry|
+    "#{pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}> "
+  },
+  proc { |target_self, nest_level, pry|
+    "#{pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}* "
+  }
+]
 
 def bundle(gem)
   return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
@@ -31,16 +33,37 @@ rescue LoadError
   warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
 end
 
+# basic debugger style navigation from binding.pry
+try_require 'pry-nav' do
+  Pry.commands.alias_command 'cont', 'continue' rescue nil
+  Pry.commands.alias_command 'c', 'continue' rescue nil
+  Pry.commands.alias_command 's', 'step' rescue nil
+  Pry.commands.alias_command 'n', 'next' rescue nil
+end
+
+# warn if pry-doc not installed
+try_require 'pry-doc'
+
+# use solarized theme - see https://github.com/kyrylo/pry-theme
+try_require 'pry-theme'do
+  Pry.config.theme = 'solarized'
+end
+
+# add rails console and pry-rails helper methods
 if defined?(Rails) && Rails.version >= "3"
   extend Rails::ConsoleMethods if defined?(Rails::ConsoleMethods)
   try_require 'pry-rails'
 end
 
+# colourize output using awesome print
 try_require 'awesome_print' do
   alias pp ap
-  Pry.config.print = proc {|output, value| output.puts ap(value, :multiline => false) }
+  Pry.config.print = proc {|output, value|
+    output.puts ap(value, :multiline => false)
+  }
 end
 
+# add hirb console methods (table, view, etc.)
 try_require 'hirb' do
   extend Hirb::Console
 end

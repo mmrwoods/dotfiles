@@ -1,10 +1,18 @@
 require 'rubygems'
 require 'irb/completion'
 
-IRB.conf[:PROMPT_MODE]  = :SIMPLE
-IRB.conf[:SAVE_HISTORY] = 25
+IRB.conf[:PROMPT][:CUSTOM] = {
+  :PROMPT_I => "%N(%m)> ",
+  :PROMPT_C => "%N(%m)* ",
+  :PROMPT_N => "%N(%m)* ",
+  :PROMPT_S => "%N(%m)%l ",
+  :RETURN => "%s\n"
+}
+
+IRB.conf[:PROMPT_MODE] = :CUSTOM
+IRB.conf[:AUTO_INDENT] = true
+IRB.conf[:SAVE_HISTORY] = 100
 IRB.conf[:HISTORY_FILE] = IRB.rc_file('_history')
-IRB.conf[:HISTORY_FILE] << '_rails' if ENV['RAILS_ENV']
 
 def bundle(gem)
   return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
@@ -25,36 +33,36 @@ rescue LoadError
   warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
 end
 
+# use pry as irb replacement if available
 try_require 'pry' do
   Pry.start
   exit
 end
 
-# fix irb history on osx (and hopefully not break things elsewhere)
-# Note: gem install blackwinter-wirble
-try_require 'wirble', 'blackwinter-wirble' do
-  Wirble.init :history_path => IRB.conf[:HISTORY_FILE], :history_size => IRB.conf[:SAVE_HISTORY]
+# add rails console helper methods (app, reload! etc.)
+if defined?(Rails) && Rails.version >= "3"
+  extend Rails::ConsoleMethods if defined?(Rails::ConsoleMethods)
 end
 
-# pretty colours makes output easier to read
+# use wirble to fix irb history on osx
+try_require 'wirble', 'blackwinter-wirble' do
+  Wirble.init(
+    :history_path => IRB.conf[:HISTORY_FILE],
+    :history_size => IRB.conf[:SAVE_HISTORY]
+  )
+end
+
+# colourize output using awesome print
 try_require 'awesome_print' do
   alias pp ap
-  unless IRB.version.include?('DietRB')
-    IRB::Irb.class_eval do
-      def output_value
-        ap @context.last_value, :multiline => false
-      end
+  IRB::Irb.class_eval do
+    def output_value
+      ap @context.last_value, :multiline => false
     end
-  else # MacRuby
-    IRB.formatter = Class.new(IRB::Formatter) do
-      def inspect_object(object)
-        object.ai
-      end
-    end.new
   end
 end
 
-# add hirb console methods to main object
+# add hirb console methods (table, view, etc.)
 try_require 'hirb' do
   extend Hirb::Console
 end
