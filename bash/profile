@@ -22,6 +22,10 @@ fi
 # enable rbenv shims and autocompletion if installed
 if which rbenv &> /dev/null; then eval "$(rbenv init -)"; fi
 
+# add project specific binstubs to path
+# note: must come after rbenv init, which add rbenv shims to path
+export PATH="./bin:$PATH"
+
 # Bash specific, i.e. not bourne shell compatible stuff goes here.
 # Allows file be sourced from .profile, without causing problems
 # when sudo is configured to keep the HOME env variable and target
