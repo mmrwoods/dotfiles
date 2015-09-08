@@ -1,8 +1,10 @@
 # use vim to edit
 Pry.editor = 'vim'
 
-# Use project directory as prompt name if gem bundle loaded (e.g. rails console)
-Pry.config.prompt_name = File.basename(Bundler.environment.root) if defined?(Bundler)
+# Use project directory as prompt name if running a rails console
+if %w{ script/rails rails_console }.include?($0)
+  Pry.config.prompt_name = File.basename(Rails.root)
+end
 
 # Simplified prompts (copy of default prompt with input array size removed)
 Pry.prompt = [
