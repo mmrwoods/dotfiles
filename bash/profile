@@ -190,14 +190,3 @@ mkpw() { head /dev/urandom | uuencode -m - | sed -n 2p | tr -d '/+' | cut -c1-${
 
 # what is my ip again?
 whatismyip() { curl -s http://icanhazip.com/ ; }
-
-# current gems dir (works with rvm and bundler)
-gems() {
-  bundle config > /dev/null
-  eval $(
-    if [ $? -eq 0 ]; then
-      echo "bundle exec "
-    fi
-    echo "ruby -r rubygems -e 'puts Gem.path.detect{|d| not d.include?(\".gem\") }'"
-  )
-}
