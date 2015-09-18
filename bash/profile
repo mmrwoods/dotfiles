@@ -51,6 +51,11 @@ if [ $SHELL = '/bin/bash' ]; then
     source ~/dotfiles/bash/rails.bash
   fi
 
+  # rvm command completion
+  if [ -r $rvm_path/scripts/completion ]; then
+    source $rvm_path/scripts/completion
+  fi
+
   # git prompt
   GIT_PS1_SHOWDIRTYSTATE=1
   PS1='\w$(__git_ps1 "[%s]")\$ '

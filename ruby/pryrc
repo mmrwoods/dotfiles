@@ -18,21 +18,27 @@ Pry.prompt = [
 
 def bundle(gem)
   return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
-  spec_path = Dir.glob("#{Gem.dir}/specifications/#{gem}-[0-9]*.gemspec").last
+  spec_path = Gem.path.map{ |dir|
+    Dir.glob("#{dir}/specifications/#{gem}-[0-9]*.gemspec").last
+  }.compact.first
   return if spec_path.nil?
-  spec = Gem::Specification.load spec_path
-  $LOAD_PATH.concat(Dir.glob("#{Gem.dir}/gems/#{gem}-[0-9]*/lib"))
+  spec = Gem::Specification.load(spec_path)
+  $LOAD_PATH.concat(Dir.glob(spec.lib_dirs_glob))
   spec.runtime_dependencies.each{ |dependency|
     bundle(dependency.name)
   }
 end
 
 def try_require(lib,gem=lib)
-  bundle(gem) if defined?(Bundler)
+  bundle(gem) if defined? Bundler
   require lib
   yield if block_given?
 rescue LoadError
-  warn $!.message.sub(/\.$/,'') + ". Try running 'gem install #{gem}'"
+  cmd = "gem install #{gem}"
+  if system("which rvm &> /dev/null") && !Gem.path.grep(/@global/).empty?
+    cmd = "rvm @global do #{cmd}"
+  end
+  warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
 end
 
 # basic debugger style navigation from binding.pry
