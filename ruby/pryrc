@@ -8,11 +8,11 @@ end
 
 # Simplified prompts (copy of default prompt with input array size removed)
 Pry.prompt = [
-  proc { |target_self, nest_level, pry|
-    "#{pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}> "
+  proc { |target_self, nest_level, _|
+    "#{Pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}> "
   },
-  proc { |target_self, nest_level, pry|
-    "#{pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}* "
+  proc { |target_self, nest_level, _|
+    "#{Pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}* "
   }
 ]
 
