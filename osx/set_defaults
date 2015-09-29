@@ -66,5 +66,18 @@ defaults write com.apple.Mail DisableSendAnimations -bool true
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
+# Don't use native OSX full screen mode with iTerm2 (annoying animations)
+defaults write com.googlecode.iterm2 UseLionStyleFullscreen -bool false
+
+# Don't prompt on quit in iTerm2
+defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+# Add solarized colours to iTerm2
+curl -L \
+  "https://raw.githubusercontent.com/altercation/solarized/master/iterm2-colors-solarized/Solarized%20Dark.itermcolors" \
+  > /tmp/iterm2-solarized-dark.itermcolors
+open /tmp/iterm2-solarized-dark.itermcolors
+sleep 1
+
 # Kill affected applications
 for app in Finder Dock SystemUIServer Safari Mail; do killall "$app"; done
