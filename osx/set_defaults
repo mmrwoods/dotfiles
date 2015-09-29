@@ -72,6 +72,10 @@ defaults write com.googlecode.iterm2 UseLionStyleFullscreen -bool false
 # Don't prompt on quit in iTerm2
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
+# Use visual bell in iTerm2
+defaults write com.googlecode.iterm2 "Silence Bell" -bool false
+defaults write com.googlecode.iterm2 "Flashing Bell" -bool true
+
 # Add solarized colours to iTerm2
 curl -L \
   "https://raw.githubusercontent.com/altercation/solarized/master/iterm2-colors-solarized/Solarized%20Dark.itermcolors" \
