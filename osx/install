@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 if test "$(uname)" != "Darwin" ; then
   exit
 fi
