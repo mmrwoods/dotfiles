@@ -77,11 +77,13 @@ defaults write com.googlecode.iterm2 "Silence Bell" -bool false
 defaults write com.googlecode.iterm2 "Flashing Bell" -bool true
 
 # Add solarized colours to iTerm2
-curl -L \
-  "https://raw.githubusercontent.com/altercation/solarized/master/iterm2-colors-solarized/Solarized%20Dark.itermcolors" \
-  > /tmp/iterm2-solarized-dark.itermcolors
-open /tmp/iterm2-solarized-dark.itermcolors
-sleep 1
+if ! defaults read com.googlecode.iterm2 | fgrep "Solarized Dark" &> /dev/null; then
+  curl -L \
+    "https://raw.githubusercontent.com/altercation/solarized/master/iterm2-colors-solarized/Solarized%20Dark.itermcolors" \
+    > "/tmp/Solarized Dark.itermcolors"
+  open "/tmp/Solarized Dark.itermcolors"
+  sleep 1
+fi
 
 # Kill affected applications
 for app in Finder Dock SystemUIServer Safari Mail; do killall "$app"; done
