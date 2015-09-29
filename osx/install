@@ -14,4 +14,4 @@ sudo cp ~/dotfiles/osx/logouthook /usr/local/bin/
 sudo defaults write com.apple.loginwindow LoginHook /usr/local/bin/loginhook
 sudo defaults write com.apple.loginwindow LogoutHook /usr/local/bin/logouthook
 
-source defaults
+source set_defaults
