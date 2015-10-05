@@ -4,11 +4,15 @@ set -x
 
 dir=$(cd `dirname $0` && pwd)
 
+# symlink bundler config file
+mkdir -p ~/.bundle
+ln -s $dir/bundler ~/.bundle/config
+
 # symlink rspec config file
-cd ~ && ln -s $dir/rspec .rspec
+ln -s $dir/rspec ~/.rspec
 
 # symlink spring config file
-cd ~ && ln -s $dir/spring.rb .spring.rb
+ln -s $dir/spring.rb ~/.spring.rb
 
 # symlink rc files
 ls $dir/*rc | while read path; do ln -s $path ~/.$(basename $path); done

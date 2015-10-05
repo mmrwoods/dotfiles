@@ -19,11 +19,13 @@ if which brew &> /dev/null; then
   export PATH=$brew_prefix/bin:$brew_prefix/sbin:$PATH
 fi
 
-# enable rbenv shims and autocompletion if installed
+# add rbenv shims to path and enable rbenv autocompletion
 if which rbenv &> /dev/null; then eval "$(rbenv init -)"; fi
 
-# add project specific binstubs to path
-# note: must come after rbenv init, which add rbenv shims to path
+# add bundler binstubs to path (see ~/dotfiles/ruby/bundler)
+export PATH="./bundle/bin:$PATH"
+
+# add project specific binaries to path (e.g. rails binstubs)
 export PATH="./bin:$PATH"
 
 # Bash specific, i.e. not bourne shell compatible stuff goes here.
