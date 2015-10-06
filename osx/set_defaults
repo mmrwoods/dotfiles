@@ -79,6 +79,9 @@ defaults write com.googlecode.iterm2 "Flashing Bell" -bool true
 # Show tabs immediately in full screen mode when pressing cmd key
 defaults write com.googlecode.iterm2 FsTabDelay "0.1"
 
+# Don't use native OSX full screen mode with MacVim (annoying animations)
+defaults write org.vim.MacVim MMNativeFullScreen -int 0
+
 # Add solarized colours to iTerm2
 if ! defaults read com.googlecode.iterm2 | fgrep "Solarized Dark" &> /dev/null; then
   curl -L \
