@@ -76,6 +76,9 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 defaults write com.googlecode.iterm2 "Silence Bell" -bool false
 defaults write com.googlecode.iterm2 "Flashing Bell" -bool true
 
+# Show tabs immediately in full screen mode when pressing cmd key
+defaults write com.googlecode.iterm2 FsTabDelay "0.1"
+
 # Add solarized colours to iTerm2
 if ! defaults read com.googlecode.iterm2 | fgrep "Solarized Dark" &> /dev/null; then
   curl -L \
