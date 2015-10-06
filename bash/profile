@@ -73,8 +73,10 @@ if [ $SHELL = '/bin/bash' ]; then
     alias pg_stop="pg_ctl -D $brew_prefix/var/postgres stop -s -m fast"
   fi
 
-  # use macvim's huge vim with ruby support on osx unless vim installed separately via homebrew
+  # alias vim to macvim's huge vim on osx unless vim found in /usr/local/bin
   # see https://github.com/mxcl/homebrew/issues/5148
+  # note: does not help when external programs launch vim as editor, to fix this
+  # override system vim with `brew install macvim --with-override-system-vim`
   if [ $has_brew ] && [ ! -r $brew_prefix/bin/vim ]; then
     macvim_version=`brew list --versions macvim | sed 's/.* \([0-9\.\-]*\)$/\1/'`
     if [ -n "${macvim_version}" ]; then
