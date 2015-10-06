@@ -273,8 +273,8 @@ if has('mouse') && has("clipboard")
   endif
 endif
 
-" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}
+" Additional ruby syntax highlighting
+autocmd BufRead,BufNewFile {Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,config.ru}
   \ set ft=ruby |
 
 " Add json syntax highlighting
