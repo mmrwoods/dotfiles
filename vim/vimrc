@@ -166,7 +166,7 @@ map <S-C-Right> :tabnext<cr>
 map <S-C-Left> :tabprevious<cr>
 
 " Session mappings
-map <leader>s :SessionSave<CR>:SessionList<CR>
+map <leader>s :SessionSave<CR>:Bda<CR>:SessionList<CR>
 map <leader>sl :SessionList<CR>
 map <leader>ss :SessionSave<CR>
 
