@@ -32,6 +32,7 @@ set wildmode=list:longest         " Complete files like a shell
 
 set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
+set infercase                     " And infer case when doing keyword completion
 
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
@@ -90,6 +91,10 @@ set viminfo='100,<50,s10,h,!
 " set list mode characters used to display whitespace
 set listchars=tab:→·,trail:·,eol:¶
 
+" Insert mode completion options - always show completion menu, even if
+" there is just one match, and only autocomplete to longest common match
+set completeopt=menuone,longest,preview
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
@@ -112,13 +117,16 @@ let g:ConqueTerm_CloseOnEnd = 1
 
 " Let supertab guess the completion type from current context
 let g:SuperTabDefaultCompletionType = "context"
-" But use keyword completion if the context can't be determined
+" Use keyword completion if the context can't be determined
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
-" And fall back to keyword completion when omni completion fails
+" Fall back to keyword completion when omni completion fails
 autocmd FileType *
   \ if &omnifunc != '' |
   \   call SuperTabChain(&omnifunc, "<c-n>") |
   \ endif
+" Use opening and closing tags to trigger html omnicompletion
+autocmd FileType html,xhtml
+  \ let b:SuperTabContextTextMemberPatterns = ['<', '</']
 
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
@@ -286,11 +294,16 @@ autocmd FileType gitcommit setlocal spell spelllang=en_gb
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
 
-" Enable omnicompletion for html editing, and tell supertab to to use
-" omnicompletion with opening and closing tags (default just closing)
-autocmd FileType html,xhtml
-  \ set omnifunc=htmlcomplete#CompleteTags |
-  \ let b:SuperTabContextTextMemberPatterns = ['<', '</']
+" Use html omnicompletion for xhtml documents
+autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
+
+" Use syntax based completion when no omnicompletion available
+if has("autocmd") && exists("+omnifunc")
+autocmd Filetype *
+  \	if &omnifunc == "" |
+  \	  setlocal omnifunc=syntaxcomplete#Complete |
+  \	endif
+endif
 
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving
