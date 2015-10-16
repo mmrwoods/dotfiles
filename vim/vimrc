@@ -95,6 +95,10 @@ set listchars=tab:→·,trail:·,eol:¶
 " there is just one match, and only autocomplete to longest common match
 set completeopt=menuone,longest,preview
 
+" Use Space to close completion menu and go back to original text
+" I'd prefer to use Esc, but things got weird when I tried Esc
+inoremap <expr> <Space> pumvisible() ? '<C-e>' : '<Space>'
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
