@@ -286,6 +286,12 @@ autocmd FileType gitcommit setlocal spell spelllang=en_gb
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
 
+" Enable omnicompletion for html editing, and tell supertab to to use
+" omnicompletion with opening and closing tags (default just closing)
+autocmd FileType html,xhtml
+  \ set omnifunc=htmlcomplete#CompleteTags |
+  \ let b:SuperTabContextTextMemberPatterns = ['<', '</']
+
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving
 function! <SID>StripTrailingWhitespace()

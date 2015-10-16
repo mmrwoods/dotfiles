@@ -34,7 +34,8 @@ repos = %w{
   git://github.com/jlipps/vim-bda.git
   git://github.com/depuracao/vim-rdoc.git
   git://github.com/Raimondi/delimitMate.git
-  git://github.com/vim-scripts/closetag.vim.git
+  git://github.com/othree/xml.vim.git
+  git://github.com/othree/html5.vim.git
   git://github.com/lilydjwg/colorizer.git
   git://github.com/vim-scripts/PreserveNoEOL.git
   git://github.com/tpope/vim-bundler.git
