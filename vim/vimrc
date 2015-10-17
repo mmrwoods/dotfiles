@@ -138,6 +138,9 @@ let g:colorizer_startup = 0
 " Preserve missing EOL at end of text files
 let g:PreserveNoEOL = 1
 
+" Disable delimitMate within comments and strings (default is comments)
+let delimitMate_excluded_regions = "Comment,String"
+
 " Ignore some additional files to make CtrlP load faster
 set wildignore+=*.gif,*.jpg,*.png
 set wildignore+=tmp/**
