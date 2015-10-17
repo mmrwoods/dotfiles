@@ -14,7 +14,7 @@ repos = %w{
   git://github.com/tpope/vim-commentary.git
   git://github.com/jpalardy/spacehi.vim.git
   git://github.com/vim-scripts/bufexplorer.zip.git
-  git://github.com/vim-scripts/sessionman.vim.git
+  git://github.com/thickpaddy/sessionman.vim.git
   git://github.com/majutsushi/tagbar.git
   git://github.com/tpope/vim-rails.git
   git://github.com/pangloss/vim-javascript.git
