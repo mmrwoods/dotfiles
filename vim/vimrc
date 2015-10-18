@@ -185,10 +185,11 @@ map <leader>s :SessionSave<CR>:SessionList<CR>
 map <leader>sl :SessionList<CR>
 map <leader>ss :SessionSave<CR>
 
-" Buffer mappings.
+" Buffer mappings
 map <leader>b :BufExplorer<CR>
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
+map <leader>wa :Wipeout<CR>
 
 " open alternate file
 nnoremap <Leader>g :e#<CR>
@@ -306,11 +307,11 @@ autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 
 " Use syntax based completion when no omnicompletion available
 if has("autocmd") && exists("+omnifunc")
-autocmd Filetype *
-  \	if &omnifunc == "" |
-  \	  setlocal omnifunc=syntaxcomplete#Complete |
-  \	endif
-endif
+  autocmd Filetype *
+    \	if &omnifunc == "" |
+    \	  setlocal omnifunc=syntaxcomplete#Complete |
+    \	endif
+  endif
 
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving

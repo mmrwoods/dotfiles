@@ -31,7 +31,7 @@ repos = %w{
   git://github.com/tpope/vim-eunuch.git
   git://github.com/kien/ctrlp.vim.git
   git://github.com/tpope/vim-fugitive.git
-  git://github.com/jlipps/vim-bda.git
+  git://github.com/artnez/vim-wipeout.git
   git://github.com/depuracao/vim-rdoc.git
   git://github.com/Raimondi/delimitMate.git
   git://github.com/othree/xml.vim.git
