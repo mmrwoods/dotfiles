@@ -113,8 +113,11 @@ if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 endif
 
-" Show relative rather than absolute paths by default in bufexplorer
+" Show relative paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
+
+" Show no name buffers by default in bufexplorer
+let g:bufExplorerShowNoName = 1
 
 " Close conqueterm buffer when program exits
 let g:ConqueTerm_CloseOnEnd = 1
