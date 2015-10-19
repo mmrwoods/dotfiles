@@ -166,6 +166,9 @@ map Y y$
 " Allow semi-colon to stand in for colon
 nnoremap ; :
 
+" Stop opening the command line history by accident
+nnoremap q: :q
+
 " Tab mappings
 " opening new tabs
 map <leader><tab> :tabnew<cr>
