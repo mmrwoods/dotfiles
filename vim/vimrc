@@ -256,7 +256,7 @@ command Bash ConqueTermSplit bash -l
 map <leader>sh :Bash<CR>
 
 " Remove current search highlighting when redrawing screen
-map <C-L> :nohl<CR><C-L>
+map <C-L> :nohl<CR>:redraw!<CR>
 
 if has('mouse') && has("clipboard")
   set mouse=a
