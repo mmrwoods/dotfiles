@@ -92,10 +92,14 @@ if has("mac")
   " Fix the dimensions of the CtrlP window to avoid dynamic resizing
   let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:10'
 
-  " Redraw the screen when cursor moves within CtrlP window
-  " FIXME: This is shit, and is only necessary because CtrlP resizes
-  " the window to the dimensions set above *after* scanning for files
-  autocmd CursorMoved ControlP exec 'redraw!'
+  " Redraw screen when CtrlP window is resized after scanning for files
+  " This is only necessary because CtrlP doesn't open the window using
+  " the dimensions set above, but resizes *after* scanning for files.
+  autocmd CursorMoved ControlP
+    \ if !exists('b:ctrlp_did_redraw') |
+    \   exec 'redraw!' |
+    \   let b:ctrlp_did_redraw = 1 |
+    \ endif
 
   " Starting MacVim in non-native fullscreen mode triggers similar rendering
   " glitches to those referred to above, so never start in fullscreen mode
