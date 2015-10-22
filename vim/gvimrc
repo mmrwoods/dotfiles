@@ -8,10 +8,10 @@ set lines=999 columns=999         " Open maximized
 let sessionman_save_on_exit=1
 
 " load last session on enter, creating a default session if necessary
-function LoadSessionAndSetTitle()
+function <SID>LoadLastSession()
   " note - sessionman plugin stores last opened session name in g:LAST_SESSION
   if argc() == 0 && ( v:servername == 'VIM' || v:servername == 'GVIM' )
-    autocmd BufEnter * if &ft == '' && &buftype == '' | filetype detect
+    " autocmd BufEnter * if &ft == '' && &buftype == '' | filetype detect
     if !filereadable($HOME . '/.vim/sessions/default')
       execute 'SessionSaveAs default'
     elseif exists('g:LAST_SESSION')
@@ -26,21 +26,32 @@ function LoadSessionAndSetTitle()
   " may be cleared above, but will be re-created if a session is opened later.
   let &titlestring = "%f - %{v:servername} %{exists('g:LAST_SESSION')?'('.(g:LAST_SESSION).')':''}"
 endfunction
-autocmd VimEnter * call LoadSessionAndSetTitle()
+autocmd VimEnter * call <SID>LoadLastSession()
 
 if has("mac")
 
   " Toggle full-screen with Cmd+Enter
   map <D-Enter> :set invfu<CR>
 
+  " Shortcut to refesh screen, primarily used to redetect filetypes after
+  " loading last session when starting, because filetype detection only
+  " runs on BufNewFile and BufRead, and calling via VimEnter doesn't work
+  function <SID>Refresh()
+    let currwin=winnr()
+    exec 'windo filetype detect'
+    exec currwin . 'wincmd w'
+    exec 'nohl'
+    exec 'redraw!'
+  endfunction
+  map <D-r> :call <SID>Refresh()<CR>
+
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
 
-  " macvim container window gets screwed up after opening and
-  " closing tabs, so map leader x to expand (um, kind of)
+  " Shortcut to maximize MacVim container window
   map <leader>x :set lines=999 columns=999<Enter>
-  " addition - just autocmd it
-  " TODO: remove the mapping if it turns out to be unnecessary
+
+  " Automagically fix window dimensions after opening and closing tabs
   autocmd TabEnter * set lines=999 columns=999
 
   " MacVim disables cocoa key bindings, but I want double S / section sign
@@ -50,8 +61,24 @@ if has("mac")
   nmap § #
   vmap § #
 
-  " Workarounds for rendering glitches with quickfix windows on macvim
-  " See https://code.google.com/p/macvim/issues/detail?id=409
+  " Workarounds for macvim rendering glitches when using core text renderer
+  " combined with non-native full screen mode (some parts of the screen are
+  " blacked out when windows are resized without redrawing the whole screen).
+  " Triggered by dynamically resized windows like CtrlP, and when opening or
+  " closing quickfix and nofile windows used by other navigation plugins.
+  "
+  " More info:
+  " https://code.google.com/p/macvim/issues/detail?id=409
+  " http://vim.1045645.n5.nabble.com/Trouble-with-the-Core-Text-renderer-in-non-native-full-screen-td5713348.html
+  " https://groups.google.com/forum/#!topic/vim_mac/psLlQaE4Ko0
+  " https://groups.google.com/forum/#!topic/vim_mac/UkxoqhPVbeQ
+  " Note: some of the above references are very old, but the issue remains.
+
+  " Clear and redraw when entering and exiting quixkfix or nofile windows
+  autocmd WinEnter,WinLeave *
+    \ if &bt == 'quickfix' || &bt == 'nofile' |
+    \   exec 'redraw!' |
+    \ endif
 
   " Clear and redraw screen when entering and exiting CtrlP buffer
   let g:ctrlp_buffer_func = {
@@ -62,11 +89,20 @@ if has("mac")
     exec 'redraw!'
   endfunction
 
-  " Clear and redraw screen when entering and exiting quixkfix windows
-  autocmd BufWinEnter,BufWinLeave *
-    \ if &ft == 'qf' |
-    \   exec 'redraw!' |
-    \ endif
+  " Fix the dimensions of the CtrlP window to avoid dynamic resizing
+  let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:10'
+
+  " Redraw the screen when cursor moves within CtrlP window
+  " FIXME: This is shit, and is only necessary because CtrlP resizes
+  " the window to the dimensions set above *after* scanning for files
+  autocmd CursorMoved ControlP exec 'redraw!'
+
+  " Starting MacVim in non-native fullscreen mode triggers similar rendering
+  " glitches to those referred to above, so never start in fullscreen mode
+  autocmd VimEnter * set nofullscreen
+
+  " Automatically resize all windows when vim container window resized
+  autocmd VimResized * wincmd =
 
 endif
 
