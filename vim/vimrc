@@ -74,7 +74,7 @@ endif
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 " Patterns that should be ignored when expanding wildcards
-set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf
+set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png
 
 " Custom status line, show relative file path and file type
 set statusline=%<%.99f\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
@@ -145,13 +145,9 @@ let g:PreserveNoEOL = 1
 let delimitMate_excluded_regions = "Comment,String"
 
 " Ignore some additional files to make CtrlP load faster
-set wildignore+=*.gif,*.jpg,*.png
-set wildignore+=tmp/**
-set wildignore+=log/**
-set wildignore+=vendor/**
-set wildignore+=public/images/**
-set wildignore+=app/assets/fonts/**
-set wildignore+=coverage/**
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/](tmp|log|vendor|coverage|images|fonts)$'
+  \ }
 
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
