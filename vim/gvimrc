@@ -64,8 +64,8 @@ if has("mac")
   " Workarounds for macvim rendering glitches when using core text renderer
   " combined with non-native full screen mode (some parts of the screen are
   " blacked out when windows are resized without redrawing the whole screen).
-  " Triggered by dynamically resized windows like CtrlP, and when opening or
-  " closing quickfix and nofile windows used by other navigation plugins.
+  " Triggered by dynamically resized windows like CtrlP, and automatically
+  " closed quickfix or nofile windows used by other plugins like MRU etc.
   "
   " More info:
   " https://code.google.com/p/macvim/issues/detail?id=409
@@ -74,15 +74,14 @@ if has("mac")
   " https://groups.google.com/forum/#!topic/vim_mac/UkxoqhPVbeQ
   " Note: some of the above references are very old, but the issue remains.
 
-  " Clear and redraw when entering and exiting quixkfix or nofile windows
-  autocmd WinEnter,WinLeave *
+  " Clear and redraw when leaving quickfix or nofile windows
+  autocmd WinLeave *
     \ if &bt == 'quickfix' || &bt == 'nofile' |
     \   exec 'redraw!' |
     \ endif
 
-  " Clear and redraw screen when entering and exiting CtrlP buffer
+  " Clear and redraw screen when exiting CtrlP buffer
   let g:ctrlp_buffer_func = {
-    \ 'enter': 'RedrawScreen',
     \ 'exit':  'RedrawScreen',
     \ }
   function RedrawScreen()
