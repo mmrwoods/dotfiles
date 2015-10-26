@@ -119,6 +119,9 @@ let g:bufExplorerShowRelativePath = 1
 " Show no name buffers by default in bufexplorer
 let g:bufExplorerShowNoName = 1
 
+" Disable default BufExplorer key mappings (use <leader>b to open BufExplorer)
+let g:bufExplorerDisableDefaultKeyMapping=1
+
 " Close conqueterm buffer when program exits
 let g:ConqueTerm_CloseOnEnd = 1
 
@@ -189,8 +192,6 @@ map <leader>ss :SessionSave<CR>
 
 " Buffer mappings
 map <leader>b :BufExplorer<CR>
-map <leader>bn :bn<CR>
-map <leader>bp :bp<CR>
 map <leader>wa :Wipeout<CR>
 
 " open alternate file
