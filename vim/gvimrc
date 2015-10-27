@@ -8,7 +8,7 @@ set lines=999 columns=999         " Open maximized
 let sessionman_save_on_exit=1
 
 " load last session on enter, creating a default session if necessary
-function <SID>LoadLastSession()
+function! <SID>LoadLastSession()
   " note - sessionman plugin stores last opened session name in g:LAST_SESSION
   if argc() == 0 && ( v:servername == 'VIM' || v:servername == 'GVIM' )
     " autocmd BufEnter * if &ft == '' && &buftype == '' | filetype detect
@@ -36,7 +36,7 @@ if has("mac")
   " Shortcut to refesh screen, primarily used to redetect filetypes after
   " loading last session when starting, because filetype detection only
   " runs on BufNewFile and BufRead, and calling via VimEnter doesn't work
-  function <SID>Refresh()
+  function! <SID>Refresh()
     let currwin=winnr()
     exec 'windo filetype detect'
     exec currwin . 'wincmd w'
@@ -84,7 +84,7 @@ if has("mac")
   let g:ctrlp_buffer_func = {
     \ 'exit':  'RedrawScreen',
     \ }
-  function RedrawScreen()
+  function! RedrawScreen()
     exec 'redraw!'
   endfunction
 

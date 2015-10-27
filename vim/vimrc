@@ -365,7 +365,7 @@ if !exists(":DiffOrig")
 endif
 
 " Set working directory when opening vim to edit a particular file
-function <SID>SetWorkingDir()
+function! <SID>SetWorkingDir()
   if argc() != 0
     if isdirectory(argv(0))
       exec 'cd' argv(0)
