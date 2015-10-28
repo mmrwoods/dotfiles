@@ -249,7 +249,7 @@ imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
 nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
 
 " Open a login shell in a new split
-command Bash ConqueTermSplit bash -l
+command! Bash ConqueTermSplit bash -l
 map <leader>sh :Bash<CR>
 
 " Remove current search highlighting when redrawing screen
