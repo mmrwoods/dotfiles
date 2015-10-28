@@ -154,6 +154,9 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\v[\/](tmp|log|vendor|coverage|images|fonts)$'
   \ }
 
+" Use the current vim working directory as the CtrlP working directory
+let g:ctrlp_working_path_mode = 0
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
