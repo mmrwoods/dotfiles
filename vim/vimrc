@@ -34,7 +34,9 @@ set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
 set infercase                     " And infer case when doing keyword completion
 
-set nofileignorecase              " Make file name completion case-sensitive
+if exists("&fileignorecase")
+  set nofileignorecase            " Make file name completion case-sensitive
+endif
 
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
