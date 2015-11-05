@@ -187,6 +187,12 @@ __git_complete gco _git_checkout
 __git_complete gcv _git_commit
 __git_complete gdc _git_diff
 
+# Fudge bash completion for complex git aliases which run external commands
+# See https://coderwall.com/p/d2w7oa/auto-completion-within-complex-git-alias
+_git_rs() { _git_reset ; }
+_git_rss() { _git_reset ; }
+_git_rsh() { _git_reset ; }
+
 if [ -f /usr/local/bin/ctags ]; then
   alias ctags='/usr/local/bin/ctags'
 fi
