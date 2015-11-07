@@ -30,6 +30,10 @@ autocmd VimEnter * call <SID>LoadLastSession()
 
 if has("mac")
 
+  " Allow standard mac keyboard shortcuts to shift lines (for pairing)
+  vmap <D-]> >
+  vmap <D-[> <
+
   " Toggle full-screen with Cmd+Enter
   map <D-Enter> :set invfu<CR>
 

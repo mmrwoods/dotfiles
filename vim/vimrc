@@ -179,6 +179,10 @@ nnoremap q: :q
 vnoremap > >gv
 vnoremap < <gv
 
+" Allow standard windows & gnome shortcuts to shift lines (for pairing)
+vmap <Tab> >
+vmap <S-Tab> <
+
 " Tab mappings
 " opening new tabs
 map <leader><tab> :tabnew<cr>
