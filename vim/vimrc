@@ -175,6 +175,10 @@ nnoremap ; :
 " Stop opening the command line history by accident
 nnoremap q: :q
 
+" Retain selection after shifting highlighted lines in visual mode
+vnoremap > >gv
+vnoremap < <gv
+
 " Tab mappings
 " opening new tabs
 map <leader><tab> :tabnew<cr>
