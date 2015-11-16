@@ -74,6 +74,8 @@ else
   colorscheme jellybeans          " And jellybeans when running remotely
 endif
 
+set nofoldenable                  " Open all folds by default
+
 " Suffixes that can be ignored when completing file names
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
@@ -87,7 +89,7 @@ set statusline=%<%.99f\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
 set pastetoggle=<F2>
 
 " store tabs, windows, buffers etc. in sessions
-set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize,winpos,resize
+set sessionoptions=blank,buffers,curdir,tabpages,winsize,winpos,resize
 
 " save globals with viminfo - sessionman stores last session info in global
 set viminfo='100,<50,s10,h,!
