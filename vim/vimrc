@@ -314,7 +314,7 @@ autocmd BufRead,BufNewFile {Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,
   \ set ft=ruby |
 
 " Add json syntax highlighting
-autocmd BufNewFile,BufRead *.json set filetype=javascript
+" autocmd BufNewFile,BufRead *.json set filetype=javascript
 
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell spelllang=en_gb
