@@ -161,6 +161,9 @@ let g:ctrlp_custom_ignore = {
 " Use the current vim working directory as the CtrlP working directory
 let g:ctrlp_working_path_mode = 0
 
+" Let CtrlP reuse nofile buffers when opening files (e.g. BufExplorer)
+let g:ctrlp_reuse_window = 'netrw\|nofile'
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
