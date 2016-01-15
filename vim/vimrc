@@ -316,6 +316,9 @@ endif
 autocmd BufRead,BufNewFile {Berksfile,Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,config.ru}
   \ set ft=ruby |
 
+" Set conf.local filetype to conf
+autocmd BufRead,BufNewFile *.conf.local set ft=conf
+
 " Add json syntax highlighting
 " autocmd BufNewFile,BufRead *.json set filetype=javascript
 
