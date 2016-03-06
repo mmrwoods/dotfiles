@@ -1,7 +1,7 @@
 # Hacky command completion for knife solo
 #
-# Obliterates any existing knife completion on the assumption that if you're
-# using knife solo, you're only using knife solo. Works for me, but not ideal.
+# Obliterates any existing knife completions if knife-solo found in Gemfile on
+# the assumption you're only using knife solo. Works for me, but not ideal.
 #
 # Only completes using node config file names, and therefore does not trigger
 # ssh completions, on the assumption these files match fully qualified host
@@ -14,12 +14,16 @@ _knife_solo()
   cur=${COMP_WORDS[COMP_CWORD]}
   prev=${COMP_WORDS[COMP_CWORD-1]}
 
+  if ! grep knife-solo Gemfile &> /dev/null && type _knife &> /dev/null; then
+    _knife
+  fi
+
   case ${prev} in
     knife)
       COMPREPLY=($(compgen -W "solo" ${cur}))
       ;;
     solo)
-      if [ -f Gemfile ] && grep knife-solo_data_bag Gemfile &> /dev/null; then
+      if grep knife-solo_data_bag Gemfile &> /dev/null; then
         local solocmds="bootstrap clean cook data init prepare"
       else
         local solocmds="bootstrap clean cook init prepare"
