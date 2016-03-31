@@ -11,6 +11,8 @@ export NODE_PATH=/usr/local/lib/node_modules
 
 export CUCUMBER_COLORS=comment=cyan
 
+export GREP_OPTIONS='--color=auto --exclude=tags --exclude-dir=.git'
+
 # check if homebrew is installed and update path such that
 # homebrew binaries take precedence over system binaries
 if which brew &> /dev/null; then
@@ -131,10 +133,6 @@ set -o vi
 
 alias h='history'
 alias hs='history'
-
-alias egrep='egrep --color=auto --exclude=tags'
-alias fgrep='fgrep --color=auto --exclude=tags'
-alias grep='grep --color=auto --exclude=tags'
 
 alias b='bundle'
 alias bi='bundle install'
