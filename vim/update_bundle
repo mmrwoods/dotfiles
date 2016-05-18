@@ -44,6 +44,7 @@ repos = %w{
   git://github.com/vim-utils/vim-most-minimal-folds.git
   git://github.com/vim-utils/vim-ruby-fold.git
   git://github.com/nelstrom/vim-markdown-folding.git
+  https://github.com/mtth/scratch.vim.git
 }
 
 if vim_version >= 7.2
