@@ -17,6 +17,9 @@ defaults write com.apple.menuextra.battery ShowTime -string "NO"
 # Show all filename extensions in Finder
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
+# Show all files in finder and open file dialogs
+defaults write NSGlobalDomain AppleShowAllFiles -bool true
+
 # Disable disk image verification
 defaults write com.apple.frameworks.diskimages skip-verify -bool true
 defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
