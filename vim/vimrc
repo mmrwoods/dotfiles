@@ -75,6 +75,8 @@ else
 endif
 
 set nofoldenable                  " Open all folds by default
+set foldlevel=1                   " Fold only one level deep by default
+set foldlevelstart=1              " Reset the fold level when opening new files
 
 " Suffixes that can be ignored when completing file names
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -213,6 +215,15 @@ map <leader>ss :SessionSave<CR>
 " Buffer mappings
 map <leader>b :BufExplorer<CR>
 map <leader>wa :Wipeout<CR>
+
+" Fold mappings (normal mode only)
+" <space> toggles current fold
+nnoremap <Space> za
+" zz opens all folds
+nnoremap zz zR
+" Z closes all folds
+nnoremap Z zM
+
 
 " open alternate file
 nnoremap <Leader>g :e#<CR>
