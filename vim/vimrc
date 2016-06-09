@@ -69,6 +69,7 @@ set t_Co=256                      " Assume a 256 color terminal
 
 set background=dark               " Use dark background in terminal vim
 if $SSH_CLIENT == ""
+   \ && $SUDO_USER == ""
   colorscheme solarized           " With solarized colour scheme locally
 else
   colorscheme jellybeans          " And jellybeans when running remotely
