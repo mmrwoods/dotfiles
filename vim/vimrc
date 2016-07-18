@@ -100,9 +100,9 @@ set viminfo='100,<50,s10,h,!
 " set list mode characters used to display whitespace
 set listchars=tab:→·,trail:·,eol:¶
 
-" Insert mode completion options - always show completion menu, even if
-" there is just one match, and only autocomplete to longest common match
-set completeopt=menuone,longest,preview
+" Ins mode completion options - complete without menu if just one match,
+" only complete to longest common match, don't use preview scratch window
+set completeopt=menu,longest
 
 " Use Space to close completion menu and go back to original text
 " I'd prefer to use Esc, but things got weird when I tried Esc
