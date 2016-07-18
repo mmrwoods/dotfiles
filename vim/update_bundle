@@ -46,6 +46,7 @@ repos = %w{
   git://github.com/nelstrom/vim-markdown-folding.git
   https://github.com/mtth/scratch.vim.git
   https://github.com/fatih/vim-go.git
+  https://github.com/rkulla/pydiction.git
 }
 
 if vim_version >= 7.2
