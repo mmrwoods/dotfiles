@@ -83,7 +83,7 @@ set foldlevelstart=1              " Reset the fold level when opening new files
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 " Patterns that should be ignored when expanding wildcards
-set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png
+set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png,*.pyc
 
 " Custom status line, show relative file path and file type
 set statusline=%<%.99f\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
@@ -169,6 +169,9 @@ let g:ctrlp_working_path_mode = 0
 
 " Let CtrlP reuse nofile buffers when opening files (e.g. BufExplorer)
 let g:ctrlp_reuse_window = 'netrw\|nofile'
+
+" Tell NERDTree to respect wildignore like CtrlP does
+let NERDTreeRespectWildIgnore = 1
 
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
