@@ -147,9 +147,6 @@ autocmd FileType *
 autocmd FileType html,xhtml
   \ let b:SuperTabContextTextMemberPatterns = ['<', '</']
 
-" Use pydiction for python autocompletion, it's simple and it works
-let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
-
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
 
