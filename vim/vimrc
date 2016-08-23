@@ -75,6 +75,10 @@ else
   colorscheme jellybeans          " And jellybeans when running remotely
 endif
 
+if has('balloon_eval')
+  set noballooneval               " Disable slow and annoying tooltips
+endif
+
 set nofoldenable                  " Open all folds by default
 set foldlevel=1                   " Fold only one level deep by default
 set foldlevelstart=1              " Reset the fold level when opening new files
@@ -266,6 +270,11 @@ nmap <leader>l :set list!<CR>
 
 " Toggle tagbar (outline view)
 map <leader>o :TagbarToggle<Enter>
+" Workaround for tagbar setting ballooneval on open, but never unsetting
+if has('balloon_eval')
+  autocmd WinEnter __Tagbar__ set ballooneval
+  autocmd WinLeave __Tagbar__ set noballooneval
+endif
 
 " Toggle NERDTree
 map <leader>n :call g:WorkaroundNERDTreeToggle()<CR>
