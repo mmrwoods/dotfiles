@@ -1,3 +1,6 @@
+[remote "origin"]
+  # automagically fetch tags from origin, we like tags
+  fetch = +refs/tags/*:refs/tags/*
 [apply]
   whitespace = fix
 [core]
