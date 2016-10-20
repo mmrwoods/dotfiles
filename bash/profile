@@ -131,6 +131,8 @@ fi
 # vi keyboard shortcuts
 set -o vi
 
+alias v='vim'
+
 alias h='history'
 alias hs='history'
 
