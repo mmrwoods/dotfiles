@@ -82,6 +82,15 @@ defaults write com.googlecode.iterm2 "Flashing Bell" -bool true
 # Show tabs immediately in full screen mode when pressing cmd key
 defaults write com.googlecode.iterm2 FsTabDelay "0.1"
 
+# Ignore test releases when checking for iTerm2 updates
+defaults write com.googlecode.iterm2 CheckTestRelease -bool false
+
+# Disable iTerm2 new output indicator, indicates new output when none
+defaults write com.googlecode.iterm2 ShowNewOutputIndicator -bool false
+
+# Hide iTerm2 tab number, I prefer to see more of the cwd path
+defaults write com.googlecode.iterm2 HideTabNumber -bool true
+
 # Don't use native OSX full screen mode with MacVim (annoying animations)
 defaults write org.vim.MacVim MMNativeFullScreen -int 0
 
