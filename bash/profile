@@ -85,7 +85,8 @@ if [ $SHELL = '/bin/bash' ]; then
   if [ $has_brew ] && [ ! -r $brew_prefix/bin/vim ]; then
     macvim_version=`brew list --versions macvim | sed 's/.* \([0-9\.\-]*\)$/\1/'`
     if [ -n "${macvim_version}" ]; then
-      alias vim=$brew_prefix/Cellar/macvim/$macvim_version/MacVim.app/Contents/MacOS/Vim
+      EDITOR=$brew_prefix/Cellar/macvim/$macvim_version/MacVim.app/Contents/MacOS/Vim
+      alias vim=$EDITOR
     fi
   fi
 
