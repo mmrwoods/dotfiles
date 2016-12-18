@@ -348,8 +348,8 @@ autocmd BufRead,BufNewFile {Berksfile,Gemfile,Rakefile,Capfile,Vagrantfile,Thorf
 " Set conf.local filetype to conf
 autocmd BufRead,BufNewFile *.conf.local set ft=conf
 
-" Add json syntax highlighting
-" autocmd BufNewFile,BufRead *.json set filetype=javascript
+" Assume *.template files are json (cloudformation templates)
+autocmd BufNewFile,BufRead *.template set filetype=json
 
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell spelllang=en_gb
