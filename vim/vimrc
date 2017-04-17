@@ -284,7 +284,7 @@ map <leader>n :call g:WorkaroundNERDTreeToggle()<CR>
 " Workaround for NerdTreeToggle failures when NerdTree buffer deleted
 " See https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
 function! g:WorkaroundNERDTreeToggle()
-  try | NERDTreeToggle | catch | silent! NERDTree | endtry
+  try | NERDTreeToggle | catch | NERDTree | endtry
 endfunction
 
 " Toggle ZoomWin
