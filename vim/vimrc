@@ -135,7 +135,18 @@ let g:bufExplorerShowNoName = 1
 " Disable default BufExplorer key mappings (use <leader>b to open BufExplorer)
 let g:bufExplorerDisableDefaultKeyMapping=1
 
-" Close conqueterm buffer when program exits
+" Enable window commands in insert mode in ConqueTerm
+let g:ConqueTerm_CWInsert = 1
+
+" Enable ConqueTerm fast mode (supposedly disables most colours and some
+" unicode support, but doesn't seem to make any difference in version 230)
+let g:ConqueTerm_FastMode = 1
+
+" Automatically enable insert mode when entering ConqueTerm window
+let g:ConqueTerm_InsertOnEnter = 1
+
+" Close and delete ConqueTerm buffer when program exits (would be nice if
+" this worked, but doesn't seem to do anything in ConqueTerm version 230)
 let g:ConqueTerm_CloseOnEnd = 1
 
 " Let supertab guess the completion type from current context
@@ -300,8 +311,8 @@ map <leader>m :MRU<Enter>
 imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
 nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
 
-" Open a login shell in a new split
-command! Bash ConqueTermSplit bash -l
+" Open a bash shell using ConqueTerm
+command! Bash ConqueTerm bash
 map <leader>sh :Bash<CR>
 
 " Remove current search highlighting when redrawing screen
