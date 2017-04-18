@@ -39,7 +39,7 @@ rescue LoadError
   warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
 end
 
-if %w{ script/rails rails_console }.include?($0)
+if $0.include?("rails")
 
   # automagically use pry as rails console
   try_require 'pry' do

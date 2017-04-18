@@ -2,7 +2,7 @@
 Pry.editor = 'vim'
 
 # Use project directory as prompt name if running a rails console
-if %w{ script/rails rails_console }.include?($0)
+if $0.include?("rails")
   Pry.config.prompt_name = File.basename(Rails.root)
 end
 
