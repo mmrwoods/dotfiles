@@ -173,7 +173,7 @@ alias gco='git checkout'
 alias gcv='git commit -v'
 alias gdc='git diff --cached'
 alias gpo='git po' # push current branch to origin, see git config
-alias gpr='git pull --rebase'
+alias gpr='git pr' # pull from origin with rebase, see git config
 alias grd='git rd' # remove deleted files, see git config
 
 __git_complete ga _git_add
