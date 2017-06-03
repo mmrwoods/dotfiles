@@ -62,7 +62,7 @@
   lp = log --patch --decorate
 
   # pull with rebase from origin
-  pr = "!bash -c 'git symbolic-ref --short HEAD | xargs git pull --rebase origin $@'" -
+  pr = "!bash -c 'git symbolic-ref --short HEAD | xargs git pull --rebase $@ origin'" -
   
   # push current branch to origin
   po = "!bash -c 'git symbolic-ref --short HEAD | xargs git push $@ origin'" -
