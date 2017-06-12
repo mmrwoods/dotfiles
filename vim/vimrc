@@ -165,8 +165,9 @@ autocmd FileType html,xhtml
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
 
-" Preserve missing EOL at end of text files
-let g:PreserveNoEOL = 1
+" Don't preserve missing EOL by default
+" Enable per buffer with `let b:PreserveNoEOL = 1`
+let g:PreserveNoEOL = 0
 
 " Disable delimitMate within comments and strings (default is comments)
 let delimitMate_excluded_regions = "Comment,String"
@@ -245,7 +246,6 @@ nnoremap <Space> za
 nnoremap zz zR
 " Z closes all folds
 nnoremap Z zM
-
 
 " open alternate file
 nnoremap <Leader>g :e#<CR>
