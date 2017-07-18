@@ -368,6 +368,9 @@ autocmd BufNewFile,BufRead *.template set filetype=json
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell spelllang=en_gb
 
+" Treat annotated git tags as git commits
+autocmd BufNewFile,BufRead TAG_EDITMSG set filetype=gitcommit
+
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
 
