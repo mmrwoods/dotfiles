@@ -174,6 +174,7 @@ alias gt='git toggle' # switch to previous branch, see git config
 alias gc-='git checkout -'
 alias gca='git commit -v -a'
 alias gco='git checkout'
+alias gcb='git checkout -b'
 alias gcv='git commit -v'
 alias gdc='git diff --cached'
 alias gpo='git po' # push current branch to origin, see git config
@@ -187,6 +188,7 @@ __git_complete gl _git_log
 __git_complete gs _git_status
 __git_complete gca _git_commit
 __git_complete gco _git_checkout
+__git_complete gcb _git_checkout
 __git_complete gcv _git_commit
 __git_complete gdc _git_diff
 
