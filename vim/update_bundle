@@ -42,7 +42,7 @@ repos = %w{
   git://github.com/pbrisbin/vim-mkdir.git
   git://github.com/ConradIrwin/vim-bracketed-paste.git
   git://github.com/vim-utils/vim-most-minimal-folds.git
-  git://github.com/rwrede/vim-ruby-fold.git
+  git://github.com/mmrwoods/vim-fold-rspec.git
   git://github.com/nelstrom/vim-markdown-folding.git
   https://github.com/mtth/scratch.vim.git
   https://github.com/fatih/vim-go.git
