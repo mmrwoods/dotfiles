@@ -189,9 +189,6 @@ let NERDTreeRespectWildIgnore = 1
 " skip editorconfig with fugitive
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-" tell rspec-fold plugin to open all folds by default
-let g:fold_rspec_default_enable = 0
-
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
