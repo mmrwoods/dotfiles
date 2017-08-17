@@ -415,17 +415,14 @@ autocmd BufWritePre *
   \   call <SID>StripTrailingWhitespace() |
   \ endif
 
-" Subtly highlight long lines using background tones from solarized
-if exists('g:colors_name') && g:colors_name == 'solarized'
-  let g:EditorConfig_max_line_indicator = 'none'
-  autocmd BufEnter * highlight LongLine ctermbg=black guibg=#eee8d5
-  autocmd BufEnter *
-    \ if &textwidth > 0 |
-    \   call matchadd('LongLine', '\%>'.&tw.'v.\+', -1) |
-    \ elseif &ft != 'qf' && &ft != '' |
-    \   call matchadd('LongLine', '\%>80v.\+', -1) |
-    \ endif
-endif
+" Subtly highlight long lines rather than display colorcolumn
+let g:EditorConfig_max_line_indicator = 'none'
+autocmd BufEnter *
+  \ if &textwidth > 0 |
+  \   call matchadd('ColorColumn', '\%>'.&tw.'v.\+', -1) |
+  \ elseif &ft != 'qf' && &ft != '' |
+  \   call matchadd('ColorColumn', '\%>80v.\+', -1) |
+  \ endif
 
 " Jump to last known cursor position when editing (except for git commits)
 autocmd BufReadPost *
