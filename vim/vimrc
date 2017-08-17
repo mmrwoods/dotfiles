@@ -79,6 +79,10 @@ if has('balloon_eval')
   set noballooneval               " Disable slow and annoying tooltips
 endif
 
+if exists("&synmaxcol")
+  set synmaxcol=120               " Disable syntax highlighting on very long lines
+endif
+
 set nofoldenable                  " Open all folds by default
 set foldlevel=1                   " Fold only one level deep by default
 set foldlevelstart=1              " Reset the fold level when opening new files
@@ -411,13 +415,15 @@ autocmd BufWritePre *
   \   call <SID>StripTrailingWhitespace() |
   \ endif
 
-" Subtly highlight long lines using background tones from solarized color scheme
-" TODO: customise based on textwidth, be less subtle, work without solarized
+" Subtly highlight long lines using background tones from solarized
 if exists('g:colors_name') && g:colors_name == 'solarized'
-  autocmd FileType * highlight longLines ctermbg=black guibg=#eee8d5
-  autocmd FileType *
-    \ if &ft != 'qf' && &ft != '' |
-    \   match longLines /\%>80v.\+/ |
+  let g:EditorConfig_max_line_indicator = 'none'
+  autocmd BufEnter * highlight LongLine ctermbg=black guibg=#eee8d5
+  autocmd BufEnter *
+    \ if &textwidth > 0 |
+    \   call matchadd('LongLine', '\%>'.&tw.'v.\+', -1) |
+    \ elseif &ft != 'qf' && &ft != '' |
+    \   call matchadd('LongLine', '\%>80v.\+', -1) |
     \ endif
 endif
 
