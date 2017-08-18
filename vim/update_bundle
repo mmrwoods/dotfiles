@@ -49,6 +49,7 @@ repos = %w{
   https://github.com/editorconfig/editorconfig-vim.git
   https://github.com/tpope/vim-surround.git
   https://github.com/jeroenbourgois/vim-actionscript.git
+  https://github.com/leafgarland/typescript-vim.git
 }
 
 if vim_version >= 7.2
