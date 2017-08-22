@@ -190,8 +190,11 @@ let g:ctrlp_reuse_window = 'netrw\|nofile'
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
 
-" skip editorconfig with fugitive
+" Skip editorconfig with fugitive
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" Prevent editorconfig from enabling automatic text wrapping
+let g:EditorConfig_preserve_formatoptions = 1
 
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
@@ -359,6 +362,12 @@ if has('mouse') && has("clipboard")
   endif
 endif
 
+" Don't wrap existing long lines in insert mode
+autocmd FileType * setlocal formatoptions+=l
+
+" Disable automatic text wrapping by default
+autocmd FileType * setlocal formatoptions-=t
+
 " Additional ruby syntax highlighting
 autocmd BufRead,BufNewFile {Berksfile,Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,config.ru}
   \ set ft=ruby |
@@ -372,11 +381,15 @@ autocmd BufNewFile,BufRead *.template set filetype=json
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell spelllang=en_gb
 
+" Re-enable automatic text wrapping for git commits
+autocmd FileType gitcommit setlocal formatoptions+=t
+
 " Treat annotated git tags as git commits
 autocmd BufNewFile,BufRead TAG_EDITMSG set filetype=gitcommit
 
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
+autocmd FileType markdown setlocal formatoptions+=t
 
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
