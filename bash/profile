@@ -34,87 +34,87 @@ export PATH="./.bundle/bin:$PATH"
 # add project specific binaries to path (e.g. rails binstubs)
 export PATH="./bin:$PATH"
 
-# Bash specific, i.e. not bourne shell compatible stuff goes here.
-# Allows file be sourced from .profile, without causing problems
-# when sudo is configured to keep the HOME env variable and target
-# user's shell is bourne compatible, but not bash.
-if [ $SHELL = '/bin/bash' ]; then
+# Stop once env vars set if stdout not a terminal or shell not bash
+# Allows file be sourced from files other than .bash_profile, without
+# causing problems when sudo is configured to keep HOME env variable
+# and/or target user's shell is bourne compatible, but not bash
+if [ ! -t 1 ] || [ $SHELL != '/bin/bash' ]; then
+   return
+fi
 
-  # bash completion
-  if [ $has_brew ] && [ -r $brew_prefix/etc/bash_completion ]; then
-    source $brew_prefix/etc/bash_completion
+# bash completion
+if [ $has_brew ] && [ -r $brew_prefix/etc/bash_completion ]; then
+  source $brew_prefix/etc/bash_completion
+fi
+
+# git completion
+if ! type __git_ps1 &> /dev/null; then
+  source ~/dotfiles/bash/git-completion.sh
+fi
+
+# capistrano command completion
+source ~/dotfiles/bash/capistrano.bash
+
+# knife solo command completion
+source ~/dotfiles/bash/knife-solo-completion.bash
+
+# rails command completion
+# TODO: try https://github.com/mernen/completion-ruby
+if [ ${BASH_VERSINFO[0]} -ge 4 ]; then
+  source ~/dotfiles/bash/rails.bash
+fi
+
+# rvm command completion
+if [ -r $rvm_path/scripts/completion ]; then
+  source $rvm_path/scripts/completion
+fi
+
+# git prompt
+GIT_PS1_SHOWDIRTYSTATE=1
+PS1='\w$(__git_ps1 "[%s]")\$ '
+
+# if some kind of xterm, use prompt command to set window title
+if [ "${TERM%%-*}" == xterm ]; then
+  PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+fi
+
+# quick hack to create aliases for starting and stopping postgres
+if [ $has_brew ] && [ -r $brew_prefix/var/postgres ]; then
+  alias pg_start="pg_ctl -D $brew_prefix/var/postgres -l $brew_prefix/var/postgres/server.log start"
+  alias pg_stop="pg_ctl -D $brew_prefix/var/postgres stop -s -m fast"
+fi
+
+# alias vim to macvim's huge vim on osx unless vim found in /usr/local/bin
+# see https://github.com/mxcl/homebrew/issues/5148
+# note: does not help when external programs launch vim as editor, to fix this
+# override system vim with `brew install macvim --with-override-system-vim`
+if [ $has_brew ] && [ ! -r $brew_prefix/bin/vim ]; then
+  macvim_version=`brew list --versions macvim | sed 's/.* \([0-9\.\-]*\)$/\1/'`
+  if [ -n "${macvim_version}" ]; then
+    EDITOR=$brew_prefix/Cellar/macvim/$macvim_version/MacVim.app/Contents/MacOS/Vim
+    alias vim=$EDITOR
   fi
+fi
 
-  # git completion
-  if ! type __git_ps1 &> /dev/null; then
-    source ~/dotfiles/bash/git-completion.sh
-  fi
+# reload bash shell (I always forget how)
+alias reload="exec bash -l"
 
-  # capistrano command completion
-  source ~/dotfiles/bash/capistrano.bash
-
-  # knife solo command completion
-  source ~/dotfiles/bash/knife-solo-completion.bash
-
-  # rails command completion
-  # TODO: try https://github.com/mernen/completion-ruby
-  if [ ${BASH_VERSINFO[0]} -ge 4 ]; then
-    source ~/dotfiles/bash/rails.bash
-  fi
-
-  # rvm command completion
-  if [ -r $rvm_path/scripts/completion ]; then
-    source $rvm_path/scripts/completion
-  fi
-
-  # git prompt
-  GIT_PS1_SHOWDIRTYSTATE=1
-  PS1='\w$(__git_ps1 "[%s]")\$ '
-
-  # if some kind of xterm, use prompt command to set window title
-  if [ "${TERM%%-*}" == xterm ]; then
-    PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
-  fi
-
-  # quick hack to create aliases for starting and stopping postgres
-  if [ $has_brew ] && [ -r $brew_prefix/var/postgres ]; then
-    alias pg_start="pg_ctl -D $brew_prefix/var/postgres -l $brew_prefix/var/postgres/server.log start"
-    alias pg_stop="pg_ctl -D $brew_prefix/var/postgres stop -s -m fast"
-  fi
-
-  # alias vim to macvim's huge vim on osx unless vim found in /usr/local/bin
-  # see https://github.com/mxcl/homebrew/issues/5148
-  # note: does not help when external programs launch vim as editor, to fix this
-  # override system vim with `brew install macvim --with-override-system-vim`
-  if [ $has_brew ] && [ ! -r $brew_prefix/bin/vim ]; then
-    macvim_version=`brew list --versions macvim | sed 's/.* \([0-9\.\-]*\)$/\1/'`
-    if [ -n "${macvim_version}" ]; then
-      EDITOR=$brew_prefix/Cellar/macvim/$macvim_version/MacVim.app/Contents/MacOS/Vim
-      alias vim=$EDITOR
+# highlight error output from git commands in red
+# - highlights based on pattern match as stderr not only used for errors
+# - only modifies output when both stderr and stdout are terminals
+# - uses script command to ensure git sees output streams as terminals
+# - only modifies output for whitelisted commands to avoid pager issues
+# - doesn't work with git alises for whitelisted commands (this sucks)
+# - currently relies on BSD sed, so only used with OSX (also sucks)
+if test $(uname) == Darwin; then
+  git_err_red() {
+    if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|fetch|po|toggle) ]]; then
+      script -q /dev/null ${1+"$@"} | sed -l -E $'s/^(fatal|error).*/\e[31m&\e[m/'
+    else
+      "$@"
     fi
-  fi
-
-  # reload bash shell (I always forget how)
-  alias reload="exec bash -l"
-
-  # highlight error output from git commands in red
-  # - highlights based on pattern match as stderr not only used for errors
-  # - only modifies output when both stderr and stdout are terminals
-  # - uses script command to ensure git sees output streams as terminals
-  # - only modifies output for whitelisted commands to avoid pager issues
-  # - doesn't work with git alises for whitelisted commands (this sucks)
-  # - currently relies on BSD sed, so only used with OSX (also sucks)
-  if test $(uname) == Darwin; then
-    git_err_red() {
-      if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|fetch|po|toggle) ]]; then
-        script -q /dev/null ${1+"$@"} | sed -l -E $'s/^(fatal|error).*/\e[31m&\e[m/'
-      else
-        "$@"
-      fi
-    }
-    alias git="git_err_red git"
-  fi
-
+  }
+  alias git="git_err_red git"
 fi
 
 # add /usr/local/sbin to path if necessary
