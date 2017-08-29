@@ -17,6 +17,8 @@ export GREP_OPTIONS='--color=auto --exclude=tags --exclude-dir=.git'
 # Use spring command to explicitly use as required (see aliases below)
 export DISABLE_SPRING=1
 
+alias which="/usr/bin/which" # fuck you node-which
+
 # check if homebrew is installed and update path such that
 # homebrew binaries take precedence over system binaries
 if which brew &> /dev/null; then
