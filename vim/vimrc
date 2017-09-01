@@ -80,7 +80,7 @@ if has('balloon_eval')
 endif
 
 if exists("&synmaxcol")
-  set synmaxcol=120               " Disable syntax highlighting on very long lines
+  set synmaxcol=200               " Disable syntax highlighting on very long lines
 endif
 
 set nofoldenable                  " Open all folds by default
