@@ -30,4 +30,3 @@ cucumber=.feature
 --ignore-dir=doc
 --ignore-dir=coverage
 --ignore-dir=build
---ignore-dir=data
