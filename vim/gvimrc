@@ -78,31 +78,36 @@ if has("mac")
   " https://groups.google.com/forum/#!topic/vim_mac/UkxoqhPVbeQ
   " Note: some of the above references are very old, but the issue remains.
 
-  " Clear and redraw when leaving quickfix or nofile windows
-  autocmd WinLeave *
-    \ if &bt == 'quickfix' || &bt == 'nofile' |
-    \   exec 'redraw!' |
-    \ endif
+  " This issue appears to be fixed since upgrading to MacVim 8.0, MacOS 10.11
+  if v:version < 800
 
-  " Clear and redraw screen when exiting CtrlP buffer
-  let g:ctrlp_buffer_func = {
-    \ 'exit':  'RedrawScreen',
-    \ }
-  function! RedrawScreen()
-    exec 'redraw!'
-  endfunction
+    " Clear and redraw when leaving quickfix or nofile windows
+    autocmd WinLeave *
+      \ if &bt == 'quickfix' || &bt == 'nofile' |
+      \   exec 'redraw!' |
+      \ endif
 
-  " Fix the dimensions of the CtrlP window to avoid dynamic resizing
-  let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:10'
+    " Clear and redraw screen when exiting CtrlP buffer
+    let g:ctrlp_buffer_func = {
+      \ 'exit':  'RedrawScreen',
+      \ }
+    function! RedrawScreen()
+      exec 'redraw!'
+    endfunction
 
-  " Redraw screen when CtrlP window is resized after scanning for files
-  " This is only necessary because CtrlP doesn't open the window using
-  " the dimensions set above, but resizes *after* scanning for files.
-  autocmd CursorMoved ControlP
-    \ if !exists('b:ctrlp_did_redraw') |
-    \   exec 'redraw!' |
-    \   let b:ctrlp_did_redraw = 1 |
-    \ endif
+    " Fix the dimensions of the CtrlP window to avoid dynamic resizing
+    let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:10'
+
+    " Redraw screen when CtrlP window is resized after scanning for files
+    " This is only necessary because CtrlP doesn't open the window using
+    " the dimensions set above, but resizes *after* scanning for files.
+    autocmd CursorMoved ControlP
+      \ if !exists('b:ctrlp_did_redraw') |
+      \   exec 'redraw!' |
+      \   let b:ctrlp_did_redraw = 1 |
+      \ endif
+
+  endif
 
   " Starting MacVim in non-native fullscreen mode triggers similar rendering
   " glitches to those referred to above, so never start in fullscreen mode
