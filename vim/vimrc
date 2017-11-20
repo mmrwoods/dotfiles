@@ -486,3 +486,7 @@ function! <SID>SetWorkingDir()
   endif
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
+
+" Close NERDTree before leaving vim, because it doesn't reopen correctly
+" FIXME: prob should do this with all nofile, help and quickfix windows
+autocmd VimLeavePre * NERDTreeClose
