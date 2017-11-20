@@ -184,7 +184,12 @@ let g:ctrlp_custom_ignore = {
 " Use the current vim working directory as the CtrlP working directory
 let g:ctrlp_working_path_mode = 0
 
+" Customise dimensions of CtrlP match window (show more than 10 results)
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+
 " Let CtrlP reuse nofile buffers when opening files (e.g. BufExplorer)
+" FIXME: This doesn't seem to make a blind bit of difference anymore,
+" NERDTree uses a nofile buffer, and CtrlP opens files in that buffer
 let g:ctrlp_reuse_window = 'netrw\|nofile'
 
 " Prevent CtrlP from opening files in NERDTree window
@@ -195,6 +200,9 @@ function! NERDTreeUnfocus()
 endfunction
 let g:ctrlp_map = ''
 nnoremap <C-p> :call NERDTreeUnfocus()<CR>:CtrlP<CR>
+
+" Map CTRL+b to open CtrlP in find buffer mode
+nnoremap <C-b> :call NERDTreeUnfocus()<CR>:CtrlPBuffer<CR>
 
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
