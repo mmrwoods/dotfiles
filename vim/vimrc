@@ -204,6 +204,9 @@ nnoremap <C-p> :call NERDTreeUnfocus()<CR>:CtrlP<CR>
 " Map CTRL+b to open CtrlP in find buffer mode
 nnoremap <C-b> :call NERDTreeUnfocus()<CR>:CtrlPBuffer<CR>
 
+" Map CTRL+m to open CtrlP in find MRU file mode
+nnoremap <C-m> :call NERDTreeUnfocus()<CR>:CtrlPMRU<CR>
+
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
 
