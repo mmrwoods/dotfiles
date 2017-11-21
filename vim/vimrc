@@ -96,9 +96,6 @@ set wildignore=*~,*.o,*.log,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png,*.pyc
 " Custom status line, show relative file path and file type
 set statusline=%<%.99f\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
 
-" toggle paste mode to safely paste from clipboard in terminal vim
-set pastetoggle=<F2>
-
 " store tabs, windows, buffers etc. in sessions
 set sessionoptions=blank,buffers,curdir,tabpages,winsize,winpos,resize
 
@@ -122,9 +119,6 @@ let sessionman_save_on_exit=0
 " show private gists when listing mine
 let g:gist_show_privates = 1
 
-" Don't add the recent files menu from MRU plugin
-let MRU_Add_Menu = 0
-
 " Make sure tagbar uses exuberant ctags
 if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
@@ -138,20 +132,6 @@ let g:bufExplorerShowNoName = 1
 
 " Disable default BufExplorer key mappings (use <leader>b to open BufExplorer)
 let g:bufExplorerDisableDefaultKeyMapping=1
-
-" Enable window commands in insert mode in ConqueTerm
-let g:ConqueTerm_CWInsert = 1
-
-" Enable ConqueTerm fast mode (supposedly disables most colours and some
-" unicode support, but doesn't seem to make any difference in version 230)
-let g:ConqueTerm_FastMode = 1
-
-" Automatically enable insert mode when entering ConqueTerm window
-let g:ConqueTerm_InsertOnEnter = 1
-
-" Close and delete ConqueTerm buffer when program exits (would be nice if
-" this worked, but doesn't seem to do anything in ConqueTerm version 230)
-let g:ConqueTerm_CloseOnEnd = 1
 
 " Let supertab guess the completion type from current context
 let g:SuperTabDefaultCompletionType = "context"
@@ -192,14 +172,20 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
 " NERDTree uses a nofile buffer, and CtrlP opens files in that buffer
 let g:ctrlp_reuse_window = 'netrw\|nofile'
 
-" Prevent CtrlP from opening files in NERDTree window
-function! NERDTreeUnfocus()
-  if (&ft=='nerdtree')
-      exec 'wincmd w'
-  endif
+" Prevent CtrlP opening files inside non-writeable buffers, e.g. NERDTree
+" See https://vi.stackexchange.com/questions/10016/stop-ctrlp-from-opening-in-nerdtree
+function! CtrlPCommand(cmd)
+    let c = 0
+    let wincount = winnr('$')
+    " Don't open it here if current buffer is not writable (e.g. NERDTree)
+    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+        exec 'wincmd w'
+        let c = c + 1
+    endwhile
+    exec a:cmd
 endfunction
 let g:ctrlp_map = ''
-nnoremap <C-p> :call NERDTreeUnfocus()<CR>:CtrlP<CR>
+nnoremap <C-p> :call CtrlPCommand('CtrlP')<CR>
 
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
@@ -234,31 +220,15 @@ vnoremap < <gv
 vmap <Tab> >
 vmap <S-Tab> <
 
-" Tab mappings
-" opening new tabs
-map <leader><tab> :tabnew<cr>
-map <leader>t :tabnew<cr>
-" rudimentary navigation
-map <leader>tt :tabnext<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
-" navigation with Ctrl-Tab (only works in gui vim)
+" Tab navigation with Ctrl-Tab (only works in gui vim)
 map <C-Tab> :tabnext<cr>
 map <S-C-Tab> :tabprevious<cr>
-" navigation and moving using arrow keys
-map <S-C-Up> :tabmove +1<cr>
-map <S-C-Down> :tabmove -1<cr>
-map <S-C-Right> :tabnext<cr>
-map <S-C-Left> :tabprevious<cr>
 
 " Session mappings
 map <leader>s :SessionSave<CR>:SessionList<CR>
-map <leader>sl :SessionList<CR>
-map <leader>ss :SessionSave<CR>
 
 " Buffer mappings
 map <leader>b :BufExplorer<CR>
-map <leader>wa :Wipeout<CR>
 
 " Fold mappings (normal mode only)
 " <space> toggles current fold
@@ -280,18 +250,16 @@ map <silent> <leader>wv :wincmd v<CR>
 " moving windows (rotate and exchange)
 map <silent> <leader>wr :wincmd r<CR>
 map <silent> <leader>wx :wincmd x<CR>
-" rudimentary navigation
-map <silent> <leader>ww :wincmd w<CR>
-map <silent> <leader>wn :wincmd w<CR>
-map <silent> <leader>wp :wincmd p<CR>
-" movemement with arrow keys
+" navigation with arrow keys
 map <silent> <C-Up> :wincmd k<CR>
 map <silent> <C-Down> :wincmd j<CR>
 map <silent> <C-Left> :wincmd h<CR>
 map <silent> <C-Right> :wincmd l<CR>
 " resize all windows
 map <silent> <leader>= :wincmd =<CR>
-" jump to definition of keyword under cursor in next split
+
+" jump to definition of keyword under cursor in next window
+" FIXME: assumes multiple windows are open, doens't work otherwise
 nmap <silent> <C-\> :let word=expand("<cword>")<CR>:wincmd w<CR>:exec "tag" word<CR>
 
 " Shortcut to search files with ack
@@ -326,15 +294,11 @@ map <leader>z :ZoomWin<Enter>
 map <leader><space> :ToggleSpaceHi<Enter>
 
 " Open most recently used files
-map <leader>m :MRU<Enter>
+map <leader>m :call CtrlPCommand('CtrlPMRU')<CR>
 
 " Toggle spell checking
 imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
 nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
-
-" Open a bash shell using ConqueTerm
-command! Bash ConqueTerm bash
-map <leader>sh :Bash<CR>
 
 " Remove current search highlighting when redrawing screen
 map <C-L> :nohl<CR>:redraw!<CR>
