@@ -124,6 +124,12 @@ if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 endif
 
+" Workaround for tagbar setting ballooneval on open, but never unsetting
+if has('balloon_eval')
+  autocmd WinEnter __Tagbar__ set ballooneval
+  autocmd WinLeave __Tagbar__ set noballooneval
+endif
+
 " Show relative paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
@@ -165,7 +171,10 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_working_path_mode = 0
 
 " Customise dimensions of CtrlP match window (show more than 10 results)
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:25,results:25'
+
+" Include the current file in the list of matches
+let g:ctrlp_match_current_file = 1
 
 " Let CtrlP reuse nofile buffers when opening files (e.g. BufExplorer)
 " FIXME: This doesn't seem to make a blind bit of difference anymore,
@@ -175,14 +184,14 @@ let g:ctrlp_reuse_window = 'netrw\|nofile'
 " Prevent CtrlP opening files inside non-writeable buffers, e.g. NERDTree
 " See https://vi.stackexchange.com/questions/10016/stop-ctrlp-from-opening-in-nerdtree
 function! CtrlPCommand(cmd)
-    let c = 0
-    let wincount = winnr('$')
-    " Don't open it here if current buffer is not writable (e.g. NERDTree)
-    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
-        exec 'wincmd w'
-        let c = c + 1
-    endwhile
-    exec a:cmd
+  let c = 0
+  let wincount = winnr('$')
+  " Don't open it here if current buffer is not writable (e.g. NERDTree)
+  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+    exec 'wincmd w'
+    let c = c + 1
+  endwhile
+  exec a:cmd
 endfunction
 let g:ctrlp_map = ''
 nnoremap <C-p> :call CtrlPCommand('CtrlP')<CR>
@@ -190,45 +199,52 @@ nnoremap <C-p> :call CtrlPCommand('CtrlP')<CR>
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
 
+" Workaround for NerdTreeToggle failures when NerdTree buffer deleted
+" See https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
+function! NERDTreeCommand()
+  try | NERDTreeToggle | catch | NERDTree | endtry
+endfunction
+
 " Skip editorconfig with fugitive
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " Prevent editorconfig from enabling automatic text wrapping
 let g:EditorConfig_preserve_formatoptions = 1
 
+" Disable editorconfig use of colorcolumn to highlight long lines
+" See custom autocmd, which subtly highlights long lines instead
+let g:EditorConfig_max_line_indicator = 'none'
+
+" Don't autohide scratch window when leaving insert mode
+let g:scratch_insert_autohide = 0
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
 " Delete key sends text to blackhole register
-nmap <Del> "_x
-vmap <Del> "_x
+nnoremap <Del> "_x
+vnoremap <Del> "_x
 
 " Make Y act like D and C, i.e. yank until EOL rather than yank entire line
-map Y y$
-
-" Allow semi-colon to stand in for colon
-nnoremap ; :
+noremap Y y$
 
 " Stop opening the command line history by accident
 nnoremap q: :q
+
+" Stop recording commands into registers by accident
+nnoremap q :q
 
 " Retain selection after shifting highlighted lines in visual mode
 vnoremap > >gv
 vnoremap < <gv
 
 " Allow standard windows & gnome shortcuts to shift lines (for pairing)
-vmap <Tab> >
-vmap <S-Tab> <
+vnoremap <Tab> >
+vnoremap <S-Tab> <
 
 " Tab navigation with Ctrl-Tab (only works in gui vim)
-map <C-Tab> :tabnext<cr>
-map <S-C-Tab> :tabprevious<cr>
-
-" Session mappings
-map <leader>s :SessionSave<CR>:SessionList<CR>
-
-" Buffer mappings
-map <leader>b :BufExplorer<CR>
+noremap <C-Tab> :tabnext<cr>
+noremap <S-C-Tab> :tabprevious<cr>
 
 " Fold mappings (normal mode only)
 " <space> toggles current fold
@@ -238,70 +254,103 @@ nnoremap zz zR
 " Z closes all folds
 nnoremap Z zM
 
-" open alternate file
-nnoremap <Leader>g :e#<CR>
+" Open alternate file (simpler than CTRL-^ or CTRL-6)
+nnoremap <Leader>a <C-^>
 
 " Window mappings
-" opening alternate file in new vertial split
-map <silent> <expr> <leader>w expand('#')!='' ? ':wincmd v\|e#<CR>' : ':wincmd v<CR>'
+" open alternate file in new vertial split
+nnoremap <leader>wa :wincmd v<CR><C-^>
+" old mapping to open alt file in split
+nnoremap <leader>w :wincmd v<CR><C-^>
 " shortcuts for opening new splits
-map <silent> <leader>ws :wincmd s<CR>
-map <silent> <leader>wv :wincmd v<CR>
-" moving windows (rotate and exchange)
-map <silent> <leader>wr :wincmd r<CR>
-map <silent> <leader>wx :wincmd x<CR>
+nnoremap <leader>ws :wincmd s<CR>
+nnoremap <leader>wv :wincmd v<CR>
+" rotate and exchange windows
+nnoremap <leader>wr :wincmd r<CR>
+nnoremap <leader>wx :wincmd x<CR>
 " navigation with arrow keys
-map <silent> <C-Up> :wincmd k<CR>
-map <silent> <C-Down> :wincmd j<CR>
-map <silent> <C-Left> :wincmd h<CR>
-map <silent> <C-Right> :wincmd l<CR>
-" resize all windows
-map <silent> <leader>= :wincmd =<CR>
+nnoremap <C-Up> :wincmd k<CR>
+nnoremap <C-Down> :wincmd j<CR>
+nnoremap <C-Left> :wincmd h<CR>
+nnoremap <C-Right> :wincmd l<CR>
+" resize all windows equally
+nnoremap = :wincmd =<CR>
+" resize dimensions of current window
+nnoremap + :wincmd +<CR>
+nnoremap - :wincmd -<CR>
+nnoremap > :wincmd ><CR>
+nnoremap < :wincmd <<CR>
 
-" jump to definition of keyword under cursor in next window
-" FIXME: assumes multiple windows are open, doens't work otherwise
-nmap <silent> <C-\> :let word=expand("<cword>")<CR>:wincmd w<CR>:exec "tag" word<CR>
+" Tag navigation
+" use CTRL-\ to jump to definition in next available window
+function! JumpToTagInSplit()
+  let currword = expand("<cword>")
+  let startwin = winnr()
+  " Move to next window with a normal buffer
+  let c = 0
+  let n = winnr('$')
+  while c < n
+    exec 'wincmd w'
+    if empty(getbufvar(+expand("<abuf>"), "&buftype"))
+      break
+    endif
+    let c = c + 1
+  endwhile
+  " Back where we started? Open a new split
+  if winnr() == startwin
+    exec 'wincmd v'
+  endif
+  " FIXME: use tjump, but update <CTRL-]> to do the same
+  exec "tag ".currword
+endfunction
+nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
-" Shortcut to search files with ack
-nnoremap <Leader>f :Ack!<Space>
+" File explorer / tree view
+nnoremap <leader>e :call NERDTreeCommand()<CR>
+
+" Fuzzy find files
+nnoremap <leader>f :call CtrlPCommand('CtrlP')<CR>
+
+" Fuzzy find open buffers
+nnoremap <leader>b :call CtrlPCommand('CtrlPBuffer')<CR>
+
+" Fuzzy find MRU files
+nnoremap <leader>m :call CtrlPCommand('CtrlPMRU')<CR>
+
+" Fuzzy find tags
+nnoremap <leader>t :call CtrlPCommand('CtrlPTag')<CR>
+
+" Search in files
+nnoremap <Leader>s :Ack!<Space>
+
+" List projects
+nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
+
+" List open files/buffers
+nnoremap <leader>l :ToggleBufExplorer<CR>
+
+" Outline view of current file
+nnoremap <leader>o :TagbarToggle<Enter>
+
+" Zoom in/out current window
+nnoremap <leader>x :ZoomWin<Enter>
+
+" Highlight whitespace
+nnoremap <leader><space> :ToggleSpaceHi<Enter>
 
 " Run ctags to (re)generate tags file
-map <Leader>ct :!ctags -R .<CR>
-
-" Toggle list mode (show whitespace using listchars)
-nmap <leader>l :set list!<CR>
-
-" Toggle tagbar (outline view)
-map <leader>o :TagbarToggle<Enter>
-" Workaround for tagbar setting ballooneval on open, but never unsetting
-if has('balloon_eval')
-  autocmd WinEnter __Tagbar__ set ballooneval
-  autocmd WinLeave __Tagbar__ set noballooneval
-endif
-
-" Toggle NERDTree
-map <leader>n :call g:WorkaroundNERDTreeToggle()<CR>
-" Workaround for NerdTreeToggle failures when NerdTree buffer deleted
-" See https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
-function! g:WorkaroundNERDTreeToggle()
-  try | NERDTreeToggle | catch | NERDTree | endtry
-endfunction
-
-" Toggle ZoomWin
-map <leader>z :ZoomWin<Enter>
-
-" Toggle SpaceHi
-map <leader><space> :ToggleSpaceHi<Enter>
-
-" Open most recently used files
-map <leader>m :call CtrlPCommand('CtrlPMRU')<CR>
+nnoremap <Leader>ct :!ctags -R .<CR>
 
 " Toggle spell checking
-imap <Leader>sp <C-o>:setlocal spell! spelllang=en_gb<CR>
-nmap <Leader>sp :setlocal spell! spelllang=en_gb<CR>
+inoremap <Leader>; <C-o>:setlocal spell! spelllang=en_gb<CR>
+nnoremap <Leader>; :setlocal spell! spelllang=en_gb<CR>
+
+" Remap gs to open Scratch window in normal rather than insert mode
+let g:scratch_no_mappings = 1 " must disable plugin mappings first
+nnoremap gs :Scratch<CR>
 
 " Remove current search highlighting when redrawing screen
-map <C-L> :nohl<CR>:redraw!<CR>
+nnoremap <C-L> :nohl<CR>:redraw!<CR>
 
 if has('mouse') && has("clipboard")
   set mouse=a
@@ -315,16 +364,16 @@ if has('mouse') && has("clipboard")
 
   " Use windows keyboard shortcuts (taken from mswin.vim)
   " CTRL-X and SHIFT-Del are Cut
-  vmap <C-X> "+x
-  vmap <S-Del> "+x
+  vnoremap <C-X> "+x
+  vnoremap <S-Del> "+x
   " CTRL-C and CTRL-Insert are Copy
-  vmap <C-C> "+y
-  vmap <C-Insert> "+y
+  vnoremap <C-C> "+y
+  vnoremap <C-Insert> "+y
   " CTRL-V and SHIFT-Insert are Paste
-  map <C-V> "+gP
-  map <S-Insert> "+gP
-  cmap <C-V> <C-R>+
-  cmap <S-Insert> <C-R>+
+  nnoremap <C-V> "+gP
+  nnoremap <S-Insert> "+gP
+  cnoremap <C-V> <C-R>+
+  cnoremap <S-Insert> <C-R>+
   exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
   exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
@@ -413,7 +462,6 @@ autocmd BufWritePre *
   \ endif
 
 " Subtly highlight long lines rather than display colorcolumn
-let g:EditorConfig_max_line_indicator = 'none'
 autocmd BufEnter *
   \ if &textwidth > 0 |
   \   call matchadd('ColorColumn', '\%>'.&tw.'v.\+', -1) |

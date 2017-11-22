@@ -31,11 +31,11 @@ autocmd VimEnter * call <SID>LoadLastSession()
 if has("mac")
 
   " Allow standard mac keyboard shortcuts to shift lines (for pairing)
-  vmap <D-]> >
-  vmap <D-[> <
+  vnoremap <D-]> >
+  vnoremap <D-[> <
 
   " Toggle full-screen with Cmd+Enter
-  map <D-Enter> :set invfu<CR>
+  nnoremap <D-Enter> :set invfu<CR>
 
   " Shortcut to refesh screen, primarily used to redetect filetypes after
   " loading last session when starting, because filetype detection only
@@ -47,23 +47,20 @@ if has("mac")
     exec 'nohl'
     exec 'redraw!'
   endfunction
-  map <D-r> :call <SID>Refresh()<CR>
+  nnoremap <D-r> :call <SID>Refresh()<CR>
 
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
-
-  " Shortcut to maximize MacVim container window
-  map <leader>x :set lines=999 columns=999<Enter>
 
   " Automagically fix window dimensions after opening and closing tabs
   autocmd TabEnter * set lines=999 columns=999
 
   " MacVim disables cocoa key bindings, but I want double S / section sign
   " mapped to hash. For some reason map doesn't work, so...
-  imap § #
-  cmap § #
-  nmap § #
-  vmap § #
+  inoremap § #
+  cnoremap § #
+  nnoremap § #
+  vnoremap § #
 
   " Workarounds for macvim rendering glitches when using core text renderer
   " combined with non-native full screen mode (some parts of the screen are
