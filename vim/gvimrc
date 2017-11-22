@@ -78,7 +78,7 @@ if has("mac")
   " https://groups.google.com/forum/#!topic/vim_mac/UkxoqhPVbeQ
   " Note: some of the above references are very old, but the issue remains.
 
-  " This issue appears to be fixed since upgrading to MacVim 8.0, MacOS 10.11
+  " These issues appear to be fixed since upgrading to MacVim 8.0, MacOS 10.11
   if v:version < 800
 
     " Clear and redraw when leaving quickfix or nofile windows
@@ -107,11 +107,11 @@ if has("mac")
       \   let b:ctrlp_did_redraw = 1 |
       \ endif
 
-  endif
+    " Starting MacVim in non-native fullscreen mode triggers similar rendering
+    " glitches to those referred to above, so never start in fullscreen mode
+    autocmd VimEnter * set nofullscreen
 
-  " Starting MacVim in non-native fullscreen mode triggers similar rendering
-  " glitches to those referred to above, so never start in fullscreen mode
-  autocmd VimEnter * set nofullscreen
+  endif
 
   " Automatically resize all windows when vim container window resized
   autocmd VimResized * wincmd =
