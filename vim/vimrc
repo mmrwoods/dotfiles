@@ -282,6 +282,8 @@ nnoremap > :wincmd ><CR>
 nnoremap < :wincmd <<CR>
 
 " Tag navigation
+" remap CTRL-] to show list when multiple matches (use tjump)
+nnoremap <C-]> g<C-]>
 " use CTRL-\ to jump to definition in next available window
 function! JumpToTagInSplit()
   let currword = expand("<cword>")
@@ -301,7 +303,7 @@ function! JumpToTagInSplit()
     exec 'wincmd v'
   endif
   " FIXME: use tjump, but update <CTRL-]> to do the same
-  exec "tag ".currword
+  exec "tjump ".currword
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
