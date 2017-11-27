@@ -303,7 +303,13 @@ function! JumpToTagInSplit()
   if winnr() == startwin
     exec 'wincmd v'
   endif
-  exec "tjump ".currword
+  try
+    exec "tjump ".currword
+  catch
+    " Go back to startwin on error
+    exec startwin . "wincmd w"
+    echoerr v:exception
+  endtry
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
