@@ -303,7 +303,6 @@ function! JumpToTagInSplit()
   if winnr() == startwin
     exec 'wincmd v'
   endif
-  " FIXME: use tjump, but update <CTRL-]> to do the same
   exec "tjump ".currword
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
