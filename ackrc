@@ -25,9 +25,11 @@ cucumber=.feature
 --ignore-file=is:tags
 --ignore-file=is:.byebug_history
 
---ignore-dir=vendor
---ignore-dir=log
---ignore-dir=tmp
---ignore-dir=doc
---ignore-dir=coverage
 --ignore-dir=build
+--ignore-dir=coverage
+--ignore-dir=doc
+--ignore-dir=dist
+--ignore-dir=log
+--ignore-dir=node_modules
+--ignore-dir=tmp
+--ignore-dir=vendor
