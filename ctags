@@ -1,10 +1,14 @@
 --recurse=yes
 --tag-relative=yes
 --exclude=.git
---exclude=vendor
---exclude=log
---exclude=tmp
+--exclude=build
 --exclude=coverage
+--exclude=doc
+--exclude=dist
+--exclude=log
+--exclude=node_modules
+--exclude=tmp
+--exclude=vendor
 
 --langdef=coffee
 --langmap=coffee:.coffee
