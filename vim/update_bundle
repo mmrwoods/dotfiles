@@ -17,7 +17,7 @@ end
 # navigation
 plug 'mileszs/ack.vim'
 plug 'scrooloose/nerdtree'
-plug 'vim-scripts/bufexplorer.zip'
+plug 'jlanzarotta/bufexplorer'
 plug 'thickpaddy/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'ctrlpvim/ctrlp.vim'
