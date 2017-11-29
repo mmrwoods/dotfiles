@@ -32,7 +32,9 @@ set wildmode=list:longest         " Complete files like a shell
 
 set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
-set tagcase=followscs             " Update tag search to to the same
+if exists("&tagcase")
+  set tagcase=followscs           " Update tag search to to the same
+endif
 set infercase                     " And infer case when doing keyword completion
 
 if exists("&fileignorecase")
