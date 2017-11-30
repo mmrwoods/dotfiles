@@ -1,0 +1,15 @@
+--recurse=yes
+--tag-relative=yes
+
+--exclude=.git
+--exclude=build
+--exclude=coverage
+--exclude=doc
+--exclude=dist
+--exclude=log
+--exclude=min
+--exclude=node_modules
+--exclude=tmp
+--exclude=vendor
+
+--langmap=ruby:+.rake
