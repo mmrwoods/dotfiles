@@ -174,7 +174,7 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_working_path_mode = 0
 
 " Customise dimensions of CtrlP match window (show more than 10 results)
-let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:25,results:25'
+let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:25'
 
 " Include the current file in the list of matches
 let g:ctrlp_match_current_file = 1
