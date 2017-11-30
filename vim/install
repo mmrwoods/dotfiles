@@ -6,7 +6,9 @@ dir=$(cd `dirname $0` && pwd)
 
 mkdir -p $dir/tmp
 
-ln -s $dir/ ~/.vim
+if ! test -d ~/.vim; then
+  ln -s $dir/ ~/.vim
+fi
 ln -s $dir/vimrc ~/.vimrc
 ln -s $dir/gvimrc ~/.gvimrc
 
