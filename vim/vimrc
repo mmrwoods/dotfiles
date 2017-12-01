@@ -197,7 +197,7 @@ function! CtrlPCommand(cmd)
   exec a:cmd
 endfunction
 let g:ctrlp_map = ''
-nnoremap <C-p> :call CtrlPCommand('CtrlP')<CR>
+nnoremap <C-p> :call CtrlPCommand('CtrlPMixed')<CR>
 
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
