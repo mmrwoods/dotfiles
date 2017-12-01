@@ -12,4 +12,9 @@
 --exclude=tmp
 --exclude=vendor
 
+--exclude=*.json
+--exclude=*.css
+--exclude=*.template
+--exclude=*.min.js
+
 --langmap=ruby:+.rake
