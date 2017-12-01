@@ -337,7 +337,7 @@ nnoremap <Leader>s :Ack!<Space>
 nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
 
 " List open files/buffers
-nnoremap <leader>l :ToggleBufExplorer<CR>
+nnoremap ; :ToggleBufExplorer<CR>
 
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<Enter>
