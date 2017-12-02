@@ -202,6 +202,12 @@ nnoremap <C-p> :call CtrlPCommand('CtrlPMixed')<CR>
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
 
+" Stop NERDTree from hijacking netrw, I want to use both :-)
+let NERDTreeHijackNetrw = 0
+
+" Always show the netrw banner, so it's not mistaken for NERDTree
+let g:netrw_banner = 1
+
 " Workaround for NerdTreeToggle failures when NerdTree buffer deleted
 " See https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
 function! NERDTreeCommand()
@@ -315,8 +321,11 @@ function! JumpToTagInSplit()
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
-" File explorer / tree view
-nnoremap <leader>e :call NERDTreeCommand()<CR>
+" Project drawer / tree view
+nnoremap <leader>d :call NERDTreeCommand()<CR>
+
+" File explorer (starts in current directory)
+nnoremap <leader>e :Explore<CR>
 
 " Fuzzy find files
 nnoremap <leader>f :call CtrlPCommand('CtrlP')<CR>
