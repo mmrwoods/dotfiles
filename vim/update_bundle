@@ -21,6 +21,7 @@ plug 'jlanzarotta/bufexplorer'
 plug 'thickpaddy/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'ctrlpvim/ctrlp.vim'
+plug 'tpope/vim-vinegar'
 
 # syntax
 plug 'kchmck/vim-coffee-script'

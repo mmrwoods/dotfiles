@@ -324,8 +324,8 @@ nnoremap <C-\> :call JumpToTagInSplit()<CR>
 " Project drawer / tree view
 nnoremap <leader>d :call NERDTreeCommand()<CR>
 
-" File explorer (starts in current directory)
-nnoremap <leader>e :Explore<CR>
+" File explorer (uses vim-vinegar plugin, enhanced netrw)
+nmap <leader>e <Plug>VinegarUp
 
 " Fuzzy find files
 nnoremap <leader>f :call CtrlPCommand('CtrlP')<CR>
