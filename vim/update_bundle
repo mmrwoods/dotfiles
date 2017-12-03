@@ -21,7 +21,9 @@ plug 'jlanzarotta/bufexplorer'
 plug 'thickpaddy/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'ctrlpvim/ctrlp.vim'
-plug 'tpope/vim-vinegar'
+# Fix for https://github.com/tpope/vim-vinegar/issues/87
+# FIXME: replace with 'tpope/vinegar' when fixed upstream
+plug 'mmrwoods/vim-vinegar'
 
 # syntax
 plug 'kchmck/vim-coffee-script'
