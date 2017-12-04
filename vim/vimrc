@@ -205,6 +205,10 @@ let NERDTreeHijackNetrw = 0
 " Always show the netrw banner, so it's not mistaken for NERDTree
 let g:netrw_banner = 1
 
+" Don't go back to netrw when choosing to edit the alternate file,
+" actually go back to the last edited file (same as bufexplorer)
+let g:netrw_altfile = 1
+
 " Workaround for NerdTreeToggle failures when NerdTree buffer deleted
 " See https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
 function! NERDTreeCommand()
