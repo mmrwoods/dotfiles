@@ -18,7 +18,7 @@ end
 plug 'mileszs/ack.vim'
 plug 'scrooloose/nerdtree'
 plug 'jlanzarotta/bufexplorer'
-plug 'thickpaddy/sessionman.vim'
+plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'ctrlpvim/ctrlp.vim'
 # Fix for https://github.com/tpope/vim-vinegar/issues/87
