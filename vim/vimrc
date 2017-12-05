@@ -122,6 +122,12 @@ let sessionman_save_on_exit=0
 " show private gists when listing mine
 let g:gist_show_privates = 1
 
+" Don't add the recent files menu from MRU plugin
+let MRU_Add_Menu = 0
+
+" Use the current window to load the list of MRU files
+let MRU_Use_Current_Window = 1
+
 " Make sure tagbar uses exuberant ctags
 if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
