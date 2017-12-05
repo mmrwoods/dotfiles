@@ -334,17 +334,20 @@ nnoremap <leader>d :call NERDTreeCommand()<CR>
 " File explorer (uses vim-vinegar plugin, enhanced netrw)
 nmap <leader>e <Plug>VinegarUp
 
+" Fuzzy finder
+nnoremap <leader>f :call CtrlPCommand('CtrlPMixed')<CR>
+
 " Fuzzy find files
-nnoremap <leader>f :call CtrlPCommand('CtrlP')<CR>
+nnoremap <leader>ff :call CtrlPCommand('CtrlP')<CR>
 
 " Fuzzy find open buffers
-nnoremap <leader>b :call CtrlPCommand('CtrlPBuffer')<CR>
+nnoremap <leader>fb :call CtrlPCommand('CtrlPBuffer')<CR>
 
 " Fuzzy find MRU files
-nnoremap <leader>m :call CtrlPCommand('CtrlPMRU')<CR>
+nnoremap <leader>fm :call CtrlPCommand('CtrlPMRU')<CR>
 
 " Fuzzy find tags
-nnoremap <leader>t :call CtrlPCommand('CtrlPTag')<CR>
+nnoremap <leader>ft :call CtrlPCommand('CtrlPTag')<CR>
 
 " Search in files
 nnoremap <Leader>s :Ack!<Space>
@@ -353,7 +356,11 @@ nnoremap <Leader>s :Ack!<Space>
 nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
 
 " List open files/buffers
-nnoremap ; :ToggleBufExplorer<CR>
+"nnoremap ; :ToggleBufExplorer<CR>
+nnoremap <leader>b :ToggleBufExplorer<CR>
+
+" List most recently used files
+nnoremap <leader>m :MRU<CR>
 
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<Enter>
