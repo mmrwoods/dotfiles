@@ -334,13 +334,13 @@ nnoremap <leader>d :call NERDTreeCommand()<CR>
 " File explorer (uses vim-vinegar plugin, enhanced netrw)
 nmap <leader>e <Plug>VinegarUp
 
-" Fuzzy finder
+" Fuzzy finder (mixed mode)
 nnoremap <leader>f :call CtrlPCommand('CtrlPMixed')<CR>
 
 " Fuzzy find files
 nnoremap <leader>ff :call CtrlPCommand('CtrlP')<CR>
 
-" Fuzzy find open buffers
+" Fuzzy find buffers
 nnoremap <leader>fb :call CtrlPCommand('CtrlPBuffer')<CR>
 
 " Fuzzy find MRU files
@@ -356,7 +356,6 @@ nnoremap <Leader>s :Ack!<Space>
 nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
 
 " List open files/buffers
-"nnoremap ; :ToggleBufExplorer<CR>
 nnoremap <leader>b :ToggleBufExplorer<CR>
 
 " List most recently used files
@@ -377,6 +376,12 @@ nnoremap <Leader>ct :!ctags -R .<CR>
 " Toggle spell checking
 inoremap <Leader>; <C-o>:setlocal spell! spelllang=en_gb<CR>
 nnoremap <Leader>; :setlocal spell! spelllang=en_gb<CR>
+
+" Some extra mappings for convenience/speed
+" Single key to toggle bufexplorer, I use this all the time
+nnoremap ; :ToggleBufExplorer<CR>
+" <leader>g mapping for alternate file, faster than <leader>a
+nnoremap <Leader>g <C-^>
 
 " Remap gs to open Scratch window in normal rather than insert mode
 let g:scratch_no_mappings = 1 " must disable plugin mappings first
