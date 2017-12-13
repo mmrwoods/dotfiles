@@ -352,6 +352,9 @@ nnoremap <leader>ft :call CtrlPCommand('CtrlPTag')<CR>
 " Search in files
 nnoremap <Leader>s :Ack!<Space>
 
+" Search in files for word under cursor
+nnoremap <leader>y :Ack! <cword><CR>
+
 " List projects
 nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
 
