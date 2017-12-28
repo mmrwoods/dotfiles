@@ -152,6 +152,8 @@ let g:bufExplorerDisableDefaultKeyMapping=1
 let g:SuperTabDefaultCompletionType = "context"
 " Use keyword completion if the context can't be determined
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" Always try to match case for supertab completions
+let g:SuperTabCompleteCase = 'match'
 " Fall back to keyword completion when omni completion fails
 autocmd FileType *
   \ if &omnifunc != '' |
