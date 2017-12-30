@@ -110,11 +110,7 @@ set listchars=tab:→·,trail:·,eol:¶
 
 " Ins mode completion options - complete without menu if just one match,
 " only complete to longest common match, don't use preview scratch window
-set completeopt=menu,longest
-
-" Use Space to close completion menu and go back to original text
-" I'd prefer to use Esc, but things got weird when I tried Esc
-inoremap <expr> <Space> pumvisible() ? '<C-e>' : '<Space>'
+set completeopt=menuone,longest
 
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
@@ -154,6 +150,8 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 " Always try to match case for supertab completions
 let g:SuperTabCompleteCase = 'match'
+" Reset the completion type once a completion has been chosen
+let g:SuperTabRetainCompletionDuration = 'completion'
 " Fall back to keyword completion when omni completion fails
 autocmd FileType *
   \ if &omnifunc != '' |
