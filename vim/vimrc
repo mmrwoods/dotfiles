@@ -135,6 +135,9 @@ if has('balloon_eval')
   autocmd WinLeave __Tagbar__ set noballooneval
 endif
 
+" Tell netrw to also stop enabling ballooneval
+let g:netrw_nobeval = 1
+
 " Show relative paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
