@@ -519,9 +519,9 @@ autocmd BufWritePre *
 " Subtly highlight long lines rather than display colorcolumn
 autocmd BufEnter *
   \ if &textwidth > 0 |
-  \   call matchadd('ColorColumn', '\%>'.&tw.'v.\+', -1) |
+  \   call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1) |
   \ elseif &ft != 'qf' && &ft != '' |
-  \   call matchadd('ColorColumn', '\%>80v.\+', -1) |
+  \   call matchadd('ColorColumn', '\%81v.\+', -1) |
   \ endif
 
 " Jump to last known cursor position when editing (except for git commits)
