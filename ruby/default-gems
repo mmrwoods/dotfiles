@@ -1,0 +1,9 @@
+bundler
+bcat
+pry
+pry-doc
+pry-nav
+pry-theme
+pry-rails
+hirb
+awesome_print

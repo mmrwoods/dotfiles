@@ -4,6 +4,10 @@ set -x
 
 dir=$(cd `dirname $0` && pwd)
 
+# symlink rbenv default gems file
+mkdir -p ~/.rbenv
+ln -s $dir/default-gems ~/.rbenv/default-gems
+
 # symlink bundler config file
 mkdir -p ~/.bundle
 ln -s $dir/bundler ~/.bundle/config
