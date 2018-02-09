@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# note: not all env vars seem to be available within custom hooks.
-rvm_env_string=$(__rvm_env_string)
-printf "\e[32m"
-echo "Now using ${rvm_env_string/system/system ruby}"
-printf "\e[0m"
