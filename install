@@ -9,6 +9,9 @@ if ! test -d ~/.vim; then
   ln -s $dir/ctags ~/.ctags.d
 fi
 
+# symlink editorconfig file
+ln -s $dir/editorconfig ~/.editorconfig
+
 # Symlink rc files
 ls $dir/*rc | while read path; do ln -s $path ~/.$(basename $path); done
 
