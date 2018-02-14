@@ -517,12 +517,19 @@ autocmd BufWritePre *
   \ endif
 
 " Subtly highlight long lines rather than display colorcolumn
-autocmd BufEnter *
-  \ if &textwidth > 0 |
-  \   call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1) |
-  \ elseif &ft != 'qf' && &ft != '' |
-  \   call matchadd('ColorColumn', '\%81v.\+', -1) |
-  \ endif
+function! <SID>HighlightLongLines()
+  for l:match in getmatches()
+    if get(l:match, 'group', '') == 'ColorColumn'
+      call matchdelete(get(l:match, 'id'))
+    endif
+  endfor
+  if &textwidth > 0
+    call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1)
+  elseif &ft != 'qf' && &ft != ''
+    call matchadd('ColorColumn', '\%81v.\+', -1)
+  endif
+endfunction
+autocmd BufNewFile,BufReadPost,BufFilePost * call <SID>HighlightLongLines()
 
 " Jump to last known cursor position when editing (except for git commits)
 autocmd BufReadPost *
