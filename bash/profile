@@ -33,6 +33,9 @@ if which rbenv &> /dev/null; then eval "$(rbenv init -)"; fi
 # add bundler binstubs to path (see ~/dotfiles/ruby/bundler)
 export PATH="./.bundle/bin:$PATH"
 
+# add npm binstubs to path (not sure about this, there is a node-which afer all)
+export PATH="./node_modules/.bin:$PATH"
+
 # add project specific binaries to path (e.g. rails binstubs)
 export PATH="./bin:$PATH"
 
