@@ -407,17 +407,16 @@ nnoremap gs :Scratch<CR>
 " Remove current search highlighting when redrawing screen
 nnoremap <C-L> :nohl<CR>:redraw!<CR>
 
-if has('mouse') && has("clipboard")
-  set mouse=a
+if has("clipboard")
+  " copy to and paste from system clipboard
+  set clipboard=unnamed
 
-  " yank to and paste from system clipboard if possible
-  if has("x11") && ( v:version >= 704 || v:version == 703 && has("patch074") )
-    set clipboard=unnamedplus
-  else
-    set clipboard=unnamed
+  if has("unnamedplus")
+    " and to X11 primary selection if available
+    set clipboard+=unnamedplus
   endif
 
-  " Use windows keyboard shortcuts (taken from mswin.vim)
+  " allow windows/gnome/kde keyboard shortcuts
   " CTRL-X and SHIFT-Del are Cut
   vnoremap <C-X> "+x
   vnoremap <S-Del> "+x
@@ -431,8 +430,13 @@ if has('mouse') && has("clipboard")
   cnoremap <S-Insert> <C-R>+
   exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
   exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
+endif
 
-  " Make the mouse/trackpad work in terminal
+if has('mouse')
+  " enable mouse support in all modes
+  set mouse=a
+
+  " Make the mouse/trackpad work with tmux and screen
   " See https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
   if &term =~ "xterm" || &term =~ "screen"
     " as of March 2013, this works:
