@@ -64,6 +64,8 @@ plug 'pbrisbin/vim-mkdir'
 plug 'editorconfig/editorconfig-vim'
 plug 'tpope/vim-surround'
 plug 'lilydjwg/colorizer'
+plug 'svermeulen/vim-easyclip'
+plug 'tpope/vim-repeat'
 
 # colours
 plug 'altercation/vim-colors-solarized'

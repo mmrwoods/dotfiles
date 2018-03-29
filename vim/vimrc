@@ -254,12 +254,8 @@ let g:jsx_ext_required = 0
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
-" Delete key sends text to blackhole register
-nnoremap <Del> "_x
-vnoremap <Del> "_x
-
-" Make Y act like D and C, i.e. yank until EOL rather than yank entire line
-noremap Y y$
+" Add M mapping to use easyclip function to move until EOL
+nmap M <Plug>MoveMotionEndOfLinePlug
 
 " Stop opening the command line history by accident
 nnoremap q: :q
