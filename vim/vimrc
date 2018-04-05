@@ -219,6 +219,11 @@ let NERDTreeHijackNetrw = 0
 " Show hidden files in NERDTree (same as netrw)
 let NERDTreeShowHidden = 1
 
+" Custom statusline for NERDTree (just show buffer name, e.g. NERD_tree_1)
+" Another option to consider is to show the currently selected file, e.g.
+" https://github.com/vim-airline/vim-airline/issues/271#issuecomment-40597276
+let NERDTreeStatusline = '%t'
+
 " Always show the netrw banner, so it's not mistaken for NERDTree
 let g:netrw_banner = 1
 
