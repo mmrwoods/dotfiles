@@ -368,7 +368,7 @@ nnoremap <leader>fm :call CtrlPCommand('CtrlPMRU')<CR>
 nnoremap <leader>ft :call CtrlPCommand('CtrlPTag')<CR>
 
 " Search in files
-nnoremap <Leader>s :Ack!<Space>
+nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ack!\<Space>"
 
 " Search in files for word under cursor
 nnoremap <leader>y :Ack! <cword><CR>
