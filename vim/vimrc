@@ -129,10 +129,10 @@ if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 endif
 
-" Workaround for tagbar setting ballooneval on open, but never unsetting
+" Workaround for tagbar setting ballooneval globally on open/toggle
 if has('balloon_eval')
-  autocmd WinEnter __Tagbar__ set ballooneval
-  autocmd WinLeave __Tagbar__ set noballooneval
+  autocmd WinEnter __Tagbar__* set ballooneval
+  autocmd WinLeave __Tagbar__* set noballooneval
 endif
 
 " Tell netrw to also stop enabling ballooneval
@@ -383,7 +383,8 @@ nnoremap <leader>b :ToggleBufExplorer<CR>
 nnoremap <leader>m :MRU<CR>
 
 " Outline view of current file
-nnoremap <leader>o :TagbarToggle<Enter>
+" Note: tagbar plugin automatically enables ballooneval globally :-(
+nnoremap <leader>o :TagbarToggle<Enter>:set noballooneval<CR>
 
 " Zoom in/out current window
 nnoremap <leader>x :ZoomWin<Enter>
