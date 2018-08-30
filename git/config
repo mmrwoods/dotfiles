@@ -1,6 +1,7 @@
 [remote "origin"]
   # automagically fetch tags from origin, we like tags
   fetch = +refs/tags/*:refs/tags/*
+  tagOpt = --tags
 [apply]
   whitespace = fix
 [core]
@@ -63,7 +64,7 @@
 
   # pull with rebase from origin
   pr = "!bash -c 'git symbolic-ref --short HEAD | xargs git pull --rebase $@ origin'" -
-  
+
   # push current branch to origin
   po = "!bash -c 'git symbolic-ref --short HEAD | xargs git push $@ origin'" -
 
