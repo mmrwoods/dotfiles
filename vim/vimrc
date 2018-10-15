@@ -256,6 +256,15 @@ let g:AutoPairsMultilineClose = 0
 " Highlight JSX embedded in javascript files
 let g:jsx_ext_required = 0
 
+" Don't set up any gitgutter key mappings (I only use it to show the diff)
+let g:gitgutter_map_keys = 0
+
+" Disable gitgutter by default, enable as needed using gd mapping (see below)
+let g:gitgutter_enabled = 0
+
+" Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
+let g:go_def_mapping_enabled = 0
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
@@ -348,6 +357,9 @@ nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
 " Project drawer / tree view
 nnoremap <leader>d :call NERDTreeCommand()<CR>
+
+" Show/hide git diff in sign column (uses gitgutter plugin)
+nnoremap gd :GitGutterToggle<CR>
 
 " File explorer (uses vim-vinegar plugin, enhanced netrw)
 nmap <leader>e <Plug>VinegarUp
