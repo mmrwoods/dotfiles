@@ -281,6 +281,12 @@ nnoremap q :q
 vnoremap > >gv
 vnoremap < <gv
 
+" Move block selections around in visual mode with schlepp plugin
+vmap <C-Up> <Plug>SchleppUp
+vmap <C-Down> <Plug>SchleppDown
+vmap <C-Left> <Plug>SchleppLeft
+vmap <C-Right> <Plug>SchleppRight
+
 " Allow standard windows & gnome shortcuts to shift lines (for pairing)
 vnoremap <Tab> >
 vnoremap <S-Tab> <

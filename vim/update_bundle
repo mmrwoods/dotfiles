@@ -67,6 +67,7 @@ plug 'lilydjwg/colorizer'
 plug 'svermeulen/vim-easyclip'
 plug 'tpope/vim-repeat'
 plug 'airblade/vim-gitgutter'
+plug 'zirrostig/vim-schlepp'
 
 # colours
 plug 'altercation/vim-colors-solarized'
