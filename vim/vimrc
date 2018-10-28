@@ -439,20 +439,31 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 
-  " allow windows/gnome/kde keyboard shortcuts
-  " CTRL-X and SHIFT-Del are Cut
+  " Allow basic windows/gnome/kde editing shortcuts. Copied from mswin.vim to
+  " help with pairing, but implements fewer shortcuts, and in fewer modes, so
+  " this doesn't break things like the CTRL-V mapping for visual block mode.
+
+  " CTRL-X and SHIFT-Del are Cut in visual mode
   vnoremap <C-X> "+x
   vnoremap <S-Del> "+x
-  " CTRL-C and CTRL-Insert are Copy
+  " CTRL-C and CTRL-Insert are Copy in visual mode
   vnoremap <C-C> "+y
   vnoremap <C-Insert> "+y
-  " CTRL-V and SHIFT-Insert are Paste
-  nnoremap <C-V> "+gP
-  nnoremap <S-Insert> "+gP
-  cnoremap <C-V> <C-R>+
-  cnoremap <S-Insert> <C-R>+
+  " CTRL-V and SHIFT-Insert are Paste in insert and visual modes
   exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
   exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
+  inoremap <S-Insert> <C-V>
+  vnoremap <S-Insert> <C-V>
+  " CTRL-Z is Undo in normal and insert modes
+  noremap <C-Z> u
+  inoremap <C-Z> <C-O>u
+  " CTRL-Y is Redo in normal and insert modes
+  noremap <C-Y> <C-R>
+  inoremap <C-Y> <C-O><C-R>
+  " CTRL-A is Select All in normal, insert and visual modes
+  noremap <C-A> gggH<C-O>G
+  inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+  vnoremap <C-A> <C-C>ggVG
 endif
 
 if has('mouse')
