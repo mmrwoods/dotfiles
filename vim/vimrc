@@ -505,9 +505,6 @@ autocmd FileType gitcommit setlocal synmaxcol=0
 autocmd FileType gitcommit setlocal comments+=fb:-
 autocmd FileType gitcommit setlocal formatoptions+=cro
 
-" Re-enable automatic text wrapping for git commits
-autocmd FileType gitcommit setlocal formatoptions+=t
-
 " Treat annotated git tags as git commits
 autocmd BufNewFile,BufRead TAG_EDITMSG set filetype=gitcommit
 
