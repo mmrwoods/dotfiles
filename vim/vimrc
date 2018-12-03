@@ -501,6 +501,10 @@ autocmd FileType gitcommit setlocal spell spelllang=en_gb
 " Enable syntax highlighting for long lines in git commits
 autocmd FileType gitcommit setlocal synmaxcol=0
 
+" Auto-indent bulletted lists in git commits (treat like comments)
+autocmd FileType gitcommit setlocal comments+=fb:-
+autocmd FileType gitcommit setlocal formatoptions+=cro
+
 " Re-enable automatic text wrapping for git commits
 autocmd FileType gitcommit setlocal formatoptions+=t
 
