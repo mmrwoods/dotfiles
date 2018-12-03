@@ -498,6 +498,9 @@ autocmd BufNewFile,BufRead *.template set filetype=json
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell spelllang=en_gb
 
+" Enable syntax highlighting for long lines in git commits
+autocmd FileType gitcommit setlocal synmaxcol=0
+
 " Re-enable automatic text wrapping for git commits
 autocmd FileType gitcommit setlocal formatoptions+=t
 
