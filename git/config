@@ -103,7 +103,10 @@
 
   # list most recently used/checked-out branches
   # FIXME: this is horribly brittle, find a better solution
-  mru = !git reflog --date=relative --no-decorate | grep --color=no 'checkout: moving from' | head -n 100 | sed s'/checkout: moving from.*to //' | sed s'/HEAD@{/(/' | sed s'/}:/)/' | fgrep -v 'head' | grep -v '[0-9a-z]\\{40\\}' | head -n 10
+  mru = !git reflog --date=relative --no-decorate | grep --color=no 'checkout: moving from' | head -n 100 | sed s'/checkout: moving from.*to //' | sed s'/HEAD@{/(/' | sed s'/}:/)/' | fgrep -v 'head' | grep -v '[0-9a-z]\\{40\\}' | less -RFX
+
+  # select and switch to a recently used/checked-out branch
+  select = "!select ref in $(git mru | awk '{print $NF}' | awk '!x[$0]++'); do git checkout $ref; break; done"
 
   # remove changes from staging area
   unstage = reset HEAD
