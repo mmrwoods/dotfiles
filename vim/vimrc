@@ -482,17 +482,8 @@ if has('mouse')
   endif
 endif
 
-" Don't wrap existing long lines in insert mode
-autocmd FileType * setlocal formatoptions+=l
-
-" Disable automatic text wrapping by default
-autocmd FileType * setlocal formatoptions-=t
-
-" Continue comments when hitting enter in insert mode
-autocmd FileType * setlocal formatoptions+=r
-
-" Continue comments when hitting o or O in normal mode
-autocmd FileType * setlocal formatoptions+=o
+" Default format options, auto-format comments, but not code/text
+set formatoptions=croql
 
 " Additional ruby syntax highlighting
 autocmd BufRead,BufNewFile {Berksfile,Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,config.ru}
