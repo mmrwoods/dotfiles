@@ -97,7 +97,7 @@
   rd = !git status | grep deleted | awk '{print$NF}' | xargs git rm;}
 
   # list recently active/committed branches, both local and remote
-  recent = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:short) %(color:reset)%(subject)' --count=10 refs/{heads,remotes} | sed s'/± /±/' | column -t -s± | less -RFX
+  recent = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' --count=10 refs/{heads,remotes} | sed s'/± /±/' | column -t -s± | less -RFX
 
   # list most recently used/checked-out branches
   # FIXME: this is horribly brittle, find a better solution
@@ -116,10 +116,10 @@
   peek = log --patch --stat --max-count=1
 
   # list local branches order by committer date, but showing author name
-  branches = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:short) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
+  branches = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
 
   # roughly the same as above, but for remote branches
-  remotes = !git for-each-ref --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:local)±%(color:blue)%(authorname)±%(color:reset)%(subject)' refs/remotes | column -t -s± | less -RFX
+  remotes = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)±%(color:reset) %(subject)' refs/remotes | column -t -s± | less -RFX
 
   # again, roughly the same as above, but this time for tags
-  tags = !git for-each-ref --sort=-taggerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(taggerdate:local)±%(color:blue)%(taggername)±%(color:reset)%(subject)' refs/tags | column -t -s± | less -RFX
+  tags = !git for-each-ref --color=always --sort=-taggerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(taggerdate:relative)±%(color:blue)%(taggername)±%(color:reset)%(subject)' refs/tags | column -t -s± | less -RFX
