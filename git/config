@@ -73,10 +73,6 @@
   # switch to most recently checked out ref
   c- = checkout - # note: equivalent to checkout @{-1}
 
-  # switch to most recently checked out symbolic ref
-  # useful for toggling between a feature branch and the main branch
-  toggle = "!bash -c 'set -e; branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo HEAD); git reflog | egrep \"checkout: moving from .* to .*\" | egrep -v \"from $branch\" | egrep -v \"from [a-z0-9]{40}\" | head -n1 | sed s\"/^.*from //\" | cut -f1 -d\" \" | xargs git checkout'"
-
   # reset aliases, pass number as argument to reset to a previous head, e.g. git rsh 2
   # TODO: fudge bash command completion for these aliases somehow
   rs = "!bash -c 'if test \"$1\" -eq \"$1\" 2>/dev/null; then git reset HEAD~${1:-0}; else git reset $@; fi'" -
@@ -98,21 +94,24 @@
   # remove deleted (I'm sure there's an easier way to do this, but this is what I do)
   rd = !git status | grep deleted | awk '{print$NF}' | xargs git rm;}
 
-  # list recently active/committed branches, both local and remote
-  recent = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' --count=10 refs/{heads,remotes} | sed s'/± /±/' | column -t -s± | less -RFX
-
-  # list most recently used/checked-out branches
-  # FIXME: this is horribly brittle, find a better solution
-  mru = !git reflog --date=relative --no-decorate | grep --color=no 'checkout: moving from' | head -n 100 | sed s'/checkout: moving from.*to //' | sed s'/HEAD@{/(/' | sed s'/}:/)/' | fgrep -v 'head' | grep -v '[0-9a-z]\\{40\\}' | less -RFX
+  # list 10 most recently used/checked-out branches
+  mru = "!git reflog -n 300 --pretty='%gs' --grep-reflog='checkout: moving' | awk '{print $NF}' | grep -vi 'head' | grep -v '[0-9a-z]\\{40\\}'| awk '!x[$0]++' | while read ref; do if test -f .git/refs/heads/$ref; then echo $ref; fi; done | head -n 10"
 
   # select and switch to a recently used/checked-out branch
-  select = "!select ref in $(git mru | awk '{print $NF}' | awk '!x[$0]++'); do git checkout $ref; break; done"
+  select = "!select ref in $(git mru); do git checkout $ref; break; done"
+
+  # switch to most recently checked out branch
+  # useful for toggling between a feature branch and the main branch
+  toggle = !git mru | egrep -v "^$(git symbolic-ref --short HEAD 2>/dev/null || echo HEAD)$" | head -n1 | xargs git checkout
 
   # amend the last commit
   amend = commit --amend
 
   # peek at the last commit
   peek = log --patch --stat --max-count=1
+
+  # list 10 most recently active/committed branches, both local and remote
+  recent = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' --count=10 refs/{heads,remotes} | sed s'/± /±/' | column -t -s± | less -RFX
 
   # list local branches order by committer date, but showing author name
   branches = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
