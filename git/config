@@ -108,12 +108,6 @@
   # select and switch to a recently used/checked-out branch
   select = "!select ref in $(git mru | awk '{print $NF}' | awk '!x[$0]++'); do git checkout $ref; break; done"
 
-  # remove changes from staging area
-  unstage = reset HEAD
-
-  # discard changes to current head
-  scrap = reset --hard HEAD
-
   # amend the last commit
   amend = commit --amend
 
