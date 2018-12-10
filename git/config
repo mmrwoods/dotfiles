@@ -115,13 +115,13 @@
   peek = log --patch --stat --max-count=1
 
   # list 10 most recently active/committed branches, both local and remote
-  recent = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' --count=10 refs/{heads,remotes} | sed s'/± /±/' | column -t -s± | less -RFX
+  recent = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' refs/{heads,remotes} | grep -vi 'head' | head -n10 | sed s'/± /±/' | column -t -s± | less -RFX
 
   # list local branches order by committer date, but showing author name
   branches = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' refs/heads | sed s'/± /±/' | column -t -s± | less -RFX
 
   # roughly the same as above, but for remote branches
-  remotes = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)±%(color:reset) %(subject)' refs/remotes | column -t -s± | less -RFX
+  remotes = !git for-each-ref --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)±%(color:reset) %(subject)' refs/remotes | | grep -vi 'head' | column -t -s± | less -RFX
 
   # again, roughly the same as above, but this time for tags
   tags = !git for-each-ref --color=always --sort=-taggerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(taggerdate:relative)±%(color:blue)%(taggername)±%(color:reset)%(subject)' refs/tags | column -t -s± | less -RFX
