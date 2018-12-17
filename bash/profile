@@ -83,6 +83,10 @@ if [ "${TERM%%-*}" == xterm ]; then
   PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 fi
 
+# Allow CTRL-s to be used to search history forward
+# Disables CTRL-s mapping to stop terminal output (not needed)
+stty -ixon
+
 # quick hack to create aliases for starting and stopping postgres
 if [ $has_brew ] && [ -r $brew_prefix/var/postgres ]; then
   alias pg_start="pg_ctl -D $brew_prefix/var/postgres -l $brew_prefix/var/postgres/server.log start"
