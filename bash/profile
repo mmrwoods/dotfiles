@@ -87,6 +87,16 @@ fi
 # Disables CTRL-s mapping to stop terminal output (not needed)
 stty -ixon
 
+# use up/down arrows to search history
+# maybe these should be in inputrc?
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+# use vi rather than emacs key bindings
+# maybe this should be in inputrc too?
+# FIXME: add some common key emacs key bindings for pairing
+set -o vi
+
 # quick hack to create aliases for starting and stopping postgres
 if [ $has_brew ] && [ -r $brew_prefix/var/postgres ]; then
   alias pg_start="pg_ctl -D $brew_prefix/var/postgres -l $brew_prefix/var/postgres/server.log start"
