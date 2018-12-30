@@ -182,6 +182,7 @@ alias sr='spring rspec spec'
 alias srw='spring rspec spec --tag wip'
 
 alias t='tig'
+complete -o default -o nospace -F _tig t
 
 alias g='git'
 complete -o default -o nospace -F _git g
