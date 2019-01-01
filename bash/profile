@@ -47,7 +47,9 @@ export PATH="./bin:$PATH"
 # Allows file be sourced from files other than .bash_profile, without
 # causing problems when sudo is configured to keep HOME env variable
 # and/or target user's shell is bourne compatible, but not bash
-if [ ! -t 1 ] || [ $SHELL != '/bin/bash' ]; then
+# FIXME: clean up this garbage, use .profile and .bash_profile (is this
+# even necessary anymore? I think this is from my old ubuntu/dash days)
+if [ ! -t 1 ] || [ $(basename $SHELL) != 'bash' ]; then
    return
 fi
 
