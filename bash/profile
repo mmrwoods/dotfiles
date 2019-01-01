@@ -155,9 +155,6 @@ if ! which pbcopy &> /dev/null && which xclip &> /dev/null; then
   alias pbpaste="xclip -o -selection clipboard"
 fi
 
-# vi keyboard shortcuts
-set -o vi
-
 alias v='vim'
 
 alias h='history'
