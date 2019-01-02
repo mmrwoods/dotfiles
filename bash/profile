@@ -59,6 +59,16 @@ if [ ! -t 1 ] || [ $(basename $SHELL) != 'bash' ]; then
    return
 fi
 
+if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
+  echo Warning: old bash version detected, $BASH_VERSION, some things might not work >&2
+  if $has_brew; then
+    echo "Use homebrew installed bash as your login shell to fix this:" >&2
+    echo "    brew install bash" >&2
+    echo "    sudo sh -c \"echo $brew_prefix/bin/bash >> /etc/shells\"" >&2
+    echo "    chsh -s $brew_prefix/bin/bash" >&2
+  fi
+fi
+
 # bash completion
 if [ $has_brew ] && [ -r $brew_prefix/etc/bash_completion ]; then
   source $brew_prefix/etc/bash_completion
