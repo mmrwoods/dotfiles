@@ -1,3 +1,11 @@
 set colored-stats on
 set completion-ignore-case on
 set completion-map-case on
+
+# use up/down arrows to search history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# use vi rather than emacs key bindings
+# FIXME: add some common key emacs key bindings for pairing
+set editing-mode vi
