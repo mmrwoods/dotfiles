@@ -38,7 +38,7 @@ if which brew &> /dev/null; then
 fi
 
 # add rbenv shims to path and enable rbenv autocompletion
-if which rbenv &> /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv &> /dev/null; then eval "$(rbenv init --no-rehash -)"; fi
 
 # add bundler binstubs to path (see ~/dotfiles/ruby/bundler)
 export PATH="./.bundle/bin:$PATH"
