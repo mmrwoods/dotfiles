@@ -69,6 +69,8 @@ plug 'tpope/vim-repeat'
 plug 'airblade/vim-gitgutter'
 plug 'zirrostig/vim-schlepp'
 plug 'ciaranm/securemodelines'
+# fork of autoswap that works with iTerm2
+plug 'mmrwoods/vim-autoswap'
 
 # colours
 plug 'altercation/vim-colors-solarized'
