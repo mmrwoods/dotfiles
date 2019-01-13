@@ -98,7 +98,7 @@
   mru = "!git reflog -n 300 --pretty='%gs' --grep-reflog='checkout: moving' | awk '{print $NF}' | grep -vi 'head' | grep -v '[0-9a-z]\\{40\\}'| awk '!x[$0]++' | while read ref; do if test -f .git/refs/heads/$ref; then echo $ref; fi; done | head -n 10"
 
   # select and switch to recently used or committed branches and tags
-  select = "!select subcmd in mru branch remote tag; do git select-$subcmd; break; done"
+  select = "!export COLUMNS=10; select subcmd in mru branch remote tag; do echo; git select-$subcmd; break; done"
   select-mru = "!select ref in $(git mru); do git checkout $ref; break; done"
   select-branch = "!select ref in $(git branch --sort=-committerdate --color=never --format='%(refname:short)' | head -n10); do git checkout $ref; break; done"
   select-remote = "!select ref in $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' | head -n10 | sed 's/^origin\\///'); do git checkout $ref; break; done"
