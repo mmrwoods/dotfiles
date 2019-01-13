@@ -515,6 +515,9 @@ autocmd FileType markdown setlocal formatoptions+=t
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 
+" Avoid error editing crontab: temp file must be edited in place
+autocmd filetype crontab setlocal nobackup nowritebackup
+
 " Use syntax based completion when no omnicompletion available
 if has("autocmd") && exists("+omnifunc")
   autocmd Filetype *
