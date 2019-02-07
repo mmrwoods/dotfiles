@@ -364,6 +364,9 @@ nnoremap <C-\> :call JumpToTagInSplit()<CR>
 " Project drawer / tree view
 nnoremap <leader>d :call NERDTreeCommand()<CR>
 
+" Locate current file in project drawer / tree view
+nnoremap <leader>l :NERDTreeFind<CR>
+
 " Show/hide git diff in sign column (uses gitgutter plugin)
 nnoremap gd :GitGutterToggle<CR>
 
