@@ -159,6 +159,8 @@ if ! which pbcopy &> /dev/null && which xclip &> /dev/null; then
   alias pbpaste="xclip -o -selection clipboard"
 fi
 
+alias p='ping www.google.com'
+
 alias v='vim'
 alias vi='vim'
 
