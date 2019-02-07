@@ -518,6 +518,9 @@ autocmd FileType markdown setlocal formatoptions+=t
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 
+" Use xmllint as exernal program for formatting xml
+autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+
 " Avoid error editing crontab: temp file must be edited in place
 autocmd filetype crontab setlocal nobackup nowritebackup
 
