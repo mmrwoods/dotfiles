@@ -160,6 +160,7 @@ if ! which pbcopy &> /dev/null && which xclip &> /dev/null; then
 fi
 
 alias v='vim'
+alias vi='vim'
 
 alias h='history'
 alias hs='history'
