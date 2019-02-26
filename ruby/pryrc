@@ -29,20 +29,21 @@ def bundle(gem)
   }
 end
 
-def try_require(lib,gem=lib)
+def auto_require(lib,gem=lib)
   bundle(gem) if defined? Bundler
   require lib
-  yield if block_given?
 rescue LoadError
-  cmd = "gem install #{gem}"
-  if system("which rvm &> /dev/null") && !Gem.path.grep(/@global/).empty?
-    cmd = "rvm @global do #{cmd}"
-  end
-  warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
+  warn "#{__FILE__}: installing required gem '#{gem}'"
+  system("gem install #{gem}")
+  Gem.clear_paths
+  bundle(gem) if defined? Bundler
+  require lib
+ensure
+  yield if block_given?
 end
 
 # basic debugger style navigation from binding.pry
-try_require 'pry-nav' do
+auto_require 'pry-nav' do
   Pry.commands.alias_command 'cont', 'continue' rescue nil
   Pry.commands.alias_command 'c', 'continue' rescue nil
   Pry.commands.alias_command 's', 'step' rescue nil
@@ -50,21 +51,21 @@ try_require 'pry-nav' do
 end
 
 # warn if pry-doc not installed
-try_require 'pry-doc'
+auto_require 'pry-doc'
 
 # use solarized theme - see https://github.com/kyrylo/pry-theme
-try_require 'pry-theme'do
+auto_require 'pry-theme'do
   Pry.config.theme = 'solarized'
 end
 
 # add rails console and pry-rails helper methods
 if defined?(Rails) && Rails.version >= "3"
   extend Rails::ConsoleMethods if defined?(Rails::ConsoleMethods)
-  try_require 'pry-rails'
+  auto_require 'pry-rails'
 end
 
 # colourize output using awesome print
-try_require 'awesome_print' do
+auto_require 'awesome_print' do
   alias pp ap
   Pry.config.print = proc {|output, value|
     output.puts ap(value, :multiline => false)
@@ -72,6 +73,6 @@ try_require 'awesome_print' do
 end
 
 # add hirb console methods (table, view, etc.)
-try_require 'hirb' do
+auto_require 'hirb' do
   extend Hirb::Console
 end

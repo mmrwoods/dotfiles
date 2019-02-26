@@ -27,22 +27,23 @@ def bundle(gem)
   }
 end
 
-def try_require(lib,gem=lib)
+def auto_require(lib,gem=lib)
   bundle(gem) if defined? Bundler
   require lib
-  yield if block_given?
 rescue LoadError
-  cmd = "gem install #{gem}"
-  if system("which rvm &> /dev/null") && !Gem.path.grep(/@global/).empty?
-    cmd = "rvm @global do #{cmd}"
-  end
-  warn $!.message.sub(/\.$/,'') + ". Try running '#{cmd}'"
+  warn "#{__FILE__}: installing required gem '#{gem}'"
+  system("gem install #{gem}")
+  Gem.clear_paths
+  bundle(gem) if defined? Bundler
+  require lib
+ensure
+  yield if block_given?
 end
 
 if $0.include?("rails")
 
   # automagically use pry as rails console
-  try_require 'pry' do
+  auto_require 'pry' do
     Pry.start
     exit
   end
@@ -50,7 +51,7 @@ if $0.include?("rails")
 else
 
   # use wirble to fix irb history on osx
-  try_require 'wirble', 'blackwinter-wirble' do
+  auto_require 'wirble', 'blackwinter-wirble' do
     Wirble.init(
       :history_path => IRB.conf[:HISTORY_FILE],
       :history_size => IRB.conf[:SAVE_HISTORY]
@@ -58,7 +59,7 @@ else
   end
 
   # colourize output using awesome print
-  try_require 'awesome_print' do
+  auto_require 'awesome_print' do
     alias pp ap
     IRB::Irb.class_eval do
       def output_value
@@ -68,7 +69,7 @@ else
   end
 
   # add hirb console methods (table, view, etc.)
-  try_require 'hirb' do
+  auto_require 'hirb' do
     extend Hirb::Console
   end
 
