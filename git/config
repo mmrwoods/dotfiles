@@ -58,6 +58,7 @@
   dc = diff --cached
   dw = diff --word-diff
   pf = push --force-with-lease
+  pt = push --tags
   rb = rebase
   st = status
   sh = show
