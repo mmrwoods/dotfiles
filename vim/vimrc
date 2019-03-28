@@ -392,7 +392,7 @@ nnoremap <leader>ft :call CtrlPCommand('CtrlPTag')<CR>
 nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ack!\<Space>"
 
 " Search in files for word under cursor
-nnoremap <leader>y :Ack! <cword><space>
+nnoremap <leader>y "syiw:Ack! <c-r>s<space>
 
 " List projects
 nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
