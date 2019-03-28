@@ -141,8 +141,10 @@ let g:netrw_nobeval = 1
 " Show relative paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
-" Show no name buffers by default in bufexplorer
-let g:bufExplorerShowNoName = 1
+" Hide no name buffers in bufexplorer, because this makes it too easy to
+" delete quickfix and location list buffers without wiping them, and this
+" causes mayhem in vim 8.1 (reuses deleted buffer, but commands don't work)
+let g:bufExplorerShowNoName = 0
 
 " Disable default BufExplorer key mappings (use custom mappings)
 let g:bufExplorerDisableDefaultKeyMapping = 1
