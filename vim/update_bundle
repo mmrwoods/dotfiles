@@ -26,6 +26,7 @@ plug 'ctrlpvim/ctrlp.vim'
 plug 'mmrwoods/vim-vinegar'
 # Fork of MRU plugin that works nicely with alternate file
 plug 'mmrwoods/mru'
+plug 'romainl/vim-qf'
 
 # syntax
 plug 'kchmck/vim-coffee-script'
