@@ -365,7 +365,7 @@ function! JumpToTagInSplit()
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
-" Project drawer / tree view
+" Toggle project drawer / tree view
 nnoremap <leader>d :call NERDTreeCommand()<CR>
 
 " Locate current file in project drawer / tree view
@@ -374,8 +374,8 @@ nnoremap <leader>l :NERDTreeFind<CR>
 " Show/hide git diff in sign column (uses gitgutter plugin)
 nnoremap gd :GitGutterToggle<CR>
 
-" File explorer (uses vim-vinegar plugin, enhanced netrw)
-nmap <leader>e <Plug>VinegarUp
+" Toggle file explorer (netrw, enhanced with vim-vinegar)
+nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
 
 " Fuzzy finder (mixed mode)
 nnoremap <leader>f :call CtrlPCommand('CtrlPMixed')<CR>
