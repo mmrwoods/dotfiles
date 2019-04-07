@@ -125,4 +125,4 @@
   remotes = !git branch --remote --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)±%(color:reset) %(subject)' | grep -v 'HEAD' | column -t -s± | less -RFX
 
   # again, roughly the same as above, but this time for tags
-  tags = !git tag --color=always --sort=-taggerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(taggerdate:relative)±%(color:blue)%(taggername)±%(color:reset)%(subject)' | column -t -s± | less -RFX
+  tags = !git tag --color=always --sort=-creatordate --format='%(color:yellow)%(refname:short)±%(color:green)%(creatordate:relative)±%(color:blue)%(taggername)±%(color:reset)%(subject)' | column -t -s± | less -RFX
