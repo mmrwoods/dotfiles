@@ -126,3 +126,6 @@
 
   # again, roughly the same as above, but this time for tags
   tags = !git tag --color=always --sort=-creatordate --format='%(color:yellow)%(refname:short)±%(color:green)%(creatordate:relative)±%(color:blue)%(taggername)±%(color:reset)%(subject)' | column -t -s± | less -RFX
+
+  # filter tags output to show only releases
+  releases = !git tags | egrep \"^(\\x1B\\[[0-9]+m)?v?[0-9]+.[0-9]+.[0-9]+\" --color=none
