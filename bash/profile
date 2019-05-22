@@ -70,13 +70,17 @@ if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
 fi
 
 # bash completion
-if [ $has_brew ] && [ -r $brew_prefix/etc/bash_completion ]; then
-  source $brew_prefix/etc/bash_completion
+if [ $has_brew ] && [ -r $brew_prefix/etc/profile.d/bash_completion.sh ]; then
+  source $brew_prefix/etc/profile.d/bash_completion.sh
+  if [ -z $BASH_COMPLETION_COMPAT_DIR ]; then
+    export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d
+  fi
 fi
 
 # git completion
 if ! type __git_ps1 &> /dev/null; then
-  source ~/dotfiles/bash/git-completion.sh
+  source ~/dotfiles/bash/git-prompt.sh
+  source ~/dotfiles/bash/git-completion.bash
 fi
 
 # capistrano command completion
