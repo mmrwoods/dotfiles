@@ -1,6 +1,8 @@
 --sort-files
 --color
 --follow
+--smart-case
+--no-group
 
 --type-add
 yaml=.yaml,.yml
