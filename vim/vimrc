@@ -288,6 +288,11 @@ nnoremap q :q
 vnoremap > >gv
 vnoremap < <gv
 
+" Make backspace work with visual selections again. This used to work by
+" default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
+" without this mapping, backspacing in visual mode just moves the cursor.
+vnoremap <BS> x
+
 " Move block selections around in visual mode with schlepp plugin
 vmap <C-Up> <Plug>SchleppUp
 vmap <C-Down> <Plug>SchleppDown
