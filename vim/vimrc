@@ -89,6 +89,7 @@ endif
 set nofoldenable                  " Open all folds by default
 set foldlevel=1                   " Fold only one level deep by default
 set foldlevelstart=1              " Reset the fold level when opening new files
+set foldmethod=indent             " Keep it simple stupid, just fold on indent
 
 " Suffixes that can be ignored when completing file names
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
