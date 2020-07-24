@@ -242,11 +242,14 @@ fi
 # alias for thefuck, https://github.com/nvbn/thefuck
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
-# make random password
-# insert underscore at random position to satisfy annoying password policies
+# Make random password containing letters, digits and an underscore somewhere
+# The resulting password is a vim/regex word, so it's easy to copy and paste
 mkpw() {
   reqlength=${1:-20}
   randomstr=`head /dev/urandom | uuencode -m - | sed -n 2p | tr -d '/+' | cut -c1-${reqlength} | tr -d '\n';`
+  if ! echo $randomstr | egrep '\d' >/dev/null; then
+    randomstr=`echo $(( RANDOM % 10 ))$randomstr | cut -c1-${reqlength}`
+  fi
   punctchar="_"
   insertpos=`awk -v min=1 -v max=$reqlength 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
   echo $randomstr | sed s/./\\$punctchar/$insertpos | tr -d '\n' ; if [ -t 1 ] ; then echo; fi
