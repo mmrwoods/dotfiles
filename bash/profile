@@ -12,10 +12,13 @@ if which gdircolors &> /dev/null; then
   eval `gdircolors ~/dotfiles/bash/dircolors-solarized.ansi-dark`
 fi
 
-export PATH=$PATH:$HOME/bin
+# Copy path before munging so we can restore it when reloading the shell
+export ORIGINAL_PATH=$PATH
 
+# Set the node path to allow use of globally installed modules
 export NODE_PATH=/usr/local/lib/node_modules
 
+# Cucumber comments are grey by default, hard to see using solarized dark
 export CUCUMBER_COLORS=comment=cyan
 
 export GREP_OPTIONS='--color=auto --exclude=tags --exclude-dir=.git'
@@ -36,6 +39,13 @@ if which brew &> /dev/null; then
   brew_prefix=`brew --prefix`
   export PATH=$brew_prefix/bin:$brew_prefix/sbin:$PATH
 fi
+
+# add /usr/local/sbin to path if necessary
+if ! echo $PATH | grep /usr/local/sbin &> /dev/null; then
+  export PATH=$PATH:/usr/local/sbin
+fi
+
+export PATH=$HOME/bin:$PATH
 
 # add nodenv shims to path and enable nodenv autocompletion
 if which nodenv &> /dev/null; then eval "$(nodenv init --no-rehash -)"; fi
@@ -132,7 +142,7 @@ if [ $has_brew ] && [ ! -r $brew_prefix/bin/vim ]; then
 fi
 
 # reload bash shell (I always forget how)
-alias reload="exec bash -l"
+alias reload="export PATH=$ORIGINAL_PATH; exec bash -l"
 
 # highlight error output from git commands in red
 # - highlights based on pattern match as stderr not only used for errors
@@ -150,11 +160,6 @@ if test $(uname) == Darwin; then
     fi
   }
   alias git="git_err_red git"
-fi
-
-# add /usr/local/sbin to path if necessary
-if ! echo $PATH | grep /usr/local/sbin &> /dev/null; then
-  PATH=$PATH:/usr/local/sbin
 fi
 
 # use gnome-open rather than openvt
