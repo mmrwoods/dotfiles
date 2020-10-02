@@ -114,6 +114,9 @@ set listchars=tab:→·,trail:·,eol:¶
 " only complete to longest common match, don't use preview scratch window
 set completeopt=menuone,longest
 
+" Include dictionary words in completion menu when spellcheck is enabled
+set complete+=kspell
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
@@ -431,8 +434,7 @@ nnoremap <leader><space> :ToggleSpaceHi<Enter>
 nnoremap <Leader>ct :!ctags -R .<CR>
 
 " Toggle spell checking
-inoremap <Leader>; <C-o>:setlocal spell! spelllang=en_gb<CR>
-nnoremap <Leader>; :setlocal spell! spelllang=en_gb<CR>
+nnoremap <Leader>ts :setlocal spell!<CR>
 
 " Some extra mappings for convenience/speed
 " Single key to toggle bufexplorer, I use this all the time
@@ -513,7 +515,7 @@ autocmd BufRead,BufNewFile *.conf.local set ft=conf
 autocmd BufNewFile,BufRead *.template set filetype=json
 
 " Turn on spell checking by default for git commits
-autocmd FileType gitcommit setlocal spell spelllang=en_gb
+autocmd FileType gitcommit setlocal spell
 
 " Enable syntax highlighting for long lines in git commits
 autocmd FileType gitcommit setlocal synmaxcol=0
@@ -528,6 +530,9 @@ autocmd BufNewFile,BufRead TAG_EDITMSG set filetype=gitcommit
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
 autocmd FileType markdown setlocal formatoptions+=t
+
+" Turn on spell checking by default for markdown and text files
+autocmd FileType markdown,text setlocal spell
 
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
