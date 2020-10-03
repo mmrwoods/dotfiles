@@ -140,6 +140,10 @@ if has('balloon_eval')
   autocmd WinLeave __Tagbar__* set noballooneval
 endif
 
+" Assume a POSIX-compatible shell when shebang specifies /bin/sh, otherwise
+" highlighting is system dependent as the sh syntax file resolves symlinks
+let g:is_posix = 1
+
 " Tell netrw to also stop enabling ballooneval
 let g:netrw_nobeval = 1
 
