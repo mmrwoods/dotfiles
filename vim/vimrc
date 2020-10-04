@@ -117,6 +117,9 @@ set completeopt=menuone,longest
 " Include dictionary words in completion menu when spellcheck is enabled
 set complete+=kspell
 
+" When joining lines, use one space rather than two after punctuation
+set nojoinspaces
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
