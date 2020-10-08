@@ -7,10 +7,21 @@ end_of_line = lf
 indent_size = 2
 indent_style = space
 insert_final_newline = true
-max_line_length = 80
 trim_trailing_whitespace = true
 
-[*.{md,txt}]
+[*.{rb,js,java,md}]
+max_line_length = 80
+
+[*.{py,txt}]
+max_line_length = 79
+
+[{*.vim,*vimrc}]
+max_line_length = 78
+
+[*.{go,ts}]
+max_line_length = 88
+
+[*.md]
 trim_trailing_whitespace = false
 
 [*.{py,go,java}]
@@ -28,3 +39,4 @@ indent_style = tab
 
 [*.min.js]
 insert_final_newline = false
+max_line_length = off
