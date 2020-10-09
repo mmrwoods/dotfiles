@@ -69,7 +69,7 @@ defaults write com.apple.Mail DisableSendAnimations -bool true
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
-# Don't use native OSX full screen mode with iTerm2 (annoying animations)
+# Don't use native full screen mode with iTerm2 (annoying animations)
 defaults write com.googlecode.iterm2 UseLionStyleFullscreen -bool false
 
 # Don't prompt on quit in iTerm2
@@ -91,7 +91,7 @@ defaults write com.googlecode.iterm2 ShowNewOutputIndicator -bool false
 # Hide iTerm2 tab number, I prefer to see more of the cwd path
 defaults write com.googlecode.iterm2 HideTabNumber -bool true
 
-# Don't use native OSX full screen mode with MacVim (annoying animations)
+# Don't use native full screen mode with MacVim (annoying animations)
 defaults write org.vim.MacVim MMNativeFullScreen -int 0
 
 # Add solarized colours to iTerm2

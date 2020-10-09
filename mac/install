@@ -7,11 +7,11 @@ if test "$(uname)" != "Darwin" ; then
 fi
 
 # Copy library files (key bindings and keyboard layout)
-cd ~/dotfiles/osx && cp -R Library ~/
+cd ~/dotfiles/mac && cp -R Library ~/
 
 # Install and enable login and logout hooks to mute sound on startup
-sudo cp ~/dotfiles/osx/loginhook /usr/local/bin/
-sudo cp ~/dotfiles/osx/logouthook /usr/local/bin/
+sudo cp ~/dotfiles/mac/loginhook /usr/local/bin/
+sudo cp ~/dotfiles/mac/logouthook /usr/local/bin/
 
 sudo defaults write com.apple.loginwindow LoginHook /usr/local/bin/loginhook
 sudo defaults write com.apple.loginwindow LogoutHook /usr/local/bin/logouthook

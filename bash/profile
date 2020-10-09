@@ -138,7 +138,7 @@ alias reload="export PATH=$ORIGINAL_PATH; exec bash -l"
 # - uses script command to ensure git sees output streams as terminals
 # - only modifies output for whitelisted commands to avoid pager issues
 # - doesn't work with git alises for whitelisted commands (this sucks)
-# - currently relies on BSD sed, so only used with OSX (also sucks)
+# - currently relies on BSD sed, so only used with MacOS (also sucks)
 if test $(uname) == Darwin; then
   git_err_red() {
     if test -t 1 && test -t 2 && [[ "$@" =~ (push|pull|clone|fetch|po|toggle) ]]; then
