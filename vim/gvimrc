@@ -66,12 +66,3 @@ if has("mac")
   autocmd VimResized * wincmd =
 
 endif
-
-if has("gui_gtk")
-
-  " always show tabline on laptop screen
-  if system("/usr/bin/xrandr | awk -F',' '/Screen 0/ {gsub(\"( |current)\",\"\");printf $2}'") == "1024x768"
-    set showtabline=2
-  endif
-
-endif
