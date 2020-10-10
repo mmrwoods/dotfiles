@@ -206,25 +206,11 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:25'
 " Include the current file in the list of matches
 let g:ctrlp_match_current_file = 1
 
-" Let CtrlP reuse nofile buffers when opening files (e.g. BufExplorer)
-" FIXME: This doesn't seem to make a blind bit of difference anymore,
-" NERDTree uses a nofile buffer, and CtrlP opens files in that buffer
-let g:ctrlp_reuse_window = 'netrw\|nofile'
+" Let CtrlP reuse Netrw and BufExplorer windows when opening files
+let g:ctrlp_reuse_window = 'netrw\|BufExplorer'
 
-" Prevent CtrlP opening files inside non-writeable buffers, e.g. NERDTree
-" See https://vi.stackexchange.com/questions/10016/stop-ctrlp-from-opening-in-nerdtree
-function! CtrlPCommand(cmd)
-  let c = 0
-  let wincount = winnr('$')
-  " Don't open it here if current buffer is not writable (e.g. NERDTree)
-  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
-    exec 'wincmd w'
-    let c = c + 1
-  endwhile
-  exec a:cmd
-endfunction
-let g:ctrlp_map = ''
-nnoremap <C-p> :call CtrlPCommand('CtrlPMixed')<CR>
+" Open CtrlP in mixed mode by default (search files, buffers and MRU files)
+let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Tell NERDTree to respect wildignore like CtrlP does
 let NERDTreeRespectWildIgnore = 1
@@ -398,19 +384,19 @@ nnoremap gd :GitGutterToggle<CR>
 nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
 
 " Fuzzy finder (mixed mode)
-nnoremap <leader>f :call CtrlPCommand('CtrlPMixed')<CR>
+nnoremap <leader>f :CtrlPMixed<CR>
 
 " Fuzzy find files
-nnoremap <leader>ff :call CtrlPCommand('CtrlP')<CR>
+nnoremap <leader>ff :CtrlP<CR>
 
 " Fuzzy find buffers
-nnoremap <leader>fb :call CtrlPCommand('CtrlPBuffer')<CR>
+nnoremap <leader>fb :CtrlPBuffer<CR>
 
 " Fuzzy find MRU files
-nnoremap <leader>fm :call CtrlPCommand('CtrlPMRU')<CR>
+nnoremap <leader>fm :CtrlPMRU<CR>
 
 " Fuzzy find tags
-nnoremap <leader>ft :call CtrlPCommand('CtrlPTag')<CR>
+nnoremap <leader>ft :CtrlPTag<CR>
 
 " Search in files
 nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ack!\<Space>"
