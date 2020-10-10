@@ -62,54 +62,6 @@ if has("mac")
   nnoremap § #
   vnoremap § #
 
-  " Workarounds for macvim rendering glitches when using core text renderer
-  " combined with non-native full screen mode (some parts of the screen are
-  " blacked out when windows are resized without redrawing the whole screen).
-  " Triggered by dynamically resized windows like CtrlP, and automatically
-  " closed quickfix or nofile windows used by other plugins like MRU etc.
-  "
-  " More info:
-  " https://code.google.com/p/macvim/issues/detail?id=409
-  " http://vim.1045645.n5.nabble.com/Trouble-with-the-Core-Text-renderer-in-non-native-full-screen-td5713348.html
-  " https://groups.google.com/forum/#!topic/vim_mac/psLlQaE4Ko0
-  " https://groups.google.com/forum/#!topic/vim_mac/UkxoqhPVbeQ
-  " Note: some of the above references are very old, but the issue remains.
-
-  " These issues appear to be fixed since upgrading to MacVim 8.0, MacOS 10.11
-  if v:version < 800
-
-    " Clear and redraw when leaving quickfix or nofile windows
-    autocmd WinLeave *
-      \ if &bt == 'quickfix' || &bt == 'nofile' |
-      \   exec 'redraw!' |
-      \ endif
-
-    " Clear and redraw screen when exiting CtrlP buffer
-    let g:ctrlp_buffer_func = {
-      \ 'exit':  'RedrawScreen',
-      \ }
-    function! RedrawScreen()
-      exec 'redraw!'
-    endfunction
-
-    " Fix the dimensions of the CtrlP window to avoid dynamic resizing
-    let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:10'
-
-    " Redraw screen when CtrlP window is resized after scanning for files
-    " This is only necessary because CtrlP doesn't open the window using
-    " the dimensions set above, but resizes *after* scanning for files.
-    autocmd CursorMoved ControlP
-      \ if !exists('b:ctrlp_did_redraw') |
-      \   exec 'redraw!' |
-      \   let b:ctrlp_did_redraw = 1 |
-      \ endif
-
-    " Starting MacVim in non-native fullscreen mode triggers similar rendering
-    " glitches to those referred to above, so never start in fullscreen mode
-    autocmd VimEnter * set nofullscreen
-
-  endif
-
   " Automatically resize all windows when vim container window resized
   autocmd VimResized * wincmd =
 
