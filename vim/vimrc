@@ -510,13 +510,6 @@ autocmd FileType gitcommit setlocal spell
 " Enable syntax highlighting for long lines in git commits
 autocmd FileType gitcommit setlocal synmaxcol=0
 
-" Auto-indent bulletted lists in git commits (treat like comments)
-autocmd FileType gitcommit setlocal comments+=fb:-
-autocmd FileType gitcommit setlocal formatoptions+=cro
-
-" Treat annotated git tags as git commits
-autocmd BufNewFile,BufRead TAG_EDITMSG set filetype=gitcommit
-
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
 
