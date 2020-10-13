@@ -82,6 +82,24 @@ if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
   fi
 fi
 
+# Hack cd to automatically push to the directory stack, but avoid duplicates
+# Similar to zsh with setopt autopushd pushdignoredups pushdsilent pushdtohome
+function cd() {
+  builtin pushd -n "$PWD" > /dev/null
+  builtin cd "$@" # do not return on fail, we've already pushed to the stack
+  lastpos=$( builtin dirs -l -v | grep -F "$PWD" | tail -n 1 | cut -f2 -d' ' )
+  if [ "$lastpos" -gt 0 ]; then
+    builtin popd "+${lastpos}" > /dev/null || return
+  fi
+}
+
+# Select a directory from the stack and switch to it
+function d() {
+  old_columns=$COLUMNS
+  COLUMNS=0; select dir in $(builtin dirs -l); do cd "$dir" || break; break; done
+  COLUMNS=$old_columns
+}
+
 # bash completion
 if [ $has_brew ] && [ -r $brew_prefix/etc/profile.d/bash_completion.sh ]; then
   source $brew_prefix/etc/profile.d/bash_completion.sh
