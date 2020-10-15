@@ -132,6 +132,9 @@ let MRU_Add_Menu = 0
 " Use the current window to load the list of MRU files
 let MRU_Use_Current_Window = 1
 
+" Don't add git commits etc. to MRU files
+let MRU_Exclude_Files = '\.git*'
+
 " Make sure tagbar uses exuberant ctags
 if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
@@ -199,6 +202,13 @@ let g:ctrlp_custom_ignore = {
 
 " Use the current vim working directory as the CtrlP working directory
 let g:ctrlp_working_path_mode = 0
+
+" Tell CtrlP to exclude the same files from its MRU list as MRU plugin
+let g:ctrlp_mruf_exclude = MRU_Exclude_Files
+
+" Only show MRU files within the current working directory in CtrlP
+" I use CtrlP for searching the current project / working directory
+let g:ctrlp_mruf_relative = 1
 
 " Customise dimensions of CtrlP match window (show more than 10 results)
 let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:25'
