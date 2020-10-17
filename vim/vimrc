@@ -538,12 +538,12 @@ autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/n
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 " Use syntax based completion when no omnicompletion available
-if has("autocmd") && exists("+omnifunc")
+if exists("+omnifunc")
   autocmd Filetype *
     \	if &omnifunc == "" |
     \	  setlocal omnifunc=syntaxcomplete#Complete |
     \	endif
-  endif
+endif
 
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving
