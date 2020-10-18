@@ -49,6 +49,21 @@ if has("mac")
   endfunction
   nnoremap <D-r> :call <SID>Refresh()<CR>
 
+  " Hack to fix equalize windows on MacVim, move to first window before resize
+  " to deal with macvim non-native fullscreen weirdness - if a bottom split is
+  " focused, it gets resized incorrectly when automatically equalising windows
+  " when entering non-native fullscreen mode, or when switching back from some
+  " other non-native fullscreen window (e.g. iTerm).
+  " The mapping just allows me to quickly tidy the windows. I could use some
+  " autocmds to do this automagically, but that's prob too much magic for now.
+  function! <SID>EqualWindows()
+    let currwin=winnr()
+    exec '1 wincmd w'
+    exec 'wincmd ='
+    exec currwin . 'wincmd w'
+  endfunction
+  nnoremap = :call <SID>EqualWindows()<CR>
+
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
 
