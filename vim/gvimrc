@@ -11,7 +11,6 @@ let sessionman_save_on_exit=1
 function! <SID>LoadLastSession()
   " note - sessionman plugin stores last opened session name in g:LAST_SESSION
   if argc() == 0 && ( v:servername == 'VIM' || v:servername == 'GVIM' )
-    " autocmd BufEnter * if &ft == '' && &buftype == '' | filetype detect
     if !filereadable($HOME . '/.vim/sessions/default')
       execute 'SessionSaveAs default'
     elseif exists('g:LAST_SESSION')
@@ -52,10 +51,6 @@ if has("mac")
   " Hack to fix equalize windows on MacVim, move to first window before resize
   " to deal with macvim non-native fullscreen weirdness - if a bottom split is
   " focused, it gets resized incorrectly when automatically equalising windows
-  " when entering non-native fullscreen mode, or when switching back from some
-  " other non-native fullscreen window (e.g. iTerm).
-  " The mapping just allows me to quickly tidy the windows. I could use some
-  " autocmds to do this automagically, but that's prob too much magic for now.
   function! <SID>EqualWindows()
     let currwin=winnr()
     exec '1 wincmd w'
@@ -63,6 +58,22 @@ if has("mac")
     exec currwin . 'wincmd w'
   endfunction
   nnoremap = :call <SID>EqualWindows()<CR>
+  nnoremap <C-w>= :call <SID>EqualWindows()<CR>
+
+  " Similar to the issue above, and presumably the same root cause, when
+  " switching back to MacVim running in a non-native fullscreen window from
+  " some other program running non-native fullscreen window (e.g. iTerm), if
+  " a bottom split is focused it gets resized slighly so things are no longer
+  " equalised. These autocmds just move to the first window before vim loses
+  " focus, and then moves back to the original window when it regains focus.
+  " It is admittedly a horrible hack, but it also seems to work quite well.
+  autocmd VimLeave,FocusLost *
+    \ let g:LAST_WINDOW = winnr() |
+    \ exec '1 wincmd w'
+  autocmd VimEnter,FocusGained *
+    \ if exists('g:LAST_WINDOW') |
+    \   exec g:LAST_WINDOW . 'wincmd w' |
+    \ endif
 
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
@@ -78,6 +89,6 @@ if has("mac")
   vnoremap § #
 
   " Automatically resize all windows when vim container window resized
-  autocmd VimResized * wincmd =
+  autocmd VimResized * call <SID>EqualWindows()
 
 endif
