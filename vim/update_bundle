@@ -27,6 +27,7 @@ plug 'mmrwoods/vim-vinegar'
 # Fork of MRU plugin that works nicely with alternate file
 plug 'mmrwoods/mru'
 plug 'romainl/vim-qf'
+plug 'MTDL9/vim-window-mode'
 
 # syntax
 plug 'kchmck/vim-coffee-script'

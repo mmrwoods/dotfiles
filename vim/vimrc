@@ -329,6 +329,9 @@ nnoremap Z zM
 nnoremap <Leader>a <C-^>
 
 " Window mappings
+" switch to window pseudo-mode (uses window mode plugin, no more keyboard
+" contortions - window mode automatically prefixes <C-w> to all keypresses)
+nnoremap <leader>wm :WindowMode<CR>
 " open alternate file in new vertial split
 nnoremap <leader>wa :wincmd v<CR><C-^>
 " old mapping to open alt file in split
