@@ -325,17 +325,22 @@ nnoremap zz zR
 " Z closes all folds
 nnoremap Z zM
 
-" Open alternate file (simpler than CTRL-^ or CTRL-6)
-nnoremap <Leader>a <C-^>
+" Open the alternate file, i.e. previously edited file in the current window
+nnoremap <Leader>g <C-^>
+
+" Open plugin defined alternate file, e.g. unit test file for model
+" This relies on plugins like rails.vim that follow the conventions of a.vim
+" and create an A command to find the file and open it in the current window
+nnoremap <Leader>a :A<CR>
 
 " Window mappings
 " switch to window pseudo-mode (uses window mode plugin, no more keyboard
 " contortions - window mode automatically prefixes <C-w> to all keypresses)
 nnoremap <leader>wm :WindowMode<CR>
-" open alternate file in new vertial split
-nnoremap <leader>wa :wincmd v<CR><C-^>
-" old mapping to open alt file in split
-nnoremap <leader>w :wincmd v<CR><C-^>
+" open vim defined alternate file in new vertial split
+nnoremap <leader>wg :vs#<CR>
+" open plugin defined alternate file in new vertial split
+nnoremap <leader>wa :AV<CR>
 " shortcuts for opening new splits
 nnoremap <leader>ws :wincmd s<CR>
 nnoremap <leader>wv :wincmd v<CR>
@@ -447,8 +452,6 @@ nnoremap <Leader>ts :setlocal spell!<CR>
 " Some extra mappings for convenience/speed
 " Single key to toggle bufexplorer, I use this all the time
 nnoremap ; :ToggleBufExplorer<CR>
-" <leader>g mapping for alternate file, faster than <leader>a
-nnoremap <Leader>g <C-^>
 
 " Remap gs to open Scratch window in normal rather than insert mode
 let g:scratch_no_mappings = 1 " must disable plugin mappings first
