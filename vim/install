@@ -12,4 +12,4 @@ fi
 ln -s $dir/vimrc ~/.vimrc
 ln -s $dir/gvimrc ~/.gvimrc
 
-ruby update_bundle
+ruby $dir/update_bundle
