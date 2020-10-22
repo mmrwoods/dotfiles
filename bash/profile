@@ -120,12 +120,6 @@ source ~/dotfiles/bash/capistrano.bash
 # knife solo command completion
 source ~/dotfiles/bash/knife-solo-completion.bash
 
-# rails command completion
-# TODO: try https://github.com/mernen/completion-ruby
-if [ ${BASH_VERSINFO[0]} -ge 4 ]; then
-  source ~/dotfiles/bash/rails.bash
-fi
-
 # git prompt for local workstation
 if [ -z "$SSH_CLIENT" ]; then
   GIT_PS1_SHOWDIRTYSTATE=1
