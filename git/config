@@ -118,10 +118,10 @@
   recent = !git branch --all --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' | grep -v 'HEAD' | head -n10 | sed s'/± /±/' | column -t -s± | less -RFX
 
   # list local branches order by committer date, but showing author name
-  branches = !git branch --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' | sed s'/± /±/' | column -t -s± | less -RFX
+  branches = !"git branch --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:reset)±%(subject)' | awk -F± 'BEGIN { OFS=FS }; { $4=substr($4, 1, 50); print }' | sed s'/± /±/' | column -t -s± | less -RFX"
 
   # roughly the same as above, but for remote branches
-  remotes = !git branch --remote --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)±%(color:reset) %(subject)' | grep -v 'HEAD' | column -t -s± | less -RFX
+  remotes = !"git branch --remote --color=always --sort=-committerdate --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:reset)±%(subject)' | awk -F± 'BEGIN { OFS=FS }; { sub(/origin\\//, \"\", $1); $4=substr($4, 1, 50); print }' | grep -v 'HEAD' | column -t -s± | less -RFX"
 
   # again, roughly the same as above, but this time for tags
   tags = !git tag --color=always --sort=-creatordate --format='%(color:yellow)%(refname:short)±%(color:green)%(creatordate:relative)±%(color:blue)%(taggername)±%(color:reset)%(subject)' | column -t -s± | less -RFX
