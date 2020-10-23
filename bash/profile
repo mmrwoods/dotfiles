@@ -96,7 +96,7 @@ function cd() {
 # Select a directory from the stack and switch to it
 function d() {
   old_columns=$COLUMNS
-  COLUMNS=0; select dir in $(builtin dirs -l -p | head -n10); do cd "$dir" || break; break; done
+  COLUMNS=10; select dir in $(builtin dirs -l -p | head -n10); do cd "$dir" || break; break; done
   COLUMNS=$old_columns
 }
 
