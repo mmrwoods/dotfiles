@@ -512,6 +512,9 @@ if has('mouse')
   endif
 endif
 
+" Default format options, auto-format comments, but not code/text
+set formatoptions=croql
+
 " Additional ruby syntax highlighting
 autocmd BufRead,BufNewFile {Berksfile,Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,config.ru}
   \ set ft=ruby |
@@ -530,6 +533,7 @@ autocmd FileType gitcommit setlocal synmaxcol=0
 
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
+autocmd FileType markdown setlocal formatoptions+=t
 
 " Turn on spell checking by default for markdown and text files
 autocmd FileType markdown,text setlocal spell
