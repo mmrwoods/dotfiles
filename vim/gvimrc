@@ -1,6 +1,5 @@
 set antialias                     " Smooth fonts
 set guioptions-=T                 " Hide toolbar
-set background=light              " Light background when using GUI
 set guicursor=n:blinkon0          " No blinking the cursor in normal mode
 set lines=999 columns=999         " Open maximized
 
