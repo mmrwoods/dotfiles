@@ -195,6 +195,9 @@ let g:colorizer_startup = 0
 " Enable per buffer with `let b:PreserveNoEOL = 1`
 let g:PreserveNoEOL = 0
 
+" Disable delimitMate within comments and strings (default is comments)
+let delimitMate_excluded_regions = "Comment,String"
+
 " Ignore some additional files to make CtrlP load faster
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v[\/](tmp|log|vendor|coverage|images|fonts|node_modules)$'

@@ -52,7 +52,7 @@ plug 'tpope/vim-endwise'
 plug 'mattn/gist-vim'
 plug 'mattn/webapi-vim' # required by gist-vim
 plug 'tpope/vim-eunuch'
-plug 'jiangmiao/auto-pairs'
+plug 'Raimondi/delimitMate'
 plug 'ConradIrwin/vim-bracketed-paste'
 plug 'vim-utils/vim-most-minimal-folds'
 plug 'nelstrom/vim-markdown-folding'
