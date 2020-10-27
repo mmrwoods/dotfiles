@@ -6,8 +6,11 @@ if test "$(uname)" != "Darwin" ; then
   exit
 fi
 
-# Copy library files (key bindings and keyboard layout)
-cd ~/dotfiles/mac && cp -R Library ~/
+# Copy custom cocoa key bindings to shared library. Most significantly,
+# this remaps section sign § to hash #. Copying to the shared library
+# allows the key bindings to work with apps installed via the app store.
+# This also modifies key bindings for all users, but this is my laptop!
+sudo cp -R ~/dotfiles/mac/Library/KeyBindings /Library/
 
 # Install and enable login and logout hooks to mute sound on startup
 sudo cp ~/dotfiles/mac/loginhook /usr/local/bin/
