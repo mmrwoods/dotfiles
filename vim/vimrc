@@ -265,9 +265,6 @@ let g:EditorConfig_max_line_indicator = 'none'
 " Don't autohide scratch window when leaving insert mode
 let g:scratch_insert_autohide = 0
 
-" Stop auto-pairs from jumping when manually inserting a closing pair
-let g:AutoPairsMultilineClose = 0
-
 " Highlight JSX embedded in javascript files
 let g:jsx_ext_required = 0
 
