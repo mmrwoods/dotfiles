@@ -401,20 +401,35 @@ nnoremap gd :GitGutterToggle<CR>
 " Toggle file explorer (netrw, enhanced with vim-vinegar)
 nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
 
-" Fuzzy finder (mixed mode)
-nnoremap <leader>f :CtrlPMixed<CR>
+" Stop fuzzy finder opening files in nofile and quickfix windows, e.g NERDTree
+" FIXME: extract to generic function and/or command and use with Ack mapping
+function! FZFCommand(cmd)
+  let c = 0
+  let wincount = winnr('$')
+  " Don't open it here if current buffer is not writable (e.g. NERDTree)
+  " FIXME: non-writable is not good enough, exclude nofile and quickfix too
+  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+    exec 'wincmd w'
+    let c = c + 1
+  endwhile
+  exec a:cmd
+endfunction
+
+" Fuzzy finder, default mode
+nnoremap <leader>f :call FZFCommand('Files')<CR>
 
 " Fuzzy find files
-nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>ff :call FZFCommand('Files')<CR>
 
 " Fuzzy find buffers
-nnoremap <leader>fb :CtrlPBuffer<CR>
+nnoremap <leader>fb :call FZFCommand('Buffers')<CR>
 
 " Fuzzy find MRU files
-nnoremap <leader>fm :CtrlPMRU<CR>
+" FIXME: exclude garbage like NERDTree buffers from results
+nnoremap <leader>fm :call FZFCommand('History')<CR>
 
 " Fuzzy find tags
-nnoremap <leader>ft :CtrlPTag<CR>
+nnoremap <leader>ft :call FZFCommand('Tags')<CR>
 
 " Search in files
 nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ack!\<Space>"
