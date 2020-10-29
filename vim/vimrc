@@ -283,6 +283,21 @@ let g:qf_auto_resize = 0
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
+" Use ag command (aka The Silver Searcher) for finding and listing files
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " use ag with ack.vim
+  let g:ackprg = 'ag --vimgrep'
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 " Add M mapping to use easyclip function to move until EOL
 nmap M <Plug>MoveMotionEndOfLinePlug
 
