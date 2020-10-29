@@ -198,34 +198,7 @@ let g:PreserveNoEOL = 0
 " Disable delimitMate within comments and strings (default is comments)
 let delimitMate_excluded_regions = "Comment,String"
 
-" Ignore some additional files to make CtrlP load faster
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/](tmp|log|vendor|coverage|images|fonts|node_modules)$'
-  \ }
-
-" Use the current vim working directory as the CtrlP working directory
-let g:ctrlp_working_path_mode = 0
-
-" Tell CtrlP to exclude the same files from its MRU list as MRU plugin
-let g:ctrlp_mruf_exclude = MRU_Exclude_Files
-
-" Only show MRU files within the current working directory in CtrlP
-" I use CtrlP for searching the current project / working directory
-let g:ctrlp_mruf_relative = 1
-
-" Customise dimensions of CtrlP match window (show more than 10 results)
-let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:25'
-
-" Include the current file in the list of matches
-let g:ctrlp_match_current_file = 1
-
-" Let CtrlP reuse Netrw and BufExplorer windows when opening files
-let g:ctrlp_reuse_window = 'netrw\|BufExplorer'
-
-" Open CtrlP in mixed mode by default (search files, buffers and MRU files)
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-" Tell NERDTree to respect wildignore like CtrlP does
+" Tell NERDTree to respect wildignore
 let NERDTreeRespectWildIgnore = 1
 
 " Stop NERDTree from hijacking netrw, I want to use both :-)
@@ -280,6 +253,10 @@ let g:go_def_mapping_enabled = 0
 " Don't automatgically resize the quickfix window if number items lt 10
 let g:qf_auto_resize = 0
 
+" Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
+" top level namespace and makes it easier to find and complete FZF commands)
+let g:fzf_command_prefix = 'FZF'
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
@@ -291,12 +268,38 @@ if executable('ag')
   " use ag with ack.vim
   let g:ackprg = 'ag --vimgrep'
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+  " Use ag in fzf for listing files. Lightning fast and respects .gitignore
+  let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
 endif
+
+" Set bat theme for fancy syntax highlighting in FZF preview window
+if executable('bat')
+  " GitHub theme works well with dark and light backgrounds and color schemes
+  let $BAT_THEME='GitHub'
+endif
+
+" FZF color scheme, see https://github.com/junegunn/fzf/wiki/Color-schemes
+function! <SID>UpdateFZFColors()
+  let colors_name = get(g:, 'colors_name', 'default')
+  if colors_name ==# 'solarized'
+    if &background ==# 'light'
+      let $FZF_DEFAULT_OPTS='
+        \ --color fg:240,bg:230,hl:33,fg+:241,bg+:221,hl+:33
+        \ --color info:33,prompt:33,pointer:166,marker:166,spinner:33'
+    else
+      let $FZF_DEFAULT_OPTS='
+        \ --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
+        \ --color info:254,prompt:37,spinner:108,pointer:235,marker:235'
+    endif
+  elseif ( colors_name ==# 'jellybeans' )
+    let $FZF_DEFAULT_OPTS='
+      \ --color fg:188,bg:233,hl:103,fg+:222,bg+:234,hl+:104
+      \ --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
+  else
+    let $FZF_DEFAULT_OPTS='--color ' . &background
+  endif
+endfunction
+autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
 " Add M mapping to use easyclip function to move until EOL
 nmap M <Plug>MoveMotionEndOfLinePlug
@@ -416,20 +419,35 @@ nnoremap gd :GitGutterToggle<CR>
 " Toggle file explorer (netrw, enhanced with vim-vinegar)
 nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
 
-" Fuzzy finder (mixed mode)
-nnoremap <leader>f :CtrlPMixed<CR>
+" Stop fuzzy finder opening files in nofile and quickfix windows, e.g NERDTree
+" FIXME: extract to generic function and/or command and use with Ack mapping
+function! FZFCommand(cmd)
+  let c = 0
+  let wincount = winnr('$')
+  " Don't open it here if current buffer is not writable (e.g. NERDTree)
+  " FIXME: non-writable is not good enough, exclude nofile and quickfix too
+  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+    exec 'wincmd w'
+    let c = c + 1
+  endwhile
+  exec a:cmd
+endfunction
+
+" Fuzzy finder, default mode
+nnoremap <leader>f :call FZFCommand('FZFFiles')<CR>
 
 " Fuzzy find files
-nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>ff :call FZFCommand('FZFFiles')<CR>
 
 " Fuzzy find buffers
-nnoremap <leader>fb :CtrlPBuffer<CR>
+nnoremap <leader>fb :call FZFCommand('FZFBuffers')<CR>
 
 " Fuzzy find MRU files
-nnoremap <leader>fm :CtrlPMRU<CR>
+" FIXME: filter to working directory and exclude nofile, git commits etc.
+nnoremap <leader>fm :call FZFCommand('FZFHistory')<CR>
 
 " Fuzzy find tags
-nnoremap <leader>ft :CtrlPTag<CR>
+nnoremap <leader>ft :call FZFCommand('FZFTags')<CR>
 
 " Search in files
 nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ack!\<Space>"

@@ -20,7 +20,8 @@ plug 'scrooloose/nerdtree'
 plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
-plug 'ctrlpvim/ctrlp.vim'
+plug 'junegunn/fzf'
+plug 'junegunn/fzf.vim'
 # Fix for https://github.com/tpope/vim-vinegar/issues/87
 # FIXME: replace with 'tpope/vinegar' when fixed upstream
 plug 'mmrwoods/vim-vinegar'
@@ -90,7 +91,8 @@ FileUtils.cd(bundle_dir)
 
 plugins.each do |path|
   url = "https://github.com/#{path}.git"
-  dir = url.split('/').last.sub(/^vim\-/,'').gsub(/\.(zip|vim|git)/, '').sub(/\-vim$/,'')
+  dir = path.split('/').last.sub(/^vim\-/,'').sub(/(\-|\.)vim$/,'')
+  dir = path.split('/').last if Dir.exists?(dir)
   puts "unpacking #{url} into #{dir}"
   `env GIT_SSL_NO_VERIFY=true git clone #{url} #{dir}`
   FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*"))
