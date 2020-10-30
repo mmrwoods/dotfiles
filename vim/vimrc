@@ -442,9 +442,9 @@ nnoremap <leader>ff :call FZFCommand('FZFFiles')<CR>
 " Fuzzy find buffers
 nnoremap <leader>fb :call FZFCommand('FZFBuffers')<CR>
 
-" Fuzzy find MRU files
-" FIXME: filter to working directory and exclude nofile, git commits etc.
-nnoremap <leader>fm :call FZFCommand('FZFHistory')<CR>
+" Fuzzy find MRU files within current working directory / project
+" Note: relies on MRU plugin, use <leader>m to see all MRU files
+nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~/.vim_mru_files', 'sink': 'e'}))<CR>
 
 " Fuzzy find tags
 nnoremap <leader>ft :call FZFCommand('FZFTags')<CR>
