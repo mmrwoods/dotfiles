@@ -12,6 +12,9 @@ fi
 # symlink editorconfig file
 ln -s $dir/editorconfig ~/.editorconfig
 
+# symlink agignore file
+ln -s $dir/agignore ~/.agignore
+
 # Symlink rc files
 ls $dir/*rc | while read path; do ln -s $path ~/.$(basename $path); done
 

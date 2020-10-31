@@ -1,0 +1,13 @@
+*.swp
+*.log
+*.tmp
+tags
+.byebug_history
+build
+coverage
+doc
+dist
+log
+node_modules
+tmp
+vendor
