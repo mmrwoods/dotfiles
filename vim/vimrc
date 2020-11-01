@@ -120,6 +120,9 @@ set complete+=kspell
 " When joining lines, use one space rather than two after punctuation
 set nojoinspaces
 
+" If using grep, at least ignore binaries and exclude some paths
+set grepprg="grep -n -I --exclude=tags --exclude-dir=.git $* /dev/null"
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
@@ -449,8 +452,13 @@ nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~
 " Fuzzy find tags
 nnoremap <leader>ft :call FZFCommand('FZFTags')<CR>
 
-" Search in files
-nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ack!\<Space>"
+" Search in files using ack.vim, with fallback to git grep
+if exists('g:ackprg') || executable('ack') || executable('ack-grep')
+  let searchcmd = 'Ack!'
+else
+  let searchcmd = 'Ggrep!'
+endif
+nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '') . ":" . searchcmd . "\<Space>"
 
 " Search in files for word under cursor
 nnoremap <leader>y "syiw:Ack! <c-r>s<space>
