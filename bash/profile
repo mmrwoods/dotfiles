@@ -205,7 +205,13 @@ alias srw='spring rspec spec --tag wip'
 alias srf='spring rspec spec --only-failures'
 
 alias t='tig'
-complete -o default -o nospace -F _tig t
+if type _tigcomp 2>/dev/null; then
+  # old tig completion, uses custom functions
+  complete -o default -o nospace -F _tig t
+else
+  # new tig completion, uses git completion
+  __git_complete t _tig
+fi
 
 alias g='git'
 complete -o default -o nospace -F _git g
