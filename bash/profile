@@ -90,7 +90,7 @@ fi
 function cd() {
   builtin pushd -n "$PWD" > /dev/null
   builtin cd "$@" # do not return on fail, we've already pushed to the stack
-  lastpos=$( builtin dirs -l -v | grep -E "${PWD}$" | tail -n 1 | cut -f2 -d' ' )
+  lastpos=$( builtin dirs -l -v | grep -E "${PWD}$" | tail -n 1 | awk '{print $1}' )
   if [ "$lastpos" -gt 0 ]; then
     builtin popd "+${lastpos}" > /dev/null || return
   fi
