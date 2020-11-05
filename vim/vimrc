@@ -575,8 +575,8 @@ autocmd FileType gitcommit setlocal synmaxcol=0
 autocmd FileType markdown setlocal textwidth=80
 autocmd FileType markdown setlocal formatoptions+=t
 
-" Turn on spell checking by default for markdown and text files
-autocmd FileType markdown,text setlocal spell
+" Turn on spell checking by default for markdown files
+autocmd FileType markdown setlocal spell
 
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
