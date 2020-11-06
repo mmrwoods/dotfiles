@@ -24,7 +24,14 @@ export NODE_PATH=/usr/local/lib/node_modules
 # Cucumber comments are grey by default, hard to see using solarized dark
 export CUCUMBER_COLORS=comment=cyan
 
-export GREP_OPTIONS='--color=auto --exclude=tags --exclude-dir=.git'
+# GREP_OPTIONS depreated for GNU grep, so hack it with aliases
+GREP_OPTIONS='--color=auto --exclude=tags --exclude-dir=.git'
+for cmd in grep fgrep egrep; do
+  eval 'alias $cmd="$cmd $GREP_OPTIONS"'
+  if which g$cmd &> /dev/null; then
+    eval 'alias g$cmd="g$cmd $GREP_OPTIONS"'
+  fi
+done
 
 # Spring is a PITA for anything other than simple development workflows
 # Use spring command to explicitly use as required (see aliases below)
