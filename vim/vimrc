@@ -428,9 +428,9 @@ nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
 function! FZFCommand(cmd)
   let c = 0
   let wincount = winnr('$')
-  " Don't open it here if current buffer is not writable (e.g. NERDTree)
-  " FIXME: non-writable is not good enough, exclude nofile and quickfix too
-  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+  " Move to a window containing a re-usable buffer before running the command
+  while ( bufname() =~# 'NERD_tree' || !empty(getbufvar(+expand("<abuf>"), "&buftype")) )
+        \  && bufname() !~# 'BufExplorer\|MRU_Files' && c < wincount
     exec 'wincmd w'
     let c = c + 1
   endwhile
