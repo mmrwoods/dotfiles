@@ -66,20 +66,34 @@ if has("mac")
   " equalised. These autocmds just move to the first window before vim loses
   " focus, and then moves back to the original window when it regains focus.
   " It is admittedly a horrible hack, but it also seems to work quite well.
-  autocmd VimLeave,FocusLost *
-    \ let g:LAST_WINDOW = winnr() |
-    \ exec '1 wincmd w'
-  autocmd VimEnter,FocusGained *
-    \ if exists('g:LAST_WINDOW') |
-    \   exec g:LAST_WINDOW . 'wincmd w' |
-    \ endif
-
-  " For the above to work correctly when restoring a session, we need to close
-  " all "blank" windows before leaving as they're not included in sessionoptions
+  " For this to work correctly when restoring a session, we need to close all
+  " "blank" windows before leaving as they're not included in sessionoptions
+  " Note: I couldn't get this working reliably using windo, there seemed to be
+  " some kind of timing issue with windo and getting window numbers from ids.
   autocmd VimLeavePre *
-    \ let currwin=winnr() |
-    \ windo if !empty(getbufvar(+expand("<abuf>"), "&buftype")) | close | endif |
-    \ exec currwin . 'wincmd w'
+    \ if ( v:servername == 'VIM' ) |
+    \   let winid = win_getid(winnr()) |
+    \   let c = 0 |
+    \   let n = winnr('$') |
+    \   while c < n |
+    \     exec 'wincmd w' |
+    \     if !empty(&buftype) | close | endif |
+    \     let c = c + 1 |
+    \   endwhile |
+    \   let g:LAST_WINDOW = win_id2win(winid) |
+    \   exec '1 wincmd w' |
+    \ endif
+  autocmd FocusLost *
+    \ if ( v:servername == 'VIM' ) |
+    \   let g:LAST_WINDOW = winnr() |
+    \   exec '1 wincmd w' |
+    \ endif
+  autocmd VimEnter,FocusGained *
+    \ if ( v:servername == 'VIM' ) |
+    \   if exists('g:LAST_WINDOW') |
+    \     exec g:LAST_WINDOW . 'wincmd w' |
+    \   endif |
+    \ endif
 
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
