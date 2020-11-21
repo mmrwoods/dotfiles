@@ -95,6 +95,8 @@
   rd = !git status | grep deleted | awk '{print$NF}' | xargs git rm;}
 
   # list 10 most recently used/checked-out branches
+  # Note: awk '!x[$0]++' removes duplicate lines without sorting, by adding
+  # values into an array and printing the value if it does not already exist
   mru = "!git reflog -n 300 --pretty='%gs' --grep-reflog='checkout: moving' \
     | awk '{print $NF}' | grep -vi 'head' | grep -v '[0-9a-z]\\{40\\}'| awk '!x[$0]++' \
     | while read ref; do if test -f .git/refs/heads/$ref; then echo $ref; fi; done | head -n 10"
