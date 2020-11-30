@@ -107,8 +107,8 @@ set sessionoptions=buffers,curdir,tabpages,winsize,winpos,resize
 " save globals with viminfo - sessionman stores last session info in global
 set viminfo='100,<50,s10,h,!
 
-" set list mode characters used to display whitespace
-set listchars=tab:→·,trail:·,eol:¶
+" set list mode characters used to display unwanted whitespace
+set listchars=tab:│→,nbsp:∘,trail:∙
 
 " Ins mode completion options - complete without menu if just one match,
 " only complete to longest common match, don't use preview scratch window
@@ -488,6 +488,9 @@ nnoremap <Leader>ct :!ctags -R .<CR>
 
 " Toggle spell checking
 nnoremap <Leader>ts :setlocal spell!<CR>
+
+" Toggle list mode (show unwanted whitespace)
+nnoremap <Leader>tl :setlocal list!<CR>
 
 " Some extra mappings for convenience/speed
 " Single key to toggle bufexplorer, I use this all the time
