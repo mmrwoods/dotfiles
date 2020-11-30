@@ -478,7 +478,7 @@ nnoremap <leader>m :MRU<CR>
 nnoremap <leader>o :TagbarToggle<Enter>:set noballooneval<CR>
 
 " Zoom in/out current window
-nnoremap <leader>x :ZoomWin<Enter>
+nnoremap <leader>z :ZoomWin<Enter>
 
 " Highlight whitespace
 nnoremap <leader><space> :ToggleSpaceHi<Enter>
