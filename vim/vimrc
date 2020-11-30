@@ -108,7 +108,7 @@ set sessionoptions=buffers,curdir,tabpages,winsize,winpos,resize
 set viminfo='100,<50,s10,h,!
 
 " set list mode characters used to display unwanted whitespace
-set listchars=tab:│→,nbsp:∘,trail:∙
+set listchars=tab:│→,nbsp:∘,trail:·
 
 " Ins mode completion options - complete without menu if just one match,
 " only complete to longest common match, don't use preview scratch window
