@@ -18,7 +18,7 @@ filetype plugin indent on         " Turn on file type detection and indentation
 
 set autoindent                    " Auto-indent if no file type specific indent
 
-set expandtab ts=2 sts=2 sw=2     " Default to two-space indent, no tabs
+set expandtab sts=2 sw=2          " Default to two-space indent, no tabs
 
 set showcmd                       " Show incomplete commands as you type
 
