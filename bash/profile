@@ -110,6 +110,13 @@ function d() {
   COLUMNS=$old_columns
 }
 
+# Select from VIM MRU files and edit
+function m() {
+  old_columns=$COLUMNS
+  COLUMNS=10; select file in $(head -n11 ~/.vim_mru_files | tail -n10); do vim $file; break; done
+  COLUMNS=$old_columns
+}
+
 # bash completion
 if [ $has_brew ] && [ -r $brew_prefix/etc/profile.d/bash_completion.sh ]; then
   source $brew_prefix/etc/profile.d/bash_completion.sh
