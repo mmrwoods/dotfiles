@@ -42,9 +42,11 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 alias which="/usr/bin/which" # fuck you node-which
 
-# set flag to check for homebrew (used in multiple conditions)
-if which brew &> /dev/null; then
-  has_brew=true
+# set homebrew env vars and paths
+if test -f /usr/local/bin/brew; then
+  eval $(/usr/local/bin/brew shellenv)
+elif test -f /opt/homebrew/bin/brew; then
+  eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
 # add /usr/local/sbin to path if necessary
@@ -86,11 +88,11 @@ fi
 
 if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
   echo Warning: old bash version detected, $BASH_VERSION, some things might not work >&2
-  if $has_brew; then
+  if $HOMEBREW_PREFIX; then
     echo "Use homebrew installed bash as your login shell to fix this:" >&2
     echo "    brew install bash" >&2
-    echo "    sudo sh -c \"echo /usr/local/bin/bash >> /etc/shells\"" >&2
-    echo "    chsh -s /usr/local/bin/bash" >&2
+    echo "    sudo sh -c \"echo $HOMEBREW_PREFIX/bin/bash >> /etc/shells\"" >&2
+    echo "    chsh -s $HOMEBREW_PREFIX/bin/bash" >&2
   fi
 fi
 
@@ -120,10 +122,10 @@ function m() {
 }
 
 # bash completion
-if [ $has_brew ] && [ -r /usr/local/etc/profile.d/bash_completion.sh ]; then
-  source /usr/local/etc/profile.d/bash_completion.sh
+if [ $HOMEBREW_PREFIX ] && [ -r $HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh ]; then
+  source $HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh
   if [ -z $BASH_COMPLETION_COMPAT_DIR ]; then
-    export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d
+    export BASH_COMPLETION_COMPAT_DIR=$HOMEBREW_PREFIX/etc/bash_completion.d
   fi
 fi
 
@@ -155,9 +157,9 @@ fi
 stty -ixon
 
 # quick hack to create aliases for starting and stopping postgres
-if [ $has_brew ] && [ -r /usr/local/var/postgres ]; then
-  alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
-  alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+if [ $HOMEBREW_PREFIX ] && [ -r $HOMEBREW_PREFIX/var/postgres ]; then
+  alias pg_start="pg_ctl -D $HOMEBREW_PREFIX/var/postgres -l $HOMEBREW_PREFIX/var/postgres/server.log start"
+  alias pg_stop="pg_ctl -D $HOMEBREW_PREFIX/var/postgres stop -s -m fast"
 fi
 
 # reload bash shell (I always forget how)
