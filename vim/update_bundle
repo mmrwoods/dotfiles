@@ -29,6 +29,7 @@ plug 'mmrwoods/vim-vinegar'
 plug 'mmrwoods/mru'
 plug 'romainl/vim-qf'
 plug 'MTDL9/vim-window-mode'
+plug 'tpope/vim-projectionist'
 
 # syntax
 plug 'kchmck/vim-coffee-script'
