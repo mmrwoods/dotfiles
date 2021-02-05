@@ -68,7 +68,7 @@
   pr = "!bash -c 'git symbolic-ref --short HEAD | xargs git pull --rebase $@ origin'" -
 
   # push current branch to origin
-  po = "!bash -c 'git symbolic-ref --short HEAD | xargs git push $@ origin'" -
+  po = "!bash -c 'git symbolic-ref --short HEAD | xargs git push ${@/#-f/--force-with-lease} origin'" -
 
   # switch to most recently checked out ref
   c- = checkout - # note: equivalent to checkout @{-1}
