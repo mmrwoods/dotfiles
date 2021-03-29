@@ -277,12 +277,16 @@ if executable('ag')
 
   " Use ag in fzf for listing files. Lightning fast and respects .gitignore
   let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
+else
+  echoerr "WARNING: ag executable not found, fuzzy finding files will be slow, install ag to fix this, see https://github.com/ggreer/the_silver_searcher"
 endif
 
 " Set bat theme for fancy syntax highlighting in FZF preview window
 if executable('bat')
   " GitHub theme works well with dark and light backgrounds and color schemes
   let $BAT_THEME='GitHub'
+else
+  echoerr "WARNING: bat executable not found, preview window will not have syntax highlighting, install bat to fix this, see https://github.com/sharkdp/bat"
 endif
 
 " FZF color scheme, see https://github.com/junegunn/fzf/wiki/Color-schemes
