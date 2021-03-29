@@ -1,6 +1,7 @@
 *.swp
 *.log
 *.tmp
+.git
 tags
 .byebug_history
 build
