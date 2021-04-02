@@ -29,7 +29,9 @@ plug 'mmrwoods/vim-vinegar'
 plug 'mmrwoods/mru'
 plug 'romainl/vim-qf'
 plug 'MTDL9/vim-window-mode'
-plug 'tpope/vim-projectionist'
+# Workaround for https://github.com/tpope/vim-projectionist/issues/155
+# FIXME: replace with 'tpope/vim-projectionist' when addressed upstream
+plug 'mmrwoods/vim-projectionist'
 
 # syntax
 plug 'kchmck/vim-coffee-script'
