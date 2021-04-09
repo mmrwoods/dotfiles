@@ -605,6 +605,16 @@ if exists("+omnifunc")
     \	endif
 endif
 
+" autochdir when in insert mode for relative file path completion
+" stolen from, damn I forget where, but I definitely stole it
+augroup working_directory
+  autocmd!
+  " set current directory on insert mode
+  autocmd InsertEnter * let save_cwd = getcwd() | silent! lcd %:p:h
+  " switch back to previous directory when leaving insert mode
+  autocmd InsertLeave * silent execute 'lcd' fnameescape(save_cwd)
+augroup END
+
 " Vimcast 4 - Tidying Whitespace
 " Function and autocmd to strip trailing whitespace from files when saving
 function! <SID>StripTrailingWhitespace()
