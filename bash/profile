@@ -223,12 +223,19 @@ alias srw='spring rspec spec --tag wip'
 alias srf='spring rspec spec --only-failures'
 
 alias t='tig'
+# FIXME: rewrite this mess to just get the current completion
+# function the tig command and assign the same to the t alias
 if type _tigcomp 2>/dev/null; then
   # old tig completion, uses custom functions
   complete -o default -o nospace -F _tig t
 else
   # new tig completion, uses git completion
-  __git_complete t _tig
+  if type _tig 2>/dev/null; then
+    __git_complete t _tig
+  else
+    # new, new tig completion, no _tig function, sigh
+    __git_complete t __tig_main
+  fi
 fi
 
 alias g='git'
