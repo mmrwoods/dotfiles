@@ -183,9 +183,9 @@ if test $(uname) == Darwin; then
   alias git="git_err_red git"
 fi
 
-# use gnome-open rather than openvt
-if which gnome-open &> /dev/null; then
-  alias open="gnome-open"
+# use xdg-open on Linux
+if test -n "$XDG_CURRENT_DESKTOP"; then
+  alias open="xdg-open"
 fi
 
 # because I keep forgetting how to do it in Linux
