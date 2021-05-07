@@ -88,7 +88,7 @@ fi
 
 if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
   echo Warning: old bash version detected, $BASH_VERSION, some things might not work >&2
-  if $HOMEBREW_PREFIX; then
+  if test -n "$HOMEBREW_PREFIX"; then
     echo "Use homebrew installed bash as your login shell to fix this:" >&2
     echo "    brew install bash" >&2
     echo "    sudo sh -c \"echo $HOMEBREW_PREFIX/bin/bash >> /etc/shells\"" >&2
