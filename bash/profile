@@ -67,14 +67,16 @@ if which nodenv &> /dev/null; then eval "$(nodenv init --no-rehash -)"; fi
 # add rbenv shims to path and enable rbenv autocompletion
 if which rbenv &> /dev/null; then eval "$(rbenv init --no-rehash -)"; fi
 
+# add project specific binaries to path (e.g. rails binstubs)
+# Note: bundler binstubs should have precedence in path to avoid confusion
+# finding gem binary paths when mixing rails binstubs and bundler binstubs
+export PATH="./bin:$PATH"
+
 # add bundler binstubs to path (see ~/dotfiles/ruby/bundler)
 export PATH="./.bundle/bin:$PATH"
 
 # add npm binstubs to path (not sure about this, there is a node-which afer all)
 export PATH="./node_modules/.bin:$PATH"
-
-# add project specific binaries to path (e.g. rails binstubs)
-export PATH="./bin:$PATH"
 
 # Stop once env vars set if stdout not a terminal or shell not bash
 # Allows file be sourced from files other than .bash_profile, without
