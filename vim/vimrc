@@ -273,7 +273,7 @@ if executable('ag')
   set grepformat=%f:%l:%c:%m
 
   " use ag with ack.vim
-  let g:ackprg = 'ag --vimgrep'
+  let g:ackprg = 'ag --vimgrep --hidden'
 
   " Use ag in fzf for listing files. Lightning fast and respects .gitignore
   let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
