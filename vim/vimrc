@@ -129,6 +129,9 @@ let sessionman_save_on_exit=0
 " show private gists when listing mine
 let g:gist_show_privates = 1
 
+" disable rails plugin on vim enter, slow when used with vim-bundler
+let g:rails_vim_enter = 0
+
 " Don't add the recent files menu from MRU plugin
 let MRU_Add_Menu = 0
 
