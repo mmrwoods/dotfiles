@@ -185,6 +185,16 @@ if test $(uname) == Darwin; then
   alias git="git_err_red git"
 fi
 
+# Hack readline support for Homebrew installed MySQL client, because
+# vi key bindings in editline are infuriating. This will surely break
+# something, and has not been tested with mariadb or percona clients.
+# if test $(uname) == Darwin && which rlwrap &>/dev/null; then
+#   readline_wrap_mysql() {
+#     rlwrap --always-readline --no-children mysql "$@"
+#   }
+#   alias mysql="readline_wrap_mysql"
+# fi
+
 # use xdg-open on Linux
 if test -n "$XDG_CURRENT_DESKTOP"; then
   alias open="xdg-open"
