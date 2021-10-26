@@ -1,1 +1,5 @@
 bind -v
+bind -k down vi-search-next
+bind -k up vi-search-prev
+bind -k left vi-prev-char
+bind -k right vi-next-char
