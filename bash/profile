@@ -117,7 +117,7 @@ function d() {
 }
 
 # Select from VIM MRU files and edit
-function m() {
+function f() {
   old_columns=$COLUMNS
   COLUMNS=10; select file in $(head -n11 ~/.vim_mru_files | tail -n10); do vim $file; break; done
   COLUMNS=$old_columns
