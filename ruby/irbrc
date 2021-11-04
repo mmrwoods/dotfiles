@@ -11,8 +11,10 @@ IRB.conf[:PROMPT][:CUSTOM] = {
 
 IRB.conf[:PROMPT_MODE] = :CUSTOM
 IRB.conf[:AUTO_INDENT] = true
-IRB.conf[:SAVE_HISTORY] = 100
-IRB.conf[:HISTORY_FILE] = IRB.rc_file('_history')
+if defined?(Readline) && !/EditLine/n.match(Readline::VERSION)
+  IRB.conf[:SAVE_HISTORY] = 100
+  IRB.conf[:HISTORY_FILE] = IRB.rc_file('_history')
+end
 
 def bundle(gem)
   return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
