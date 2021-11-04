@@ -569,7 +569,7 @@ endif
 set formatoptions=croql
 
 " Additional ruby syntax highlighting
-autocmd BufRead,BufNewFile {Berksfile,Gemfile,Rakefile,Capfile,Vagrantfile,Thorfile,pryrc,config.ru}
+autocmd BufRead,BufNewFile {Berksfile,Capfile,Vagrantfile,Thorfile,pryrc,.pryrc}
   \ set ft=ruby |
 
 " Set conf.local filetype to conf
