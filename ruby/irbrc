@@ -65,9 +65,11 @@ else
   # colourize output using awesome print
   auto_require 'awesome_print' do
     alias pp ap
-    IRB::Irb.class_eval do
-      def output_value
-        ap @context.last_value, :multiline => false
+    AwesomePrint.respond_to? :irb! ? AwesomePrint.irb! : begin
+      IRB::Irb.class_eval do
+        def output_value(*args)
+          ap @context.last_value, :multiline => false
+        end
       end
     end
   end
