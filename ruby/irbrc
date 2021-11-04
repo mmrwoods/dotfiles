@@ -54,14 +54,6 @@ if $0.include?("rails")
 
 else
 
-  # use wirble to fix irb history on mac
-  auto_require 'wirble', 'blackwinter-wirble' do
-    Wirble.init(
-      :history_path => IRB.conf[:HISTORY_FILE],
-      :history_size => IRB.conf[:SAVE_HISTORY]
-    )
-  end
-
   # colourize output using awesome print
   auto_require 'awesome_print' do
     alias pp ap
