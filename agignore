@@ -1,6 +1,7 @@
 *.swp
 *.log
 *.tmp
+*.min.js
 .git
 tags
 .byebug_history
