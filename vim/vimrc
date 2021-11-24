@@ -197,6 +197,9 @@ autocmd FileType *
 autocmd FileType html,xhtml
   \ let b:SuperTabContextTextMemberPatterns = ['<', '</']
 
+" Disable ALE linting by default, use ALEToggle to enable
+let g:ale_enabled = 0
+
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
 
@@ -358,10 +361,8 @@ nnoremap Z zM
 " Open the alternate file, i.e. previously edited file in the current window
 nnoremap <Leader>g <C-^>
 
-" Open plugin defined alternate file, e.g. unit test file for model
-" This relies on plugins like rails.vim that follow the conventions of a.vim
-" and create an A command to find the file and open it in the current window
-nnoremap <Leader>a :A<CR>
+" Toggle ALE linting (disabled by default)
+nnoremap <Leader>a :ALEToggle<CR>
 
 " Window mappings
 " switch to window pseudo-mode (uses window mode plugin, no more keyboard

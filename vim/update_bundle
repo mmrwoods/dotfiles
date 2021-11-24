@@ -73,6 +73,7 @@ plug 'zirrostig/vim-schlepp'
 plug 'ciaranm/securemodelines'
 # fork of autoswap that works with iTerm2
 plug 'mmrwoods/vim-autoswap'
+plug 'dense-analysis/ale'
 
 # colours
 plug 'altercation/vim-colors-solarized'
