@@ -175,27 +175,15 @@ let g:bufExplorerShowNoName = 1
 " Disable default BufExplorer key mappings (use custom mappings)
 let g:bufExplorerDisableDefaultKeyMapping = 1
 
-" Let supertab guess the completion type from current context
-let g:SuperTabDefaultCompletionType = "context"
-
-" Use keyword completion if the context can't be determined
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" Use next keyword completion by default with supertab
+" (previous keyword sucks when there are many completions)
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Always try to match case for supertab completions
 let g:SuperTabCompleteCase = 'match'
 
 " Reset supertab completion type once a completion has been chosen
 let g:SuperTabRetainCompletionDuration = 'completion'
-
-" Fall back to keyword completion when omni completion fails
-autocmd FileType *
-  \ if &omnifunc != '' |
-  \   call SuperTabChain(&omnifunc, "<c-n>") |
-  \ endif
-
-" Use opening and closing tags to trigger html omnicompletion
-autocmd FileType html,xhtml
-  \ let b:SuperTabContextTextMemberPatterns = ['<', '</']
 
 " Disable ALE linting by default, use ALEToggle to enable
 let g:ale_enabled = 0
