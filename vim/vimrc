@@ -185,6 +185,9 @@ let g:SuperTabCompleteCase = 'match'
 " Reset supertab completion type once a completion has been chosen
 let g:SuperTabRetainCompletionDuration = 'completion'
 
+" Accept/close popup/completion menu with enter/cr, ah sanity, finally
+let g:lexima_accept_pum_with_enter = 1
+
 " Disable ALE linting by default, use ALEToggle to enable
 let g:ale_enabled = 0
 
@@ -194,9 +197,6 @@ let g:colorizer_startup = 0
 " Don't preserve missing EOL by default
 " Enable per buffer with `let b:PreserveNoEOL = 1`
 let g:PreserveNoEOL = 0
-
-" Disable delimitMate within comments and strings (default is comments)
-let delimitMate_excluded_regions = "Comment,String"
 
 " Tell NERDTree to respect wildignore
 let NERDTreeRespectWildIgnore = 1

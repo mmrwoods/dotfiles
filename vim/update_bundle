@@ -50,11 +50,10 @@ plug 'tpope/vim-commentary'
 # fork of spacehi that works with unicode spaces
 plug 'mmrwoods/spacehi.vim'
 plug 'ervandew/supertab'
-plug 'tpope/vim-endwise'
 plug 'mattn/gist-vim'
 plug 'mattn/webapi-vim' # required by gist-vim
 plug 'tpope/vim-eunuch'
-plug 'Raimondi/delimitMate'
+plug 'cohama/lexima.vim'
 plug 'ConradIrwin/vim-bracketed-paste'
 plug 'vim-utils/vim-most-minimal-folds'
 plug 'mtth/scratch.vim'
