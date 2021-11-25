@@ -76,6 +76,8 @@ elseif $SSH_CLIENT != ''
   colorscheme jellybeans          " And jellybeans when running remotely
 endif
 
+hi! link SignColumn LineNr        " Same colours in sign column as line numbers
+
 if has('balloon_eval')
   set noballooneval               " Disable slow and annoying tooltips
 endif
