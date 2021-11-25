@@ -251,11 +251,8 @@ let g:scratch_insert_autohide = 0
 " Highlight JSX embedded in javascript files
 let g:jsx_ext_required = 0
 
-" Don't set up any gitgutter key mappings (I only use it to show the diff)
-let g:gitgutter_map_keys = 0
-
-" Disable gitgutter by default, enable as needed using gd mapping (see below)
-let g:gitgutter_enabled = 0
+" Disable signify by default, enable as needed using gd mapping (see below)
+let g:signify_disable_by_default = 1
 
 " Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
 let g:go_def_mapping_enabled = 0
@@ -426,8 +423,8 @@ nnoremap <leader>d :call NERDTreeCommand()<CR>
 " Locate current file in project drawer / tree view
 nnoremap <leader>l :NERDTreeFind<CR>
 
-" Show/hide git diff in sign column (uses gitgutter plugin)
-nnoremap gd :GitGutterToggle<CR>
+" Show/hide git diff in sign column
+nnoremap gd :SignifyToggle<CR>
 
 " Toggle file explorer (netrw, enhanced with vim-vinegar)
 nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
