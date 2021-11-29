@@ -73,15 +73,11 @@ plug 'ciaranm/securemodelines'
 # fork of autoswap that works with iTerm2
 plug 'mmrwoods/vim-autoswap'
 plug 'dense-analysis/ale'
+plug 'vim-scripts/ZoomWin'
 
 # colours
 plug 'altercation/vim-colors-solarized'
 plug 'nanotech/jellybeans.vim'
-
-# FIXME: allow plug method to set version dependency
-if vim_version >= 7.2
-  plug 'vim-scripts/ZoomWin'
-end
 
 bundle_dir = File.join(File.dirname(__FILE__), "bundle")
 
