@@ -7,11 +7,11 @@ def vim_version
 end
 
 def plugins
-  @plugins ||= []
+  @plugins ||= {}
 end
 
-def plug(path)
-  plugins << path
+def plug(path, opts={})
+  plugins[path] = opts
 end
 
 # navigation
@@ -74,6 +74,7 @@ plug 'ciaranm/securemodelines'
 plug 'mmrwoods/vim-autoswap'
 plug 'dense-analysis/ale'
 plug 'vim-scripts/ZoomWin'
+plug 'neoclide/coc.nvim', branch: :release
 
 # colours
 plug 'altercation/vim-colors-solarized'
@@ -85,12 +86,13 @@ FileUtils.rm_rf(bundle_dir)
 FileUtils.mkdir_p(bundle_dir)
 FileUtils.cd(bundle_dir)
 
-plugins.each do |path|
+plugins.each do |path, opts|
   url = "https://github.com/#{path}.git"
-  dir = path.split('/').last.sub(/^vim\-/,'').sub(/(\-|\.)vim$/,'')
+  opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
+  dir = path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
   dir = path.split('/').last if Dir.exists?(dir)
   puts "unpacking #{url} into #{dir}"
-  `env GIT_SSL_NO_VERIFY=true git clone #{url} #{dir}`
+  `env GIT_SSL_NO_VERIFY=true git clone #{opts} #{url} #{dir}`
   FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*"))
 end
 

@@ -1,0 +1,6 @@
+{
+  "coc.preferences.colorSupport": false,
+  "suggest.floatEnable": true,
+  "signature.target": "echo",
+  "diagnostic.displayByAle": true
+}

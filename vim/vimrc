@@ -89,7 +89,10 @@ set foldlevel=99                  " Don't open/close all folds at same indent
 set foldlevelstart=99             " Reset fold level when opening new files
 set foldmethod=indent             " Keep it simple stupid, just fold on indent
 set foldignore=''                 " Don't ignore # when folding on indent
+
 set updatetime=1000               " Default updatetime for gitgutter and friends
+
+set shortmess+=c                  " Don't send ins-completion-menu messages
 
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
@@ -207,6 +210,13 @@ let g:ale_lint_on_text_changed = 'never'
 
 " Don't highlight linting errors in source, just use sign column
 let g:ale_set_highlights = 0
+
+" Only use ALE to run linters, use coc.nvim with language servers
+" Note: Coc.nvim configured to send disgnostics to ALE for display
+let g:ale_disable_lsp = 1
+
+" Disable coc.nvim service at startup, use CocStart to enable
+let g:coc_start_at_startup = 0
 
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:colorizer_startup = 0
@@ -365,6 +375,32 @@ nnoremap <Leader>g <C-^>
 
 " Toggle ALE linting (disabled by default)
 nnoremap <Leader>a :ALEToggle<CR>
+
+" Toggle coc.nvim service (disabled by default)
+nnoremap <leader>c :call <SID>CocToggle()<CR>
+
+function! s:CocToggle()
+  if coc#rpc#ready()
+    echohl MoreMsg | echom 'stopping coc.nvim service' | echohl None
+    call coc#rpc#stop()
+  else
+    echohl MoreMsg | echom 'starting coc.nvim service' | echohl None
+    call coc#rpc#start_server()
+  endif
+endfunction
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
 
 " Window mappings
 " switch to window pseudo-mode (uses window mode plugin, no more keyboard
