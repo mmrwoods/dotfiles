@@ -374,7 +374,17 @@ nnoremap Z zM
 nnoremap <Leader>g <C-^>
 
 " Toggle ALE linting (disabled by default)
-nnoremap <Leader>a :ALEToggle<CR>
+nnoremap <Leader>a :call <SID>ALEToggle()<CR>
+
+function! s:ALEToggle()
+  if g:ale_enabled
+    ALEDisable
+    echohl MoreMsg | echom 'ALE disabled' | echohl None
+  else
+    ALEEnable
+    echohl MoreMsg | echom 'ALE enabled' | echohl None
+  endif
+endfunction
 
 " Toggle coc.nvim service (disabled by default)
 nnoremap <leader>c :call <SID>CocToggle()<CR>
