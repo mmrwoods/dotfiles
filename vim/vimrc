@@ -76,8 +76,6 @@ elseif $SSH_CLIENT != ''
   colorscheme jellybeans          " And jellybeans when running remotely
 endif
 
-hi! link SignColumn LineNr        " Same colours in sign column as line numbers
-
 if has('balloon_eval')
   set noballooneval               " Disable slow and annoying tooltips
 endif
@@ -92,6 +90,15 @@ set foldlevelstart=99             " Reset fold level when opening new files
 set foldmethod=indent             " Keep it simple stupid, just fold on indent
 set foldignore=''                 " Don't ignore # when folding on indent
 set updatetime=1000               " Default updatetime for gitgutter and friends
+
+" Sign column configuration - condition copied from coc.nvim readme
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Merge sign column and number column if supported
+  set signcolumn=number
+else
+  " Otherwise at least use same colours as number column
+  hi! link SignColumn LineNr
+endif
 
 " Suffixes that can be ignored when completing file names
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
