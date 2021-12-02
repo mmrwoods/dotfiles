@@ -143,7 +143,13 @@ let sessionman_save_on_exit=0
 let g:gist_show_privates = 1
 
 " disable rails plugin on vim enter, slow when used with vim-bundler
+" also results in some garbage written to screen, seems a vim issue
+" see https://github.com/tpope/vim-rails/issues/579 for some info
 let g:rails_vim_enter = 0
+
+" disable projectionist on vim enter, also causes garbage to be written
+" to screen, also see https://github.com/tpope/vim-rails/issues/579
+let g:projectionist_vim_enter = 0
 
 " Don't add the recent files menu from MRU plugin
 let MRU_Add_Menu = 0
