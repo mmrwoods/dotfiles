@@ -621,6 +621,12 @@ set formatoptions=croql
 autocmd BufRead,BufNewFile {Berksfile,Capfile,Vagrantfile,Thorfile,pryrc,.pryrc}
   \ set ft=ruby |
 
+" Set cloudformation filetypes to enable linting in ALE
+autocmd BufRead,BufWrite *.yaml,*.yml,*.json
+  \ if &ft !~ 'cloudformation' && search('AWSTemplateFormatVersion', 'nw') |
+  \   let &ft=&ft . '.cloudformation' |
+  \ endif
+
 " Set conf.local filetype to conf
 autocmd BufRead,BufNewFile *.conf.local set ft=conf
 
