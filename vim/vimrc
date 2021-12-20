@@ -439,11 +439,6 @@ nnoremap <C-Left> :wincmd h<CR>
 nnoremap <C-Right> :wincmd l<CR>
 " resize all windows equally
 nnoremap = :wincmd =<CR>
-" resize dimensions of current window
-nnoremap + :wincmd +<CR>
-nnoremap - :wincmd -<CR>
-nnoremap > :wincmd ><CR>
-nnoremap < :wincmd <<CR>
 
 " Tag navigation
 " remap CTRL-] to show list when multiple matches (use tjump)
