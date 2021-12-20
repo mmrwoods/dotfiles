@@ -139,6 +139,15 @@ set grepprg="grep -n -I --exclude=tags --exclude-dir=.git $* /dev/null"
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
+" Don't enable bullets mappings in empty buffers, can cause problems
+" See https://github.com/dkarter/bullets.vim/issues/63
+let g:bullets_enable_in_empty_buffers = 1
+
+" Remove buffer local <leader>x mapping set by bullets.vim as it takes
+" priority over normal mode <leader>x mapping to expand current window
+autocmd Bufread * if index(g:bullets_enabled_file_types, &ft) > 0 |
+  \ unmap <buffer> <Leader>x| endif
+
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
