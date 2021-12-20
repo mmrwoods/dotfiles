@@ -538,7 +538,23 @@ nnoremap <leader>m :MRU<CR>
 nnoremap <leader>o :TagbarToggle<Enter>:set noballooneval<CR>
 
 " Zoom in/out current window
-nnoremap <leader>z :ZoomWin<Enter>
+nnoremap <leader>z :ZoomWin<CR>
+
+" Expand/maximize current window
+" See https://stackoverflow.com/a/26551079/17278003
+function! s:ExpandWin() abort
+    if exists('t:expanded') && t:expanded
+        execute t:expand_winrestcmd
+        let t:expanded = 0
+    else
+        let t:expand_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:expanded = 1
+    endif
+endfunction
+command! ExpandWin call s:ExpandWin()
+nnoremap <Leader>x :ExpandWin<CR>
 
 " Highlight whitespace
 nnoremap <leader><space> :ToggleSpaceHi<Enter>
