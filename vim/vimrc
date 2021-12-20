@@ -746,3 +746,36 @@ function! <SID>SetWorkingDir()
   endif
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
+
+" Show diff from git commit --verbose in a new vertical split
+" Inspired by https://github.com/rhysd/committia.vim, but mostly copied
+" from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
+autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
+autocmd QuitPre COMMIT_EDITMSG windo if &ft == 'diff' | bwipeout | endif
+function <SID>GitCommitSplitDiff()
+  " Save the contents of the z register
+  let old_z = getreg("z")
+  let old_z_type = getregtype("z")
+
+  try
+    call cursor(1, 0)
+    let diff_start = search("^diff --git")
+    if diff_start > 0
+      " Move diff from commit message to the z register
+      :silent .,$delete z
+      :silent write
+      call cursor(1, 0)
+      " Paste from z register into a new vertial split
+      vnew
+      silent normal! V"zP
+      " Configure the diff buffer
+      setlocal filetype=diff buftype=nofile readonly nonumber noswapfile nomodified nomodifiable nofoldenable
+      silent file COMMIT_DIFF
+      " Get back to the commit message
+      wincmd p
+    endif
+  finally
+    " Restore the z register
+    call setreg("z", old_z, old_z_type)
+  endtry
+endfunction
