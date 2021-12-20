@@ -73,7 +73,8 @@ plug 'ciaranm/securemodelines'
 # fork of autoswap that works with iTerm2
 plug 'mmrwoods/vim-autoswap'
 plug 'dense-analysis/ale'
-plug 'vim-scripts/ZoomWin'
+# fork of ZoomWin that tracks upstream unstable/unreleased
+plug 'regedarek/ZoomWin'
 plug 'neoclide/coc.nvim', branch: :release
 
 # colours
