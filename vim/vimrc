@@ -377,14 +377,6 @@ vnoremap <S-Tab> <
 noremap <C-Tab> :tabnext<cr>
 noremap <S-C-Tab> :tabprevious<cr>
 
-" Fold mappings (normal mode only)
-" <space> toggles current fold
-nnoremap <Space> za
-" zz opens all folds
-nnoremap zz zR
-" Z closes all folds
-nnoremap Z zM
-
 " Open the alternate file, i.e. previously edited file in the current window
 nnoremap <Leader>g <C-^>
 
