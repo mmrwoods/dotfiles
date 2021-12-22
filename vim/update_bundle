@@ -33,16 +33,11 @@ plug 'tpope/vim-projectionist'
 
 # syntax
 plug 'kchmck/vim-coffee-script'
-plug 'tpope/vim-haml'
 plug 'pangloss/vim-javascript'
 plug 'mxw/vim-jsx'
 plug 'tpope/vim-rails'
-plug 'derekwyatt/vim-scala'
 plug 'depuracao/vim-rdoc'
-plug 'othree/xml.vim'
 plug 'othree/html5.vim'
-plug 'jeroenbourgois/vim-actionscript'
-plug 'leafgarland/typescript-vim'
 plug 'fatih/vim-go'
 
 # tools
@@ -50,8 +45,6 @@ plug 'tpope/vim-commentary'
 # fork of spacehi that works with unicode spaces
 plug 'mmrwoods/spacehi.vim'
 plug 'ervandew/supertab'
-plug 'mattn/gist-vim'
-plug 'mattn/webapi-vim' # required by gist-vim
 plug 'tpope/vim-eunuch'
 plug 'cohama/lexima.vim'
 plug 'ConradIrwin/vim-bracketed-paste'
