@@ -34,7 +34,7 @@ plug 'tpope/vim-projectionist'
 # syntax
 plug 'kchmck/vim-coffee-script'
 plug 'pangloss/vim-javascript'
-plug 'mxw/vim-jsx'
+plug 'MaxMEllon/vim-jsx-pretty'
 plug 'tpope/vim-rails'
 plug 'depuracao/vim-rdoc'
 plug 'othree/html5.vim'
