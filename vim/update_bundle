@@ -57,7 +57,7 @@ plug 'vim-scripts/PreserveNoEOL'
 plug 'pbrisbin/vim-mkdir'
 plug 'editorconfig/editorconfig-vim'
 plug 'tpope/vim-surround'
-plug 'lilydjwg/colorizer'
+plug 'RRethy/vim-hexokinase', build: 'make hexokinase'
 plug 'svermeulen/vim-easyclip'
 plug 'tpope/vim-repeat'
 plug 'mhinz/vim-signify'
@@ -72,7 +72,8 @@ plug 'neoclide/coc.nvim', branch: :release
 plug 'dkarter/bullets.vim'
 
 # colours
-plug 'altercation/vim-colors-solarized'
+# fork of solaraized that works with both 256 colors and true color
+plug 'ericbn/vim-solarized'
 plug 'nanotech/jellybeans.vim'
 
 bundle_dir = File.join(File.dirname(__FILE__), "bundle")
@@ -83,12 +84,18 @@ FileUtils.cd(bundle_dir)
 
 plugins.each do |path, opts|
   url = "https://github.com/#{path}.git"
+  build = opts.delete(:build)
   opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
   dir = path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
   dir = path.split('/').last if Dir.exists?(dir)
   puts "unpacking #{url} into #{dir}"
   `env GIT_SSL_NO_VERIFY=true git clone #{opts} #{url} #{dir}`
-  FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*"))
+  if build
+    puts "running build command '#{build}'"
+    `cd #{dir} && #{build}`
+  end
+  FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*")) # FIXME: shallow clone
+
 end
 
 print "Updating VIM Documentation... "

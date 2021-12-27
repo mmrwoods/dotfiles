@@ -237,7 +237,21 @@ let g:ale_disable_lsp = 1
 let g:coc_start_at_startup = 0
 
 " Don't automagically colorize text, use <leader>tc to toggle
-let g:colorizer_startup = 0
+let g:Hexokinase_ftEnabled = []
+
+" Include triple hex when colorizing text (missing from default)
+let g:Hexokinase_optInPatterns = [
+\     'full_hex',
+\     'triple_hex',
+\     'rgb',
+\     'rgba',
+\     'hsl',
+\     'hsla',
+\     'colour_names'
+\ ]
+
+" Use background to highlight colours, ugly, but clearly visible
+let g:Hexokinase_highlighters = ['backgroundfull']
 
 " Don't preserve missing EOL by default
 " Enable per buffer with `let b:PreserveNoEOL = 1`
@@ -568,6 +582,10 @@ nnoremap <Leader>ts :setlocal spell!<CR>
 
 " Toggle list mode (show unwanted whitespace)
 nnoremap <Leader>tl :setlocal list!<CR>
+
+" Toggle colorizing of color codes and names
+" Note: Hexokinase requires termguicolors
+nnoremap <leader>tc :set termguicolors!<CR>:HexokinaseToggle<CR>
 
 " Some extra mappings for convenience/speed
 " Single key to toggle bufexplorer, I use this all the time
