@@ -37,7 +37,7 @@ endif
 set infercase                     " And infer case when doing keyword completion
 
 if exists("&fileignorecase")
-  set nofileignorecase            " Make file name completion case-sensitive
+  set fileignorecase              " Make file name completion case-insensitive
 endif
 
 set number                        " Show line numbers in left margin
