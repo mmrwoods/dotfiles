@@ -141,16 +141,20 @@ let mapleader = ","
 
 " Don't enable bullets mappings in empty buffers, can cause problems
 " See https://github.com/dkarter/bullets.vim/issues/63
-let g:bullets_enable_in_empty_buffers = 1
+let g:bullets_enable_in_empty_buffers = 0
 
 " Remove buffer local <leader>x mapping set by bullets.vim as it takes
 " priority over normal mode <leader>x mapping to expand current window,
 " and update insert mode <cr> mapping to work with ins-completion-menu
-autocmd Bufread *
-  \ if index(g:bullets_enabled_file_types, &ft) > 0 |
+function! InsertNewBullet()
+  InsertNewBullet
+  return ''
+endfunction
+autocmd BufRead *
+  \ if index(g:bullets_enabled_file_types, &ft) >= 0 |
   \   unmap <buffer> <leader>x|
   \   iunmap <buffer> <cr>|
-  \   inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<esc>:InsertNewBullet<cr>')|
+  \   inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<C-]><C-R>=InsertNewBullet()<cr>')|
   \ endif
 
 " don't automatically save session on exit in non-gui vim
