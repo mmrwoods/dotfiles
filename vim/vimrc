@@ -136,8 +136,24 @@ set nojoinspaces
 " If using grep, at least ignore binaries and exclude some paths
 set grepprg="grep -n -I --exclude=tags --exclude-dir=.git $* /dev/null"
 
+" Shorten timeoutlen, primarily to make WhichKey menu appear sooner
+set timeoutlen=500
+
+" Set ttimeoutlen, primarily to make it faster to exit popup windows
+set ttimeoutlen=100
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
+
+" Open WhichKey menu for leader and g mappings after timeoutlen (500ms)
+nnoremap <silent> , :WhichKey ','<CR>
+nnoremap <silent> g :WhichKey 'g'<CR>
+
+" Disable caching of WhichKey menus - allow for buffer local mappings
+let g:which_key_run_map_on_popup = 1
+
+" Run native command when mapping not defined (required for WhichKey 'g')
+let g:which_key_fallback_to_native_key = 1
 
 " Don't enable bullets mappings in empty buffers, can cause problems
 " See https://github.com/dkarter/bullets.vim/issues/63
@@ -539,11 +555,11 @@ nnoremap <leader>ft :call FZFCommand('FZFTags')<CR>
 
 " Search in files using ack.vim, with fallback to git grep
 if exists('g:ackprg') || executable('ack') || executable('ack-grep')
-  let searchcmd = 'Ack!'
+  let g:searchcmd = 'Ack!'
 else
-  let searchcmd = 'Ggrep!'
+  let g:searchcmd = 'Ggrep!'
 endif
-nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '') . ":" . searchcmd . "\<Space>"
+nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '') . ":" . g:searchcmd . "\<Space>"
 
 " Search in files for word under cursor
 nnoremap <leader>y "syiw:Ack! <c-r>s<space>

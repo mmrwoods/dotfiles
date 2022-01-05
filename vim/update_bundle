@@ -70,6 +70,7 @@ plug 'dense-analysis/ale'
 plug 'regedarek/ZoomWin'
 plug 'neoclide/coc.nvim', branch: :release
 plug 'dkarter/bullets.vim'
+plug 'liuchengxu/vim-which-key'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color
