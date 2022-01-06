@@ -553,13 +553,14 @@ nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~
 " Fuzzy find tags
 nnoremap <leader>ft :call FZFCommand('FZFTags')<CR>
 
-" Search in files using ack.vim, with fallback to git grep
+" Search in files using ack.vim, with fallback to git grep and grep
 if exists('g:ackprg') || executable('ack') || executable('ack-grep')
-  let g:searchcmd = 'Ack!'
+  nnoremap <leader>s :Ack!<Space>
+elseif executable('git') && system('git rev-parse &>/dev/null; printf $?') == '0'
+  nnoremap <leader>s :Ggrep! -q<Space>
 else
-  let g:searchcmd = 'Ggrep!'
+  nnoremap <leader>s :grep!<Space>
 endif
-nnoremap <expr> <Leader>s (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '') . ":" . g:searchcmd . "\<Space>"
 
 " Search in files for word under cursor
 nnoremap <leader>y "syiw:Ack! <c-r>s<space>
