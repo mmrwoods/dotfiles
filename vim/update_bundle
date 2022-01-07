@@ -71,6 +71,7 @@ plug 'regedarek/ZoomWin'
 plug 'neoclide/coc.nvim', branch: :release
 plug 'dkarter/bullets.vim'
 plug 'liuchengxu/vim-which-key'
+plug 'yssl/QFEnter'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color
