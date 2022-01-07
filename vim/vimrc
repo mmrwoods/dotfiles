@@ -594,8 +594,10 @@ endif
 " Search in files for word under cursor
 nnoremap <leader>y "syiw:Ack! <c-r>s<space>
 
-" List projects
-nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
+" List projects, only used in GUI vim, see gvimrc
+if has('gui_running')
+  nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
+endif
 
 " List open files/buffers
 nnoremap <leader>b :ToggleBufExplorer<CR>
