@@ -143,7 +143,10 @@ set timeoutlen=500
 set ttimeoutlen=100
 
 " Reuse existing windows when opening files from the quickfix window
-set switchbuf=useopen,uselast
+set switchbuf=useopen
+if has("patch-8.1.2315")
+  set switchbuf+=uselast
+endif
 
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
