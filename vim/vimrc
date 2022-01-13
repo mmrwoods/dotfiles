@@ -310,10 +310,6 @@ let g:Hexokinase_optInPatterns = [
 " Use background to highlight colours, ugly, but clearly visible
 let g:Hexokinase_highlighters = ['backgroundfull']
 
-" Don't preserve missing EOL by default
-" Enable per buffer with `let b:PreserveNoEOL = 1`
-let g:PreserveNoEOL = 0
-
 " Tell NERDTree to respect wildignore
 let NERDTreeRespectWildIgnore = 1
 
