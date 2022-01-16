@@ -198,7 +198,7 @@ function! InsertNewBullet()
   InsertNewBullet
   return ''
 endfunction
-autocmd BufRead *
+autocmd BufFilePost *
   \ if index(g:bullets_enabled_file_types, &ft) >= 0 |
   \   unmap <buffer> <leader>x|
   \   iunmap <buffer> <cr>|
