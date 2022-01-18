@@ -551,35 +551,33 @@ nnoremap gd :SignifyToggle<CR>
 " Toggle file explorer (netrw, enhanced with vim-vinegar)
 nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
 
-" Stop fuzzy finder opening files in nofile and quickfix windows, e.g NERDTree
-" FIXME: extract to generic function and/or command and use with Ack mapping
-function! FZFCommand(cmd)
+" Stop FZF opening files in nofile and quickfix windows, with some exceptions
+let g:fzf_reuse_windows = ['bufexplorer', 'mru']
+function! FZFOpen(cmd)
   let c = 0
   let wincount = winnr('$')
-  " Move to a window containing a re-usable buffer before running the command
-  while ( bufname() =~# 'NERD_tree' || !empty(getbufvar(+expand("<abuf>"), "&buftype")) )
-        \  && bufname() !~# 'BufExplorer\|MRU_Files' && c < wincount
-    exec 'wincmd w'
+  while ( !empty(&buftype) && index(g:fzf_reuse_windows, &ft) == -1 && c < wincount )
+    wincmd w
     let c = c + 1
   endwhile
-  exec a:cmd
-endfunction
+  exec g:fzf_command_prefix . a:cmd
+endfunc
 
 " Fuzzy finder, default mode
-nnoremap <leader>f :call FZFCommand('FZFFiles')<CR>
+nnoremap <leader>f :call FZFOpen('Files')<CR>
 
 " Fuzzy find files
-nnoremap <leader>ff :call FZFCommand('FZFFiles')<CR>
+nnoremap <leader>ff :call FZFOpen('Files')<CR>
 
 " Fuzzy find buffers
-nnoremap <leader>fb :call FZFCommand('FZFBuffers')<CR>
+nnoremap <leader>fb :call FZFOpen('Buffers')<CR>
 
 " Fuzzy find MRU files within current working directory / project
 " Note: relies on MRU plugin, use <leader>m to see all MRU files
 nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~/.vim_mru_files', 'sink': 'e'}))<CR>
 
 " Fuzzy find tags
-nnoremap <leader>ft :call FZFCommand('FZFTags')<CR>
+nnoremap <leader>ft :call FZFOpen('Tags')<CR>
 
 " Search in files using ack.vim, with fallback to git grep and grep
 if exists('g:ackprg') || executable('ack') || executable('ack-grep')
