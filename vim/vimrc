@@ -234,11 +234,8 @@ if filereadable('/usr/local/bin/ctags')
   let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 endif
 
-" Workaround for tagbar setting ballooneval globally on open/toggle
-if has('balloon_eval')
-  autocmd WinEnter __Tagbar__* set ballooneval
-  autocmd WinLeave __Tagbar__* set noballooneval
-endif
+" Tell tagbar to stop enabling ballooneval
+let g:tagbar_show_balloon = 0
 
 " Assume a POSIX-compatible shell when shebang specifies /bin/sh, otherwise
 " highlighting is system dependent as the sh syntax file resolves symlinks
@@ -330,12 +327,6 @@ let g:netrw_banner = 1
 " Don't go back to netrw when choosing to edit the alternate file,
 " actually go back to the last edited file (same as bufexplorer)
 let g:netrw_altfile = 1
-
-" Workaround for NerdTreeToggle failures when NerdTree buffer deleted
-" See https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
-function! NERDTreeCommand()
-  try | NERDTreeToggle | catch | NERDTree | endtry
-endfunction
 
 " Skip editorconfig with fugitive
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
@@ -448,9 +439,7 @@ noremap <S-C-Tab> :tabprevious<cr>
 nnoremap <Leader>g <C-^>
 
 " Toggle ALE linting (disabled by default)
-nnoremap <Leader>a :call <SID>ALEToggle()<CR>
-
-function! s:ALEToggle()
+function! ALEToggle()
   if g:ale_enabled
     ALEDisable
     echohl MoreMsg | echom 'ALE disabled' | echohl None
@@ -459,11 +448,10 @@ function! s:ALEToggle()
     echohl MoreMsg | echom 'ALE enabled' | echohl None
   endif
 endfunction
+nnoremap <Leader>a :call ALEToggle()<CR>
 
 " Toggle coc.nvim service (disabled by default)
-nnoremap <leader>c :call <SID>CocToggle()<CR>
-
-function! s:CocToggle()
+function! CocToggle()
   if coc#rpc#ready()
     echohl MoreMsg | echom 'stopping coc.nvim service' | echohl None
     call coc#rpc#stop()
@@ -472,11 +460,10 @@ function! s:CocToggle()
     call coc#rpc#start_server()
   endif
 endfunction
+nnoremap <leader>c :call CocToggle()<CR>
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
+function! ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   elseif (coc#rpc#ready())
@@ -485,6 +472,7 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
 " Window mappings
 " switch to window pseudo-mode (uses window mode plugin, no more keyboard
@@ -540,7 +528,7 @@ endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
 " Toggle project drawer / tree view
-nnoremap <leader>d :call NERDTreeCommand()<CR>
+nnoremap <leader>d :NERDTreeToggle<CR>
 
 " Locate current file in project drawer / tree view
 nnoremap <leader>l :NERDTreeFind<CR>
@@ -548,8 +536,15 @@ nnoremap <leader>l :NERDTreeFind<CR>
 " Show/hide git diff in sign column
 nnoremap gd :SignifyToggle<CR>
 
-" Toggle file explorer (netrw, enhanced with vim-vinegar)
-nmap <expr> <Leader>e (&ft == 'netrw' ? ':Rexplore<CR>' : '<Plug>VinegarUp')
+" Toggle file explorer (Netrw)
+function! NetrwToggle()
+  if &ft == 'netrw'
+    Rexplore
+  else
+    Explore
+  end
+endfunction
+nnoremap <Leader>e :call NetrwToggle()<CR>
 
 " Stop FZF opening files in nofile and quickfix windows, with some exceptions
 let g:fzf_reuse_windows = ['bufexplorer', 'mru']
@@ -600,18 +595,17 @@ endif
 nnoremap <leader>b :ToggleBufExplorer<CR>
 
 " List most recently used files
-nnoremap <leader>m :MRU<CR>
+nnoremap <leader>m :MRUToggle<CR>
 
 " Outline view of current file
-" Note: tagbar plugin automatically enables ballooneval globally :-(
-nnoremap <leader>o :TagbarToggle<Enter>:set noballooneval<CR>
+nnoremap <leader>o :TagbarToggle<CR>
 
 " Zoom in/out current window
 nnoremap <leader>z :ZoomWin<CR>
 
 " Expand/maximize current window
 " See https://stackoverflow.com/a/26551079/17278003
-function! s:ExpandWin() abort
+function! ExpandWin() abort
     if exists('t:expanded') && t:expanded
         execute t:expand_winrestcmd
         let t:expanded = 0
@@ -622,11 +616,10 @@ function! s:ExpandWin() abort
         let t:expanded = 1
     endif
 endfunction
-command! ExpandWin call s:ExpandWin()
-nnoremap <Leader>x :ExpandWin<CR>
+nnoremap <Leader>x :call ExpandWin()<CR>
 
 " Highlight whitespace
-nnoremap <leader><space> :ToggleSpaceHi<Enter>
+nnoremap <leader><space> :ToggleSpaceHi<CR>
 
 " Run ctags to (re)generate tags file
 nnoremap <Leader>ct :!ctags -R .<CR>
