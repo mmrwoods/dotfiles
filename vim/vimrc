@@ -276,6 +276,9 @@ let g:lexima_accept_pum_with_enter = 1
 " Disable ALE linting by default, use ALEToggle to enable
 let g:ale_enabled = 0
 
+" And stop enabling balloneval, even when linting disabled!
+let g:ale_set_balloons = 0
+
 " Even when ALE is enabled, disable automatic linting as you type
 " Note: linting still runs on enter, save and leave insert mode
 let g:ale_lint_on_text_changed = 'never'
