@@ -735,6 +735,9 @@ autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 " Use xmllint as exernal program for formatting xml
 autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 
+" Use jq as external program for formatting json
+autocmd FileType json setlocal equalprg=jq
+
 " Avoid error editing crontab: temp file must be edited in place
 autocmd filetype crontab setlocal nobackup nowritebackup
 
