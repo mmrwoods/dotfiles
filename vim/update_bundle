@@ -15,7 +15,6 @@ def plug(path, opts={})
 end
 
 # navigation
-plug 'mileszs/ack.vim'
 plug 'scrooloose/nerdtree'
 plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'

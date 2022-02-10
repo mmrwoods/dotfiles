@@ -151,6 +151,9 @@ endif
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
+" Tell vim-qf to enable ack.vim style mappings in quickfix window
+let g:qf_mapping_ack_style = 1
+
 " Tell QFEnter to skip some filetypes when choosing window to open
 " Note: plugin required because vim only reuses normal buffers when opening
 " files from quickfix windows, which does not work well with bufexplorer etc.
@@ -363,16 +366,13 @@ let g:fzf_command_prefix = 'FZF'
 " Use ag command (aka The Silver Searcher) for finding and listing files
 if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ --vimgrep
+  set grepprg=ag\ --vimgrep\ --hidden
   set grepformat=%f:%l:%c:%m
-
-  " use ag with ack.vim
-  let g:ackprg = 'ag --vimgrep --hidden'
 
   " Use ag in fzf for listing files. Lightning fast and respects .gitignore
   let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
 else
-  echoerr "WARNING: ag executable not found, fuzzy finding files will be slow, install ag to fix this, see https://github.com/ggreer/the_silver_searcher"
+  echoerr "WARNING: ag executable not found, finding files will be slow, install ag to fix this, see https://github.com/ggreer/the_silver_searcher"
 endif
 
 " Set bat theme for fancy syntax highlighting in FZF preview window
@@ -577,17 +577,14 @@ nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~
 " Fuzzy find tags
 nnoremap <leader>ft :call FZFOpen('Tags')<CR>
 
-" Search in files using ack.vim, with fallback to git grep and grep
-if exists('g:ackprg') || executable('ack') || executable('ack-grep')
-  nnoremap <leader>s :Ack!<Space>
-elseif executable('git') && system('git rev-parse &>/dev/null; printf $?') == '0'
-  nnoremap <leader>s :Ggrep! -q<Space>
-else
-  nnoremap <leader>s :grep!<Space>
-endif
+" Custom Grep command to avoid external command prompt, see :help grep
+command! -nargs=+ -bang -complete=file Grep execute 'silent grep<bang> <args>' | redraw!
+
+" Search in files using grep program, see :help grepprg and :help grep
+nnoremap <leader>s :Grep!<Space>
 
 " Search in files for word under cursor
-nnoremap <leader>y "syiw:Ack! <c-r>s<space>
+nnoremap <leader>y "syiw:Grep! <c-r>s<space>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
