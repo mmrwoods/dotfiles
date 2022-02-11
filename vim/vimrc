@@ -232,11 +232,6 @@ let MRU_Use_Current_Window = 1
 " Don't add git commits etc. to MRU files
 let MRU_Exclude_Files = '\.git*'
 
-" Make sure tagbar uses exuberant ctags
-if filereadable('/usr/local/bin/ctags')
-  let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-endif
-
 " Tell tagbar to stop enabling ballooneval
 let g:tagbar_show_balloon = 0
 
