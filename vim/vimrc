@@ -230,6 +230,14 @@ let MRU_Exclude_Files = '\.git*'
 " Tell tagbar to stop enabling ballooneval
 let g:tagbar_show_balloon = 0
 
+" Don't auto-generate tags files in every source code repo
+let g:gutentags_generate_on_new = 0
+let g:gutentags_generate_on_missing = 0
+
+" But do generate when I write a file, for now anyway
+" Note: Consider disabling gutentags entirely by default
+let g:gutentags_generate_on_write = 1
+
 " Assume a POSIX-compatible shell when shebang specifies /bin/sh, otherwise
 " highlighting is system dependent as the sh syntax file resolves symlinks
 let g:is_posix = 1
