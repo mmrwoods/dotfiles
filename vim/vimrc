@@ -190,23 +190,18 @@ let g:which_key_run_map_on_popup = 1
 " Run native command when mapping not defined (required for WhichKey 'g')
 let g:which_key_fallback_to_native_key = 1
 
-" Don't enable bullets mappings in empty buffers, can cause problems
-" See https://github.com/dkarter/bullets.vim/issues/63
-let g:bullets_enable_in_empty_buffers = 0
+" Disable default bullets.vim mappings, clashes with other mappings
+let g:bullets_set_mappings = 0
 
-" Remove buffer local <leader>x mapping set by bullets.vim as it takes
-" priority over normal mode <leader>x mapping to expand current window,
-" and update insert mode <cr> mapping to work with ins-completion-menu
+" Add custom bullets mappings that don't clash with other mappings
 function! InsertNewBullet()
   InsertNewBullet
   return ''
 endfunction
-autocmd BufFilePost *
-  \ if index(g:bullets_enabled_file_types, &ft) >= 0 |
-  \   unmap <buffer> <leader>x|
-  \   iunmap <buffer> <cr>|
-  \   inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<C-]><C-R>=InsertNewBullet()<cr>')|
-  \ endif
+autocmd FileType markdown,text,gitcommit
+  \ inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<C-]><C-R>=InsertNewBullet()<cr>')|
+  \ nnoremap <buffer> o :InsertNewBullet<cr>|
+  \ nnoremap cx :ToggleCheckbox<cr>
 
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
