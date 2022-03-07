@@ -587,6 +587,8 @@ nnoremap <leader>y "syiw:Grep! <c-r>s<space>
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
   nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
+else
+  nnoremap <leader>p :echo 'Error: Session management not enabled in terminal vim!'<CR>
 endif
 
 " List open files/buffers
