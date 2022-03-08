@@ -71,6 +71,7 @@ plug 'dkarter/bullets.vim'
 plug 'liuchengxu/vim-which-key'
 plug 'yssl/QFEnter'
 plug 'ludovicchabant/vim-gutentags'
+plug 'voldikss/vim-floaterm'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color

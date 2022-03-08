@@ -361,6 +361,15 @@ let g:qf_auto_resize = 0
 " top level namespace and makes it easier to find and complete FZF commands)
 let g:fzf_command_prefix = 'FZF'
 
+if executable('glow')
+  let g:markdown_preview_command = 'glow -s dark -p'
+elseif executable('mdcat')
+  let g:markdown_preview_command = 'mdcat -p'
+else
+  " FIXME should this error only appear when attempting to preview markdown???
+  echoerr "WARNING: no markdown preview executable found, install glow to fix this, see https://github.com/charmbracelet/glow"
+endif
+
 " Use ag command (aka The Silver Searcher) for finding and listing files
 if executable('ag')
   " Use ag over grep
@@ -722,6 +731,9 @@ autocmd FileType gitcommit setlocal synmaxcol=0
 " Automatically wrap markdown text at 80 characters
 autocmd FileType markdown setlocal textwidth=80
 autocmd FileType markdown setlocal formatoptions+=t
+
+autocmd FileType markdown
+  \ nnoremap <buffer> <leader>v :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' ' . g:markdown_preview_command . ' %'<CR>
 
 " Turn on spell checking by default for markdown files
 autocmd FileType markdown setlocal spell
