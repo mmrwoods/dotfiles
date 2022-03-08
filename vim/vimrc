@@ -585,7 +585,7 @@ nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~
 nnoremap <leader>ft :call FZFOpen('Tags')<CR>
 
 " Custom Grep command to avoid external command prompt, see :help grep
-command! -nargs=+ -bang -complete=file Grep execute 'silent grep<bang> <args>' | redraw!
+command! -nargs=+ -bang -complete=file Grep execute 'silent grep<bang> '. escape('<q-args>', '|#%') | redraw!
 
 " Search in files using grep program, see :help grepprg and :help grep
 nnoremap <leader>s :Grep!<Space>
