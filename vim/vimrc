@@ -184,6 +184,13 @@ endfunc
 nnoremap <silent> , :WhichKey ','<CR>
 nnoremap <silent> g :WhichKey 'g'<CR>
 
+" Define dictionary with prefix names for leader mappings
+call which_key#register(',', "g:which_key_map")
+let g:which_key_map =  {}
+let g:which_key_map.f = { 'name' : '+fzfind' }
+let g:which_key_map.t = { 'name' : '+toggle' }
+let g:which_key_map.w = { 'name' : '+window' }
+
 " Disable caching of WhichKey menus - allow for buffer local mappings
 let g:which_key_run_map_on_popup = 1
 
@@ -567,9 +574,6 @@ function! FZFOpen(cmd)
   endwhile
   exec g:fzf_command_prefix . a:cmd
 endfunc
-
-" Fuzzy finder, default mode
-nnoremap <leader>f :call FZFOpen('Files')<CR>
 
 " Fuzzy find files
 nnoremap <leader>ff :call FZFOpen('Files')<CR>
