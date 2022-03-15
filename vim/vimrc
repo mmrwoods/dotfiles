@@ -634,9 +634,6 @@ nnoremap <Leader>x :call ExpandWin()<CR>
 " Highlight whitespace
 nnoremap <leader><space> :ToggleSpaceHi<CR>
 
-" Run ctags to (re)generate tags file
-nnoremap <Leader>ct :!ctags -R .<CR>
-
 " Toggle spell checking
 nnoremap <Leader>ts :setlocal spell!<CR>
 
