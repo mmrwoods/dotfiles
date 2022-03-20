@@ -455,6 +455,9 @@ noremap <S-C-Tab> :tabprevious<cr>
 " Open the alternate file, i.e. previously edited file in the current window
 nnoremap <Leader>g <C-^>
 
+" Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
+nnoremap <leader>/ /\V
+
 " Toggle ALE linting (disabled by default)
 function! ALEToggle()
   if g:ale_enabled
