@@ -29,7 +29,6 @@ cucumber=.feature
 
 --ignore-dir=build
 --ignore-dir=coverage
---ignore-dir=doc
 --ignore-dir=dist
 --ignore-dir=log
 --ignore-dir=node_modules
