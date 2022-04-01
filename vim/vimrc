@@ -379,14 +379,15 @@ endif
 
 " Use ag command (aka The Silver Searcher) for finding and listing files
 if executable('ag')
-  " Use ag over grep
   set grepprg=ag\ --vimgrep\ --hidden
   set grepformat=%f:%l:%c:%m
-
-  " Use ag in fzf for listing files. Lightning fast and respects .gitignore
   let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
+elseif executable('rg')
+  set grepprg=rg\ --vimgrep\ --hidden
+  set grepformat=%f:%l:%c:%m
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --color never'
 else
-  echoerr "WARNING: ag executable not found, finding files will be slow, install ag to fix this, see https://github.com/ggreer/the_silver_searcher"
+  echoerr "WARNING: grep alternative not found, finding files will be slow, install ag to fix this, see https://github.com/ggreer/the_silver_searcher"
 endif
 
 " Set bat theme for fancy syntax highlighting in FZF preview window
