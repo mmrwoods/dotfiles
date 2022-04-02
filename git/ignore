@@ -3,3 +3,6 @@
 *.swp
 .byebug_history
 tags
+tags.lock
+tags.temp
+tags.log
