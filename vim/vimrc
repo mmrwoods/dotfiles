@@ -377,17 +377,16 @@ else
   echoerr "WARNING: no markdown preview executable found, install glow to fix this, see https://github.com/charmbracelet/glow"
 endif
 
-" Use ag command (aka The Silver Searcher) for finding and listing files
-if executable('ag')
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore-parent\ -g\ \!**/node_modules\ -g\ \!**/.git\ -g\ \!**/tags\ -g\ \!**/tags.*
+  set grepformat=%f:%l:%c:%m
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --color never'
+elseif executable('ag')
   set grepprg=ag\ --vimgrep\ --hidden
   set grepformat=%f:%l:%c:%m
   let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
-elseif executable('rg')
-  set grepprg=rg\ --vimgrep\ --hidden
-  set grepformat=%f:%l:%c:%m
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --color never'
 else
-  echoerr "WARNING: grep alternative not found, finding files will be slow, install ag to fix this, see https://github.com/ggreer/the_silver_searcher"
+  echoerr "WARNING: grep alternative not found, finding files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
 endif
 
 " Set bat theme for fancy syntax highlighting in FZF preview window
