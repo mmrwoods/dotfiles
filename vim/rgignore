@@ -1,0 +1,16 @@
+*.bak
+*.swp
+*.log
+*.tmp
+*.min.js
+tags
+tags.*
+.byebug_history
+**/.git
+**/.hg
+**/bower_components
+**/build
+**/dist
+**/node_modules
+**/tmp
+**/vendor
