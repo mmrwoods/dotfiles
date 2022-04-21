@@ -70,10 +70,11 @@ set splitbelow                    " Open horizontal splits below
 set t_Co=256                      " Assume a 256 color terminal, ignore $TERM
 
 if $TERM_PROGRAM =~# 'iTerm'
-  \ || has('gui_running')
-  colorscheme solarized           " Solarized colors for local development
+  colorscheme solarized           " Match dark iTerm color scheme locally
+elseif has('gui_running')
+  colorscheme PaperColor          " High contrast light bg colors for gui
 elseif $SSH_CLIENT != ''
-  colorscheme jellybeans          " And jellybeans when running remotely
+  colorscheme jellybeans          " Distinct color scheme for ssh sessions
 endif
 
 if has('balloon_eval')
@@ -414,6 +415,12 @@ function! <SID>UpdateFZFColors()
     let $FZF_DEFAULT_OPTS='
       \ --color fg:188,bg:233,hl:103,fg+:222,bg+:234,hl+:104
       \ --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
+  elseif ( colors_name ==# 'PaperColor' )
+    let $FZF_DEFAULT_OPTS='
+          \ --color=light,fg:#4d4d4c,bg:#eeeeee,hl:#d7005f
+          \ --color=fg+:#4d4d4c,bg+:#e8e8e8,hl+:#d7005f
+          \ --color=info:#4271ae,prompt:#8959a8,pointer:#d7005f
+          \ --color=marker:#4271ae,spinner:#4271ae,header:#4271ae'
   else
     let $FZF_DEFAULT_OPTS='--color ' . &background
   endif
