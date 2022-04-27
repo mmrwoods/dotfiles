@@ -77,7 +77,7 @@ plug 'voldikss/vim-floaterm'
 # fork of solaraized that works with both 256 colors and true color
 plug 'ericbn/vim-solarized'
 plug 'nanotech/jellybeans.vim'
-plug 'NLKNguyen/papercolor-theme.git'
+plug 'NLKNguyen/papercolor-theme'
 
 bundle_dir = File.join(File.dirname(__FILE__), "bundle")
 
