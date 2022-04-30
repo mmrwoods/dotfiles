@@ -102,5 +102,5 @@ plugins.each do |path, opts|
 end
 
 print "Updating VIM Documentation... "
-`vim -c 'call pathogen#helptags()|q' 2>&1 > /dev/null`
+system "vim -c 'call pathogen#helptags()|q'"
 puts $?.exitstatus == 0 ? "OK" : "FAILED"
