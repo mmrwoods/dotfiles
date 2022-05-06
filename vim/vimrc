@@ -515,6 +515,8 @@ nnoremap <leader>wv :wincmd v<CR>
 " rotate and exchange windows
 nnoremap <leader>wr :wincmd r<CR>
 nnoremap <leader>wx :wincmd x<CR>
+" move horizonal split to vertical
+nnoremap <leader>wl :wincmd L<CR>
 " navigation with arrow keys
 nnoremap <C-Up> :wincmd k<CR>
 nnoremap <C-Down> :wincmd j<CR>
