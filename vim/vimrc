@@ -600,14 +600,34 @@ nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~
 " Fuzzy find tags
 nnoremap <leader>ft :call FZFOpen('Tags')<CR>
 
-" Custom Grep command to avoid external command prompt, see :help grep
-command! -nargs=+ -bang -complete=file Grep execute 'silent grep<bang> '. escape('<args>', '|#%') | redraw! | copen
+" Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
+" silently to avoid the "Press ENTER to continue" prompt after running external
+" commands and escapes cmdline special chars to avoid expansion of # and friends
+function! GrepPrompt(...)
+  let inputstr = trim(input('grep> ', (a:0 > 0 ? a:1 : ''), 'customlist,GrepComplete'))
+  if empty(inputstr) | redraw! | return | end
+  try
+    exec 'silent grep! '. escape(inputstr, '#%')
+  catch /E40:/ " shell error, re-run unsilent to see error output
+    exec 'unsilent grep! '. escape(inputstr, '#%')
+  endtry
+  redraw! | copen
+endfunction
+
+" Simple completion for grep prompt, also inspired by vim-grepper
+function! GrepComplete(lead, _line, _pos)
+  let args = split(a:lead, '.*\s\zs', 1)
+  if len(args) < 2 | return [] | end
+  let path = args[-1]
+  let head = join(args[0:-2])
+  return map(getcompletion(args[-1], 'file'), 'head . fnameescape(v:val)')
+endfun
 
 " Search in files using grep program, see :help grepprg and :help grep
-nnoremap <leader>s :Grep!<Space>
+nnoremap <leader>s :call GrepPrompt()<CR>
 
 " Search in files for word under cursor
-nnoremap <leader>y "syiw:Grep! <c-r>s<space>
+nnoremap <leader>y "syiw:call GrepPrompt('<c-r>s')<CR>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
