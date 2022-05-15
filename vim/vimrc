@@ -609,7 +609,11 @@ function! GrepPrompt(...)
   try
     exec 'silent grep! '. escape(inputstr, '#%')
   catch /E40:/ " shell error, re-run unsilent to see error output
-    exec 'unsilent grep! '. escape(inputstr, '#%')
+    try
+      exec 'unsilent grep! '. escape(inputstr, '#%')
+    catch /E40:/
+      call setqflist([], 'r', {'title': &grepprg . ' ' . inputstr, 'items': []})
+    endtry
   endtry
   redraw! | copen
 endfunction
