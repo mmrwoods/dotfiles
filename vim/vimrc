@@ -379,7 +379,7 @@ else
 endif
 
 if executable('rg')
-  set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
   set grepformat=%f:%l:%c:%m
   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --color never'
 elseif executable('ag')
