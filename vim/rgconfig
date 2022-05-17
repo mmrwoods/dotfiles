@@ -1,0 +1,3 @@
+--max-count=100
+--max-columns=1000
+--max-filesize=1M
