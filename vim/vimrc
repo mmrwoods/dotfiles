@@ -760,6 +760,21 @@ autocmd BufRead,BufWrite *.yaml,*.yml,*.json
 " Set conf.local filetype to conf
 autocmd BufRead,BufNewFile *.conf.local set ft=conf
 
+" Crude autodetection of some common rc file types/formats
+" Is this good enough to use on all files with unknown type?
+autocmd BufRead,BufWrite .*rc
+  \ if empty(&ft) |
+  \   if getline(1) =~ '^{' |
+  \     setfiletype json |
+  \   elseif getline(1) == '---' |
+  \     setfiletype yaml |
+  \   elseif getline(1) =~ '^\w\+:' && ( getline(2) =~ '^\w\+:' || getline(2) =~ '^\s\+\-\s\+\w\+' ) |
+  \     setfiletype yaml |
+  \   elseif search('^\[\w\+\]', 'nw') |
+  \     setfiletype dosini |
+  \   endif |
+  \ endif
+
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell
 
