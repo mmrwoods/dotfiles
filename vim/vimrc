@@ -769,7 +769,7 @@ autocmd BufRead,BufWrite .*rc,$HOME/.*
   \     setfiletype yaml |
   \   elseif getline(1) =~ '^\w\+:' && ( getline(2) =~ '^\w\+:' || getline(2) =~ '^\s\+\-\s\+\w\+' ) |
   \     setfiletype yaml |
-  \   elseif search('^\[\w\+\]', 'nw') |
+  \   elseif search('^\[.*\]', 'nw') && search('^\w\+\s*=\s*\(\w\|\"\)', 'nw') |
   \     setfiletype dosini |
   \   endif |
   \ endif
