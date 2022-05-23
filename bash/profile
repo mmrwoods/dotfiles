@@ -37,8 +37,12 @@ done
 # Use spring command to explicitly use as required (see aliases below)
 export DISABLE_SPRING=1
 
-# Stop homebrew from auto-updating, which can cause all sorts of mayhem
+# Stop homebrew from auto-updating, which can cause mayhem
 export HOMEBREW_NO_AUTO_UPDATE=1
+
+# Stop homebrew from upgrading all dependencies, more mayhem
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 alias which="/usr/bin/which" # fuck you node-which
 
