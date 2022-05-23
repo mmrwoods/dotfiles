@@ -38,6 +38,7 @@ plug 'tpope/vim-rails'
 plug 'depuracao/vim-rdoc'
 plug 'othree/html5.vim'
 plug 'fatih/vim-go'
+plug 'cespare/vim-toml'
 
 # tools
 plug 'tpope/vim-commentary'
