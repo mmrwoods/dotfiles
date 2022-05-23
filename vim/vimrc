@@ -760,9 +760,8 @@ autocmd BufRead,BufWrite *.yaml,*.yml,*.json
 " Set conf.local filetype to conf
 autocmd BufRead,BufNewFile *.conf.local set ft=conf
 
-" Crude autodetection of some common rc file types/formats
-" Is this good enough to use on all files with unknown type?
-autocmd BufRead,BufWrite .*rc
+" Crude autodetection of some common rc and other dotfile types/formats
+autocmd BufRead,BufWrite .*rc,$HOME/.*
   \ if empty(&ft) |
   \   if getline(1) =~ '^{' |
   \     setfiletype json |
