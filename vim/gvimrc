@@ -108,9 +108,6 @@ if has("mac")
   " Set the guifont
   set guifont=Mensch:h12,Menlo:h12,Monaco:h12
 
-  " Automagically fix window dimensions after opening and closing tabs
-  autocmd TabEnter * set lines=999 columns=999
-
   " MacVim disables cocoa key bindings, but I want double S / section sign
   " mapped to hash. For some reason map doesn't work, so...
   inoremap § #
