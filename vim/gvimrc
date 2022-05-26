@@ -118,4 +118,14 @@ if has("mac")
   " Automatically resize all windows when vim container window resized
   autocmd VimResized * call <SID>EqualWindows()
 
+  " Rerun filetype detection after starting vim and loading session
+  " Note: does not work on VimEnter or SessionLoadPost, so use timer
+  if has('timers')
+    function _VimEnterPost(...)
+      windo if empty(&filetype) | filetype detect | endif
+      1 wincmd w
+    endfunction
+    autocmd VimEnter * call timer_start(100, '_VimEnterPost', {'repeat':0})
+  endif
+
 endif
