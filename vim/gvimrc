@@ -78,25 +78,29 @@ if has("mac")
   " some kind of timing issue with windo and getting window numbers from ids.
   autocmd VimLeavePre *
     \ if ( v:servername == 'VIM' ) |
+    \   " get id of current window before we start closing blank windows
     \   let winid = win_getid(winnr()) |
     \   let c = 0 |
     \   let n = winnr('$') |
     \   while c < n |
     \     exec 'wincmd w' |
-    \     if !empty(&buftype) | close | endif |
+    \     if !empty(&buftype) || !empty(win_gettype(winnr())) | close | endif |
     \     let c = c + 1 |
     \   endwhile |
+    \   " set last window number using winid after closing blank windows
     \   let g:LAST_WINDOW = win_id2win(winid) |
     \   exec '1 wincmd w' |
     \ endif
   autocmd FocusLost *
     \ if ( v:servername == 'VIM' ) |
     \   let g:LAST_WINDOW = winnr() |
-    \   exec '1 wincmd w' |
+    \   if empty(win_gettype(winnr())) |
+    \     exec '1 wincmd w' |
+    \   endif |
     \ endif
   autocmd VimEnter,FocusGained *
     \ if ( v:servername == 'VIM' ) |
-    \   if exists('g:LAST_WINDOW') |
+    \   if exists('g:LAST_WINDOW') && empty(win_gettype(g:LAST_WINDOW))|
     \     exec g:LAST_WINDOW . 'wincmd w' |
     \   endif |
     \ endif
