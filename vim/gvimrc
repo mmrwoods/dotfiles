@@ -1,7 +1,13 @@
 set antialias                     " Smooth fonts
 set guioptions-=T                 " Hide toolbar
 set guicursor=n:blinkon0          " No blinking the cursor in normal mode
-set lines=999 columns=999         " Open maximized
+
+" open maximized
+if has('fullscreen')
+  set fullscreen
+else
+  set lines=999 columns=999
+endif
 
 " save session data on exit
 let sessionman_save_on_exit=1
