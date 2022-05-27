@@ -99,8 +99,10 @@ plugins.each do |path, opts|
     `cd #{dir} && #{build}`
   end
   FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*")) # FIXME: shallow clone
-
 end
+
+puts "Overriding editorconfig for bundle dir"
+system "echo root=true > .editorconfig"
 
 print "Updating VIM Documentation... "
 system "vim -c 'call pathogen#helptags()|q'"
