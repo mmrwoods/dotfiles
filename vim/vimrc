@@ -214,6 +214,9 @@ autocmd FileType markdown,text,gitcommit
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
+" minimalist sessions list, hide mappings help
+let sessionman_minimal_ui = 1
+
 " show private gists when listing mine
 let g:gist_show_privates = 1
 
@@ -332,6 +335,9 @@ let NERDTreeShowHidden = 1
 " Another option to consider is to show the currently selected file, e.g.
 " https://github.com/vim-airline/vim-airline/issues/271#issuecomment-40597276
 let NERDTreeStatusline = '%t'
+
+" Minimalist NERDTree UI, no bookmarks, help hint or up a dir
+let NERDTreeMinimalUI = 1
 
 " Always show the netrw banner, so it's not mistaken for NERDTree
 let g:netrw_banner = 1
