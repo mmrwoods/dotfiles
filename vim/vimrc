@@ -600,9 +600,25 @@ nnoremap <leader>ff :call FZFOpen('Files')<CR>
 " Fuzzy find buffers
 nnoremap <leader>fb :call FZFOpen('Buffers')<CR>
 
-" Fuzzy find MRU files within current working directory / project
-" Note: relies on MRU plugin, use <leader>m to see all MRU files
-nnoremap <leader>fm : call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~/.vim_mru_files', 'sink': 'e'}))<CR>
+" Fuzzy find commits
+nnoremap <leader>fc :call FZFOpen('Commits')<CR>
+
+" Fuzzy find commands (things to "execute")
+nnoremap <leader>fe :call FZFOpen('Commands')<CR>
+
+" Fuzzy find git ls-files
+nnoremap <leader>fg :call FZFOpen('GitFiles')<CR>
+
+" Fuzzy find help tags
+nnoremap <leader>fh :call FZFOpen('Helptags')<CR>
+
+" Fuzzy find "recent" files within current working directory / project
+" Note: relies on MRU plugin, use <leader>fm to fzf find all MRU files
+command FZFRecent :call fzf#run(fzf#wrap({'source': 'grep ^' . getcwd() . ' ~/.vim_mru_files', 'sink': 'e'}))
+nnoremap <leader>fr :call FZFOpen('Recent')<CR>
+
+" Fuzzy find all MRU files
+nnoremap <leader>fm :call FZFOpen('Mru')<CR>
 
 " Fuzzy find tags
 nnoremap <leader>ft :call FZFOpen('Tags')<CR>
