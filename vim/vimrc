@@ -7,6 +7,8 @@ set nobomb                        " And don't add a BOM, assume UTF8 everywhere
 
 set nomodeline                    " No modelines (potential for security issues)
 
+set nofixeol                      " Disable fixeol by default, use .editorconfig
+
 set cursorline                    " Highlight the cursor line
 
 set ttyfast                       " Assume a fast terminal connection
