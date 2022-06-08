@@ -584,6 +584,21 @@ function! NetrwToggle()
 endfunction
 nnoremap <Leader>e :call NetrwToggle()<CR>
 
+let g:vimspector_base_dir = expand('~/.vim/bundle/vimspector')
+
+nmap <Leader>dd <Plug>VimspectorLaunch
+nmap <Leader>ds <Plug>VimspectorStop
+nmap <Leader>db <Plug>VimspectorBreakpoints
+nmap <Leader>dc <Plug>VimspectorContinue
+nmap <Leader>dp <Plug>VimspectorPause
+nmap <Leader>dn <Plug>VimspectorStepOver
+nmap <Leader>ds <Plug>VimspectorStepInto
+nmap <Leader>do <Plug>VimspectorStepOut
+nmap <Leader>dr <Plug>VimspectorRestart
+nmap <Leader>dx :call vimspector#Reset()<CR>
+nmap <Leader>dt <Plug>VimspectorToggleBreakpoint
+nmap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+
 " Stop FZF opening files in nofile and quickfix windows, with some exceptions
 let g:fzf_reuse_windows = ['bufexplorer', 'mru']
 function! FZFOpen(cmd)
