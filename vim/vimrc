@@ -565,16 +565,17 @@ function! JumpToTagInSplit()
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
-" Toggle project drawer / tree view
-nnoremap <leader>d :NERDTreeToggle<CR>
+" Toggle project explorer / tree view
+nnoremap <leader>e :NERDTreeToggle<CR>
 
-" Locate current file in project drawer / tree view
+" Locate current file in project explorer / tree view
 nnoremap <leader>l :NERDTreeFind<CR>
 
 " Show/hide git diff in sign column
 nnoremap gd :SignifyToggle<CR>
 
-" Toggle file explorer (Netrw)
+" Toggle directory/file explorer (Netrw)
+" FIXME: Delete?? Are VinegarUp/- and altfile/<leader>g mappings enough?
 function! NetrwToggle()
   if &ft == 'netrw'
     Rexplore
@@ -582,7 +583,7 @@ function! NetrwToggle()
     Explore
   end
 endfunction
-nnoremap <Leader>e :call NetrwToggle()<CR>
+nnoremap _ :call NetrwToggle()<CR>
 
 let g:vimspector_base_dir = expand('~/.vim/bundle/vimspector')
 
