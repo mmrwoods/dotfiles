@@ -688,6 +688,9 @@ nnoremap <leader>b :ToggleBufExplorer<CR>
 " List most recently used files
 nnoremap <leader>m :MRUToggle<CR>
 
+" List most recently used files within current working directory
+nnoremap <leader>r :exec ':MRU ' . getcwd()<CR>
+
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<CR>
 
