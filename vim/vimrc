@@ -238,8 +238,8 @@ let MRU_Add_Menu = 0
 " Use the current window to load the list of MRU files
 let MRU_Use_Current_Window = 1
 
-" Don't add git commits etc. to MRU files
-let MRU_Exclude_Files = '\.git*'
+" Don't add git commits, private or tmp files to MRU files
+let MRU_Exclude_Files = '\.git*\|^/\(private\|tmp\|var\)/.*'
 
 " Tell tagbar to stop enabling ballooneval
 let g:tagbar_show_balloon = 0
