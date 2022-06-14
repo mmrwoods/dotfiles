@@ -241,6 +241,9 @@ let MRU_Use_Current_Window = 1
 " Don't add git commits, private or tmp files to MRU files
 let MRU_Exclude_Files = '\.git*\|^/\(private\|tmp\|var\)/.*'
 
+" Don't fuzzy match when filtering MRU files, orders on match score
+let MRU_FuzzyMatch = 0
+
 " Tell tagbar to stop enabling ballooneval
 let g:tagbar_show_balloon = 0
 
