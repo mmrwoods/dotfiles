@@ -824,6 +824,12 @@ augroup filetypedetect
     \     setfiletype dosini |
     \   endif |
     \ endif
+
+  " Even cruder autodetection of text files with no file extension
+  autocmd BufRead,BufWrite *
+    \ if empty(&ft) && empty(expand('%:e')) && search('^\w\+', 'nw', 10) |
+    \   setfiletype text |
+    \ endif
 augroup END
 
 " Turn on spell checking by default for git commits
