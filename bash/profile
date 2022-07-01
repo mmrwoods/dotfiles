@@ -303,14 +303,23 @@ alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 # Make random password containing letters, digits and an underscore somewhere
 # The resulting password is a vim/regex word, so it's easy to copy and paste
 mkpw() {
+  # required password length, default 20, override with script arg, e.g. mkpw 30
   reqlength=${1:-20}
-  randomstr=`head /dev/urandom | uuencode -m - | sed -n 2p | tr -d '/+' | cut -c1-${reqlength} | tr -d '\n';`
+  # get some random bytes, uuencode them, and extract reqlength alphanumeric chars
+  randomstr=`head /dev/urandom | uuencode -m - | sed -n 2p | tr -d '/+' | cut -c1-${reqlength}`
+  # if randomstr doesn't have any digits, add one in some random position
   if ! echo $randomstr | egrep '\d' >/dev/null; then
     randomstr=`echo $(( RANDOM % 10 ))$randomstr | cut -c1-${reqlength}`
   fi
+  # insert underscore somewhere to make stupid password strength meters happy
+  # don't insert at beginning or end, simply because I find this offputting
   punctchar="_"
-  insertpos=`awk -v min=1 -v max=$reqlength 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
-  echo $randomstr | sed s/./\\$punctchar/$insertpos | tr -d '\n' ; if [ -t 1 ] ; then echo; fi
+  insertpos=`awk -v min=2 -v max=$(($reqlength-1)) 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
+  randomstr=`echo $randomstr | sed s/./\$punctchar/$insertpos`
+  # print password, only adding a new line if stdout is a tty, which allows
+  # stdout to be piped to stdin for another program, e.g. mkpw | pbcopy
+  printf $randomstr
+  if [ -t 1 ] ; then printf '\n'; fi
 }
 
 # what is my ip again?
