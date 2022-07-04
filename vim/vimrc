@@ -870,12 +870,16 @@ endif
 
 " autochdir when in insert mode for relative file path completion
 " stolen from, damn I forget where, but I definitely stole it
+" FIXME: remap i_CTRL-X_CTRL-F and use au CompleteDone instead?
 augroup working_directory
   autocmd!
   " set current directory on insert mode
   autocmd InsertEnter * let save_cwd = getcwd() | silent! lcd %:p:h
   " switch back to previous directory when leaving insert mode
   autocmd InsertLeave * silent execute 'lcd' fnameescape(save_cwd)
+  " catch edge cases when leaving window or vim while in insert mode
+  autocmd WinLeave * if exists('save_cwd') | silent execute 'lcd' fnameescape(save_cwd) | endif
+  autocmd VimLeavePre * windo if exists('save_cwd') | silent execute 'lcd' fnameescape(save_cwd) | endif
 augroup END
 
 " Vimcast 4 - Tidying Whitespace
