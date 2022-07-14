@@ -804,7 +804,7 @@ augroup filetypedetect
 
   " Set cloudformation filetypes to enable linting in ALE
   autocmd Filetype yaml,json
-    \ if search('AWSTemplateFormatVersion', 'nw') |
+    \ if search('AWSTemplateFormatVersion', 'nwc') |
     \   let &ft=&ft . '.cloudformation' |
     \ endif
 
@@ -820,14 +820,14 @@ augroup filetypedetect
     \     setfiletype yaml |
     \   elseif getline(1) =~ '^\w\+:' && ( getline(2) =~ '^\w\+:' || getline(2) =~ '^\s\+\-\s\+\w\+' ) |
     \     setfiletype yaml |
-    \   elseif search('^\[.*\]', 'nw') && search('^\w\+\s*=\s*\(\w\|\"\)', 'nw') |
+    \   elseif search('^\[.*\]', 'nw') && search('^\w\+\s*=\s*\(\w\|\"\)', 'nwc') |
     \     setfiletype dosini |
     \   endif |
     \ endif
 
   " Even cruder autodetection of text files with no file extension
   autocmd BufRead,BufWrite *
-    \ if empty(&ft) && empty(expand('%:e')) && search('^\w\+', 'nw', 10) |
+    \ if empty(&ft) && empty(expand('%:e')) && search('\c^\w\+', 'nwc', 10) |
     \   setfiletype text |
     \ endif
 augroup END
