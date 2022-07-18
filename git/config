@@ -63,6 +63,7 @@
   sh = show
   l1 = log --oneline
   lp = log --patch --decorate
+  lf = log --follow
 
   # pull with rebase from origin
   pr = "!bash -c 'git symbolic-ref --short HEAD | xargs git pull --rebase $@ origin'" -
