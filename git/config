@@ -98,10 +98,10 @@
   # list 10 most recently used/checked-out branches
   # Note: awk '!x[$0]++' removes duplicate lines without sorting, by adding
   # values into an array and printing the value if it does not already exist
-  mru = "!( git rev-parse --verify --symbolic-full-name @{-1} 2>/dev/null ; \
-    git reflog -n 300 --pretty='%gs' -i --grep-reflog='checkout: moving\\|branch: renamed' ) \
+  mru = "!( git reflog -n 300 --pretty='%gs' -i --grep-reflog='checkout: moving\\|branch: renamed' ) \
     | awk '{print $NF}' | sed 's/refs\\/heads\\///' | egrep -vi '^head[\\^~@]*[\\{\\}0-9]*$' | grep -v '[0-9a-z]\\{40\\}'| awk '!x[$0]++' \
-    | while read ref; do if test -f .git/refs/heads/$ref || fgrep \"refs/heads/$ref\" .git/packed-refs &>/dev/null; then echo $ref; fi; done | head -n 10"
+    | while read ref; do if test -f .git/refs/heads/$ref || fgrep \"refs/heads/$ref\" .git/packed-refs &>/dev/null; then echo $ref; fi; done | head -n 10 \
+    | /usr/bin/grep . || git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's/refs\\/remotes\\/origin\\///'"
 
   # select and switch to recently used or committed branches and tags
   select = "!export COLUMNS=10; select subcmd in mru branch remote tag; do echo; git select-$subcmd; break; done"
