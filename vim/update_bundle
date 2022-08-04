@@ -71,7 +71,10 @@ plug 'neoclide/coc.nvim', branch: :release
 plug 'dkarter/bullets.vim'
 plug 'liuchengxu/vim-which-key'
 plug 'yssl/QFEnter'
-plug 'ludovicchabant/vim-gutentags'
+# Fix for missing options temp file
+# FIXME: replace with 'ludovicchabant/vim-gutentags' when fixed upstream
+# see https://github.com/ludovicchabant/vim-gutentags/pull/333
+plug 'mmrwoods/vim-gutentags'
 plug 'voldikss/vim-floaterm'
 plug 'puremourning/vimspector'
 
