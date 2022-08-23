@@ -778,17 +778,6 @@ endif
 if has('mouse')
   " enable mouse support in all modes
   set mouse=a
-
-  " Make the mouse/trackpad work with tmux and screen
-  " See https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
-  if &term =~ "xterm" || &term =~ "screen"
-    " as of March 2013, this works:
-    set ttymouse=xterm2
-
-    " previously, I found that ttymouse was getting reset, so had
-    " to reapply it via an autocmd like this:
-    autocmd VimEnter,FocusGained,BufEnter * set ttymouse=xterm2
-  endif
 endif
 
 " Default format options, auto-format comments, but not code/text
