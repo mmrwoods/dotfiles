@@ -773,6 +773,10 @@ if has("clipboard")
   noremap <C-A> gggH<C-O>G
   inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
   vnoremap <C-A> <C-C>ggVG
+
+  " CTRL-V and SHIFT-insert are also Paste in terminal job mode
+   tnoremap <C-V> <C-W>"+
+   tnoremap <S-Insert> <C-W>"+
 endif
 
 if has('mouse')
