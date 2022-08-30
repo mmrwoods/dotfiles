@@ -779,6 +779,10 @@ if has("clipboard")
    tnoremap <S-Insert> <C-W>"+
 endif
 
+" Make p paste from unanmed register in terminal normal mode
+au TerminalOpen *
+  \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
+
 if has('mouse')
   " enable mouse support in all modes
   set mouse=a
