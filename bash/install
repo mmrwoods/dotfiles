@@ -13,6 +13,12 @@ fi
 
 touch ~/.bash_profile
 if ! fgrep "source ~/dotfiles/bash/profile" ~/.bash_profile &> /dev/null; then
-  echo "" >> ~/.bash_profile
+  test -s ~/.bash_profile && echo "" >> ~/.bash_profile
   echo "source ~/dotfiles/bash/profile" >> ~/.bash_profile
+fi
+
+touch ~/.bashrc
+if ! fgrep "source ~/dotfiles/bash/profile" ~/.bashrc &> /dev/null; then
+  test -s ~/.bashrc && echo "" >> ~/.bashrc
+  echo "source ~/dotfiles/bash/profile" >> ~/.bashrc
 fi
