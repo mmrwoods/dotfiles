@@ -3,7 +3,7 @@
 set -x
 
 if test "$(uname)" == "Darwin" ; then
-  brew install bash bash-completion
+  brew install bash bash-completion@2
   brew_prefix=$(brew --prefix)
   if ! fgrep "$brew_prefix/bin/bash" /etc/shells &> /dev/null; then
     sudo sh -c "echo $brew_prefix/bin/bash >> /etc/shells"
