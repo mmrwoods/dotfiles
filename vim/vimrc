@@ -162,26 +162,9 @@ let g:qf_mapping_ack_style = 1
 " files from quickfix windows, which does not work well with bufexplorer etc.
 let g:qfenter_exclude_filetypes = ['nerdtree', 'tagbar', 'scratch']
 
-" Customise QFEnter CR mapping to move to next usable window rather than
-" simply echo an error when previous window matches an excluded filetype
-" FIXME: fork QFEnter and add a feature to support this kind of behaviour
-let g:qfenter_custom_map_list = []
-call add(g:qfenter_custom_map_list, {
-  \'tabwinfunc': 'QFEnterWin',
-  \'qfopencmd': 'cc',
-  \'keepfocus': 0,
-  \'keys': ['<CR>'],
-  \})
-function! QFEnterWin()
-  wincmd p
-  let c = 0
-  let wincount = winnr('$')
-  while ( index(g:qfenter_exclude_filetypes, &ft) >= 0 && c < wincount )
-    wincmd w
-    let c = c + 1
-  endwhile
-  return [tabpagenr(), winnr(), 1, '']
-endfunc
+" Tell QFEnter to move to next usable window rather than simply echo an error
+" when attempting to open a file in a window matching an excluded filetype
+let g:qfenter_excluded_action = 'next'
 
 " Open WhichKey menu for leader and g mappings after timeoutlen (500ms)
 nnoremap <silent> , :WhichKey ','<CR>
