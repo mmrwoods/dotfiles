@@ -58,8 +58,7 @@ plug 'tpope/vim-repeat'
 plug 'mhinz/vim-signify'
 plug 'zirrostig/vim-schlepp'
 plug 'ciaranm/securemodelines'
-# fork of autoswap that works with iTerm2
-plug 'mmrwoods/vim-autoswap'
+plug 'gioele/vim-autoswap'
 plug 'dense-analysis/ale'
 # fork of ZoomWin that tracks upstream unstable/unreleased
 plug 'regedarek/ZoomWin'
