@@ -21,9 +21,7 @@ plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'junegunn/fzf'
 plug 'junegunn/fzf.vim'
-# Fix for https://github.com/tpope/vim-vinegar/issues/87
-# FIXME: replace with 'tpope/vinegar' when fixed upstream
-plug 'mmrwoods/vim-vinegar'
+plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'
 plug 'MTDL9/vim-window-mode'
