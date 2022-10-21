@@ -72,6 +72,7 @@ plug 'yssl/QFEnter'
 plug 'mmrwoods/vim-gutentags'
 plug 'voldikss/vim-floaterm'
 plug 'puremourning/vimspector'
+plug 'tpope/vim-sleuth'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color
