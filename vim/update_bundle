@@ -73,6 +73,7 @@ plug 'mmrwoods/vim-gutentags'
 plug 'voldikss/vim-floaterm'
 plug 'puremourning/vimspector'
 plug 'tpope/vim-sleuth'
+plug 'urxvtcd/vim-indent-object'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color

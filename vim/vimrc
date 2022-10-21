@@ -523,6 +523,15 @@ nnoremap = :wincmd =<CR>
 nnoremap > :wincmd ><CR>
 nnoremap < :wincmd <<CR>
 
+xmap ii <Plug>(indent-object_linewise-none)
+omap ii <Plug>(indent-object_blockwise-none)
+xmap ai <Plug>(indent-object_linewise-start)
+omap ai <Plug>(indent-object_linewise-start)
+xmap iI <Plug>(indent-object_linewise-end)
+omap iI <Plug>(indent-object_linewise-end)
+xmap aI <Plug>(indent-object_linewise-both)
+omap aI <Plug>(indent-object_linewise-both)
+
 " Tag navigation
 " remap CTRL-] to show list when multiple matches (use tjump)
 nnoremap <C-]> g<C-]>
