@@ -166,9 +166,8 @@ let g:qfenter_exclude_filetypes = ['nerdtree', 'tagbar', 'scratch']
 " when attempting to open a file in a window matching an excluded filetype
 let g:qfenter_excluded_action = 'next'
 
-" Open WhichKey menu for leader and g mappings after timeoutlen (500ms)
+" Open WhichKey menu for leader mappings after timeoutlen (500ms)
 nnoremap <silent> , :WhichKey ','<CR>
-nnoremap <silent> g :WhichKey 'g'<CR>
 
 " Define dictionary with prefix names for leader mappings
 call which_key#register(',', "g:which_key_map")
