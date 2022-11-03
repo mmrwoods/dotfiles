@@ -1,6 +1,7 @@
 set antialias                     " Smooth fonts
 set guioptions-=T                 " Hide toolbar
 set guicursor=n:blinkon0          " No blinking the cursor in normal mode
+set viminfo+=n~/.gviminfo         " Separate viminfo file for GUI vim
 
 " open maximized
 if has('fullscreen')
