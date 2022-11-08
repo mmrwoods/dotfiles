@@ -139,8 +139,9 @@ set nojoinspaces
 " If using grep, at least ignore binaries and exclude some paths
 set grepprg="grep -n -I --exclude=tags --exclude-dir=.git $* /dev/null"
 
-" Shorten timeoutlen, primarily to make WhichKey menu appear sooner
-set timeoutlen=500
+" Keep timeoutlen short enough to make WhichKey menu appear promptly, but not
+" so short that it makes it almost impossible to complete multi-key mappings
+set timeoutlen=1000
 
 " Set ttimeoutlen, primarily to make it faster to exit popup windows
 set ttimeoutlen=100
