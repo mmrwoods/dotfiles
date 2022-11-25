@@ -775,7 +775,7 @@ if has("clipboard")
 endif
 
 " Make p paste from unanmed register in terminal normal mode
-au TerminalOpen *
+au TerminalWinOpen *
   \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
 
 if has('mouse')
