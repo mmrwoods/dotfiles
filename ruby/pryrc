@@ -7,18 +7,15 @@ if $0.include?("rails")
 end
 
 # Simplified prompts (copy of default prompt with input array size removed)
-Pry.config.prompt = Pry::Prompt.new(
-  "custom",
-  "my custom prompt",
-  [
-    proc { |target_self, nest_level, _|
-      "#{Pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}> "
-    },
-    proc { |target_self, nest_level, _|
-      "#{Pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}* "
-    }
-  ]
-)
+prompt_procs = [
+  proc { |target_self, nest_level, _|
+    "#{Pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}> "
+  },
+  proc { |target_self, nest_level, _|
+    "#{Pry.config.prompt_name}(#{Pry.view_clip(target_self)})#{":#{nest_level}" unless nest_level.zero?}* "
+  }
+]
+Pry.config.prompt = Pry::Prompt.respond_to?(:new) ? Pry::Prompt.new('_', '_', prompt_procs) : prompt_procs
 
 def bundle(gem)
   return if Bundler.definition.current_dependencies.map(&:name).include?(gem)
