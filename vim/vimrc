@@ -423,10 +423,10 @@ function! <SID>UpdateFZFColors()
 endfunction
 autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
-" Disable bg color highlighting of bad spelling in PaperColor
+" Disable bg and fg color highlighting of bad spelling in PaperColor
 autocmd VimEnter,ColorScheme *
     \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
-    \   hi Spellbad guibg=NONE |
+    \   hi Spellbad guibg=NONE guifg=NONE |
     \ endif
 
 " Add M mapping to use easyclip function to move until EOL
