@@ -872,12 +872,12 @@ endif
 augroup working_directory
   autocmd!
   " set current directory on insert mode
-  autocmd InsertEnter * let save_cwd = getcwd() | silent! lcd %:p:h
+  autocmd InsertEnter * let w:save_cwd = getcwd() | silent! lcd %:p:h
   " switch back to previous directory when leaving insert mode
-  autocmd InsertLeave * silent execute 'lcd' fnameescape(save_cwd)
+  autocmd InsertLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
   " catch edge cases when leaving window or vim while in insert mode
-  autocmd WinLeave * if exists('save_cwd') | silent execute 'lcd' fnameescape(save_cwd) | endif
-  autocmd VimLeavePre * windo if exists('save_cwd') | silent execute 'lcd' fnameescape(save_cwd) | endif
+  autocmd WinLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
+  autocmd VimLeavePre * windo if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
 augroup END
 
 " Vimcast 4 - Tidying Whitespace
