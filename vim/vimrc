@@ -425,7 +425,7 @@ autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
 " Disable bg color highlighting of bad spelling in PaperColor
 autocmd VimEnter,ColorScheme *
-    \ if colors_name ==# 'PaperColor' |
+    \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
     \   hi Spellbad guibg=NONE |
     \ endif
 
