@@ -364,6 +364,10 @@ let g:qf_auto_resize = 0
 " top level namespace and makes it easier to find and complete FZF commands)
 let g:fzf_command_prefix = 'FZF'
 
+" Don't automatically change working directory to project root
+" Just using public function FindRootDirectory() with MRU mappings
+let g:rooter_manual_only = 1
+
 if executable('glow')
   let g:markdown_preview_command = 'glow -s dark -p'
 elseif executable('mdcat')
@@ -635,12 +639,12 @@ nnoremap <leader>fg :call FZFOpen('GitFiles')<CR>
 " Fuzzy find help tags
 nnoremap <leader>fh :call FZFOpen('Helptags')<CR>
 
-" Fuzzy find "recent" files within current working directory / project
+" Fuzzy find most recently used files within project root directory
 " Note: relies on MRU plugin, use <leader>fm to fzf find all MRU files
-command FZFRecent :call fzf#run(fzf#wrap({'source': MruGetFiles(getcwd()), 'sink': 'e'}))
+command FZFRecent :call fzf#run(fzf#wrap({'source': MruGetFiles(FindRootDirectory()), 'sink': 'e'}))
 nnoremap <leader>fr :call FZFOpen('Recent')<CR>
 
-" Fuzzy find all MRU files
+" Fuzzy find most recently used files
 nnoremap <leader>fm :call FZFOpen('Mru')<CR>
 
 " Fuzzy find tags
@@ -692,8 +696,8 @@ nnoremap <leader>b :ToggleBufExplorer<CR>
 " List most recently used files
 nnoremap <leader>m :MRUToggle<CR>
 
-" List most recently used files within current working directory
-nnoremap <leader>r :exec ':MRU ' . getcwd()<CR>
+" List most recently used files within project root directory
+nnoremap <leader>r :exec ':MRU ' . FindRootDirectory()<CR>
 
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<CR>
