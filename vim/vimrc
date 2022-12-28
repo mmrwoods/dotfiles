@@ -345,6 +345,17 @@ let g:EditorConfig_preserve_formatoptions = 1
 " See custom autocmd, which subtly highlights long lines instead
 let g:EditorConfig_max_line_indicator = 'none'
 
+" Disable whitespace highlighting by default, toggle with <leader><space>
+let g:better_whitespace_enabled=0
+
+" Automatically strip whitespace on save using better_whitespace plugin
+" Note: fallback for when no editorconfig configuration being applied
+" TODO: make aware of editorconfig so we don't tidy whitespace twice,
+" or possibly just disable editorconfig trim_trailing_whitespace rule
+let g:strip_whitespace_on_save=1
+let g:strip_only_modified_lines=1
+let g:strip_whitespace_confirm=0
+
 " Don't autohide scratch window when leaving insert mode
 let g:scratch_insert_autohide = 0
 
@@ -721,7 +732,7 @@ endfunction
 nnoremap <Leader>x :call ExpandWin()<CR>
 
 " Highlight whitespace
-nnoremap <leader><space> :ToggleSpaceHi<CR>
+nnoremap <leader><space> :ToggleWhitespace<CR>
 
 " Toggle spell checking
 nnoremap <Leader>ts :setlocal spell!<CR>
@@ -883,32 +894,6 @@ augroup working_directory
   autocmd WinLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
   autocmd VimLeavePre * windo if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
 augroup END
-
-" Vimcast 4 - Tidying Whitespace
-" Function and autocmd to strip trailing whitespace from files when saving
-function! <SID>StripTrailingWhitespace()
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " Do the business:
-  %s/\s\+$//e
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-" enable whitespace stripping for known file types by default
-autocmd FileType * let b:strip_trailing_whitespace=1
-" disable whitespace stripping for other file types as needed
-autocmd FileType markdown let b:strip_trailing_whitespace=0
-" enable whitespace stripping globally by default
-let g:strip_trailing_whitespace=1
-" strip whitespace before writing if enabled globally and for buffer
-autocmd BufWritePre *
-  \ if ( exists('g:strip_trailing_whitespace') && g:strip_trailing_whitespace )
-  \ && ( exists('b:strip_trailing_whitespace') && b:strip_trailing_whitespace ) |
-  \   call <SID>StripTrailingWhitespace() |
-  \ endif
 
 " Subtly highlight long lines rather than display colorcolumn
 function! <SID>HighlightLongLines()

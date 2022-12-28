@@ -39,8 +39,7 @@ plug 'cespare/vim-toml'
 
 # tools
 plug 'tpope/vim-commentary'
-# fork of spacehi that works with unicode spaces
-plug 'mmrwoods/spacehi.vim'
+plug 'ntpeters/vim-better-whitespace'
 plug 'ervandew/supertab'
 plug 'tpope/vim-eunuch'
 plug 'cohama/lexima.vim'
