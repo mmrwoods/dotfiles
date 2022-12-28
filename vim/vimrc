@@ -840,10 +840,10 @@ autocmd FileType gitcommit setlocal spell
 " Enable syntax highlighting for long lines in git commits
 autocmd FileType gitcommit setlocal synmaxcol=0
 
-" Automatically wrap markdown text at 80 characters
-autocmd FileType markdown setlocal textwidth=80
+" Automatically wrap markdown text at textwidth
 autocmd FileType markdown setlocal formatoptions+=t
 
+" Mapping to load markdown preview in popup window
 autocmd FileType markdown
   \ nnoremap <buffer> <leader>v :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' ' . g:markdown_preview_command . ' %'<CR>
 
