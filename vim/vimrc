@@ -345,16 +345,34 @@ let g:EditorConfig_preserve_formatoptions = 1
 " See custom autocmd, which subtly highlights long lines instead
 let g:EditorConfig_max_line_indicator = 'none'
 
+" Disable editorconfig trim_trailing_whitespace, use better_whitespace
+let g:EditorConfig_disable_rules = ['trim_trailing_whitespace']
+
 " Disable whitespace highlighting by default, toggle with <leader><space>
-let g:better_whitespace_enabled=0
+let g:better_whitespace_enabled = 0
 
 " Automatically strip whitespace on save using better_whitespace plugin
-" Note: fallback for when no editorconfig configuration being applied
-" TODO: make aware of editorconfig so we don't tidy whitespace twice,
-" or possibly just disable editorconfig trim_trailing_whitespace rule
-let g:strip_whitespace_on_save=1
-let g:strip_only_modified_lines=1
-let g:strip_whitespace_confirm=0
+let g:strip_whitespace_on_save = 1
+
+" Only strip whitespace on modified lines and don't ask for confirmation
+let g:strip_only_modified_lines = 1
+let g:strip_whitespace_confirm = 0
+
+" Use editorconfig hook to automatically enable/disable whitespace stripping
+function! <SID>EditorConfigHook(config)
+  try
+    let l:trim_trailing_whitespace = a:config->get('trim_trailing_whitespace')
+    if l:trim_trailing_whitespace == 'true'
+      exec 'EnableStripWhitespaceOnSave'
+    elseif l:trim_trailing_whitespace == 'false'
+      exec 'DisableStripWhitespaceOnSave'
+    endif
+  catch
+    echo 'EditorConfigHook Failed: ' . v:exception
+  endtry
+  return 0 " Return 0 to show no error happened
+endfunction
+call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
 
 " Don't autohide scratch window when leaving insert mode
 let g:scratch_insert_autohide = 0
