@@ -911,6 +911,12 @@ autocmd OptionSet textwidth call <SID>HighlightLongLines()
 " And on VimEnter because OptionSet autocmds do not run on startup
 autocmd VimEnter * bufdo call <SID>HighlightLongLines()
 
+" Experimental: Only show cursorline in currently focused/active window
+" Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
+" various edge cases with popups, same buffer in multiple windows etc.
+autocmd WinEnter,BufEnter * setlocal cursorline
+autocmd WinLeave,BufLeave * setlocal nocursorline
+
 " Jump to last known cursor position when editing (except for git commits)
 autocmd BufReadPost *
   \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
