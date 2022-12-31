@@ -465,11 +465,11 @@ autocmd VimEnter,ColorScheme *
 " Add M mapping to use easyclip function to move until EOL
 nmap M <Plug>MoveMotionEndOfLinePlug
 
-" Stop opening the command line history by accident
-nnoremap q: :q
+" Stop recording commands and opening the command history by accident
+nnoremap q <nop>
 
-" Stop recording commands into registers by accident
-nnoremap q :q
+" Use q to close the quickfix window and return to the previous window
+autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>
 
 " Retain selection after shifting highlighted lines in visual mode
 vnoremap > >gv
