@@ -469,7 +469,7 @@ nmap M <Plug>MoveMotionEndOfLinePlug
 nnoremap q <nop>
 
 " Use q to close the quickfix window and return to the previous window
-autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>
+autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd =<CR>
 
 " Retain selection after shifting highlighted lines in visual mode
 vnoremap > >gv
