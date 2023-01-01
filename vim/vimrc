@@ -471,6 +471,9 @@ nnoremap q <nop>
 " Use q to close the quickfix window and return to the previous window
 autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd =<CR>
 
+" Fix previous window navigation when existing quickfix window re-used
+autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
+
 " Retain selection after shifting highlighted lines in visual mode
 vnoremap > >gv
 vnoremap < <gv
