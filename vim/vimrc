@@ -670,7 +670,7 @@ nnoremap <leader>fh :call FZFOpen('Helptags')<CR>
 
 " Fuzzy find most recently used files within project root directory
 " Note: relies on MRU plugin, use <leader>fm to fzf find all MRU files
-command FZFRecent :call fzf#run(fzf#wrap({'source': MruGetFiles(FindRootDirectory()), 'sink': 'e'}))
+command! FZFRecent :call fzf#run(fzf#wrap({'source': MruGetFiles(FindRootDirectory()), 'sink': 'e'}))
 nnoremap <leader>fr :call FZFOpen('Recent')<CR>
 
 " Fuzzy find most recently used files
