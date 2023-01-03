@@ -38,6 +38,7 @@ plug 'fatih/vim-go'
 plug 'cespare/vim-toml'
 
 # tools
+plug 'andymass/vim-matchup'
 plug 'tpope/vim-commentary'
 plug 'ntpeters/vim-better-whitespace'
 plug 'ervandew/supertab'
