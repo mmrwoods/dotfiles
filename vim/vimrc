@@ -561,19 +561,27 @@ nnoremap <C-Down> :wincmd j<CR>
 nnoremap <C-Left> :wincmd h<CR>
 nnoremap <C-Right> :wincmd l<CR>
 " resize all windows equally
-nnoremap = :wincmd =<CR>
+nnoremap <leader>= :wincmd =<CR>
 " increase/decrease window width
 nnoremap > :wincmd ><CR>
 nnoremap < :wincmd <<CR>
 
-xmap ii <Plug>(indent-object_linewise-none)
-omap ii <Plug>(indent-object_blockwise-none)
-xmap ai <Plug>(indent-object_linewise-start)
-omap ai <Plug>(indent-object_linewise-start)
-xmap iI <Plug>(indent-object_linewise-end)
-omap iI <Plug>(indent-object_linewise-end)
-xmap aI <Plug>(indent-object_linewise-both)
-omap aI <Plug>(indent-object_linewise-both)
+" indentation text objects, visual, select, and operator-pending modes
+let g:vindent_object_XX_ii = 'ii' " inner indent level, including blank lines
+let g:vindent_object_OX_ii = 'iI' " inner indent level, excluding blank lines
+let g:vindent_object_XX_ai = 'ai' " an indent level and the line above
+let g:vindent_object_XX_aI = 'aI' " an indent level and the lines above/below
+
+" Experimental: indentation motions, nmap only to avoid breaking {Visual}=,
+" does still break ={motion}, but I never use ={motion}, that's scary shit.
+" go to next line at the same indent
+nmap <silent> = <Plug>(VindentBlockMotion_OO_next)
+" go to previous line of same indent
+nmap <silent> g= <Plug>(VindentBlockMotion_OO_prev)
+" go to prev line with different indent
+nmap <silent> [= <Plug>(VindentMotion_prev_diff)
+" go to next line with different indent
+nmap <silent> ]= <Plug>(VindentMotion_next_diff)
 
 " Tag navigation
 " remap CTRL-] to show list when multiple matches (use tjump)

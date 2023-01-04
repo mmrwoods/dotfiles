@@ -69,7 +69,7 @@ plug 'ludovicchabant/vim-gutentags'
 plug 'voldikss/vim-floaterm'
 plug 'puremourning/vimspector'
 plug 'tpope/vim-sleuth'
-plug 'urxvtcd/vim-indent-object'
+plug 'jessekelighine/vindent'
 plug 'airblade/vim-rooter'
 
 # colours
