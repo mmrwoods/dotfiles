@@ -852,7 +852,7 @@ set formatoptions=croql
 " which means it works after restoring a macvim session (see gvimrc).
 augroup filetypedetect
   " Additional ruby syntax highlighting
-  autocmd BufRead,BufNewFile {Berksfile,Capfile,Vagrantfile,Thorfile,pryrc,.pryrc}
+  autocmd BufRead,BufNewFile {Berksfile,Capfile,Vagrantfile,Thorfile,pryrc,.pryrc,*.cap}
     \ setfiletype ruby |
 
   " Set cloudformation filetypes to enable linting in ALE
