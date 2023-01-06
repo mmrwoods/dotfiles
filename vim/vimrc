@@ -155,6 +155,12 @@ endif
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
+" use normal rather than hanging indent for multiline ruby assignment, i.e.
+" let x = if foo    --NOT--    let x = if foo
+"   bar                                  bar
+" end                                  end
+let g:ruby_indent_assignment_style = 'variable'
+
 " Tell vim-qf to enable ack.vim style mappings in quickfix window
 let g:qf_mapping_ack_style = 1
 
