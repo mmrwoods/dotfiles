@@ -403,6 +403,10 @@ let g:fzf_command_prefix = 'FZF'
 " Just using public function FindRootDirectory() with MRU mappings
 let g:rooter_manual_only = 1
 
+" Override indent level for continuation lines in vimscript
+" Default is shiftwidth() * 3, see $VIMRUNTIME/ftplugin/vim.vim
+let g:vim_indent_cont = 2
+
 if executable('glow')
   let g:markdown_preview_command = 'glow -s dark -p'
 elseif executable('mdcat')
