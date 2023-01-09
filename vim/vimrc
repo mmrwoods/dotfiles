@@ -484,6 +484,17 @@ autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
 vnoremap > >gv
 vnoremap < <gv
 
+" Mark previous cursor position when entering visual mode, see :h m`
+nnoremap v m`v
+nnoremap V m`V
+nnoremap <C-v> m`<C-v>
+
+" And return to previous cursor position when leaving visual mode
+" Pattern derived from https://github.com/vim/vim/commit/25def2c8
+if exists('##ModeChanged')
+  autocmd ModeChanged [vV\x16]*:n exe "normal! ``"
+endif
+
 " Make backspace work with visual selections again. This used to work by
 " default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
 " without this mapping, backspacing in visual mode just moves the cursor.
