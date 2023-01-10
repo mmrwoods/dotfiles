@@ -179,7 +179,6 @@ nnoremap <silent> , :WhichKey ','<CR>
 " Define dictionary with prefix names for leader mappings
 call which_key#register(',', "g:which_key_map")
 let g:which_key_map =  {}
-let g:which_key_map.d = { 'name' : '+debug' }
 let g:which_key_map.f = { 'name' : '+fzfind' }
 let g:which_key_map.t = { 'name' : '+toggle' }
 let g:which_key_map.w = { 'name' : '+window' }
@@ -655,20 +654,12 @@ function! NetrwToggle()
 endfunction
 nnoremap _ :call NetrwToggle()<CR>
 
+" I think I needed to set this for VimspectorInstall to work properly
+" FIXME: investigate why this was necessary, docs suggest it should not be
 let g:vimspector_base_dir = expand('~/.vim/bundle/vimspector')
 
-nmap <Leader>dd <Plug>VimspectorLaunch
-nmap <Leader>ds <Plug>VimspectorStop
-nmap <Leader>db <Plug>VimspectorBreakpoints
-nmap <Leader>dc <Plug>VimspectorContinue
-nmap <Leader>dp <Plug>VimspectorPause
-nmap <Leader>dn <Plug>VimspectorStepOver
-nmap <Leader>ds <Plug>VimspectorStepInto
-nmap <Leader>do <Plug>VimspectorStepOut
-nmap <Leader>dr <Plug>VimspectorRestart
-nmap <Leader>dx :call vimspector#Reset()<CR>
-nmap <Leader>dt <Plug>VimspectorToggleBreakpoint
-nmap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+" Launch graphical debugger (vimspector)
+nmap <Leader>d <Plug>VimspectorLaunch
 
 " Stop FZF opening files in nofile and quickfix windows, with some exceptions
 let g:fzf_reuse_windows = ['bufexplorer', 'mru']
