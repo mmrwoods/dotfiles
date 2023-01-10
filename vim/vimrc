@@ -634,17 +634,16 @@ function! JumpToTagInSplit()
 endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
-" Toggle project explorer / tree view
-nnoremap <leader>e :NERDTreeToggle<CR>
+" Toggle project drawer / tree view
+nnoremap <leader>d :NERDTreeToggle<CR>
 
-" Locate current file in project explorer / tree view
+" Locate current file in project drawer / tree view
 nnoremap <leader>l :NERDTreeFind<CR>
 
 " Show/hide git diff in sign column
 nnoremap gd :SignifyToggle<CR>
 
-" Toggle directory/file explorer (Netrw)
-" FIXME: Delete?? Are VinegarUp/- and altfile/<leader>g mappings enough?
+" Toggle file explorer (Netrw)
 function! NetrwToggle()
   if &ft == 'netrw'
     Rexplore
@@ -652,14 +651,14 @@ function! NetrwToggle()
     Explore
   end
 endfunction
-nnoremap _ :call NetrwToggle()<CR>
+nnoremap <Leader>e :call NetrwToggle()<CR>
 
 " I think I needed to set this for VimspectorInstall to work properly
 " FIXME: investigate why this was necessary, docs suggest it should not be
 let g:vimspector_base_dir = expand('~/.vim/bundle/vimspector')
 
-" Launch graphical debugger (vimspector)
-nmap <Leader>d <Plug>VimspectorLaunch
+" Launch graphical debugger/inspector (vimspector)
+nmap <Leader>i <Plug>VimspectorLaunch
 
 " Stop FZF opening files in nofile and quickfix windows, with some exceptions
 let g:fzf_reuse_windows = ['bufexplorer', 'mru']
