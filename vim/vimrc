@@ -517,7 +517,10 @@ vnoremap <S-Tab> <
 noremap <C-Tab> :tabnext<cr>
 noremap <S-C-Tab> :tabprevious<cr>
 
-" Open the alternate file, i.e. previously edited file in the current window
+" Open plugin defined alternate file, e.g. unit test for model
+nnoremap <leader>a :A<CR>
+
+" Open vim alternate file, i.e. previously edited file in window
 nnoremap <Leader>g <C-^>
 
 " Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
@@ -533,7 +536,7 @@ function! ALEToggle()
     echohl MoreMsg | echom 'ALE enabled' | echohl None
   endif
 endfunction
-nnoremap <Leader>a :call ALEToggle()<CR>
+nnoremap <Leader>ta :call ALEToggle()<CR>
 
 " Toggle coc.nvim service (disabled by default)
 function! CocToggle()
@@ -545,7 +548,7 @@ function! CocToggle()
     call coc#rpc#start_server()
   endif
 endfunction
-nnoremap <leader>c :call CocToggle()<CR>
+nnoremap <leader>tc :call CocToggle()<CR>
 
 " Use K to show documentation in preview window.
 function! ShowDocumentation()
@@ -602,6 +605,9 @@ nmap <silent> g= <Plug>(VindentBlockMotion_OO_prev)
 nmap <silent> [= <Plug>(VindentMotion_prev_diff)
 " go to next line with different indent
 nmap <silent> ]= <Plug>(VindentMotion_next_diff)
+
+" Toggle quicfix window
+nmap <leader>q <Plug>(qf_qf_toggle)
 
 " Tag navigation
 " remap CTRL-] to show list when multiple matches (use tjump)
@@ -732,14 +738,18 @@ endfun
 nnoremap <leader>s :call GrepPrompt()<CR>
 
 " Search in files for word under cursor
-nnoremap <leader>y "syiw:call GrepPrompt('<c-r>s')<CR>
+nnoremap <leader>y :call GrepPrompt(expand('<cword>'))<CR>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
   nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
 else
-  nnoremap <leader>p :echo 'Error: Session management not enabled in terminal vim!'<CR>
+  " Remove easyclip <leader>p mapping
+  autocmd VimEnter * unmap <leader>p
 endif
+
+" Remove easyclip <leader>P mapping
+autocmd VimEnter * unmap <leader>P
 
 " List open files/buffers
 nnoremap <leader>b :ToggleBufExplorer<CR>
@@ -782,7 +792,7 @@ nnoremap <Leader>tl :setlocal list!<CR>
 
 " Toggle colorizing of color codes and names
 " Note: Hexokinase requires termguicolors
-nnoremap <leader>tc :set termguicolors!<CR>:HexokinaseToggle<CR>
+nnoremap <leader>th :set termguicolors!<CR>:HexokinaseToggle<CR>
 
 " Some extra mappings for convenience/speed
 " Single key to toggle bufexplorer, I use this all the time
