@@ -769,15 +769,16 @@ nnoremap <leader>z :ZoomWin<CR>
 " Expand/maximize current window
 " See https://stackoverflow.com/a/26551079/17278003
 function! ExpandWin() abort
-    if exists('t:expanded') && t:expanded
-        execute t:expand_winrestcmd
-        let t:expanded = 0
-    else
-        let t:expand_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:expanded = 1
-    endif
+  if winnr('$') == 1 | return | endif
+  if exists('t:expanded') && t:expanded
+    execute t:expand_winrestcmd
+    let t:expanded = 0
+  else
+    let t:expand_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let t:expanded = 1
+  endif
 endfunction
 nnoremap <Leader>x :call ExpandWin()<CR>
 
