@@ -304,14 +304,14 @@ let g:Hexokinase_ftEnabled = []
 
 " Include triple hex when colorizing text (missing from default)
 let g:Hexokinase_optInPatterns = [
-\     'full_hex',
-\     'triple_hex',
-\     'rgb',
-\     'rgba',
-\     'hsl',
-\     'hsla',
-\     'colour_names'
-\ ]
+  \ 'full_hex',
+  \ 'triple_hex',
+  \ 'rgb',
+  \ 'rgba',
+  \ 'hsl',
+  \ 'hsla',
+  \ 'colour_names'
+  \ ]
 
 " Use background to highlight colours, ugly, but clearly visible
 let g:Hexokinase_highlighters = ['backgroundfull']
@@ -455,10 +455,10 @@ function! <SID>UpdateFZFColors()
       \ --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
   elseif ( colors_name ==# 'PaperColor' )
     let $FZF_DEFAULT_OPTS='
-          \ --color=light,fg:#4d4d4c,bg:#eeeeee,hl:#d7005f
-          \ --color=fg+:#4d4d4c,bg+:#e8e8e8,hl+:#d7005f
-          \ --color=info:#4271ae,prompt:#8959a8,pointer:#d7005f
-          \ --color=marker:#4271ae,spinner:#4271ae,header:#4271ae'
+      \ --color=light,fg:#4d4d4c,bg:#eeeeee,hl:#d7005f
+      \ --color=fg+:#4d4d4c,bg+:#e8e8e8,hl+:#d7005f
+      \ --color=info:#4271ae,prompt:#8959a8,pointer:#d7005f
+      \ --color=marker:#4271ae,spinner:#4271ae,header:#4271ae'
   else
     let $FZF_DEFAULT_OPTS='--color ' . &background
   endif
@@ -467,9 +467,9 @@ autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
 " Disable bg and fg color highlighting of bad spelling in PaperColor
 autocmd VimEnter,ColorScheme *
-    \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
-    \   hi Spellbad guibg=NONE guifg=NONE |
-    \ endif
+  \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
+  \   hi Spellbad guibg=NONE guifg=NONE |
+  \ endif
 
 " Add M mapping to use easyclip function to move until EOL
 nmap M <Plug>MoveMotionEndOfLinePlug
@@ -843,8 +843,8 @@ if has("clipboard")
   vnoremap <C-A> <C-C>ggVG
 
   " CTRL-V and SHIFT-insert are also Paste in terminal job mode
-   tnoremap <C-V> <C-W>"+
-   tnoremap <S-Insert> <C-W>"+
+  tnoremap <C-V> <C-W>"+
+  tnoremap <S-Insert> <C-W>"+
 endif
 
 " Make p paste from unanmed register in terminal normal mode
@@ -978,7 +978,7 @@ autocmd BufReadPost *
 " Diff a buffer with the file from which it was originally loaded
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-      \ | wincmd p | diffthis
+    \ | wincmd p | diffthis
 endif
 
 " Set working directory when opening vim to edit a particular file
