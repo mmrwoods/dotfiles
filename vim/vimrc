@@ -473,8 +473,13 @@ autocmd VimEnter,ColorScheme *
   \   hi MatchParen ctermbg=NONE guibg=NONE |
   \ endif
 
-" Add M mapping to use easyclip function to move until EOL
-nmap M <Plug>MoveMotionEndOfLinePlug
+" Add cut/move mappings (delete operations overridden by vim-cutlass to just
+" delete, not yank and delete, see https://github.com/svermeulen/vim-cutlass)
+" Warning: breaks "m{a-zA-Z}" command to set named marks, which I don't use
+nnoremap m d
+xnoremap m d
+nnoremap mm dd
+nnoremap M D
 
 " Stop recording commands and opening the command history by accident
 nnoremap q <nop>
@@ -745,13 +750,7 @@ nnoremap <leader>y :call GrepPrompt(expand('<cword>'))<CR>
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
   nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
-else
-  " Remove easyclip <leader>p mapping
-  autocmd VimEnter * unmap <leader>p
 endif
-
-" Remove easyclip <leader>P mapping
-autocmd VimEnter * unmap <leader>P
 
 " List open files/buffers
 nnoremap <leader>b :ToggleBufExplorer<CR>
