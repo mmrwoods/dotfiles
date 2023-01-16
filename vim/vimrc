@@ -208,9 +208,6 @@ let sessionman_save_on_exit=0
 " minimalist sessions list, hide mappings help
 let sessionman_minimal_ui = 1
 
-" show private gists when listing mine
-let g:gist_show_privates = 1
-
 " disable rails plugin on vim enter, slow when used with vim-bundler
 " also results in some garbage written to screen, seems a vim issue
 " see https://github.com/tpope/vim-rails/issues/579 for some info
