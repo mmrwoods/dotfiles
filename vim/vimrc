@@ -650,8 +650,8 @@ nnoremap <leader>d :NERDTreeToggle<CR>
 " Locate current file in project drawer / tree view
 nnoremap <leader>l :NERDTreeFind<CR>
 
-" Show/hide git diff in sign column
-nnoremap gd :SignifyToggle<CR>
+" Show/hide diff/changes in sign column
+nnoremap <leader>td :SignifyToggle<CR>
 
 " Toggle file explorer (Netrw)
 function! NetrwToggle()
