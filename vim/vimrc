@@ -161,6 +161,9 @@ let mapleader = ","
 " end                                  end
 let g:ruby_indent_assignment_style = 'variable'
 
+" Disable vim-visual-multi mappings, except CTRL-n (select words)
+let g:VM_default_mappings = 0
+
 " Tell vim-qf to enable ack.vim style mappings in quickfix window
 let g:qf_mapping_ack_style = 1
 

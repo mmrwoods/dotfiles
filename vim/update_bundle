@@ -71,6 +71,7 @@ plug 'puremourning/vimspector'
 plug 'tpope/vim-sleuth'
 plug 'jessekelighine/vindent'
 plug 'airblade/vim-rooter'
+plug 'mg979/vim-visual-multi'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color
