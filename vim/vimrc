@@ -166,6 +166,15 @@ let g:ruby_indent_assignment_style = 'variable'
 " Disable vim-visual-multi mappings, except CTRL-n (select words)
 let g:VM_default_mappings = 0
 
+" Disable indentLine plugin by default, toggle with <leader>ti
+let g:indentLine_enabled = 0
+
+" Disable conceal for json and markdown, indentLine sets conceallevel to 2, so
+" enabling it will conceal some characters in filetypes with built in support
+" (I find this acceptable, I don't use conceal, I prefer some kind of preview)
+let g:vim_json_conceal=0
+let g:markdown_syntax_conceal=0
+
 " Tell vim-qf to enable ack.vim style mappings in quickfix window
 let g:qf_mapping_ack_style = 1
 
@@ -807,6 +816,9 @@ nnoremap <Leader>tw :setlocal list!<CR>
 " Toggle colorizing of color codes and names
 " Note: Hexokinase requires termguicolors
 nnoremap <leader>th :set termguicolors!<CR>:HexokinaseToggle<CR>
+
+" Toggle indent guides / lines
+nnoremap <leader>ti :IndentLinesToggle<CR>
 
 " Some extra mappings for convenience/speed
 " Single key to toggle bufexplorer, I use this all the time
