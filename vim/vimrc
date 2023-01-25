@@ -482,7 +482,7 @@ autocmd VimEnter,ColorScheme *
   \   hi Spellbad guibg=NONE guifg=NONE |
   \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
   \   hi MatchParen ctermbg=NONE guibg=NONE |
-  \   hi SpecialKey ctermbg=NONE ctermfg=16 guibg=NONE guifg=#bcbcbc |
+  \   hi SpecialKey cterm=NONE ctermbg=NONE ctermfg=10 gui=NONE guibg=NONE guifg=#bcbcbc |
   \ endif
 
 " Add cut/move mappings (delete operations overridden by vim-cutlass to just
