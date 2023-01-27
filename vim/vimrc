@@ -169,6 +169,9 @@ let g:VM_default_mappings = 0
 " Disable indentLine plugin by default, toggle with <leader>ti
 let g:indentLine_enabled = 0
 
+" Use same highlighting for indent lines as used for whitespace listchars
+let g:indentLine_defaultGroup = 'SpecialKey'
+
 " Disable conceal for json and markdown, indentLine sets conceallevel to 2, so
 " enabling it will conceal some characters in filetypes with built in support
 " (I find this acceptable, I don't use conceal, I prefer some kind of preview)
@@ -482,7 +485,7 @@ autocmd VimEnter,ColorScheme *
   \   hi Spellbad guibg=NONE guifg=NONE |
   \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
   \   hi MatchParen ctermbg=NONE guibg=NONE |
-  \   hi SpecialKey cterm=NONE ctermbg=NONE ctermfg=10 gui=NONE guibg=NONE guifg=#bcbcbc |
+  \   hi SpecialKey cterm=NONE ctermbg=NONE ctermfg=239 gui=NONE guibg=NONE guifg=#bcbcbc |
   \ endif
 
 " Add cut/move mappings (delete operations overridden by vim-cutlass to just
