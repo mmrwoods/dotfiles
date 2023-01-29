@@ -280,16 +280,6 @@ let g:bufExplorerShowNoName = 1
 " Disable default BufExplorer key mappings (use custom mappings)
 let g:bufExplorerDisableDefaultKeyMapping = 1
 
-" Use next keyword completion by default with supertab
-" (previous keyword sucks when there are many completions)
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
-" Always try to match case for supertab completions
-let g:SuperTabCompleteCase = 'match'
-
-" Reset supertab completion type once a completion has been chosen
-let g:SuperTabRetainCompletionDuration = 'completion'
-
 " Accept/close popup/completion menu with enter/cr, ah sanity, finally
 let g:lexima_accept_pum_with_enter = 1
 
@@ -583,6 +573,22 @@ function! ShowDocumentation()
   endif
 endfunction
 nnoremap <silent> K :call ShowDocumentation()<CR>
+
+" Stupid simple tab completion, file path and keyword completion only
+" Cribbed from Gary Bernhardt's vimrc and Akshay Hegde's VimCompletesMe
+" For more elaborate completions, see :h 'ins-completion' or use coc.nvim
+function! <SID>SimpleTab()
+  let pos = getpos('.')
+  let substr = matchstr(strpart(getline(pos[1]), 0, pos[2]-1), "[^ \t]*$")
+  if empty(substr)
+    return "\<tab>"
+  elseif match(substr, '\/') != -1
+    return "\<c-x>\<c-f>"
+  else
+    return "\<c-n>"
+  endif
+endfunction
+inoremap <expr> <tab> <SID>SimpleTab()
 
 " Window mappings
 " switch to window pseudo-mode (uses window mode plugin, no more keyboard
