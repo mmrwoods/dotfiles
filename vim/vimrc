@@ -154,6 +154,12 @@ if has("patch-8.1.2315")
   set switchbuf+=uselast
 endif
 
+" Minimalist fold text, just show first line, no line count etc.
+set foldtext=getline(v:foldstart)
+
+" Override fillchars to avoid filling folded line with dashes
+set fillchars=fold:\ ,vert:\|,eob:~
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
