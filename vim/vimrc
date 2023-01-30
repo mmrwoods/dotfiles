@@ -502,6 +502,13 @@ xnoremap m d
 nnoremap mm dd
 nnoremap M D
 
+" Make Y act like D and C, i.e. yank until EOL rather than yank entire line
+noremap Y y$
+
+" And make delete key just delete, i.e. send text to blackhole register
+nnoremap <Del> "_x
+vnoremap <Del> "_x
+
 " Stop recording commands and opening the command history by accident
 nnoremap q <nop>
 
