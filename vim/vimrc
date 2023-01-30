@@ -49,11 +49,14 @@ set incsearch                     " Highlight search match as you type
 set nohlsearch                    " But clear highlighting once search completed
 
 set nowrap                        " Turn off line wrapping by default
-set scrolloff=3                   " Show 3 lines of context around the cursor
+set scrolloff=1                   " Show context when scrolling vertically
+
+set sidescroll=1                  " Scroll hoizontally one column at a time
+set sidescrolloff=2               " Show context when scrolling horizontally
 
 set title                         " Set the terminal's title
 
-set visualbell                    " No beeping
+set belloff=all                   " No beeping, ever, not even visual
 
 set confirm                       " Allow dialog to confirm an action
 set autoread                      " Skip confirm for file changed outside vim
@@ -96,6 +99,7 @@ set foldignore=''                 " Don't ignore # when folding on indent
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
 set shortmess+=c                  " Don't send ins-completion-menu messages
+set shortmess+=F                  " Don't show file info messages, use statusline
 
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
@@ -120,8 +124,8 @@ set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r%{get(g:,'ZoomWin_statusline','
 " NERDTree, Tagbar, Ack), which are not well supported by vim sessions
 set sessionoptions=buffers,curdir,tabpages,winsize,winpos,resize
 
-" save globals with viminfo - sessionman stores last session info in global
-set viminfo='100,<50,s10,h,!
+" save upper case globals with viminfo - sessionman uses g:LAST_SESSION
+set viminfo^=!
 
 " set list mode characters used to display whitespace, toggle with <leader>tw
 " note: only use basic latin and latin 1 supplement unicode characters to
@@ -135,8 +139,14 @@ set completeopt=menuone,longest
 " Include dictionary words in completion menu when spellcheck is enabled
 set complete+=kspell
 
+" Disable completing keywords in included files, can make completion slow
+set complete-=i
+
 " When joining lines, use one space rather than two after punctuation
 set nojoinspaces
+
+"Delete comment character when joining commented lines
+set formatoptions+=j
 
 " If using grep, at least ignore binaries and exclude some paths
 set grepprg="grep -n -I --exclude=tags --exclude-dir=.git $* /dev/null"
@@ -891,8 +901,8 @@ au TerminalWinOpen *
   \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
 
 if has('mouse')
-  " enable mouse support in all modes
-  set mouse=a
+  " enable mouse support in normal, visual and insert modes
+  set mouse=nvi
 endif
 
 " Default format options, auto-format comments, but not code/text
