@@ -1049,6 +1049,23 @@ function! <SID>SetWorkingDir()
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
 
+" Experimental: do the right thing with swap files, inspired by vim-autoswap
+function! <SID>HandleSwapfile(filename, swapname)
+  if getftime(a:swapname) < getftime(a:filename)
+    " swapfile is older than file itself, just delete it
+    let v:swapchoice = 'd'
+  else
+    if empty(system('lsof ' . a:swapname . ' 2>/dev/null'))
+      " swapfile seems to be the result of a crash, recover
+      let v:swapchoice = 'r'
+    else
+      " swapfile owned by another vim process, open readonly
+      let v:swapchoice = 'o'
+    endif
+  endif
+endfunction
+autocmd SwapExists * call <SID>HandleSwapfile(expand('<afile>:p'), v:swapname)
+
 " Show diff from git commit --verbose in a new vertical split
 " Inspired by https://github.com/rhysd/committia.vim, but mostly copied
 " from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
