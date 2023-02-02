@@ -46,7 +46,8 @@ set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
 
 set incsearch                     " Highlight search match as you type
-set nohlsearch                    " But clear highlighting once search completed
+au CmdlineEnter /,\? :set hls     " Highlight all matches while searching
+au CmdlineLeave /,\? :set nohls   " Hide all matches when search completed
 
 set nowrap                        " Turn off line wrapping by default
 set scrolloff=1                   " Show context when scrolling vertically
