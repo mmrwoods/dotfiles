@@ -981,6 +981,9 @@ autocmd FileType xml setlocal formatprg=xmllint\ --format\ --recover\ -\ 2>/dev/
 " Use jsonlint as external program for formatting json
 autocmd FileType json setlocal formatprg=jsonlint\ --pretty-print\ 2>/dev/null
 
+" Use black as external program for formatting python
+autocmd FileType python setlocal formatprg=black\ --quiet\ -\ 2>/dev/null
+
 " Avoid error editing crontab: temp file must be edited in place
 autocmd filetype crontab setlocal nobackup nowritebackup
 
