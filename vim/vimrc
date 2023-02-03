@@ -789,8 +789,10 @@ endfun
 " Search in files using grep program, see :help grepprg and :help grep
 nnoremap <leader>s :call GrepPrompt()<CR>
 
-" Search in files for word under cursor
+" Search in files for word or WORD under cursor
 nnoremap <leader>y :call GrepPrompt(expand('<cword>'))<CR>
+" Note: shell escape WORD to prevent expansion
+nnoremap <leader>Y :call GrepPrompt(shellescape(expand('<cWORD>')))<CR>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
