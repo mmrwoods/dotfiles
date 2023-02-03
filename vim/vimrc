@@ -1057,13 +1057,14 @@ function! <SID>HandleSwapfile(filename, swapname)
   if getftime(a:swapname) < getftime(a:filename)
     " swapfile is older than file itself, just delete it
     let v:swapchoice = 'd'
-  else
-    if empty(system('lsof ' . a:swapname . ' 2>/dev/null'))
-      " swapfile seems to be the result of a crash, recover
-      let v:swapchoice = 'r'
-    else
+  elseif executable('lsof')
+    call system('lsof ' . a:swapname)
+    if v:shell_error == 0
       " swapfile owned by another vim process, open readonly
       let v:swapchoice = 'o'
+    else
+      " swapfile seems to be the result of a crash, recover
+      let v:swapchoice = 'r'
     endif
   endif
 endfunction
