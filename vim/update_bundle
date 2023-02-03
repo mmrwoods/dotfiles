@@ -27,7 +27,7 @@ plug 'romainl/vim-qf'
 plug 'MTDL9/vim-window-mode'
 plug 'tpope/vim-projectionist'
 
-# syntax
+# syntax and formatters
 plug 'kchmck/vim-coffee-script'
 plug 'pangloss/vim-javascript'
 plug 'MaxMEllon/vim-jsx-pretty'
@@ -36,6 +36,7 @@ plug 'depuracao/vim-rdoc'
 plug 'othree/html5.vim'
 plug 'fatih/vim-go'
 plug 'cespare/vim-toml'
+plug 'Vimjas/vim-python-pep8-indent'
 
 # tools
 plug 'tpope/vim-commentary'
