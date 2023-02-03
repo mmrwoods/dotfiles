@@ -589,6 +589,20 @@ function! CocToggle()
 endfunction
 nnoremap <leader>tc :call CocToggle()<CR>
 
+" Toggle location list
+function! LocationListToggle()
+  if get(getloclist(winnr(), {'winid': 1}), 'winid') != 0
+    lclose
+  elseif getloclist(winnr()) != []
+    lopen
+  else
+    echohl ErrorMsg
+    echo "Location List is empty."
+    echohl None
+  endif
+endfunction
+nnoremap <leader>l :call LocationListToggle()<CR>
+
 " Use K to show documentation in preview window.
 function! ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -696,10 +710,8 @@ endfunction
 nnoremap <C-\> :call JumpToTagInSplit()<CR>
 
 " Toggle project drawer / tree view
+" FIXME: update to use NERDTreeFind if buffer has file
 nnoremap <leader>d :NERDTreeToggle<CR>
-
-" Locate current file in project drawer / tree view
-nnoremap <leader>l :NERDTreeFind<CR>
 
 " Show/hide diff/changes in sign column
 nnoremap <leader>td :SignifyToggle<CR>
