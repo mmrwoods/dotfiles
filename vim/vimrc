@@ -198,6 +198,12 @@ let g:markdown_syntax_conceal=0
 " Tell vim-qf to enable ack.vim style mappings in quickfix window
 let g:qf_mapping_ack_style = 1
 
+" Tell vim-qf to use a fixed window size (default 10)
+let g:qf_auto_resize = 0
+
+" Tell vim-qf not to mess with loclist positioning (1 qflist, many loclists)
+let g:qf_loclist_window_bottom = 0
+
 " Tell QFEnter to skip some filetypes when choosing window to open
 " Note: plugin required because vim only reuses normal buffers when opening
 " files from quickfix windows, which does not work well with bufexplorer etc.
@@ -411,9 +417,6 @@ let g:signify_disable_by_default = 1
 
 " Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
 let g:go_def_mapping_enabled = 0
-
-" Don't automatgically resize the quickfix window if number items lt 10
-let g:qf_auto_resize = 0
 
 " Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
 " top level namespace and makes it easier to find and complete FZF commands)
