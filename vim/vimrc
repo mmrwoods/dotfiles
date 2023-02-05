@@ -49,11 +49,18 @@ set incsearch                     " Highlight next search match as you type
 set nohlsearch                    " Avoid hlsearch as applies to all windows
 
 " Hack to highlight all matches while searching, but only in current window
+" Assumes ignorecase, smartcase, skipped when case or magic set in pattern
+" FIXME: handle patterns which explicitly set case sensitivity or magic
+" Note: this might be a bit bat shit crazy, maybe hlsearch isn't all bad
 let g:hls_mid = 67865 " randomish match id, hopefully won't clash!
 au CmdLineChanged /,\?
-  \ if &hlsearch == 0 |
-  \   silent! call matchdelete(g:hls_mid) |
-  \   call matchadd("Search", getcmdline(), 1, g:hls_mid) |
+  \ silent! call matchdelete(g:hls_mid) |
+  \ if &hlsearch == 0 && getcmdline() !~# '\\[cCmMvV]' |
+  \   if  getcmdline() =~# '[A-Z]' |
+  \     call matchadd("Search", '\C'.getcmdline(), 1, g:hls_mid) |
+  \   else |
+  \     call matchadd("Search", '\c'.getcmdline(), 1, g:hls_mid) |
+  \   endif |
   \ endif
 au CmdlineLeave /,\? silent! call matchdelete(g:hls_mid)
 
