@@ -45,9 +45,17 @@ endif
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
 
-set incsearch                     " Highlight search match as you type
-au CmdlineEnter /,\? :set hls     " Highlight all matches while searching
-au CmdlineLeave /,\? :set nohls   " Hide all matches when search completed
+set incsearch                     " Highlight next search match as you type
+set nohlsearch                    " Avoid hlsearch as applies to all windows
+
+" Hack to highlight all matches while searching, but only in current window
+let g:hls_mid = 67865 " randomish match id, hopefully won't clash!
+au CmdLineChanged /,\?
+  \ if &hlsearch == 0 |
+  \   silent! call matchdelete(g:hls_mid) |
+  \   call matchadd("Search", getcmdline(), 1, g:hls_mid) |
+  \ endif
+au CmdlineLeave /,\? silent! call matchdelete(g:hls_mid)
 
 set nowrap                        " Turn off line wrapping by default
 set scrolloff=1                   " Show context when scrolling vertically
