@@ -52,17 +52,18 @@ set nohlsearch                    " Avoid hlsearch as applies to all windows
 " Assumes ignorecase, smartcase, skipped when case or magic set in pattern
 " FIXME: handle patterns which explicitly set case sensitivity or magic
 " Note: this might be a bit bat shit crazy, maybe hlsearch isn't all bad
-let g:hls_mid = 67865 " randomish match id, hopefully won't clash!
+let s:hls_mid = 67865 " randomish match id, hopefully won't clash!
 au CmdLineChanged /,\?
-  \ silent! call matchdelete(g:hls_mid) |
-  \ if &hlsearch == 0 && getcmdline() !~# '\\[cCmMvV]' |
-  \   if  getcmdline() =~# '[A-Z]' |
-  \     call matchadd("Search", '\C'.getcmdline(), 1, g:hls_mid) |
+  \ silent! call matchdelete(s:hls_mid) |
+  \ let s:hls_pat = getcmdline() |
+  \ if &hlsearch == 0 && !empty(s:hls_pat) && s:hls_pat !~# '\\[cCmMvV]' |
+  \   if  s:hls_pat =~# '[A-Z]' |
+  \     call matchadd("Search", '\C'.s:hls_pat, 1, s:hls_mid) |
   \   else |
-  \     call matchadd("Search", '\c'.getcmdline(), 1, g:hls_mid) |
+  \     call matchadd("Search", '\c'.s:hls_pat, 1, s:hls_mid) |
   \   endif |
   \ endif
-au CmdlineLeave /,\? silent! call matchdelete(g:hls_mid)
+au CmdlineLeave /,\? silent! call matchdelete(s:hls_mid)
 
 set nowrap                        " Turn off line wrapping by default
 set scrolloff=1                   " Show context when scrolling vertically
