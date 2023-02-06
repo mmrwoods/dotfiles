@@ -45,25 +45,9 @@ endif
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
 
-set incsearch                     " Highlight next search match as you type
-set nohlsearch                    " Avoid hlsearch as applies to all windows
-
-" Hack to highlight all matches while searching, but only in current window
-" Assumes ignorecase, smartcase, skipped when case or magic set in pattern
-" FIXME: handle patterns which explicitly set case sensitivity or magic
-" Note: this might be a bit bat shit crazy, maybe hlsearch isn't all bad
-let s:hls_mid = 67865 " randomish match id, hopefully won't clash!
-au CmdLineChanged /,\?
-  \ silent! call matchdelete(s:hls_mid) |
-  \ let s:hls_pat = getcmdline() |
-  \ if &hlsearch == 0 && !empty(s:hls_pat) && s:hls_pat !~# '\\[cCmMvV]' |
-  \   if  s:hls_pat =~# '[A-Z]' |
-  \     call matchadd("Search", '\C'.s:hls_pat, 1, s:hls_mid) |
-  \   else |
-  \     call matchadd("Search", '\c'.s:hls_pat, 1, s:hls_mid) |
-  \   endif |
-  \ endif
-au CmdlineLeave /,\? silent! call matchdelete(s:hls_mid)
+set incsearch                     " Highlight and move to match as you type
+au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
+au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
 
 set nowrap                        " Turn off line wrapping by default
 set scrolloff=1                   " Show context when scrolling vertically
