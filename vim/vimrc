@@ -589,6 +589,20 @@ function! CocToggle()
 endfunction
 nnoremap <leader>tc :call CocToggle()<CR>
 
+" Toggle quickfix list
+function! QuickfixListToggle()
+  if get(getqflist({'winid': 1}), 'winid') != 0
+    cclose
+  elseif getqflist() != []
+    copen
+  else
+    echohl ErrorMsg
+    echo "Quickfix List is empty."
+    echohl None
+  endif
+endfunction
+nnoremap <leader>q :call QuickfixListToggle()<CR>
+
 " Toggle location list
 function! LocationListToggle()
   if get(getloclist(winnr(), {'winid': 1}), 'winid') != 0
@@ -674,9 +688,6 @@ nmap <silent> g= <Plug>(VindentBlockMotion_OO_prev)
 nmap <silent> [= <Plug>(VindentMotion_prev_diff)
 " go to next line with different indent
 nmap <silent> ]= <Plug>(VindentMotion_next_diff)
-
-" Toggle quicfix window
-nmap <leader>q <Plug>(qf_qf_toggle)
 
 " Tag navigation
 " remap CTRL-] to show list when multiple matches (use tjump)
