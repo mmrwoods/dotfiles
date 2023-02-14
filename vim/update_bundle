@@ -77,6 +77,7 @@ plug 'mg979/vim-visual-multi'
 plug 'ericbn/vim-solarized'
 plug 'nanotech/jellybeans.vim'
 plug 'NLKNguyen/papercolor-theme'
+plug 'tomasiser/vim-code-dark'
 
 bundle_dir = File.join(File.dirname(__FILE__), "bundle")
 
