@@ -560,7 +560,10 @@ noremap <S-C-Tab> :tabprevious<cr>
 nnoremap <leader>a :A<CR>
 
 " Open vim alternate file, i.e. previously edited file in window
-nnoremap <Leader>g <C-^>
+nnoremap <Leader># :edit#<CR>
+
+" Additional mapping for quick switching between alternate files
+nnoremap <Leader><leader> <C-^>
 
 " Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
 nnoremap <leader>/ /\V
@@ -650,7 +653,7 @@ inoremap <expr> <tab> <SID>SimpleTab()
 " contortions - window mode automatically prefixes <C-w> to all keypresses)
 nnoremap <leader>wm :WindowMode<CR>
 " open vim defined alternate file in new vertial split
-nnoremap <leader>wg :vs#<CR>
+nnoremap <leader>w# :vsplit#<CR>
 " open plugin defined alternate file in new vertial split
 nnoremap <leader>wa :AV<CR>
 " shortcuts for opening new splits
