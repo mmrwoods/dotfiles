@@ -1,5 +1,5 @@
 set antialias                     " Smooth fonts
-set guioptions-=T                 " Hide toolbar
+set guioptions=egm                " Hide toolbar and scrollbars
 set guicursor=n:blinkon0          " No blinking the cursor in normal mode
 set viminfo+=n~/.gviminfo         " Separate viminfo file for GUI vim
 
