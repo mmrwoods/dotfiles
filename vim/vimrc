@@ -530,6 +530,7 @@ vnoremap < <gv
 nnoremap v m`v
 nnoremap V m`V
 nnoremap <C-v> m`<C-v>
+nnoremap <LeftDrag> m`<LeftDrag>
 
 " And return to previous cursor position when leaving visual mode
 " Pattern derived from https://github.com/vim/vim/commit/25def2c8
