@@ -180,7 +180,7 @@ let mapleader = ","
 " end                                  end
 let g:ruby_indent_assignment_style = 'variable'
 
-" Disable vim-visual-multi mappings, except CTRL-n (select words)
+" Disable vim-visual-multi mappings, except CTRL-n (see :h vm-find-word)
 let g:VM_default_mappings = 0
 
 " Disable indentLine plugin by default, toggle with <leader>ti
