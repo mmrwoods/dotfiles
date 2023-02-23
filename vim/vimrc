@@ -621,6 +621,23 @@ function! LocationListToggle()
 endfunction
 nnoremap <leader>l :call LocationListToggle()<CR>
 
+" Toggle terminal - for default shell only, other terms ignored
+function! TerminalToggle()
+  let termbufs = filter(term_list(), { _, bufnr -> stridx(bufname(bufnr), $SHELL) > 0 })
+  if empty(termbufs)
+    terminal
+  else
+    let termwins = filter(map(copy(termbufs), { _, bufnr -> bufwinnr(bufnr) }), 'v:val != -1')
+    if empty(termwins)
+      for bufnr in termbufs | exe 'sbuffer ' . bufnr | endfor
+    else
+      for winnr in reverse(sort(termwins)) | exe winnr . 'wincmd c' | endfor
+    endif
+  endif
+endfunction
+nnoremap <C-W>` :call TerminalToggle()<CR>
+tnoremap <C-W>` <C-W>:call TerminalToggle()<CR>
+
 " Use K to show documentation in preview window.
 function! ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
