@@ -638,6 +638,13 @@ endfunction
 nnoremap <C-W>` :call TerminalToggle()<CR>
 tnoremap <C-W>` <C-W>:call TerminalToggle()<CR>
 
+" Open terminal in directory of current file
+function! OpenInTerminal()
+  let $OLDPWD = getcwd()
+  split | silent lcd %:p:h | terminal ++curwin
+endfunction
+nnoremap <leader>` :call OpenInTerminal()<CR>
+
 " Use K to show documentation in preview window.
 function! ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
