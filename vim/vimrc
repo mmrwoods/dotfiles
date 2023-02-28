@@ -645,6 +645,9 @@ function! OpenInTerminal()
 endfunction
 nnoremap <leader>` :call OpenInTerminal()<CR>
 
+" Custom terminal statusline, not a normal editor window
+autocmd TerminalWinOpen * setlocal statusline=%f
+
 " Use K to show documentation in preview window.
 function! ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
