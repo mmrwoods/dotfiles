@@ -1029,6 +1029,12 @@ autocmd FileType markdown
 " Turn on spell checking by default for markdown files
 autocmd FileType markdown setlocal spell
 
+" Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
+" and it's not worth arguing about (personally I think markdown should be
+" treated as source, and I will wrap at 80 if no other rules apply, but I
+" also respect other peoples' and teams' opinions and follow their rules)
+autocmd FileType markdown setlocal wrap linebreak
+
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 
