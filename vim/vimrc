@@ -143,11 +143,14 @@ set complete+=kspell
 " Disable completing keywords in included files, can make completion slow
 set complete-=i
 
+" Default format options, auto-format comments, but not code/text
+set formatoptions=croql
+
+" Delete comment leader when joining commented lines
+set formatoptions+=j
+
 " When joining lines, use one space rather than two after punctuation
 set nojoinspaces
-
-"Delete comment character when joining commented lines
-set formatoptions+=j
 
 " If using grep, at least ignore binaries and exclude some paths
 set grepprg="grep -n -I --exclude=tags --exclude-dir=.git $* /dev/null"
@@ -971,9 +974,6 @@ if has('mouse')
   " enable mouse support in normal, visual and insert modes
   set mouse=nvi
 endif
-
-" Default format options, auto-format comments, but not code/text
-set formatoptions=croql
 
 " Custom filetype detection, runs after built in filetype detection
 " Using augroup filetypedetect means this re-runs on :filetype detect,
