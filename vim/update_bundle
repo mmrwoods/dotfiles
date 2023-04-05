@@ -92,12 +92,11 @@ plugins.each do |path, opts|
   dir = path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
   dir = path.split('/').last if Dir.exists?(dir)
   puts "unpacking #{url} into #{dir}"
-  `env GIT_SSL_NO_VERIFY=true git clone #{opts} #{url} #{dir}`
+  `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{dir}`
   if build
     puts "running build command '#{build}'"
     `cd #{dir} && #{build}`
   end
-  FileUtils.rm_rf(Dir.glob("#{dir}/**/.git*")) # FIXME: shallow clone
 end
 
 puts "Overriding editorconfig for bundle dir"
