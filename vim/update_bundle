@@ -68,7 +68,7 @@ plug 'ludovicchabant/vim-gutentags'
 plug 'voldikss/vim-floaterm'
 plug 'puremourning/vimspector'
 plug 'tpope/vim-sleuth'
-plug 'jessekelighine/vindent'
+plug 'jessekelighine/vindent.vim'
 plug 'airblade/vim-rooter'
 plug 'mg979/vim-visual-multi'
 
