@@ -1046,8 +1046,11 @@ autocmd FileType xml setlocal formatprg=xmllint\ --format\ --recover\ -\ 2>/dev/
 " Use jsonlint as external program for formatting json
 autocmd FileType json setlocal formatprg=jsonlint\ --pretty-print\ 2>/dev/null
 
-" Use black as external program for formatting python
-autocmd FileType python setlocal formatprg=black\ --quiet\ -\ 2>/dev/null
+" Use auopep8 for formatting python, but disable rules to add 2 blank lines
+" Was using black, but too uncompromising for editing other people's code
+" TODO: automatically use black formatter if configured in pyproject.toml,
+" and consider passing textwidth as max line length (changed by editorconfig)
+autocmd FileType python setlocal formatprg=autopep8\ --ignore\ E226,E24,W50,W690,E302,E305\ -\ 2>/dev/null
 
 " Disable yaml indentexpr from runtime files, too magical and confusing for
 " occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
