@@ -1114,21 +1114,21 @@ if !exists(":DiffOrig")
     \ | wincmd p | diffthis
 endif
 
-" Set working directory to root for project/package if possible when opening.
-" If not in project/package, set to working diretory of file/dir being opened.
+" Set working directory when opening vim, use directory of current file when
+" provided as argument, otherwise cwd to root of project/package if possible.
 " Note: uses vim-rooter, and works nicely with monorepos (not reliant on VCS)
 function! <SID>SetWorkingDir()
-  let l:root = FindRootDirectory()
-  if !empty(l:root)
-    if l:root !=# getcwd()
-      exec 'cd' l:root
-    endif
-  elseif argc() != 0
+  if argc() != 0
     if isdirectory(argv(0))
       exec 'cd' argv(0)
     elseif filereadable(argv(0))
       exec 'cd %:p:h'
     end
+  else
+    let l:root = FindRootDirectory()
+    if l:root !=# getcwd()
+      exec 'cd' l:root
+    endif
   endif
   exec 'pwd'
 endfunction
