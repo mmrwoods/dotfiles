@@ -673,7 +673,7 @@ function! <SID>SimpleTab()
   let substr = matchstr(strpart(getline(pos[1]), 0, pos[2]-1), "[^ \t]*$")
   if empty(substr)
     return "\<tab>"
-  elseif match(substr, '\/') != -1
+  elseif match(substr, '\/') != -1 && match(substr, '<\/') == -1
     return "\<c-x>\<c-f>"
   else
     return "\<c-n>"
