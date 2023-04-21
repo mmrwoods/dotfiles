@@ -9,7 +9,5 @@ mkdir -p $dir/tmp
 if ! test -d ~/.vim; then
   ln -s $dir/ ~/.vim
 fi
-ln -s $dir/vimrc ~/.vimrc
-ln -s $dir/gvimrc ~/.gvimrc
 
 ruby $dir/update_bundle
