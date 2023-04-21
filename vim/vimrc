@@ -535,6 +535,7 @@ vnoremap < <gv
 nnoremap v m`v
 nnoremap V m`V
 nnoremap <C-v> m`<C-v>
+nnoremap <2-LeftMouse> m`<2-LeftMouse>
 nnoremap <LeftDrag> m`<LeftDrag>
 
 " And return to previous cursor position when leaving visual mode
