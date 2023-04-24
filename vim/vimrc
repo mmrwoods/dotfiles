@@ -556,8 +556,8 @@ vmap <C-Left> <Plug>SchleppLeft
 vmap <C-Right> <Plug>SchleppRight
 
 " Allow standard windows & gnome shortcuts to shift lines (for pairing)
-vnoremap <Tab> >
-vnoremap <S-Tab> <
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " Tab navigation with Ctrl-Tab (only works in gui vim)
 noremap <C-Tab> :tabnext<cr>
