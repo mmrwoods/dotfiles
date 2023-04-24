@@ -446,7 +446,7 @@ endif
 
 if executable('rg')
   let $RIPGREP_CONFIG_PATH = expand('~/.vim/rgconfig')
-  set grepprg=rg\ --vimgrep\ --smart-case\ --no-config\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
   set grepformat=%f:%l:%c:%m
   let $FZF_DEFAULT_COMMAND = 'rg --files --color never --no-config --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
 elseif executable('ag')
