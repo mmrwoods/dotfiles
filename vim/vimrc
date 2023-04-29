@@ -133,7 +133,13 @@ set viminfo^=!
 " set list mode characters used to display whitespace, toggle with <leader>tw
 " note: only use basic latin and latin 1 supplement unicode characters to
 " avoid missing glyphs, see https://github.com/tpope/vim-sensible/issues/57
-set listchars=tab:»·,nbsp:¤,trail:·,lead:·,multispace:·
+set listchars=tab:»·,nbsp:¤,trail:·
+if has("patch-8.2.2454")
+  set listchars+=lead:·
+endif
+if has("patch-8.2.3424")
+  set listchars+=multispace:·
+endif
 
 " Ins mode completion options - complete without menu if just one match,
 " only complete to longest common match, don't use preview scratch window
@@ -174,7 +180,10 @@ endif
 set foldtext=getline(v:foldstart)
 
 " Override fillchars to avoid filling folded line with dashes
-set fillchars=fold:\ ,vert:\|,eob:~
+set fillchars=fold:\ ,vert:\|
+if has("patch-8.2.2508")
+  set fillchars+=eob:~
+endif
 
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
@@ -652,7 +661,9 @@ endfunction
 nnoremap <leader>` :call OpenInTerminal()<CR>
 
 " Custom terminal statusline, not a normal editor window
-autocmd TerminalWinOpen * setlocal statusline=%f
+if exists('##TerminalWinOpen')
+  autocmd TerminalWinOpen * setlocal statusline=%f
+endif
 
 " Use K to show documentation in preview window.
 function! ShowDocumentation()
@@ -969,9 +980,11 @@ if has("clipboard")
   tnoremap <S-Insert> <C-W>"+
 endif
 
-" Make p paste from unanmed register in terminal normal mode
-au TerminalWinOpen *
-  \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
+if exists('##TerminalWinOpen')
+  " Make p paste from unanmed register in terminal normal mode
+  au TerminalWinOpen *
+    \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
+endif
 
 if has('mouse')
   " enable mouse support in normal, visual and insert modes
@@ -1092,10 +1105,12 @@ function! <SID>HighlightLongLines()
     call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1)
   endif
 endfunction
-" Apply long line highlighting whenever textwidth option is set
-autocmd OptionSet textwidth call <SID>HighlightLongLines()
-" And on VimEnter because OptionSet autocmds do not run on startup
-autocmd VimEnter * bufdo call <SID>HighlightLongLines()
+if exists('##OptionSet')
+  " Apply long line highlighting whenever textwidth option is set
+  autocmd OptionSet textwidth call <SID>HighlightLongLines()
+  " And on VimEnter because OptionSet autocmds do not run on startup
+  autocmd VimEnter * bufdo call <SID>HighlightLongLines()
+endif
 
 " Experimental: Only show cursorline in currently focused/active window
 " Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
