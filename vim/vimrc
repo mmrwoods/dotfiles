@@ -1134,13 +1134,13 @@ endif
 " provided as argument, otherwise cwd to root of project/package if possible.
 " Note: uses vim-rooter, and works nicely with monorepos (not reliant on VCS)
 function! <SID>SetWorkingDir()
-  if argc() != 0
+  if argc() == 1 && len(argv()) == 1
     if isdirectory(argv(0))
       exec 'cd' argv(0)
     elseif filereadable(argv(0))
       exec 'cd %:p:h'
     end
-  else
+  elseif len(argv()) == 0
     let l:root = FindRootDirectory()
     if l:root !=# getcwd()
       exec 'cd' l:root
