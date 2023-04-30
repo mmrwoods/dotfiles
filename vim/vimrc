@@ -1,5 +1,3 @@
-call pathogen#infect()
-
 set nocompatible                  " Disable vi compatibility (must come first)
 
 set encoding=utf-8                " Default to UTF8, don't use value from $LANG
