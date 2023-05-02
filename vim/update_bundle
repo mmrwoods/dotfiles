@@ -79,7 +79,7 @@ plug 'nanotech/jellybeans.vim'
 plug 'NLKNguyen/papercolor-theme'
 plug 'tomasiser/vim-code-dark'
 
-bundle_dir = File.join(File.dirname(__FILE__), "pack/bundle/start")
+bundle_dir = File.join(File.dirname(__FILE__), "bundle")
 
 FileUtils.rm_rf(bundle_dir)
 FileUtils.mkdir_p(bundle_dir)
@@ -103,5 +103,5 @@ puts "Overriding editorconfig for bundle dir"
 system "echo root=true > .editorconfig"
 
 print "Updating VIM Documentation... "
-system "vim -c 'silent! helptags ALL|q'"
+system "vim -c 'call pathogen#helptags()|q'"
 puts $?.exitstatus == 0 ? "OK" : "FAILED"
