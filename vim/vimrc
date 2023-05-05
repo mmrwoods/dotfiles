@@ -47,9 +47,8 @@ endif
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
 
-set incsearch                     " Highlight and move to match as you type
-au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
-au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
+set hlsearch                      " Enable highlighting of search matches
+set incsearch                     " And move to first match as you type
 
 set nowrap                        " Turn off line wrapping by default
 set scrolloff=1                   " Show context when scrolling vertically
@@ -185,6 +184,12 @@ if has("patch-8.2.2508")
   set fillchars+=eob:~
 endif
 
+augroup vimrc_hlsearch
+  autocmd!
+  au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
+  au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
+augroup END
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
@@ -251,10 +256,13 @@ function! InsertNewBullet()
   InsertNewBullet
   return ''
 endfunction
-autocmd FileType markdown,text,gitcommit
-  \ inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<C-]><C-R>=InsertNewBullet()<cr>')|
-  \ nnoremap <buffer> o :InsertNewBullet<cr>|
-  \ nnoremap cx :ToggleCheckbox<cr>
+augroup vimrc_bullets
+  autocmd!
+  autocmd FileType markdown,text,gitcommit
+    \ inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<C-]><C-R>=InsertNewBullet()<cr>')|
+    \ nnoremap <buffer> o :InsertNewBullet<cr>|
+    \ nnoremap cx :ToggleCheckbox<cr>
+augroup END
 
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
@@ -501,16 +509,19 @@ function! <SID>UpdateFZFColors()
     let $FZF_DEFAULT_OPTS='--color ' . &background
   endif
 endfunction
-autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
-" Tweak some annoying highilghting from PaperColor and solarized
-autocmd VimEnter,ColorScheme *
-  \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
-  \   hi Spellbad guibg=NONE guifg=NONE |
-  \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
-  \   hi MatchParen ctermbg=NONE guibg=NONE |
-  \   hi SpecialKey cterm=NONE ctermbg=NONE ctermfg=239 gui=NONE guibg=NONE guifg=#bcbcbc |
-  \ endif
+augroup vimrc_colors
+  autocmd!
+  autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
+  " Tweak some annoying highilghting from PaperColor and solarized
+  autocmd VimEnter,ColorScheme *
+    \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
+    \   hi Spellbad guibg=NONE guifg=NONE |
+    \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
+    \   hi MatchParen ctermbg=NONE guibg=NONE |
+    \   hi SpecialKey cterm=NONE ctermbg=NONE ctermfg=239 gui=NONE guibg=NONE guifg=#bcbcbc |
+    \ endif
+augroup END
 
 " Add cut/move mappings (delete operations overridden by vim-cutlass to just
 " delete, not yank and delete, see https://github.com/svermeulen/vim-cutlass)
@@ -530,11 +541,13 @@ vnoremap <Del> "_x
 " Stop recording commands and opening the command history by accident
 nnoremap q <nop>
 
-" Use q to close the quickfix window and return to the previous window
-autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd =<CR>
-
-" Fix previous window navigation when existing quickfix window re-used
-autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
+augroup vimrc_quickfix
+  autocmd!
+  " Use q to close the quickfix window and return to the previous window
+  autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd =<CR>
+  " Fix previous window navigation when existing quickfix window re-used
+  autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
+augroup END
 
 " Retain selection after shifting highlighted lines in visual mode
 vnoremap > >gv
@@ -550,7 +563,10 @@ nnoremap <LeftDrag> m`<LeftDrag>
 " And return to previous cursor position when leaving visual mode
 " Pattern derived from https://github.com/vim/vim/commit/25def2c8
 if exists('##ModeChanged')
-  autocmd ModeChanged [vV\x16]*:n exe "normal! ``"
+  augroup vimrc_cursor_return
+    au!
+    autocmd ModeChanged [vV\x16]*:n exe "normal! ``"
+  augroup END
 endif
 
 " Make backspace work with visual selections again. This used to work by
@@ -662,7 +678,10 @@ nnoremap <leader>` :call OpenInTerminal()<CR>
 
 " Custom terminal statusline, not a normal editor window
 if exists('##TerminalWinOpen')
-  autocmd TerminalWinOpen * setlocal statusline=%f
+  augroup vimrc_terminal_status
+    au!
+    autocmd TerminalWinOpen * setlocal statusline=%f
+  augroup END
 endif
 
 " Use K to show documentation in preview window.
@@ -910,7 +929,10 @@ function! ExpandWin() abort
     let w:expanded = 1
   endif
 endfunction
-autocmd WinLeave * if exists('w:expanded') && w:expanded | call ExpandWin() | endif
+augroup vimrc_expandwin
+  au!
+  autocmd WinLeave * if exists('w:expanded') && w:expanded | call ExpandWin() | endif
+augroup END
 nnoremap <Leader>x :call ExpandWin()<CR>
 
 " Highlight whitespace
