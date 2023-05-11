@@ -1,7 +1,6 @@
 set nocompatible                  " Disable vi compatibility (must come first)
 
 set encoding=utf-8                " Default to UTF8, don't use value from $LANG
-set nobomb                        " And don't add a BOM, assume UTF8 everywhere
 
 set nomodeline                    " No modelines (potential for security issues)
 
@@ -31,7 +30,7 @@ set backspace=indent,eol,start    " Intuitive backspacing in insert mode
 set hidden                        " Allow hidden buffers with unsaved changes
 
 set wildmenu                      " Enhanced command line completion
-set wildmode=list:longest         " Complete files like a shell
+set wildmode=list:longest,full    " And complete like a shell (similar to zsh)
 
 set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
@@ -150,9 +149,6 @@ set complete+=kspell
 
 " Disable completing keywords in included files, can make completion slow
 set complete-=i
-
-" Default format options, auto-format comments, but not code/text
-set formatoptions=croql
 
 " Delete comment leader when joining commented lines
 set formatoptions+=j
@@ -526,6 +522,10 @@ noremap Y y$
 " And make delete key just delete, i.e. send text to blackhole register
 nnoremap <Del> "_x
 vnoremap <Del> "_x
+
+" Don't use Q for Ex mode, except for Select mode, I have fat fingers
+map Q <nop>
+sunmap Q
 
 " Stop recording commands and opening the command history by accident
 nnoremap q <nop>
