@@ -949,19 +949,15 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 
-  " Allow basic windows/gnome/kde editing shortcuts. Copied from mswin.vim
-  " but implements fewer shortcuts, in fewer modes, to avoid breaking things
-  " like CTRL-A/X to add/subtract numbers and CTRL-V for visual block mode.
+  " Allow basic windows style editing shortcuts. Copied from mswin.vim but
+  " implements fewer shortcuts, in fewer modes, to avoid breaking things like
+  " CTRL-A/CTRL-X to add/subtract numbers and CTRL-V for visual block mode.
   " For more extensive windows style editing shortcuts, see :help mswin.vim
 
-  " CTRL-C and CTRL-Insert are Copy in visual mode
+  " CTRL-C is Copy in visual mode
   vnoremap <C-C> "+y
-  vnoremap <C-Insert> "+y
-  " CTRL-V and SHIFT-Insert are Paste in insert and visual modes
+  " CTRL-V is Paste in insert mode
   exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
-  exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
-  inoremap <S-Insert> <C-V>
-  vnoremap <S-Insert> <C-V>
   " CTRL-Z is Undo in normal and insert modes
   noremap <C-Z> u
   inoremap <C-Z> <C-O>u
@@ -970,9 +966,8 @@ if has("clipboard")
   inoremap <C-Y> <C-O><C-R>
   " CTRL-A is Select All in insert mode only
   inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-  " CTRL-V and SHIFT-insert are also Paste in terminal job mode
+  " CTRL-V is also Paste in terminal job mode
   tnoremap <C-V> <C-W>"+
-  tnoremap <S-Insert> <C-W>"+
 endif
 
 if exists('##TerminalWinOpen')
