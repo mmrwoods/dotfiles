@@ -181,6 +181,10 @@ if has("patch-8.2.2508")
   set fillchars+=eob:~
 endif
 
+" Do not recognize octal numbers when adding/subtracting using CTRL-A
+" and CTRL-X, e.g. make CTRL-A on "007" result in "008", not "010"
+set nrformats-=octal
+
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
