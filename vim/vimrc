@@ -385,19 +385,6 @@ let g:netrw_banner = 1
 " actually go back to the last edited file (same as bufexplorer)
 let g:netrw_altfile = 1
 
-" Skip editorconfig with fugitive
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-
-" Prevent editorconfig from enabling automatic text wrapping
-let g:EditorConfig_preserve_formatoptions = 1
-
-" Disable editorconfig use of colorcolumn to highlight long lines
-" See custom autocmd, which subtly highlights long lines instead
-let g:EditorConfig_max_line_indicator = 'none'
-
-" Disable editorconfig trim_trailing_whitespace, use better_whitespace
-let g:EditorConfig_disable_rules = ['trim_trailing_whitespace']
-
 " Disable whitespace highlighting by default, toggle with <leader><space>
 let g:better_whitespace_enabled = 0
 
@@ -407,22 +394,6 @@ let g:strip_whitespace_on_save = 1
 " Only strip whitespace on modified lines and don't ask for confirmation
 let g:strip_only_modified_lines = 1
 let g:strip_whitespace_confirm = 0
-
-" Use editorconfig hook to automatically enable/disable whitespace stripping
-function! <SID>EditorConfigHook(config)
-  try
-    let l:trim_trailing_whitespace = a:config->get('trim_trailing_whitespace')
-    if l:trim_trailing_whitespace == 'true'
-      exec 'EnableStripWhitespaceOnSave'
-    elseif l:trim_trailing_whitespace == 'false'
-      exec 'DisableStripWhitespaceOnSave'
-    endif
-  catch
-    echo 'EditorConfigHook Failed: ' . v:exception
-  endtry
-  return 0 " Return 0 to show no error happened
-endfunction
-call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
 
 " Don't autohide scratch window when leaving insert mode
 let g:scratch_insert_autohide = 0
