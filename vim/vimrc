@@ -563,6 +563,13 @@ nnoremap <Leader><leader> <C-^>
 " Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
 nnoremap <leader>/ /\V
 
+" Use CTRL-H to toggle search highlighting (being able to see matches is
+" really useful when operating on those matches using gn, see :help gn)
+" Note: <Cmd> mapping required to work around CmdlineLeave to set nohls
+if has("patch-8.2.1978")
+  nnoremap <C-H> <Cmd>set hlsearch!<CR>
+endif
+
 " Toggle ALE linting (disabled by default)
 function! ALEToggle()
   if g:ale_enabled
