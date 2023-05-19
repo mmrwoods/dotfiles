@@ -1008,7 +1008,7 @@ augroup filetypedetect
 
   " Even cruder autodetection of text files with no file extension
   autocmd BufRead,BufWrite *
-    \ if empty(&ft) && empty(expand('%:e')) && search('\c^\w\+', 'nwc', 10) |
+    \ if empty(&ft) && empty(expand('%:e')) && search('\c^\(\w\+\s\+\)\{2}\w\+', 'nwc', 10) |
     \   setfiletype text |
     \ endif
 augroup END
