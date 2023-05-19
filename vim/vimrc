@@ -1013,12 +1013,8 @@ augroup filetypedetect
     \ endif
 augroup END
 
-" Experimental: Turn on spell checking by default for text files
-" Not sure about this, text files is pretty broad, might not be a good default
-autocmd FileType text setlocal spell
-
-" Turn on spell checking by default for git commits
-autocmd FileType gitcommit setlocal spell
+" Turn on spell checking by default for some file types
+autocmd FileType markdown,text,gitcommit,asciidoc,rst,rdoc setlocal spell
 
 " Enable syntax highlighting for long lines in git commits
 autocmd FileType gitcommit setlocal synmaxcol=0
@@ -1029,9 +1025,6 @@ autocmd FileType markdown setlocal formatoptions+=t
 " Mapping to load markdown preview in popup window
 autocmd FileType markdown
   \ nnoremap <buffer> <leader>v :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' ' . g:markdown_preview_command . ' %'<CR>
-
-" Turn on spell checking by default for markdown files
-autocmd FileType markdown setlocal spell
 
 " Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
 " and it's not worth arguing about (personally I think markdown should be
