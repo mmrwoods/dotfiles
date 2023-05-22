@@ -156,10 +156,6 @@ let g:gutentags_generate_on_missing = 0
 " Note: Consider disabling gutentags entirely by default
 let g:gutentags_generate_on_write = 1
 
-" Assume a POSIX-compatible shell when shebang specifies /bin/sh, otherwise
-" highlighting is system dependent as the sh syntax file resolves symlinks
-let g:is_posix = 1
-
 " Tell netrw to also stop enabling ballooneval
 let g:netrw_nobeval = 1
 
