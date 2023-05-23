@@ -3,6 +3,9 @@ set guioptions=egm                " Hide toolbar and scrollbars
 set guicursor=n:blinkon0          " No blinking the cursor in normal mode
 set viminfo+=n~/.gviminfo         " Separate viminfo file for GUI vim
 
+" Always use light background even when launched from open command in terminal
+set background=light
+
 " open maximized
 if has('fullscreen')
   set fullscreen
