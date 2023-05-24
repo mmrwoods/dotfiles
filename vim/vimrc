@@ -727,9 +727,6 @@ nnoremap ; :ToggleBufExplorer<CR>
 let g:scratch_no_mappings = 1 " must disable plugin mappings first
 nnoremap gs :Scratch<CR>
 
-" Remove current search highlighting when redrawing screen
-nnoremap <C-L> :nohl<CR>:redraw!<CR>
-
 if exists('##TerminalWinOpen')
   " Make p paste from unanmed register in terminal normal mode
   au TerminalWinOpen *
