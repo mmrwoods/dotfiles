@@ -730,14 +730,6 @@ nnoremap gs :Scratch<CR>
 " Remove current search highlighting when redrawing screen
 nnoremap <C-L> :nohl<CR>:redraw!<CR>
 
-" copy to and paste from system clipboard
-set clipboard=unnamed
-
-if has("unnamedplus")
-  " and to X11 primary selection if available
-  set clipboard+=unnamedplus
-endif
-
 if exists('##TerminalWinOpen')
   " Make p paste from unanmed register in terminal normal mode
   au TerminalWinOpen *
