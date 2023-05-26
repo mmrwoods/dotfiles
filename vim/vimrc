@@ -25,9 +25,6 @@ set foldignore=''                 " Don't ignore # when folding on indent
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
-set shortmess+=c                  " Don't send ins-completion-menu messages
-set shortmess+=F                  " Don't show file info messages, use statusline
-
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Merge sign column and number column if supported
