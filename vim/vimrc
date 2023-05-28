@@ -136,6 +136,9 @@ let MRU_Add_Menu = 0
 " Use the current window to load the list of MRU files
 let MRU_Use_Current_Window = 1
 
+" Use relative paths when opening files from the MRU list
+let MRU_Open_File_Relative = 1
+
 " Don't add git commits, private or tmp files to MRU files
 let MRU_Exclude_Files = '\.git*\|^/\(private\|tmp\|var\)/.*'
 
