@@ -355,17 +355,15 @@ autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd
 " Fix previous window navigation when existing quickfix window re-used
 autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
 
-" Mark previous cursor position when entering visual mode, see :h m`
-nnoremap v m`v
-nnoremap V m`V
-nnoremap <C-v> m`<C-v>
-nnoremap <2-LeftMouse> m`<2-LeftMouse>
-nnoremap <LeftDrag> m`<LeftDrag>
+" Mark cursor position when visually selecting using text objects
+" FIXME: rewrite to avoid overwriting existing marks, set/getpos?
+nnoremap vi mOvi
+nnoremap va mOva
 
-" And return to previous cursor position when leaving visual mode
+" And return to cursor position mark if set when leaving visual mode
 " Pattern derived from https://github.com/vim/vim/commit/25def2c8
 if exists('##ModeChanged')
-  autocmd ModeChanged [vV\x16]*:n exe "normal! ``"
+  autocmd ModeChanged [vV\x16]*:n silent! exe "normal! `O" | delmarks O
 endif
 
 " Move block selections around in visual mode with schlepp plugin
