@@ -362,11 +362,8 @@ nnoremap <C-v> m`<C-v>
 nnoremap <2-LeftMouse> m`<2-LeftMouse>
 nnoremap <LeftDrag> m`<LeftDrag>
 
-" And return to previous cursor position when leaving visual mode
-" Pattern derived from https://github.com/vim/vim/commit/25def2c8
-if exists('##ModeChanged')
-  autocmd ModeChanged [vV\x16]*:n exe "normal! ``"
-endif
+" And return to previous cursor position when "escaping" visual mode
+vnoremap <expr> <Esc> "\<Esc>``"
 
 " Move block selections around in visual mode with schlepp plugin
 vmap <C-Up> <Plug>SchleppUp
