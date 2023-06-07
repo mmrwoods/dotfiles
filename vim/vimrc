@@ -191,6 +191,9 @@ let g:ale_lint_on_text_changed = 'never'
 " Don't highlight linting errors in source, just use sign column
 let g:ale_set_highlights = 0
 
+" Only show linting errors inline for the current line
+let g:ale_virtualtext_cursor = 'current'
+
 " Only use ALE to run linters, use coc.nvim with language servers
 " Note: Coc.nvim configured to send disgnostics to ALE for display
 let g:ale_disable_lsp = 1
