@@ -471,14 +471,12 @@ if exists('##TerminalWinOpen')
   autocmd TerminalWinOpen * setlocal statusline=%f
 endif
 
-" Use K to show documentation in preview window.
+" Use K to show documentation from CoC in preview window.
 function! ShowDocumentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
+  if coc#rpc#ready() && CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call feedkeys('K', 'in')
   endif
 endfunction
 nnoremap <silent> K :call ShowDocumentation()<CR>
