@@ -10,4 +10,10 @@ if ! test -d ~/.vim; then
   ln -s $dir/ ~/.vim
 fi
 
+set -e
+mkdir -p ~/.vim/pack/mmrwoods/opt
+cd ~/.vim/pack/mmrwoods/opt
+git clone git@github.com:mmrwoods/vim-friendly.git friendly
+set +e
+
 ruby $dir/update_bundle
