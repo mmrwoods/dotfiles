@@ -777,6 +777,30 @@ augroup END
 autocmd FileType markdown
   \ nnoremap <buffer> <leader>v :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' ' . g:markdown_preview_command . ' %'<CR>
 
+" Set dict as keywordprg for text, markdown etc. if installed, but load dict
+" program output in preview window rather than simply run an external command
+if executable("dict")
+  function! <SID>Dict(word)
+    silent! exe "noautocmd pedit dict \\\"" . a:word . "\\\""
+    noautocmd wincmd P
+    setlocal modifiable
+    setlocal buftype=nofile
+    setlocal nobuflisted
+    setlocal nofoldenable
+    setlocal statusline=%f
+    setlocal keywordprg=:Dict
+    nnoremap <buffer><silent> q :bw!<CR>
+
+    silent! exe "noautocmd r! dict \"" . a:word . "\""
+    silent! exe "1d_"
+    silent! exe "gg"
+    setlocal nomodifiable
+  endfunction
+  command! -nargs=1 Dict :call <SID>Dict(<q-args>)
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+    \ setlocal keywordprg=:Dict
+endif
+
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 
