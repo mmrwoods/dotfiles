@@ -5,7 +5,7 @@ set -x
 dir=$(cd `dirname $0` && pwd)
 
 # symlink ctags config directory
-if ! test -d ~/.vim; then
+if ! test -d ~/.ctags.d; then
   ln -s $dir/ctags ~/.ctags.d
 fi
 
