@@ -170,7 +170,7 @@ if [ $HOMEBREW_PREFIX ] && [ -r $HOMEBREW_PREFIX/var/postgres ]; then
 fi
 
 # reload bash shell (I always forget how)
-alias reload="export PATH=$ORIGINAL_PATH; exec bash -l"
+alias reload="export PATH=$ORIGINAL_PATH; exec $SHELL -l"
 
 # highlight error output from git commands in red
 # - highlights based on pattern match as stderr not only used for errors
