@@ -41,5 +41,6 @@
 --exclude=*.xml
 --exclude=*.xslt
 --exclude=*.yml
+--exclude=*.json
 
 --langmap=ruby:+.rake
