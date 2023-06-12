@@ -14,7 +14,7 @@ if has('gui_running')
 elseif $TERM_PROGRAM =~# 'iTerm'
   colorscheme onedark             " Match dark iTerm color scheme locally
 elseif $SSH_CLIENT != ''
-  colorscheme jellybeans          " Distinct color scheme for ssh sessions
+  colorscheme elflord             " Distinct color scheme for ssh sessions
 endif
 
 set nofoldenable                  " Open all folds by default

@@ -74,7 +74,6 @@ plug 'mg979/vim-visual-multi'
 # colours
 # fork of solaraized that works with both 256 colors and true color
 plug 'ericbn/vim-solarized'
-plug 'nanotech/jellybeans.vim'
 plug 'NLKNguyen/papercolor-theme'
 plug 'tomasiser/vim-code-dark'
 plug 'joshdick/onedark.vim'
