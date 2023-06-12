@@ -12,7 +12,7 @@ set backupdir=$HOME/.vim/tmp//    " And backups in the same place
 if has('gui_running')
   colorscheme PaperColor          " High contrast light bg colors for gui
 elseif $TERM_PROGRAM =~# 'iTerm'
-  colorscheme solarized           " Match dark iTerm color scheme locally
+  colorscheme onedark             " Match dark iTerm color scheme locally
 elseif $SSH_CLIENT != ''
   colorscheme jellybeans          " Distinct color scheme for ssh sessions
 endif

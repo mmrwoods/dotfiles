@@ -94,14 +94,16 @@ defaults write com.googlecode.iterm2 HideTabNumber -bool true
 # Don't use native full screen mode with MacVim (annoying animations)
 defaults write org.vim.MacVim MMNativeFullScreen -int 0
 
-# Add solarized colours to iTerm2
-if ! defaults read com.googlecode.iterm2 | fgrep "Solarized Dark" &> /dev/null; then
-  curl -L \
-    "https://raw.githubusercontent.com/altercation/solarized/master/iterm2-colors-solarized/Solarized%20Dark.itermcolors" \
-    > "/tmp/Solarized Dark.itermcolors"
-  open "/tmp/Solarized Dark.itermcolors"
-  sleep 1
-fi
+# Add preset color schemes to iTerm2
+for path in iTerm2/*.itermcolors; do
+  filename=$(basename "$path")
+  colorname=${filename%.itermcolors}
+  if ! defaults read com.googlecode.iterm2 | fgrep "$colorname" &> /dev/null; then
+    echo Importing $colorname iTerm colors...
+    open "$path"
+    sleep 1
+  fi
+done
 
 # Kill affected applications
 for app in Finder Dock SystemUIServer Safari Mail; do killall "$app"; done
