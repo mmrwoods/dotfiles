@@ -837,22 +837,19 @@ if exists("+omnifunc")
     \	endif
 endif
 
-" Subtly highlight long lines rather than display colorcolumn
+" Highlight long lines in active window rather than display colorcolumn
 function! <SID>HighlightLongLines()
-  for l:match in getmatches()
-    if get(l:match, 'group', '') == 'ColorColumn'
-      call matchdelete(get(l:match, 'id'))
-    endif
-  endfor
+  if exists('w:long_lines_mid')
+    silent! call matchdelete(w:long_lines_mid)
+  endif
   if empty(&buftype) && &textwidth > 0
-    call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1)
+    let w:long_lines_mid = matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1)
   endif
 endfunction
+autocmd WinEnter,BufEnter * call <SID>HighlightLongLines()
+autocmd WinLeave,BufLeave * silent! call matchdelete(w:long_lines_mid)
 if exists('##OptionSet')
-  " Apply long line highlighting whenever textwidth option is set
   autocmd OptionSet textwidth call <SID>HighlightLongLines()
-  " And on VimEnter because OptionSet autocmds do not run on startup
-  autocmd VimEnter * bufdo call <SID>HighlightLongLines()
 endif
 
 " Diff a buffer with the file from which it was originally loaded
