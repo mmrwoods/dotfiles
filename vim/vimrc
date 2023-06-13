@@ -837,7 +837,7 @@ function! <SID>HighlightLongLines()
       call matchdelete(get(l:match, 'id'))
     endif
   endfor
-  if &textwidth > 0
+  if empty(&buftype) && &textwidth > 0
     call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1)
   endif
 endfunction
