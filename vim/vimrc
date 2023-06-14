@@ -343,9 +343,9 @@ autocmd VimEnter,ColorScheme *
   \ hi clear QuickFixLine |
   \ hi QuickFixLine ctermfg=red guifg=red |
   \ if get(g:, 'colors_name', v:null) ==# 'onedark' |
-  \   hi StatusLine ctermbg=240 |
+  \   hi StatusLine ctermbg=242 |
   \   hi StatusLineNC ctermbg=237 |
-  \   hi StatusLineTerm ctermbg=240 |
+  \   hi StatusLineTerm ctermbg=242 |
   \   hi StatusLineTermNC ctermbg=237 |
   \ elseif get(g:, 'colors_name', v:null) ==# 'PaperColor' |
   \   hi Spellbad guibg=NONE guifg=NONE |
