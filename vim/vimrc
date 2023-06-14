@@ -338,9 +338,16 @@ function! <SID>UpdateFZFColors()
 endfunction
 autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
-" Tweak some annoying highilghting from PaperColor and solarized
+" Tweak some highilghting from colour schemes
 autocmd VimEnter,ColorScheme *
-  \ if get(g:, 'colors_name', v:null) ==# 'PaperColor' |
+  \ hi clear QuickFixLine |
+  \ hi QuickFixLine ctermfg=red guifg=red |
+  \ if get(g:, 'colors_name', v:null) ==# 'onedark' |
+  \   hi StatusLine ctermbg=240 |
+  \   hi StatusLineNC ctermbg=237 |
+  \   hi StatusLineTerm ctermbg=240 |
+  \   hi StatusLineTermNC ctermbg=237 |
+  \ elseif get(g:, 'colors_name', v:null) ==# 'PaperColor' |
   \   hi Spellbad guibg=NONE guifg=NONE |
   \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
   \   hi MatchParen ctermbg=NONE guibg=NONE |
