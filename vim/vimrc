@@ -2,6 +2,8 @@ packadd friendly                  " load friendly defaults (must come first)
 
 set nomodeline                    " No modelines (potential for security issues)
 
+set nocursorline                  " Enabled for active window using autocmds
+
 set textwidth=80                  " Default textwidth, override using .editorconfig
 
 set writebackup                   " Create backups before overwriting files
@@ -836,6 +838,12 @@ if exists("+omnifunc")
     \	  setlocal omnifunc=syntaxcomplete#Complete |
     \	endif
 endif
+
+" Only show cursorline in active window, easy to locate active window
+" Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
+" various edge cases with popups, same buffer in multiple windows etc.
+autocmd WinEnter,BufEnter * setlocal cursorline
+autocmd WinLeave,BufLeave * setlocal nocursorline
 
 " Highlight long lines in active window rather than display colorcolumn
 function! <SID>HighlightLongLines()
