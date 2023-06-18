@@ -538,9 +538,9 @@ nmap <silent> [= <Plug>(VindentMotion_prev_diff)
 nmap <silent> ]= <Plug>(VindentMotion_next_diff)
 
 " Tag navigation
-" remap CTRL-] to show list when multiple matches (use tjump)
+" remap CTRL-] to show list when multiple matches, see :h g_CTRL-]
 nnoremap <C-]> g<C-]>
-" use CTRL-\ to jump to definition in next available window
+" use <leader>] jump to tag in next window (and split if necessary)
 function! JumpToTagInSplit()
   let currword = expand("<cword>")
   let startwin = winnr()
@@ -566,7 +566,7 @@ function! JumpToTagInSplit()
     echoerr v:exception
   endtry
 endfunction
-nnoremap <C-\> :call JumpToTagInSplit()<CR>
+nnoremap <leader>] :call JumpToTagInSplit()<CR>
 
 " Toggle project drawer / tree view
 " FIXME: update to use NERDTreeFind if buffer has file
