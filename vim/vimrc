@@ -43,9 +43,6 @@ set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r%{get(g:,'ZoomWin_statusline','
 " so short that it makes it almost impossible to complete multi-key mappings
 set timeoutlen=1000
 
-" Set ttimeoutlen, primarily to make it faster to exit popup windows
-set ttimeoutlen=100
-
 " map leader to comma so it's in the same position on all keyboards
 let mapleader = ","
 
