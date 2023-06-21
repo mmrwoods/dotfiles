@@ -177,6 +177,9 @@ let g:bufExplorerDisableDefaultKeyMapping = 1
 " Accept/close popup/completion menu with enter/cr, ah sanity, finally
 let g:lexima_accept_pum_with_enter = 1
 
+" Stop with the house of pain, no jumping around on CR
+let g:AutoPairsCenterLine = 0
+
 " Disable ALE linting by default, use ALEToggle to enable
 let g:ale_enabled = 0
 
