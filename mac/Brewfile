@@ -1,3 +1,7 @@
+tap "nodenv/nodenv"
+tap "puma/puma"
+tap "saulpw/vd"
+
 brew "align"
 brew "autopep8"
 brew "awscli"
