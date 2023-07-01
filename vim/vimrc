@@ -350,6 +350,7 @@ autocmd VimEnter,ColorScheme *
   \   hi StatusLineNC ctermbg=237 |
   \   hi StatusLineTerm ctermbg=242 |
   \   hi StatusLineTermNC ctermbg=237 |
+  \   hi! link VertSplit StatusLineNC |
   \ elseif get(g:, 'colors_name', v:null) ==# 'PaperColor' |
   \   hi Spellbad guibg=NONE guifg=NONE |
   \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
