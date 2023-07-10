@@ -120,6 +120,16 @@ if which fzf &> /dev/null; then
     [ $# -gt 1 ] || [[ $1 =~ [^[:alnum:]] ]] && { _z "$*"; return; }
     cd "$(_z -l $1 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
   }
+  function _z_completion()
+  {
+    local cur cmd
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+    [[ $prev =~ ^- ]] && return
+    local matches=`awk -F\| '{print $1}' ~/.z | sed -E 's/(\/|-)/\n/g' | grep -i ^$cur | sort -u`
+    COMPREPLY=($(compgen -W "${matches}" ${cur}))
+  }
+  complete -F _z_completion z
 fi
 
 # Hack cd to automatically push to the directory stack, but avoid duplicates
