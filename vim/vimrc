@@ -198,6 +198,13 @@ let g:ale_set_highlights = 0
 " for being shown (which seems like a bug, but I can't find an ALE bug report)
 " let g:ale_virtualtext_cursor = 'current'
 
+" Configure some fixers for ALEFix (easier than ':!eslint --fix %' etc.)
+let g:ale_fixers = {
+  \ 'javascript': ['eslint'],
+  \ 'python': ['autopep8'],
+  \ 'ruby': ['rubocop']
+  \ }
+
 " Only use ALE to run linters, use coc.nvim with language servers
 " Note: Coc.nvim configured to send disgnostics to ALE for display
 let g:ale_disable_lsp = 1
