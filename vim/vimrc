@@ -194,7 +194,9 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_set_highlights = 0
 
 " Only show linting errors inline for the current line
-let g:ale_virtualtext_cursor = 'current'
+" Disabled for now as this also prevents multiple errors for the current line
+" for being shown (which seems like a bug, but I can't find an ALE bug report)
+" let g:ale_virtualtext_cursor = 'current'
 
 " Only use ALE to run linters, use coc.nvim with language servers
 " Note: Coc.nvim configured to send disgnostics to ALE for display
