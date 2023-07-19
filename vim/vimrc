@@ -196,7 +196,9 @@ let g:ale_set_highlights = 0
 " Only show linting errors inline for the current line
 " Disabled for now as this also prevents multiple errors for the current line
 " for being shown (which seems like a bug, but I can't find an ALE bug report)
-" let g:ale_virtualtext_cursor = 'current'
+" Restore this even though it doesn't work for multiple warnings or errors,
+" becuase showing suggestsions from tsserver as virtual text is infuriating
+let g:ale_virtualtext_cursor = 'current'
 
 " Configure some fixers for ALEFix (easier than ':!eslint --fix %' etc.)
 let g:ale_fixers = {
