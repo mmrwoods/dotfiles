@@ -353,6 +353,8 @@ autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
 " Tweak some highilghting from colour schemes
 autocmd VimEnter,ColorScheme *
+  \ hi clear CocUnusedHighlight |
+  \ hi! link CocUnusedHighlight CocHintHighlight |
   \ hi clear QuickFixLine |
   \ hi QuickFixLine ctermfg=red guifg=red |
   \ if get(g:, 'colors_name', v:null) ==# 'onedark' |

@@ -3,5 +3,6 @@
   "suggest.floatEnable": true,
   "suggest.noselect": true,
   "signature.target": "echo",
-  "diagnostic.displayByAle": true
+  "diagnostic.displayByAle": false,
+  "diagnostic.enableSign": false
 }
