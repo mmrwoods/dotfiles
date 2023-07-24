@@ -1,4 +1,5 @@
 /.*
+!.node-version
 *.*~
 *.swp
 pack
