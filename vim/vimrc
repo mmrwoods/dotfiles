@@ -611,7 +611,7 @@ nnoremap <Leader>e :call NetrwToggle()<CR>
 
 " I think I needed to set this for VimspectorInstall to work properly
 " FIXME: investigate why this was necessary, docs suggest it should not be
-let g:vimspector_base_dir = expand('~/.vim/bundle/vimspector')
+let g:vimspector_base_dir = expand('~/.vim/pack/bundle/start/vimspector')
 
 " Launch graphical debugger/inspector (vimspector)
 nmap <Leader>i <Plug>VimspectorLaunch
