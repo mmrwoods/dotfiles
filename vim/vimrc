@@ -550,16 +550,16 @@ let g:vindent_object_OX_ii = 'iI' " inner indent level, excluding blank lines
 let g:vindent_object_XX_ai = 'ai' " an indent level and the line above
 let g:vindent_object_XX_aI = 'aI' " an indent level and the lines above/below
 
-" Experimental: indentation motions, nmap only to avoid breaking {Visual}=,
-" does still break ={motion}, but I never use ={motion}, that's scary shit.
-" go to next line at the same indent
-nmap <silent> = <Plug>(VindentBlockMotion_OO_next)
-" go to previous line of same indent
-nmap <silent> g= <Plug>(VindentBlockMotion_OO_prev)
-" go to prev line with different indent
-nmap <silent> [= <Plug>(VindentMotion_prev_diff)
-" go to next line with different indent
-nmap <silent> ]= <Plug>(VindentMotion_next_diff)
+" make vindent motion count as a jump (works with jumplist)
+let g:vindent_jumps = 1
+
+" some recommended vindent motions, taken from vindent readme
+let g:vindent_motion_OO_prev   = '[=' " jump to prev block of same indent.
+let g:vindent_motion_OO_next   = ']=' " jump to next block of same indent.
+let g:vindent_motion_more_prev = '[+' " jump to prev line with more indent.
+let g:vindent_motion_more_next = ']+' " jump to next line with more indent.
+let g:vindent_motion_less_prev = '[-' " jump to prev line with less indent.
+let g:vindent_motion_less_next = ']-' " jump to next line with less indent.
 
 " Tag navigation
 " remap CTRL-] to show list when multiple matches, see :h g_CTRL-]
