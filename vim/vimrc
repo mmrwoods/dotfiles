@@ -420,7 +420,7 @@ nnoremap <Leader><leader> <C-^>
 " Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
 nnoremap <leader>/ /\V
 
-" CoC aware mapping to accept completion with CR. Necessary because other
+" CoC aware mapping to accept completion with CR. Necessary because some
 " plugins wrap CR mappings, so CoC does not detect an existing CR mapping to
 " accept completion as it cannnot see pumvislble() in the existing map expr.
 inoremap <silent><expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
