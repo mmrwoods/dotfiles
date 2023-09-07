@@ -294,10 +294,6 @@ _git_rs() { _git_reset ; }
 _git_rss() { _git_reset ; }
 _git_rsh() { _git_reset ; }
 
-if [ -f /usr/local/bin/ctags ]; then
-  alias ctags='/usr/local/bin/ctags'
-fi
-
 # alias for thefuck, https://github.com/nvbn/thefuck
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
