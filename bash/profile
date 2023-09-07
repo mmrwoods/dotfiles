@@ -103,35 +103,6 @@ if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
   fi
 fi
 
-# z command to jump to frecent dirs, see https://github.com/rupa/z
-export _Z_EXCLUDE_DIRS=($HOME/tmp /tmp /private)
-export _Z_NO_RESOLVE_SYMLINKS=1
-source ~/dotfiles/bash/z.sh
-
-# Remove z completion, replaces completion word with / when no match
-complete -r z 2> /dev/null
-
-# Use fzf prompt with z, don't auto-jump to most frecent match, unpredictable
-# From https://github.com/junegunn/fzf/wiki/Examples#integration-with-z
-# Modified to prompt when single non-option alphanumeric argument provided
-if which fzf &> /dev/null; then
-  unalias z 2> /dev/null
-  function z() {
-    [ $# -gt 1 ] || [[ $1 =~ [^[:alnum:]] ]] && { _z "$*"; return; }
-    cd "$(_z -l $1 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-  }
-  function _z_completion()
-  {
-    local cur cmd
-    cur=${COMP_WORDS[COMP_CWORD]}
-    prev=${COMP_WORDS[COMP_CWORD-1]}
-    [[ $prev =~ ^- ]] && return
-    local matches=`awk -F\| '{print $1}' ~/.z | sed -E 's/(\/|-)/\n/g' | grep -i ^$cur | sort -u`
-    COMPREPLY=($(compgen -W "${matches}" ${cur}))
-  }
-  complete -F _z_completion z
-fi
-
 # Hack cd to automatically push to the directory stack, but avoid duplicates
 # Similar to zsh with setopt autopushd pushdignoredups pushdsilent pushdtohome
 function cd() {
@@ -329,6 +300,37 @@ fi
 
 # alias for thefuck, https://github.com/nvbn/thefuck
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
+
+# z command to jump to frecent dirs, see https://github.com/rupa/z
+# Note: must come after setting PROMPT_COMMAND. In Bash, z appends
+# a command to the PROMPT_COMMAND env var to maintain its database.
+export _Z_EXCLUDE_DIRS=($HOME/tmp /tmp /private)
+export _Z_NO_RESOLVE_SYMLINKS=1
+source ~/dotfiles/bash/z.sh
+
+# Remove z completion, replaces completion word with / when no match
+complete -r z 2> /dev/null
+
+# Use fzf prompt with z, don't auto-jump to most frecent match, unpredictable
+# From https://github.com/junegunn/fzf/wiki/Examples#integration-with-z
+# Modified to prompt when single non-option alphanumeric argument provided
+if which fzf &> /dev/null; then
+  unalias z 2> /dev/null
+  function z() {
+    [ $# -gt 1 ] || [[ $1 =~ [^[:alnum:]] ]] && { _z "$*"; return; }
+    cd "$(_z -l $1 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+  }
+  function _z_completion()
+  {
+    local cur cmd
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+    [[ $prev =~ ^- ]] && return
+    local matches=`awk -F\| '{print $1}' ~/.z | sed -E 's/(\/|-)/\n/g' | grep -i ^$cur | sort -u`
+    COMPREPLY=($(compgen -W "${matches}" ${cur}))
+  }
+  complete -F _z_completion z
+fi
 
 # Make random password containing letters, digits and an underscore somewhere
 # The resulting password is a vim/regex word, so it's easy to copy and paste
