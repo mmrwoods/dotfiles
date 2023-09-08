@@ -30,6 +30,8 @@ brew "glow"
 brew "gnu-getopt"
 brew "gnu-sed"
 brew "go"
+brew "gotags"
+brew "gopls"
 brew "grep"
 brew "grip" # GitHub markdown previewer
 brew "htop"
