@@ -110,7 +110,7 @@ if has("mac")
   "   \ endif
 
   " Set the guifont
-  set guifont=Mensch:h12,Menlo:h12,Monaco:h12
+  set guifont=Menlo:h12,Monaco:h12
 
   " MacVim disables cocoa key bindings, but I want double S / section sign
   " mapped to hash. For some reason map doesn't work, so...
