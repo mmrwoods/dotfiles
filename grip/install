@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -x
+
+dir=$(cd `dirname $0` && pwd)
+
+if ! test -d ~/.grip; then
+  ln -s $dir/ ~/.grip
+fi
