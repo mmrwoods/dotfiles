@@ -136,6 +136,19 @@ if [ $HOMEBREW_PREFIX ] && [ -r $HOMEBREW_PREFIX/etc/profile.d/bash_completion.s
   fi
 fi
 
+# fix Cisco Umbrella, use Homebrew installed CA certs with cli tools
+# ca-certificates formula adds Cisco Umbrella Root CA from keychain
+if test -n "$HOMEBREW_PREFIX" ; then
+  if test -f ${HOMEBREW_PREFIX}/etc/ca-certificates/cert.pem ; then
+    export SSL_CERT_FILE=${HOMEBREW_PREFIX}/etc/ca-certificates/cert.pem
+  fi
+fi
+if test -n "$SSL_CERT_FILE" ; then
+  for var in NODE_EXTRA_CA_CERTS REQUESTS_CA_BUNDLE CURL_CA_BUNDLE ; do
+    export $var=$SSL_CERT_FILE
+  done
+fi
+
 # git completion
 if ! type __git_ps1 &> /dev/null; then
   source ~/dotfiles/bash/git-prompt.sh
