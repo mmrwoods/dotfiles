@@ -475,6 +475,19 @@ function! LocationListToggle()
 endfunction
 nnoremap <leader>l :call LocationListToggle()<CR>
 
+" Toggle project drawer / tree view, but unlike NERDTreeToggle
+" command, locate the current file in the tree when opening
+function! NERDTreeToggle()
+  if g:NERDTree.IsOpen()
+    NERDTreeClose
+  elseif empty(expand('%'))
+    NERDTreeFocus
+  else
+    NERDTreeFind
+  endif
+endfunction
+nnoremap <leader>d :call NERDTreeToggle()<CR>
+
 " Toggle terminal - for default shell only, other terms ignored
 function! TerminalToggle()
   let termbufs = filter(term_list(), { _, bufnr -> stridx(bufname(bufnr), $SHELL) > 0 })
@@ -588,10 +601,6 @@ function! JumpToTagInSplit()
   endtry
 endfunction
 nnoremap <leader>] :call JumpToTagInSplit()<CR>
-
-" Toggle project drawer / tree view
-" FIXME: update to use NERDTreeFind if buffer has file
-nnoremap <leader>d :NERDTreeToggle<CR>
 
 " Show/hide diff/changes in sign column
 nnoremap <leader>td :SignifyToggle<CR>
