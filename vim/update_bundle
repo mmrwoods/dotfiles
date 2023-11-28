@@ -61,7 +61,6 @@ plug 'dense-analysis/ale'
 # fork of ZoomWin that tracks upstream unstable/unreleased
 plug 'regedarek/ZoomWin'
 plug 'neoclide/coc.nvim', branch: :release
-plug 'dkarter/bullets.vim'
 plug 'liuchengxu/vim-which-key'
 plug 'yssl/QFEnter'
 plug 'ludovicchabant/vim-gutentags'

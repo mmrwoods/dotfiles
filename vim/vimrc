@@ -101,19 +101,6 @@ let g:which_key_run_map_on_popup = 1
 " Run native command when mapping not defined (required for WhichKey 'g')
 let g:which_key_fallback_to_native_key = 1
 
-" Disable default bullets.vim mappings, clashes with other mappings
-let g:bullets_set_mappings = 0
-
-" Add custom bullets mappings that don't clash with other mappings
-function! InsertNewBullet()
-  InsertNewBullet
-  return ''
-endfunction
-autocmd FileType markdown,text,gitcommit
-  \ inoremap <buffer><expr> <cr> (pumvisible() ? '<C-y>' : '<C-]><C-R>=InsertNewBullet()<cr>')|
-  \ nnoremap <buffer> o :InsertNewBullet<cr>|
-  \ nnoremap cx :ToggleCheckbox<cr>
-
 " don't automatically save session on exit in non-gui vim
 let sessionman_save_on_exit=0
 
@@ -421,7 +408,7 @@ nnoremap <leader>/ /\V
 " plugins wrap CR mappings, so CoC does not detect an existing CR mapping to
 " accept completion as it cannnot see pumvislble() in the existing map expr.
 inoremap <silent><expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
-  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<CR>' )
+  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-]><C-R>=FriendlyCR()<CR>' )
 
 " Toggle ALE linting (disabled by default)
 function! ALEToggle()
