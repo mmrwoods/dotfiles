@@ -766,10 +766,12 @@ endif
 augroup filetypedetect
   " Set .asc to AsciiDoc as this is recognised by GitHub (Vim only recognises
   " .asciidoc and .adoc extensions by default, see $VIMRUNTIME/filetype.vim)
+  " FIXME: allow for AGS script and PGP public key files with .asc extension
+  " See https://github.com/github-linguist/linguist/pull/1511 for example
   autocmd BufRead,BufNewFile *.asc setfiletype asciidoc
 
   " Additional ruby syntax highlighting
-  autocmd BufRead,BufNewFile {Berksfile,Capfile,Vagrantfile,Thorfile,pryrc,.pryrc,*.cap}
+  autocmd BufRead,BufNewFile {Berksfile,Brewfile,Capfile,Thorfile,.pryrc,pryrc,*.cap,*.thor}
     \ setfiletype ruby |
 
   " Set cloudformation filetypes to enable linting in ALE
