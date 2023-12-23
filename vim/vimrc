@@ -791,9 +791,11 @@ augroup filetypedetect
   " Crude autodetection of some common rc and other dotfile types/formats
   autocmd BufRead,BufWrite .*rc,$HOME/.*
     \ if !did_filetype() |
-    \   if getline(1) =~ '^{' |
+    \   if getline(1) =~ '^{' && getline('$') =~ '}$' |
     \     setfiletype json |
-    \   elseif getline(1) == '---' |
+    \   elseif getline(1) =~ '^%YAML' |
+    \     setfiletype yaml |
+    \   elseif getline(1) =~ '^---' && getline(2) =~ '^\w\+:' |
     \     setfiletype yaml |
     \   elseif getline(1) =~ '^\w\+:' && ( getline(2) =~ '^\w\+:' || getline(2) =~ '^\s\+\-\s\+\w\+' ) |
     \     setfiletype yaml |
