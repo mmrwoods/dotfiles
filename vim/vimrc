@@ -795,9 +795,9 @@ augroup filetypedetect
     \     setfiletype json |
     \   elseif getline(1) =~ '^%YAML' |
     \     setfiletype yaml |
-    \   elseif getline(1) =~ '^---' && getline(2) =~ '^\w\+:' |
+    \   elseif getline(1) =~ '^---' && getline(2) =~ '^\(\w\S\+:\|\-\s\+\w\+\)' |
     \     setfiletype yaml |
-    \   elseif getline(1) =~ '^\w\+:' && ( getline(2) =~ '^\w\+:' || getline(2) =~ '^\s\+\-\s\+\w\+' ) |
+    \   elseif getline(1) =~ '^\(\w\S\+:\|\-\s\+\w\+\)' && getline(2) =~ '^\s\+\(\w\S\+:\|\-\s\+\S\+\)' |
     \     setfiletype yaml |
     \   else |
     \     let lines = getline(1, min([line("$"), 50])) |
