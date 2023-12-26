@@ -790,7 +790,7 @@ augroup filetypedetect
 
   " Crude autodetection of some common rc and other dotfile types/formats
   autocmd BufRead,BufWrite .*rc,$HOME/.*
-    \ if !did_filetype() |
+    \ if empty(&ft) || ( !did_filetype() && &ft ==# 'conf' ) |
     \   if getline(1) =~ '^{' && getline('$') =~ '^}' && getline(2) =~ '^\s\+"[^"]\+"\s*:' |
     \     setfiletype json |
     \   elseif getline(1) =~ '^%YAML' |
@@ -809,7 +809,7 @@ augroup filetypedetect
 
   " Even cruder autodetection of text files with no file extension
   autocmd BufRead,BufWrite *
-    \ if !did_filetype() && empty(expand('%:e')) |
+    \ if empty(&ft) && empty(expand('%:e')) |
     \   let lines = getline(1, min([line("$"), 10])) |
     \   if match(lines, '\c^\(\w\+\s\+\)\{2}\w\+') != -1 |
     \     setfiletype text |
