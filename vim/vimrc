@@ -811,7 +811,7 @@ augroup filetypedetect
   autocmd BufRead,BufWrite *
     \ if empty(&ft) && empty(expand('%:e')) |
     \   let lines = getline(1, min([line("$"), 10])) |
-    \   if match(lines, '\c^\(\w\+\s\+\)\{2}\w\+') != -1 |
+    \   if match(lines, '^\(\a\+\s\+\)\{3}\a\+') != -1 |
     \     setfiletype text |
     \   endif |
     \ endif
