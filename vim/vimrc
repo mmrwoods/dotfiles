@@ -787,34 +787,6 @@ augroup filetypedetect
 
   " Set conf.local filetype to conf
   autocmd BufRead,BufNewFile *.conf.local setfiletype conf
-
-  " Crude autodetection of some common rc and other dotfile types/formats
-  autocmd BufRead,BufWrite .*rc,$HOME/.*
-    \ if empty(&ft) || ( !did_filetype() && &ft ==# 'conf' ) |
-    \   if getline(1) =~ '^{' && getline('$') =~ '^}' && getline(2) =~ '^\s\+"[^"]\+"\s*:' |
-    \     setfiletype json |
-    \   elseif getline(1) =~ '^%YAML' |
-    \     setfiletype yaml |
-    \   elseif getline(1) =~ '^---' && getline(2) =~ '^\(\w\S\+:\|\-\s\+\w\+\)' |
-    \     setfiletype yaml |
-    \   elseif getline(1) =~ '^\(\w\S\+:\|\-\s\+\w\+\)' && getline(2) =~ '^\s\+\(\w\S\+:\|\-\s\+\S\+\)' |
-    \     setfiletype yaml |
-    \   else |
-    \     let lines = getline(1, min([line("$"), 50])) |
-    \     if match(lines, '^\[.*\]$') != -1 && match(lines, '^\w\+\s*=\s*\(\w\|\"\)') != -1 |
-    \       setfiletype dosini |
-    \     endif |
-    \   endif |
-    \ endif
-
-  " Even cruder autodetection of text files with no file extension
-  autocmd BufRead,BufWrite *
-    \ if empty(&ft) && empty(expand('%:e')) |
-    \   let lines = getline(1, min([line("$"), 10])) |
-    \   if match(lines, '^\(\a\+\s\+\)\{3}\a\+') != -1 |
-    \     setfiletype text |
-    \   endif |
-    \ endif
 augroup END
 
 " Mapping to load markdown preview in popup window
