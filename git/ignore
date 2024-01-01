@@ -2,6 +2,7 @@
 *.*~
 *.swp
 .byebug_history
+tmp
 tags
 tags.lock
 tags.temp
