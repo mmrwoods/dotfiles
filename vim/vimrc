@@ -17,6 +17,8 @@ elseif $TERM_PROGRAM =~# 'iTerm'
   colorscheme onedark             " Match dark iTerm color scheme locally
 elseif $SSH_CLIENT != ''
   colorscheme elflord             " Distinct color scheme for ssh sessions
+else
+  colorscheme dim                 " Default IMproved color scheme elsewhere
 endif
 
 set nofoldenable                  " Open all folds by default
