@@ -4,7 +4,7 @@ export EDITOR=vim
 
 # Set TERM to something suitable for local and remote systems
 # Note: SSH client always sends the TERM env var to the server
-export TERM='xterm-color'
+export TERM='xterm-256color'
 
 # solarized dark colours for BSD ls command
 export CLICOLOR=1
