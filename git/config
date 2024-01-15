@@ -1,8 +1,6 @@
 # vim: set ft=gitconfig:
-
-[remote "origin"]
-  # automagically fetch tags from origin, we like tags
-  tagOpt = --tags
+[init]
+  defaultBranch = main
 [apply]
   whitespace = fix
 [core]
@@ -17,6 +15,12 @@
 [branch]
   # pull with rebase by default on new tracking branches
   autosetuprebase = always
+[remote "origin"]
+  # automagically fetch tags from origin, we like tags
+  tagOpt = --tags
+[branch "main"]
+  # pull with rebase by default on main
+  rebase = true
 [branch "master"]
   # pull with rebase by default on master
   rebase = true
