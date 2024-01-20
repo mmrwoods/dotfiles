@@ -349,6 +349,9 @@ autocmd VimEnter,ColorScheme *
   \   hi StatusLineNC ctermbg=237 |
   \   hi StatusLineTerm ctermbg=242 |
   \   hi StatusLineTermNC ctermbg=237 |
+  \   hi Search ctermfg=235 ctermbg=108 |
+  \   hi IncSearch ctermfg=235 ctermbg=215 |
+  \   hi! link CurSearch IncSearch |
   \   hi! link VertSplit StatusLineNC |
   \ elseif get(g:, 'colors_name', v:null) ==# 'PaperColor' |
   \   hi Spellbad guibg=NONE guifg=NONE |
