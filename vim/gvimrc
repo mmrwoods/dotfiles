@@ -24,6 +24,7 @@ function! <SID>LoadLastSession()
       execute 'SessionSaveAs default'
     elseif exists('g:LAST_SESSION')
       execute 'SessionOpenLast'
+      windo if haslocaldir() | lcd - | cd | cd - | endif
     else
       execute 'SessionOpen default'
     endif
