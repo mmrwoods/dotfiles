@@ -2,7 +2,6 @@
   "coc.preferences.colorSupport": false,
   "suggest.floatEnable": true,
   "suggest.noselect": true,
-  "signature.target": "echo",
   "diagnostic.displayByAle": false,
   "diagnostic.enableSign": false,
   "tsserver.disableAutomaticTypeAcquisition": true
