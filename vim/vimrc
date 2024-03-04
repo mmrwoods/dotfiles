@@ -6,8 +6,6 @@ set nocursorline                  " Enabled for active window using autocmds
 
 set textwidth=80                  " Default textwidth, override using .editorconfig
 
-set writebackup                   " Create backups before overwriting files
-set nobackup                      " But don't retain backups after writing
 set directory=$HOME/.vim/tmp//    " Keep swap files in one location
 set backupdir=$HOME/.vim/tmp//    " And backups in the same place
 
