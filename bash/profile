@@ -313,7 +313,7 @@ alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 # z command to jump to frecent dirs, see https://github.com/rupa/z
 # Note: must come after setting PROMPT_COMMAND. In Bash, z appends
 # a command to the PROMPT_COMMAND env var to maintain its database.
-export _Z_EXCLUDE_DIRS=($HOME/tmp /tmp /private)
+export _Z_EXCLUDE_DIRS=($HOME/Backup $HOME/tmp /tmp /private)
 export _Z_NO_RESOLVE_SYMLINKS=1
 source ~/dotfiles/bash/z.sh
 
