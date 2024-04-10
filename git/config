@@ -108,13 +108,20 @@
     | while read ref; do if test -f .git/refs/heads/$ref || fgrep \"refs/heads/$ref\" .git/packed-refs &>/dev/null; then echo $ref; fi; done | head -n 10"
 
   # select and switch to recently used or committed branches and tags
-  select = "!export COLUMNS=10; select subcmd in mru branch remote tag; do echo; git select-$subcmd; break; done"
-  select-mru = "!select ref in $(git mru); do git checkout $ref; break; done"
-  select-branch = "!select ref in $(git branch --sort=-committerdate --color=never --format='%(refname:short)' \
-    | head -n10); do git checkout $ref; break; done"
-  select-remote = "!select ref in $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' \
-    | head -n10 | sed 's/^origin\\///'); do git checkout $ref; break; done"
-  select-tag = "!select ref in $(git tag --sort=-taggerdate | head -n10); do git checkout $ref; break; done"
+  ; select = "!export COLUMNS=10; select subcmd in mru branch remote tag; do echo; git select-$subcmd; break; done"
+  ; select-mru = "!select ref in $(git mru); do git checkout $ref; break; done"
+  ; select-branch = "!select ref in $(git branch --sort=-committerdate --color=never --format='%(refname:short)' \
+  ;   | head -n10); do git checkout $ref; break; done"
+  ; select-remote = "!select ref in $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' \
+  ;   | head -n10 | sed 's/^origin\\///'); do git checkout $ref; break; done"
+  ; select-tag = "!select ref in $(git tag --sort=-taggerdate | head -n10); do git checkout $ref; break; done"
+  select = "!subcmd=$(gum choose mru branch remote tag) && git select-$subcmd;"
+  select-mru = "!ref=$(gum choose $(git mru)) && git checkout $ref;"
+  select-branch = "!ref=$(gum choose $(git branch --sort=-committerdate --color=never --format='%(refname:short)' \
+    | head -n10)) && git checkout $ref;"
+  select-remote = "!ref=$(gum choose $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' --no-contains \
+    | head -n10 | sed 's/^origin\\///')) && git checkout $ref;"
+  select-tag = "!ref=$(gum choose $(git tag --sort=-taggerdate | head -n10)) && git checkout $ref;"
 
   # switch to most recently checked out branch
   # useful for toggling between a feature branch and the main branch
