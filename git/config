@@ -133,6 +133,9 @@
   # peek at the last commit
   peek = log --patch --stat --max-count=1
 
+  # squash commits in the current branch
+  squash = !"~/dotfiles/git/squash_branch.sh"
+
   # list 10 most recently active/committed branches, both local and remote
   recent = !"git branch --all --color=always --sort=-committerdate \
     --format='%(color:yellow)%(refname:short)±%(color:green)%(committerdate:relative)±%(color:blue)%(authorname)%(color:cyan)±%(upstream:track) %(color:reset)%(subject)' \

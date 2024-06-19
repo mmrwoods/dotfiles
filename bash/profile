@@ -308,6 +308,7 @@ __git_complete gdc _git_diff
 _git_rs() { _git_reset ; }
 _git_rss() { _git_reset ; }
 _git_rsh() { _git_reset ; }
+_git_squash() { _git_rebase ; }
 
 # alias for thefuck, https://github.com/nvbn/thefuck
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
