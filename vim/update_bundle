@@ -37,6 +37,7 @@ plug 'othree/html5.vim'
 plug 'fatih/vim-go'
 plug 'cespare/vim-toml'
 plug 'Vimjas/vim-python-pep8-indent'
+plug 'architect/vim-plugin', name: 'architect'
 
 # tools
 plug 'tpope/vim-commentary'
@@ -90,14 +91,17 @@ FileUtils.cd(bundle_dir)
 plugins.each do |path, opts|
   url = "https://github.com/#{path}.git"
   build = opts.delete(:build)
+  name = opts.delete(:name)
   opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
-  dir = path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
-  dir = path.split('/').last if Dir.exists?(dir)
-  puts "unpacking #{url} into #{dir}"
-  `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{dir}`
+  if name.nil?
+    name = path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
+    name = path.split('/').last if Dir.exists?(name)
+  end
+  puts "Installing #{url} as #{name}"
+  `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{name}`
   if build
-    puts "running build command '#{build}'"
-    `cd #{dir} && #{build}`
+    puts "Running build command '#{build}'"
+    `cd #{name} && #{build}`
   end
 end
 
