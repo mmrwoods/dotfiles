@@ -391,6 +391,9 @@ vmap <C-Down> <Plug>SchleppDown
 vmap <C-Left> <Plug>SchleppLeft
 vmap <C-Right> <Plug>SchleppRight
 
+" Calculate sum, avg, min, and max of visual selection using vmath plugin
+vmap <expr> ++ VMATH_YankAndAnalyse()
+
 " Tab navigation with Ctrl-Tab (only works in gui vim)
 noremap <C-Tab> :tabnext<cr>
 noremap <S-C-Tab> :tabprevious<cr>

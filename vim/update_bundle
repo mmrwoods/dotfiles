@@ -70,6 +70,8 @@ plug 'tpope/vim-sleuth'
 plug 'jessekelighine/vindent.vim'
 plug 'airblade/vim-rooter'
 plug 'mg979/vim-visual-multi'
+# calculate sum, avg, min, and max of visual selection
+plug 'nixon/vim-vmath'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color
