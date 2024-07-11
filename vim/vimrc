@@ -841,10 +841,6 @@ autocmd FileType json setlocal formatprg=jsonlint\ --pretty-print\ 2>/dev/null
 " and consider passing textwidth as max line length (changed by editorconfig)
 autocmd FileType python setlocal formatprg=autopep8\ -\ 2>/dev/null
 
-" Disable yaml indentexpr from runtime files, too magical and confusing for
-" occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
-autocmd FileType yaml setlocal autoindent indentexpr=
-
 " Use syntax based completion when no omnicompletion available
 if exists("+omnifunc")
   autocmd Filetype *
