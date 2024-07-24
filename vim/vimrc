@@ -299,7 +299,7 @@ else
 endif
 
 " Set bat theme for fancy syntax highlighting in FZF preview window
-if executable('bat')
+if executable('bat') || executable('batcat')
   " GitHub theme works well with dark and light backgrounds and color schemes
   let $BAT_THEME='GitHub'
 else
