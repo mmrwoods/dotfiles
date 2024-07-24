@@ -198,6 +198,9 @@ let g:ale_disable_lsp = 1
 " Disable coc.nvim service at startup, use CocStart to enable
 let g:coc_start_at_startup = 0
 
+" Disable coc.nvim warnings on old vim versions
+let g:coc_disable_startup_warning = 1
+
 " Don't automagically colorize text, use <leader>tc to toggle
 let g:Hexokinase_ftEnabled = []
 

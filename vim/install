@@ -1,5 +1,13 @@
 #!/bin/bash
 
+for binary in go ruby; do
+  if ! which $binary &> /dev/null; then
+    echo "Error: Required binary \"$binary\" not found" >&2
+    echo "Please install $binary and try again" >&2
+    exit 1
+  fi
+done
+
 set -x
 
 dir=$(cd `dirname $0` && pwd)
@@ -10,10 +18,12 @@ if ! test -d ~/.vim; then
   ln -s $dir/ ~/.vim
 fi
 
-set -e
-mkdir -p ~/.vim/pack/mmrwoods/opt
-cd ~/.vim/pack/mmrwoods/opt
-git clone git@github.com:mmrwoods/vim-friendly.git friendly
-set +e
+if ! test -d ~/.vim/pack/mmrwoods/opt/friendly; then
+  set -e
+  mkdir -p ~/.vim/pack/mmrwoods/opt
+  cd ~/.vim/pack/mmrwoods/opt
+  git clone git@github.com:mmrwoods/vim-friendly.git friendly
+  set +e
+fi
 
 ruby $dir/update_bundle

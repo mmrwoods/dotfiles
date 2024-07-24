@@ -109,5 +109,5 @@ puts "Overriding editorconfig for bundle dir"
 system "echo root=true > .editorconfig"
 
 print "Updating VIM Documentation... "
-system "vim -c 'silent! helptags ALL|q'"
+system "vim -u NONE -c 'silent! helptags ALL' -c q"
 puts $?.exitstatus == 0 ? "OK" : "FAILED"
