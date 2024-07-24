@@ -88,6 +88,12 @@ let g:qfenter_excluded_action = 'next'
 " Open WhichKey menu for leader mappings after timeoutlen (500ms)
 nnoremap <silent> , :WhichKey ','<CR>
 
+" Add which-key to runtimepath on old vim versions to use which_key#register
+" In newer versions autoload searches packpath in addition to runtimepath
+if !has("nvim-0.4.0") && !has("patch-8.2.4275")
+  packadd which-key
+endif
+
 " Define dictionary with prefix names for leader mappings
 call which_key#register(',', "g:which_key_map")
 let g:which_key_map =  {}
