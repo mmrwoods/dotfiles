@@ -384,15 +384,24 @@ autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd
 " Fix previous window navigation when existing quickfix window re-used
 autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
 
-" Mark previous cursor position when entering visual mode, see :h m`
-nnoremap v m`v
-nnoremap V m`V
-nnoremap <C-v> m`<C-v>
-nnoremap <2-LeftMouse> m`<2-LeftMouse>
-nnoremap <LeftDrag> m`<LeftDrag>
+" Mark previous cursor position when entering visual mode, this abuses the
+" first character of previously changed text mark to allow for deletion from
+" visual mode, otherise we might jump to a position where text was deleted.
+" For consistency, also set the mark for the end of deletion, see :h `[
+nnoremap v m[m]v
+nnoremap V m[m]V
+nnoremap <C-v> m[m]<C-v>
+nnoremap <2-LeftMouse> m[m]<2-LeftMouse>
+nnoremap <LeftDrag> m[m]<LeftDrag>
 
-" And return to previous cursor position when "escaping" visual mode
-vnoremap <expr> <Esc> "\<Esc>``"
+" And return to previous cursor position when leaving visual mode
+" Map ESC if possible as most predictable, otherwise use ModeChanged
+" ModeChanged pattern from https://github.com/vim/vim/commit/25def2c8
+if has("mac")
+  vnoremap <expr> <Esc> "\<Esc>`["
+elseif exists('##ModeChanged')
+  autocmd ModeChanged [vV\x16]*:n exe "normal! `["
+endif
 
 " Move block selections around in visual mode with schlepp plugin
 vmap <C-Up> <Plug>SchleppUp
