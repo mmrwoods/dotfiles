@@ -387,20 +387,25 @@ autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
 " Mark previous cursor position when entering visual mode, this abuses the
 " first character of previously changed text mark to allow for deletion from
 " visual mode, otherise we might jump to a position where text was deleted.
-" For consistency, also set the mark for the end of deletion, see :h `[
-nnoremap v m[m]v
-nnoremap V m[m]V
-nnoremap <C-v> m[m]<C-v>
-nnoremap <2-LeftMouse> m[m]<2-LeftMouse>
-nnoremap <LeftDrag> m[m]<LeftDrag>
+" For consistency, also set the mark for the end of changed text, see :h `[
+" And set the last known cursor pos mark to detect deletion of text, see :h ``
+nnoremap v m`m[m]v
+nnoremap V m`m[m]V
+nnoremap <C-v> m`m[m]<C-v>
+nnoremap <2-LeftMouse> m`m[m]<2-LeftMouse>
+nnoremap <LeftDrag> m`m[m]<LeftDrag>
 
 " And return to previous cursor position when leaving visual mode
-" Map ESC if possible as most predictable, otherwise use ModeChanged
-" ModeChanged pattern from https://github.com/vim/vim/commit/25def2c8
-if has("mac")
-  vnoremap <expr> <Esc> "\<Esc>`["
-elseif exists('##ModeChanged')
-  autocmd ModeChanged [vV\x16]*:n exe "normal! `["
+" ModeChanged pattern derived from https://github.com/vim/vim/commit/25def2c8
+" After deletion in visual line mode, jump to the first non-blank character,
+" consistent with the default behaviour without these mappings and autocmds
+if exists('##ModeChanged')
+  autocmd ModeChanged [vV\x16]*:n
+    \ if ( getpos("'`") != getpos("'[") ) && ( v:event['old_mode'] ==# 'V' ) |
+    \   exe "normal! '[" |
+    \ else |
+    \   exe "normal! `[" |
+    \ endif
 endif
 
 " Move block selections around in visual mode with schlepp plugin
