@@ -38,6 +38,8 @@ rescue LoadError
     Gem.install(gem)
   rescue Gem::FilePermissionError
     Gem.install(gem, Gem::Requirement.default, user_install: true)
+  rescue Gem::InstallError
+    puts $!
   end
   Gem.clear_paths
   bundle(gem) if defined? Bundler
