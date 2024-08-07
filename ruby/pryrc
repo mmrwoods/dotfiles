@@ -62,7 +62,7 @@ auto_require 'pry-doc'
 
 # use solarized theme - see https://github.com/kyrylo/pry-theme
 auto_require 'pry-theme'do
-  Pry.config.theme = 'solarized'
+  Pry.config.theme = 'railscasts'
 end
 
 # add rails console and pry-rails helper methods
