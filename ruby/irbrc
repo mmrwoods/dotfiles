@@ -48,31 +48,22 @@ ensure
   yield if block_given?
 end
 
-if $0.include?("rails")
+# allow pry to be launched from irb
+auto_require 'pry'
 
-  # automagically use pry as rails console
-  auto_require 'pry' do
-    Pry.start
-    exit
-  end
-
-else
-
-  # colourize output using awesome print
-  auto_require 'awesome_print' do
-    alias pp ap
-    AwesomePrint.respond_to? :irb! ? AwesomePrint.irb! : begin
-      IRB::Irb.class_eval do
-        def output_value(*args)
-          ap @context.last_value, :multiline => false
-        end
+# colourize output using awesome print
+auto_require 'awesome_print' do
+  alias pp ap
+  AwesomePrint.respond_to? :irb! ? AwesomePrint.irb! : begin
+    IRB::Irb.class_eval do
+      def output_value(*args)
+        ap @context.last_value, :multiline => false
       end
     end
   end
+end
 
-  # add hirb console methods (table, view, etc.)
-  auto_require 'hirb' do
-    extend Hirb::Console
-  end
-
+# add hirb console methods (table, view, etc.)
+auto_require 'hirb' do
+  extend Hirb::Console
 end
