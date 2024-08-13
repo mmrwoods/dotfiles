@@ -4,7 +4,7 @@
 [apply]
   whitespace = fix
 [core]
-  editor = vim
+  editor = vim -u ~/dotfiles/vim/vimrc.minimal
   autocrlf = input
   excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
