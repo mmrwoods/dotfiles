@@ -6,3 +6,63 @@ nnoremap <c-up> :wincmd k<cr>
 nnoremap <c-down> :wincmd j<cr>
 nnoremap <c-left> :wincmd h<cr>
 nnoremap <c-right> :wincmd l<cr>
+
+" Testing committia again, with a few little tweaks this is super nice!
+packadd committia
+let g:committia_hooks = {}
+
+" Equalize windows when committia opens
+function! g:committia_hooks.edit_open(info)
+  wincmd =
+endfunction
+
+" Extract status and diff from COMMIT_EDITMSG when using git commit --verbose
+" This is just for amending commits, where committa normally shows the status
+" and diff for what is being amended, because it actually runs the status and
+" diff commands, but I often want the status and diff for the entire commit.
+function! g:committia_hooks.diff_open(info)
+  " never forget where you've come here from
+  let winnr = winnr()
+  let re_start_diff_line = '^\(#\|:\) -\+ >8 -\+\n\%(#.*\n\)\+diff --git'
+  try
+    " go back to the edit window
+    exe a:info.edit_winnr . 'wincmd w'
+    call cursor(1, 0)
+    let diff_start = search(re_start_diff_line, 'cenW')
+    if diff_start > 0
+      let diff = getline(diff_start, '$')
+      exe a:info.diff_winnr . 'wincmd w'
+      set modifiable
+      call cursor(1, 0)
+      silent .,$delete _
+      call setline(1, diff)
+    endif
+  finally
+    " goin' back to my roots, yeah
+    exe winnr . 'wincmd w'
+  endtry
+endfunction
+
+function! g:committia_hooks.status_open(info)
+  " never forget where you've come here from
+  let winnr = winnr()
+  let match_status_start = getline(1)
+  try
+    " go back to the edit window
+    exe a:info.edit_winnr . 'wincmd w'
+    call cursor(1, 0)
+    let status_start = search(match_status_start, 'cenW')
+    let status_end = search('^\(#\|:\) -\+ >8 -\+\n', 'cenW')
+    if status_start > 0 && status_end > 0
+      let status = getline(status_start, status_end-1)
+      exe a:info.status_winnr . 'wincmd w'
+      set modifiable
+      call cursor(1, 0)
+      silent .,$delete _
+      call setline(1, status)
+    endif
+  finally
+    " goin' back to my roots, yeah
+    exe winnr . 'wincmd w'
+  endtry
+endfunction
