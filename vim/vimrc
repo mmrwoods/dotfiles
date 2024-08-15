@@ -28,6 +28,10 @@ set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
+" Clean highlighting of column separating vertically split windows
+set fillchars=vert:\ ,
+autocmd VimEnter,ColorScheme * hi! link VertSplit StatusLineNC
+
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Merge sign column and number column if supported
@@ -360,12 +364,8 @@ autocmd VimEnter,ColorScheme *
   \   hi Search ctermfg=235 ctermbg=108 |
   \   hi IncSearch ctermfg=235 ctermbg=215 |
   \   hi! link CurSearch IncSearch |
-  \   hi! link VertSplit StatusLineNC |
   \ elseif get(g:, 'colors_name', v:null) ==# 'PaperColor' |
   \   hi Spellbad guibg=NONE guifg=NONE |
-  \ elseif get(g:, 'colors_name', v:null) ==# 'solarized' |
-  \   hi MatchParen ctermbg=NONE guibg=NONE |
-  \   hi SpecialKey cterm=NONE ctermbg=NONE ctermfg=239 gui=NONE guibg=NONE guifg=#bcbcbc |
   \ endif
 
 " Add cut/move mappings (delete operations overridden by vim-cutlass to just
