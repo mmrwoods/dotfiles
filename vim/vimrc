@@ -24,6 +24,7 @@ set foldlevel=99                  " Don't open/close all folds at same indent
 set foldlevelstart=99             " Reset fold level when opening new files
 set foldmethod=indent             " Keep it simple stupid, just fold on indent
 set foldignore=''                 " Don't ignore # when folding on indent
+set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
