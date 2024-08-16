@@ -32,6 +32,11 @@ set updatetime=1000               " Default updatetime for gitgutter and friends
 set fillchars=vert:\ ,
 autocmd VimEnter,ColorScheme * hi! link VertSplit StatusLineNC
 
+" Hide eob fillchar when line numbers enabled, eob lines will have no number
+if has("nvim") || has("patch-8.2.2508")
+  set fillchars+=eob:\ ,
+endif
+
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Merge sign column and number column if supported
