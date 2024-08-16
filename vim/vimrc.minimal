@@ -1,3 +1,4 @@
+" vim: set syntax=vim:
 set noloadplugins
 packadd friendly
 packadd committia
