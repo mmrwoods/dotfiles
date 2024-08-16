@@ -1,8 +1,7 @@
-packadd friendly                  " load friendly defaults (must come first)
+exe 'source ' . $MYVIMRC . '.minimal'
+set loadplugins
 
 set nomodeline                    " No modelines (potential for security issues)
-
-set nocursorline                  " Enabled for active window using autocmds
 
 set textwidth=80                  " Default textwidth, override using .editorconfig
 
@@ -28,15 +27,6 @@ set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
-" Clean highlighting of column separating vertically split windows
-set fillchars=vert:\ ,
-autocmd VimEnter,ColorScheme * hi! link VertSplit StatusLineNC
-
-" Hide eob fillchar when line numbers enabled, eob lines will have no number
-if has("nvim") || has("patch-8.2.2508")
-  set fillchars+=eob:\ ,
-endif
-
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Merge sign column and number column if supported
@@ -53,7 +43,8 @@ set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r%{get(g:,'ZoomWin_statusline','
 " so short that it makes it almost impossible to complete multi-key mappings
 set timeoutlen=1000
 
-" map leader to comma so it's in the same position on all keyboards
+" map leader to comma so it's in the same position on all of my keyboards
+" breaks comma for navigation, probably a bad idea, but I'm used to it now
 let mapleader = ","
 
 " use normal rather than hanging indent for multiline ruby assignment, i.e.
@@ -551,7 +542,7 @@ function! ShowDocumentation()
 endfunction
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
-" Window mappings
+" Additional window mappings, see minimal vimrc for basic mappings
 " switch to window pseudo-mode (uses window mode plugin, no more keyboard
 " contortions - window mode automatically prefixes <C-w> to all keypresses)
 nnoremap <leader>wm :WindowMode<CR>
@@ -569,11 +560,6 @@ nnoremap <leader>wx :wincmd x<CR>
 nnoremap <leader>w\| :wincmd L<CR>
 " move vertical split to horizontal
 nnoremap <leader>w_ :wincmd J<CR>
-" navigation with arrow keys
-nnoremap <C-Up> :wincmd k<CR>
-nnoremap <C-Down> :wincmd j<CR>
-nnoremap <C-Left> :wincmd h<CR>
-nnoremap <C-Right> :wincmd l<CR>
 " resize all windows equally
 nnoremap <leader>= :wincmd =<CR>
 " increase/decrease window width
@@ -877,12 +863,6 @@ if exists("+omnifunc")
     \	  setlocal omnifunc=syntaxcomplete#Complete |
     \	endif
 endif
-
-" Only show cursorline in active window, easy to locate active window
-" Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
-" various edge cases with popups, same buffer in multiple windows etc.
-autocmd WinEnter,BufEnter * setlocal cursorline
-autocmd WinLeave,BufLeave * setlocal nocursorline
 
 " Highlight long lines in active window rather than display colorcolumn
 function! <SID>HighlightLongLines()
