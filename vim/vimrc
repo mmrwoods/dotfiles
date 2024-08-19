@@ -1,4 +1,5 @@
-exe 'source ' . $MYVIMRC . '.minimal'
+" exe 'source ' . $MYVIMRC . '.minimal'
+source ~/.vim/vimrc.minimal
 set loadplugins
 
 set nomodeline                    " No modelines (potential for security issues)
