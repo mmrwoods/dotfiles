@@ -356,8 +356,6 @@ autocmd VimEnter,ColorScheme *
   \   hi Visual ctermbg=64 |
   \   hi StatusLine ctermbg=242 |
   \   hi StatusLineNC ctermbg=237 |
-  \   hi StatusLineTerm ctermbg=242 |
-  \   hi StatusLineTermNC ctermbg=237 |
   \   hi Search ctermfg=235 ctermbg=108 |
   \   hi IncSearch ctermfg=235 ctermbg=215 |
   \   hi! link CurSearch IncSearch |
