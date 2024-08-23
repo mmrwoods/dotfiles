@@ -10,7 +10,7 @@ nnoremap <c-left> :wincmd h<cr>
 nnoremap <c-right> :wincmd l<cr>
 
 " Clean, consistent highlighting of tabline, statusline and vertical splits
-set fillchars=vert:\ ,
+set fillchars+=vert:\ ,
 autocmd VimEnter,ColorScheme *
   \ hi! link VertSplit StatusLineNC |
   \ hi! link Tablinefill StatusLineNC |
@@ -18,11 +18,6 @@ autocmd VimEnter,ColorScheme *
   \ hi! link Tabline StatusLineNC |
   \ hi! link StatusLineTerm StatusLine |
   \ hi! link StatusLineTermNC StatusLineNC
-
-" Hide eob fillchar, line numbers are enabled, eob lines will have no number
-if has("nvim") || has("patch-8.2.2508")
-  set fillchars+=eob:\ ,
-endif
 
 " Only show cursorline in active window, easy to locate active window
 " Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
