@@ -354,6 +354,8 @@ autocmd VimEnter,ColorScheme *
   \ hi QuickFixLine ctermfg=red guifg=red |
   \ if get(g:, 'colors_name', v:null) ==# 'onedark' |
   \   hi Visual ctermbg=64 |
+  \   hi Comment ctermfg=243 |
+  \   hi SpecialComment ctermfg=243 |
   \   hi StatusLine ctermbg=242 |
   \   hi StatusLineNC ctermbg=237 |
   \   hi Search ctermfg=235 ctermbg=108 |
