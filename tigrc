@@ -1,3 +1,8 @@
-set ignore-case	= yes # ignore case when searching
+set ignore-case	= yes
+set git-colors = no
+
+color   cursor          black   green
+color   title-focus     black   blue
+color   title-blur      black   blue
 
 source ~/dotfiles/tigrc.vim
