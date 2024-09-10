@@ -63,6 +63,7 @@ brew "tig"
 brew "tldr"
 brew "universal-ctags"
 brew "unzip"
+brew "vint"
 brew "vim"
 brew "visidata" # browse CSV, JSON etc., command vd
 brew "wget"
