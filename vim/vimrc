@@ -896,12 +896,6 @@ if exists('##OptionSet')
   autocmd OptionSet textwidth call <SID>HighlightLongLines()
 endif
 
-" Diff a buffer with the file from which it was originally loaded
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-    \ | wincmd p | diffthis
-endif
-
 " Set working directory when opening vim, use directory of current file when
 " provided as argument, otherwise cwd to root of project/package if possible.
 " Note: uses vim-rooter, and works nicely with monorepos (not reliant on VCS)
