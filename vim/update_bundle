@@ -39,7 +39,6 @@ plug 'Vimjas/vim-python-pep8-indent'
 plug 'architect/vim-plugin', name: 'architect'
 
 # tools
-plug 'tpope/vim-commentary'
 plug 'ntpeters/vim-better-whitespace'
 plug 'Yggdroot/indentLine'
 plug 'tpope/vim-eunuch'
