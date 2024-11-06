@@ -64,6 +64,11 @@ autocmd WinLeave,BufLeave * setlocal nocursorline
 " breaks comma for navigation, probably a bad idea, but I'm used to it now
 let mapleader = ","
 
+" Disable editorconfig, now enabled by default in friendly.vim
+" I prefer sleuth, which auto-detects settings in addition to checking
+" editorconfig, and better_whitespace, which only strips changed lines
+let g:editorconfig = 0
+
 " use normal rather than hanging indent for multiline ruby assignment, i.e.
 " let x = if foo    --NOT--    let x = if foo
 "   bar                                  bar
