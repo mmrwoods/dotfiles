@@ -325,13 +325,13 @@ autocmd BufReadPost *
     \ endif
 augroup END
 
-if executable('glow')
-  let g:markdown_preview_command = 'glow -s dark -p'
-elseif executable('mdcat')
-  let g:markdown_preview_command = 'mdcat -p'
+if executable('mdcat')
+  " Mapping to load markdown preview in popup window
+  autocmd FileType markdown
+    \ nnoremap <buffer> <leader>v :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' mdcat -p %'<CR>
 else
   " FIXME should this error only appear when attempting to preview markdown???
-  echoerr "WARNING: no markdown preview executable found, install glow to fix this, see https://github.com/charmbracelet/glow"
+  echoerr "WARNING: no markdown preview executable found, install mdcat to fix this, see https://github.com/swsnr/mdcat"
 endif
 
 if executable('rg')
@@ -857,10 +857,6 @@ augroup filetypedetect
   " Set conf.local filetype to conf
   autocmd BufRead,BufNewFile *.conf.local setfiletype conf
 augroup END
-
-" Mapping to load markdown preview in popup window
-autocmd FileType markdown
-  \ nnoremap <buffer> <leader>v :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' ' . g:markdown_preview_command . ' %'<CR>
 
 " Set dict as keywordprg for text, markdown etc. if installed, but load dict
 " program output in preview window rather than simply run an external command
