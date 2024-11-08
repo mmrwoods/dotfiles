@@ -338,9 +338,15 @@ if executable('rg')
   let $RIPGREP_CONFIG_PATH = expand('~/.vim/rgconfig')
   set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
   set grepformat=%f:%l:%c:%m
-  let $FZF_DEFAULT_COMMAND = 'rg --files --color never --no-config --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
+  let $FZF_DEFAULT_COMMAND = 'fd --files --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
 else
-  echoerr "WARNING: grep alternative not found, finding files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
+  echoerr "WARNING: grep alternative not found, finding in files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
+endif
+
+if executable('fd')
+  let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
+else
+  echoerr "WARNING: find alternative not found, fuzzy finding files will be slow, install fd to fix this, see https://github.com/sharkdp/fd"
 endif
 
 " Set bat theme for fancy syntax highlighting in FZF preview window
