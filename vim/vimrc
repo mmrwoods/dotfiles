@@ -339,10 +339,6 @@ if executable('rg')
   set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
   set grepformat=%f:%l:%c:%m
   let $FZF_DEFAULT_COMMAND = 'rg --files --color never --no-config --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
-elseif executable('ag')
-  set grepprg=ag\ --vimgrep\ --hidden
-  set grepformat=%f:%l:%c:%m
-  let $FZF_DEFAULT_COMMAND = 'ag --literal --files-with-matches --nocolor --hidden -g ""'
 else
   echoerr "WARNING: grep alternative not found, finding files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
 endif
