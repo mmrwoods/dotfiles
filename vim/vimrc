@@ -297,6 +297,27 @@ let g:go_def_mapping_enabled = 0
 " top level namespace and makes it easier to find and complete FZF commands)
 let g:fzf_command_prefix = 'FZF'
 
+let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+" let g:Lf_WindowPosition = 'popup'
+" Doesn't work with popup window, causes error
+" let g:Lf_DisableStl = 1
+let g:Lf_ShowDevIcons = 0
+" Doesn't work with popup window, no effect
+" let g:Lf_ReverseOrder = 1
+let Lf_ShowRelativePath = 1
+let g:Lf_PopupAutoAdjustHeight = 0
+let g:Lf_RgConfig = [
+        \ "--max-columns=1000",
+        \ "--max-count=100",
+        \ "--max-filesize=1M",
+        \ "--glob=!git/*",
+        \ "--hidden",
+        \ "--no-ignore-parent",
+        \ "--ignore-file ~/.vim/rgignore"
+    \ ]
+
+let g:fuzzyy_menu_matched_hl = 'SpellRare'
+
 " Don't automatically change working directory to project root
 " Just using public function FindRootDirectory() with MRU mappings
 let g:rooter_manual_only = 1
@@ -326,46 +347,6 @@ elseif executable('ag')
 else
   echoerr "WARNING: grep alternative not found, finding files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
 endif
-
-" Set bat theme for fancy syntax highlighting in FZF preview window
-if executable('bat') || executable('batcat')
-  " GitHub theme works well with dark and light backgrounds and color schemes
-  let $BAT_THEME='GitHub'
-else
-  echoerr "WARNING: bat executable not found, preview window will not have syntax highlighting, install bat to fix this, see https://github.com/sharkdp/bat"
-endif
-
-" FZF color scheme, see https://github.com/junegunn/fzf/wiki/Color-schemes
-" FIXME: use g:fzf_colors, but note that suggested defaults do not work with
-" PaperColor, see https://github.com/junegunn/fzf/blob/master/README-VIM.md
-function! <SID>UpdateFZFColors()
-  let colors_name = get(g:, 'colors_name', 'default')
-  if colors_name ==# 'solarized'
-    if &background ==# 'light'
-      let $FZF_DEFAULT_OPTS='
-        \ --color fg:240,bg:230,hl:33,fg+:241,bg+:221,hl+:33
-        \ --color info:33,prompt:33,pointer:166,marker:166,spinner:33'
-    else
-      let $FZF_DEFAULT_OPTS='
-        \ --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
-        \ --color info:254,prompt:37,spinner:108,pointer:235,marker:235'
-    endif
-  elseif ( colors_name ==# 'onedark' )
-    let $FZF_DEFAULT_OPTS='
-      \ --color=dark
-      \ --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
-      \ --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
-  elseif ( colors_name ==# 'PaperColor' && &background ==# 'light' )
-    let $FZF_DEFAULT_OPTS='
-      \ --color=light,fg:#4d4d4c,bg:#eeeeee,hl:#d7005f
-      \ --color=fg+:#4d4d4c,bg+:#e8e8e8,hl+:#d7005f
-      \ --color=info:#4271ae,prompt:#8959a8,pointer:#d7005f
-      \ --color=marker:#4271ae,spinner:#4271ae,header:#4271ae'
-  else
-    let $FZF_DEFAULT_OPTS='--color ' . &background
-  endif
-endfunction
-autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
 " Tweak some highilghting from colour schemes
 autocmd VimEnter,ColorScheme *
