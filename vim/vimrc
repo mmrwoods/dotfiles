@@ -64,11 +64,6 @@ autocmd WinLeave,BufLeave * setlocal nocursorline
 " breaks comma for navigation, probably a bad idea, but I'm used to it now
 let mapleader = ","
 
-" Disable editorconfig, now enabled by default in friendly.vim
-" I prefer sleuth, which auto-detects settings in addition to checking
-" editorconfig, and better_whitespace, which only strips changed lines
-let g:editorconfig = 0
-
 " use normal rather than hanging indent for multiline ruby assignment, i.e.
 " let x = if foo    --NOT--    let x = if foo
 "   bar                                  bar
@@ -304,6 +299,31 @@ let g:rooter_manual_only = 1
 " Override indent level for continuation lines in vimscript
 " Default is shiftwidth() * 3, see $VIMRUNTIME/ftplugin/vim.vim
 let g:vim_indent_cont = 2
+
+" Don't automatically use sleuth to detect indent etc., conflicts with some file
+" navigation plugins, sleuth uses :redir, which cannot be used inside execute()
+" Instead add a BufReadPost autocmd to run Sleuth if EditorConfig not applied
+let g:sleuth_automatic = 0
+
+" Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
+" Allows other autocmds to check what has been applied by EditorConfig
+function! <SID>EditorConfigHook(config)
+  let b:editorconfig = a:config
+endfunction
+call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
+
+" Only use Sleuth as fallback to detect indent when EditorConfig not applied
+autocmd BufReadPost *
+    \ if !exists('b:editorconfig') || (type(b:editorconfig) == 4 && b:editorconfig->get('indent_size') == 0) |
+    \   exe ':silent! Sleuth' |
+    \ endif
+
+" Disable better whitespace plugin when configured via EditorConfig
+autocmd BufReadPost *
+    \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace') != 0 |
+    \   exe 'DisableStripWhitespaceOnSave' |
+    \ endif
+augroup END
 
 if executable('glow')
   let g:markdown_preview_command = 'glow -s dark -p'
