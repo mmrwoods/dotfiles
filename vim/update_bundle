@@ -19,8 +19,7 @@ plug 'scrooloose/nerdtree'
 plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
-plug 'junegunn/fzf', build: './install --bin'
-plug 'junegunn/fzf.vim'
+plug 'Yggdroot/LeaderF', build: './install.sh'
 plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'
@@ -102,7 +101,7 @@ plugins.each do |path, opts|
   `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{name}`
   if build
     puts "Running build command '#{build}'"
-    `cd #{name} && #{build}`
+    puts `cd #{name} && #{build}`
   end
 end
 

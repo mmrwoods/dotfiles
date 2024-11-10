@@ -288,9 +288,29 @@ let g:signify_disable_by_default = 1
 " Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
 let g:go_def_mapping_enabled = 0
 
-" Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
-" top level namespace and makes it easier to find and complete FZF commands)
-let g:fzf_command_prefix = 'FZF'
+" Leaderf configuration
+" Disable default <leader>f mapping
+let g:Lf_ShortcutF = ''
+" Use up/down rather than CTRL-K/J to browse results
+let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+" Open in popup by default
+let g:Lf_WindowPosition = 'popup'
+" Would like to disable status line, but doesn't work with popup window,
+" causes vim.error E121: Undefined variable: g:Lf_File_StlResultsCount
+" let g:Lf_DisableStl = 1
+" Don't bother with devicons, I'm happy with lean and mean
+let g:Lf_ShowDevIcons = 0
+" Would like to flip the order of the results, more like FZF.vim or
+" telescope.nvim, but this currently has no effect with popup windows
+let g:Lf_ReverseOrder = 1
+" Don't shrink the results window when filtering
+let g:Lf_PopupAutoAdjustHeight = 0
+" TODO: use $RIPGREP_CONFIG_PATH here if possible
+let g:Lf_RgConfig = [
+        \ "--hidden",
+        \ "--no-ignore-parent",
+        \ "--ignore-file ~/.vim/rgignore"
+    \ ]
 
 " Don't automatically change working directory to project root
 " Just using public function FindRootDirectory() with MRU mappings
@@ -338,56 +358,14 @@ if executable('rg')
   let $RIPGREP_CONFIG_PATH = expand('~/.vim/rgconfig')
   set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
   set grepformat=%f:%l:%c:%m
-  let $FZF_DEFAULT_COMMAND = 'fd --files --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
 else
   echoerr "WARNING: grep alternative not found, finding in files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
 endif
 
-if executable('fd')
-  let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --no-ignore-parent --ignore-file ~/.vim/rgignore'
-else
+if !executable('fd')
+  " Note: Leaderf and Fuzzyy will use fd if installed, but don't warn if not
   echoerr "WARNING: find alternative not found, fuzzy finding files will be slow, install fd to fix this, see https://github.com/sharkdp/fd"
 endif
-
-" Set bat theme for fancy syntax highlighting in FZF preview window
-if executable('bat') || executable('batcat')
-  " GitHub theme works well with dark and light backgrounds and color schemes
-  let $BAT_THEME='GitHub'
-else
-  echoerr "WARNING: bat executable not found, preview window will not have syntax highlighting, install bat to fix this, see https://github.com/sharkdp/bat"
-endif
-
-" FZF color scheme, see https://github.com/junegunn/fzf/wiki/Color-schemes
-" FIXME: use g:fzf_colors, but note that suggested defaults do not work with
-" PaperColor, see https://github.com/junegunn/fzf/blob/master/README-VIM.md
-function! <SID>UpdateFZFColors()
-  let colors_name = get(g:, 'colors_name', 'default')
-  if colors_name ==# 'solarized'
-    if &background ==# 'light'
-      let $FZF_DEFAULT_OPTS='
-        \ --color fg:240,bg:230,hl:33,fg+:241,bg+:221,hl+:33
-        \ --color info:33,prompt:33,pointer:166,marker:166,spinner:33'
-    else
-      let $FZF_DEFAULT_OPTS='
-        \ --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
-        \ --color info:254,prompt:37,spinner:108,pointer:235,marker:235'
-    endif
-  elseif ( colors_name ==# 'onedark' )
-    let $FZF_DEFAULT_OPTS='
-      \ --color=dark
-      \ --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
-      \ --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
-  elseif ( colors_name ==# 'PaperColor' && &background ==# 'light' )
-    let $FZF_DEFAULT_OPTS='
-      \ --color=light,fg:#4d4d4c,bg:#eeeeee,hl:#d7005f
-      \ --color=fg+:#4d4d4c,bg+:#e8e8e8,hl+:#d7005f
-      \ --color=info:#4271ae,prompt:#8959a8,pointer:#d7005f
-      \ --color=marker:#4271ae,spinner:#4271ae,header:#4271ae'
-  else
-    let $FZF_DEFAULT_OPTS='--color ' . &background
-  endif
-endfunction
-autocmd VimEnter,ColorScheme * call <SID>UpdateFZFColors()
 
 " Tweak some highilghting from colour schemes
 autocmd VimEnter,ColorScheme *
@@ -678,46 +656,32 @@ let g:vimspector_base_dir = expand('~/.vim/pack/bundle/start/vimspector')
 " Launch graphical debugger/inspector (vimspector)
 nmap <Leader>i <Plug>VimspectorLaunch
 
-" Stop FZF opening files in nofile and quickfix windows, with some exceptions
+" Stop fuzzy finder opening files in special buffers
 let g:fzf_reuse_windows = ['bufexplorer', 'mru']
-function! FZFOpen(cmd)
+function! FZFind(cmd)
   let c = 0
   let wincount = winnr('$')
   while ( !empty(&buftype) && index(g:fzf_reuse_windows, &ft) == -1 && c < wincount )
     wincmd w
     let c = c + 1
   endwhile
-  exec g:fzf_command_prefix . a:cmd
+  exec ':Leaderf' . a:cmd
 endfunc
 
 " Fuzzy find files
-nnoremap <leader>ff :call FZFOpen('Files')<CR>
+nnoremap <leader>ff :call FZFind('File')<CR>
 
 " Fuzzy find buffers
-nnoremap <leader>fb :call FZFOpen('Buffers')<CR>
+nnoremap <leader>fb :call FZFind('Buffer')<CR>
 
-" Fuzzy find commits
-nnoremap <leader>fc :call FZFOpen('Commits')<CR>
-
-" Fuzzy find commands (things to "execute")
-nnoremap <leader>fe :call FZFOpen('Commands')<CR>
-
-" Fuzzy find git ls-files
-nnoremap <leader>fg :call FZFOpen('GitFiles')<CR>
-
-" Fuzzy find help tags
-nnoremap <leader>fh :call FZFOpen('Helptags')<CR>
-
-" Fuzzy find most recently used files within project root directory
-" Note: relies on MRU plugin, use <leader>fm to fzf find all MRU files
-command! FZFRecent :call fzf#run(fzf#wrap({'source': MruGetFiles(FindRootDirectory()), 'sink': 'e'}))
-nnoremap <leader>fr :call FZFOpen('Recent')<CR>
+" Fuzzy find most recently used files in cwd
+nnoremap <leader>fr :call FZFind('MruCwd')<CR>
 
 " Fuzzy find most recently used files
-nnoremap <leader>fm :call FZFOpen('Mru')<CR>
+nnoremap <leader>fm :call FZFind('Mru')<CR>
 
 " Fuzzy find tags
-nnoremap <leader>ft :call FZFOpen('Tags')<CR>
+nnoremap <leader>ft :call FZFind('Tag')<CR>
 
 " Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
 " silently to avoid the "Press ENTER to continue" prompt after running external
