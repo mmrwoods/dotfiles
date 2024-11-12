@@ -676,19 +676,13 @@ function! FZFind(cmd)
   exec ':Leaderf' . a:cmd
 endfunc
 
-" Fuzzy find files
+command! LeaderfGrep :silent exe 'Leaderf rg --live'
+
 nnoremap <leader>ff :call FZFind('File')<CR>
-
-" Fuzzy find buffers
 nnoremap <leader>fb :call FZFind('Buffer')<CR>
-
-" Fuzzy find most recently used files in cwd
+nnoremap <leader>fg :call FZFind('Grep')<CR>
 nnoremap <leader>fr :call FZFind('MruCwd')<CR>
-
-" Fuzzy find most recently used files
 nnoremap <leader>fm :call FZFind('Mru')<CR>
-
-" Fuzzy find tags
 nnoremap <leader>ft :call FZFind('Tag')<CR>
 
 " Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
