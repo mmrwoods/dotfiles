@@ -313,12 +313,12 @@ let g:Lf_ShowDevIcons = 0
 let g:Lf_ReverseOrder = 1
 " Don't shrink the results window when filtering
 let g:Lf_PopupAutoAdjustHeight = 0
-" TODO: use $RIPGREP_CONFIG_PATH here if possible
 let g:Lf_RgConfig = [
-        \ "--hidden",
-        \ "--no-ignore-parent",
-        \ "--ignore-file ~/.vim/rgignore"
-    \ ]
+  \ "--no-config",
+  \ "--hidden",
+  \ "--no-ignore-parent",
+  \ "--ignore-file ~/.vim/rgignore"
+  \ ]
 
 " Don't automatically change working directory to project root
 " Just using public function FindRootDirectory() with MRU mappings
