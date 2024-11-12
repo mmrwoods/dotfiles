@@ -288,6 +288,14 @@ let g:signify_disable_by_default = 1
 " Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
 let g:go_def_mapping_enabled = 0
 
+" Fuzzyy configuration, for testing, this is not my default finder for now
+" I really like Fuzzyy, nice clean interface, no dependencies, but it needs
+" some small performance tweaks and doesn't allow custom cmd configuration
+" I might create some PRs, it's a very nice plugin, and could be fast enough
+let g:enable_fuzzyy_keymaps = 0
+let g:fuzzyy_menu_matched_hl = 'spellrare'
+let g:files_respect_gitignore = 1
+
 " Leaderf configuration
 " Disable default <leader>f mapping
 let g:Lf_ShortcutF = ''
