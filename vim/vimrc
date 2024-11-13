@@ -318,6 +318,8 @@ let g:Lf_ReverseOrder = 1
 let g:Lf_PopupAutoAdjustHeight = 0
 let g:Lf_RgConfig = [
   \ "--no-config",
+  \ "--smart-case",
+  \ "--max-columns=1000",
   \ "--hidden",
   \ "--no-ignore-parent",
   \ "--ignore-file ~/.vim/rgignore"
@@ -366,8 +368,7 @@ else
 endif
 
 if executable('rg')
-  let $RIPGREP_CONFIG_PATH = expand('~/.vim/rgconfig')
-  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
+  exe 'set grepprg=rg\ --vimgrep\ ' . substitute(join(g:Lf_RgConfig, ' '), ' ', '\\ ', 'g')
   set grepformat=%f:%l:%c:%m
 else
   echoerr "WARNING: grep alternative not found, finding in files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
