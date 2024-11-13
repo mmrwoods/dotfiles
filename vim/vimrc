@@ -276,6 +276,9 @@ let g:strip_whitespace_on_save = 1
 let g:strip_only_modified_lines = 1
 let g:strip_whitespace_confirm = 0
 
+" When using StripWhitespace command, also include blank lines at eof
+let g:strip_whitelines_at_eof = 1
+
 " Don't autohide scratch window when leaving insert mode
 let g:scratch_insert_autohide = 0
 
