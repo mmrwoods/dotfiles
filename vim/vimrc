@@ -345,13 +345,13 @@ call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
 
 " Only use Sleuth as fallback to detect indent when EditorConfig not applied
 autocmd BufReadPost *
-    \ if !exists('b:editorconfig') || (type(b:editorconfig) == 4 && b:editorconfig->get('indent_size') == 0) |
+    \ if !exists('b:editorconfig') || (type(b:editorconfig) == 4 && b:editorconfig->get('indent_size', 'unset') ==# 'unset') |
     \   exe ':silent! Sleuth' |
     \ endif
 
 " Disable better whitespace plugin when configured via EditorConfig
 autocmd BufReadPost *
-    \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace') != 0 |
+    \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
     \   exe 'DisableStripWhitespaceOnSave' |
     \ endif
 augroup END
