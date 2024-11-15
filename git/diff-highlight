@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Just pass through cat if diff-highlight script cannot be found
+program=cat
+
+# diff-highlight script should be in predictable location relative to git binary
+git_binary_path=$(which git 2>/dev/null)
+if test -n $git_binary_path; then
+  hl_script_path=${git_binary_path/bin\/git/share\/git-core/contrib/diff-highlight/diff-highlight}
+  if test -n $hl_script_path; then
+    program=$hl_script_path
+  fi
+fi
+
+exec "$program" "$@"
