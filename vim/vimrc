@@ -41,7 +41,7 @@ set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r%{get(g:,'ZoomWin_statusline','
 
 " Keep timeoutlen short enough to make WhichKey menu appear promptly, but not
 " so short that it makes it almost impossible to complete multi-key mappings
-set timeoutlen=1000
+set timeoutlen=500
 
 " Clean, consistent highlighting of tabline, statusline and vertical splits
 set fillchars+=vert:\ ,
