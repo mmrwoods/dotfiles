@@ -77,10 +77,7 @@ plug 'tpope/vim-characterize'
 plug 'chrisbra/unicode.vim'
 
 # colours
-# fork of solaraized that works with both 256 colors and true color
-plug 'ericbn/vim-solarized'
 plug 'NLKNguyen/papercolor-theme'
-plug 'tomasiser/vim-code-dark'
 plug 'joshdick/onedark.vim'
 plug 'jeffkreeftmeijer/vim-dim'
 
