@@ -73,6 +73,8 @@ plug 'nixon/vim-vmath'
 plug 'tommcdo/vim-exchange'
 plug 'tweekmonster/helpful.vim'
 plug 'rhysd/committia.vim'
+plug 'tpope/vim-characterize'
+plug 'chrisbra/unicode.vim'
 
 # colours
 # fork of solaraized that works with both 256 colors and true color
