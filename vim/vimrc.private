@@ -1,0 +1,6 @@
+" vim: set syntax=vim:
+source ~/.vim/vimrc
+set viminfo=
+set viminfofile=NONE
+let g:MRU_Exclude_Files = ".*"
+let g:Lf_MruEnable = 0
