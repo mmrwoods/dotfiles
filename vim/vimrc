@@ -151,7 +151,7 @@ let MRU_Use_Current_Window = 1
 let MRU_Open_File_Relative = 1
 
 " Don't add git commits, private or tmp files to MRU files
-let MRU_Exclude_Files = '\.git*\|^/\(private\|tmp\|var\)/.*\|' . $HOME . '/tmp'
+let MRU_Exclude_Files = '\.git\/.*\|^/\(private\|tmp\|var\)/.*\|' . $HOME . '/tmp'
 
 " Don't fuzzy match when filtering MRU files, orders on match score
 let MRU_FuzzyMatch = 0
@@ -325,6 +325,12 @@ let g:Lf_RgConfig = [
   \ "--no-ignore-parent",
   \ "--ignore-file ~/.vim/rgignore"
   \ ]
+" Note: each dir entry matches anywhere in the file path as the pattern passed
+" to Python fnmatch() wraps the dir entry in wildcards, i.e. "*/" + dir + "/*"
+let g:Lf_MruWildIgnore = {
+  \ 'dir': ['.git', 'tmp', 'private'],
+  \ 'file': []
+  \}
 
 " Don't automatically change working directory to project root
 " Just using public function FindRootDirectory() with MRU mappings
