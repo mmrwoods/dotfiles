@@ -920,7 +920,7 @@ function! <SID>SetWorkingDir()
     end
   elseif len(argv()) == 0
     let l:root = FindRootDirectory()
-    if l:root !=# getcwd()
+    if !empty(l:root) && l:root !=# getcwd()
       exec 'cd' l:root
     endif
   endif
