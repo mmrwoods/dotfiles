@@ -292,17 +292,28 @@ let g:signify_disable_by_default = 1
 " Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
 let g:go_def_mapping_enabled = 0
 
-" Fuzzyy configuration, for testing, this is not my default finder for now
-" I really like Fuzzyy, nice clean interface, no dependencies, but it needs
-" some small performance tweaks and doesn't allow custom cmd configuration
-" I might create some PRs, it's a very nice plugin, and could be fast enough
-let g:enable_fuzzyy_keymaps = 0
-let g:fuzzyy_menu_matched_hl = 'spellrare'
-let g:files_respect_gitignore = 1
+" Fuzzyy configuration
+" Based on my quite large open PR which I'm hoping will be merged soon
+" See https://github.com/Donaldttt/fuzzyy/pull/49
+let g:fuzzyy_enable_mappings = 0
+let g:fuzzyy_follow_symlinks = 1
+let g:fuzzyy_ripgrep_options = [
+  \ "--no-config",
+  \ "--no-ignore-parent",
+  \ "--ignore-file " . expand('~/.vim/rgignore')
+  \ ]
+
+" Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
+" top level namespace and makes it easier to find and complete FZF commands)
+" Only using this for testing now, I've switch to Fuzzyy as my default finder
+let g:fzf_command_prefix = 'FZF'
 
 " Leaderf configuration
+" Only using this for testing now, I've switch to Fuzzyy as my default finder
 " Disable default <leader>f mapping
 let g:Lf_ShortcutF = ''
+" Add LeaderfGrep command to perform live grep
+command! LeaderfGrep :silent exe 'Leaderf rg --live'
 " Use up/down rather than CTRL-K/J to browse results
 let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
 " Open in popup by default
@@ -687,26 +698,12 @@ nnoremap <leader>un :UnicodeName<CR>
 " Print Unicode Table in new window
 nnoremap <leader>ut :UnicodeTable<CR>
 
-" Stop fuzzy finder opening files in special buffers
-let g:fzf_reuse_windows = ['bufexplorer', 'mru']
-function! FZFind(cmd)
-  let c = 0
-  let wincount = winnr('$')
-  while ( !empty(&buftype) && index(g:fzf_reuse_windows, &ft) == -1 && c < wincount )
-    wincmd w
-    let c = c + 1
-  endwhile
-  exec ':Leaderf' . a:cmd
-endfunc
-
-command! LeaderfGrep :silent exe 'Leaderf rg --live'
-
-nnoremap <leader>ff :call FZFind('File')<CR>
-nnoremap <leader>fb :call FZFind('Buffer')<CR>
-nnoremap <leader>fg :call FZFind('Grep')<CR>
-nnoremap <leader>fr :call FZFind('MruCwd')<CR>
-nnoremap <leader>fm :call FZFind('Mru')<CR>
-nnoremap <leader>ft :call FZFind('Tag')<CR>
+nnoremap <leader>ff :FuzzyFiles<CR>
+nnoremap <leader>fb :FuzzyBuffers<CR>
+nnoremap <leader>fg :FuzzyGrep<CR>
+nnoremap <leader>fr :FuzzyMruCwd<CR>
+nnoremap <leader>fm :FuzzyMru<CR>
+" nnoremap <leader>ft :call FZFind('Tag')<CR>
 
 " Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
 " silently to avoid the "Press ENTER to continue" prompt after running external
