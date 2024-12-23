@@ -815,6 +815,10 @@ if exists('##TerminalWinOpen')
     \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
 endif
 
+" Workaround for vim-vinegar not working with g:netrw_altfile = 1
+" See https://github.com/tpope/vim-vinegar/issues/137
+nnoremap - :Explore<CR>:silent! call search('^' . expand('#:t'), 'wc')<CR>
+
 " Custom filetype detection, runs after built in filetype detection
 " Using augroup filetypedetect means this re-runs on :filetype detect,
 " which means it works after restoring a macvim session (see gvimrc).
