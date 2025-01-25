@@ -11,6 +11,7 @@ def plugins
 end
 
 def plug(path, opts={})
+  opts = { opts => true } if opts.kind_of? Symbol
   plugins[path] = opts
 end
 
@@ -56,8 +57,7 @@ plug 'mhinz/vim-signify'
 plug 'zirrostig/vim-schlepp'
 plug 'ciaranm/securemodelines'
 plug 'dense-analysis/ale'
-# fork of ZoomWin that tracks upstream unstable/unreleased
-plug 'regedarek/ZoomWin'
+plug 'regedarek/ZoomWin' # fork that tracks upstream unstable/unreleased
 plug 'neoclide/coc.nvim', branch: :release
 plug 'liuchengxu/vim-which-key'
 plug 'yssl/QFEnter'
@@ -68,12 +68,12 @@ plug 'tpope/vim-sleuth'
 plug 'jessekelighine/vindent.vim'
 plug 'airblade/vim-rooter'
 plug 'mg979/vim-visual-multi'
-# calculate sum, avg, min, and max of visual selection
-plug 'nixon/vim-vmath'
+plug 'nixon/vim-vmath' # calculate sum, avg, min, and max of visual selection
 plug 'tommcdo/vim-exchange'
 plug 'tweekmonster/helpful.vim'
-plug 'rhysd/committia.vim'
+plug 'rhysd/committia.vim', :optional
 plug 'tpope/vim-characterize'
+plug 'tpope/vim-unimpaired'
 plug 'chrisbra/unicode.vim'
 
 # colours
@@ -81,26 +81,35 @@ plug 'NLKNguyen/papercolor-theme'
 plug 'joshdick/onedark.vim'
 plug 'jeffkreeftmeijer/vim-dim'
 
-bundle_dir = File.join(File.dirname(__FILE__), "pack/bundle/start")
-
-FileUtils.rm_rf(bundle_dir)
-FileUtils.mkdir_p(bundle_dir)
-FileUtils.cd(bundle_dir)
+pack_dir = File.join(File.dirname(__FILE__), "pack/bundle")
+# FileUtils.rm_rf(pack_dir)
+FileUtils.mkdir_p("#{pack_dir}/start")
+FileUtils.mkdir_p("#{pack_dir}/opt")
+FileUtils.cd(pack_dir)
 
 plugins.each do |path, opts|
   url = "https://github.com/#{path}.git"
   build = opts.delete(:build)
   name = opts.delete(:name)
-  opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
-  if name.nil?
-    name = path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
-    name = path.split('/').last if Dir.exists?(name)
-  end
-  puts "Installing #{url} as #{name}"
-  `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{name}`
-  if build
-    puts "Running build command '#{build}'"
-    puts `cd #{name} && #{build}`
+  optional = opts.delete(:optional) || opts.delete(:opt)
+  Dir.chdir((optional ? 'opt' : 'start')) do
+    opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
+    name ||= path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
+    if Dir.exists?(name)
+      origin = Dir.chdir(name) { `git remote get-url origin`.chomp }
+      if origin != url
+        puts "Skipping installation of #{url} as #{name}"
+        puts "Repository exists with different origin #{origin}"
+        next
+      end
+    end
+    puts "Installing #{url} as #{name}"
+    FileUtils.rm_rf(name)
+    `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{name}`
+    if build
+      puts "Running build command '#{build}'"
+      `cd #{name} && #{build}`
+    end
   end
 end
 
