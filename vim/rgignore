@@ -4,7 +4,7 @@
 *.tmp
 *.min.js
 tags
-tags.*
+tags.{files,lock,temp}
 .byebug_history
 **/.git
 **/.hg
