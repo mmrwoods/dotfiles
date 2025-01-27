@@ -10,10 +10,19 @@ def plugins
   @plugins ||= {}
 end
 
-def plug(path, opts={})
-  opts = { opts => true } if opts.kind_of? Symbol
+def plug(path, *args)
+  if args.size == 1 && args[0].kind_of?(Hash)
+    opts = args[0]
+  elsif args.all? Symbol
+    opts = args.reduce({}) { |all, cur| all.merge( { cur => true } ) }
+  else
+    raise ArgumentError 'Array of symbols or single hash required'
+  end
   plugins[path] = opts
 end
+
+# baseline config
+plug 'mmrwoods/vim-friendly', :ssh, :full, :opt
 
 # navigation
 plug 'scrooloose/nerdtree'
@@ -21,6 +30,7 @@ plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'Yggdroot/LeaderF', build: './install.sh'
+plug 'Donaldttt/fuzzyy', :ssh, :full
 plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'
@@ -88,24 +98,32 @@ FileUtils.mkdir_p("#{pack_dir}/opt")
 FileUtils.cd(pack_dir)
 
 plugins.each do |path, opts|
-  url = "https://github.com/#{path}.git"
   build = opts.delete(:build)
   name = opts.delete(:name)
+  full = opts.delete(:full)
+  ssh = opts.delete(:ssh)
+  url = "#{ssh ? 'git@github.com:' : 'https://github.com/'}#{path}.git"
   optional = opts.delete(:optional) || opts.delete(:opt)
+  opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
+  opts << " --depth=1" unless full
   Dir.chdir((optional ? 'opt' : 'start')) do
-    opts = opts.map { |k, v| "--#{k}=#{v}" }.join(' ')
     name ||= path.split('/').last.sub(/^n?vim\-/,'').sub(/(\-|\.)n?vim$/,'')
     if Dir.exists?(name)
       origin = Dir.chdir(name) { `git remote get-url origin`.chomp }
+      shallow = Dir.chdir(name) { File.exists?(".git/shallow") }
       if origin != url
         puts "Skipping installation of #{url} as #{name}"
         puts "Repository exists with different origin #{origin}"
+        next
+      elsif full && !shallow
+        puts "Skipping installation of #{url} as #{name}"
+        puts "Repository exists as full clone, manually pull changes"
         next
       end
     end
     puts "Installing #{url} as #{name}"
     FileUtils.rm_rf(name)
-    `env GIT_SSL_NO_VERIFY=true git clone --depth=1 #{opts} #{url} #{name}`
+    `env GIT_SSL_NO_VERIFY=true git clone #{opts} #{url} #{name}`
     if build
       puts "Running build command '#{build}'"
       `cd #{name} && #{build}`
@@ -113,7 +131,8 @@ plugins.each do |path, opts|
   end
 end
 
-puts "Overriding editorconfig for bundle dir"
+# avoid applying my editorconfig settings when contributing to plugins
+puts "Overriding editorconfig for package dir"
 system "echo root=true > .editorconfig"
 
 print "Updating VIM Documentation... "
