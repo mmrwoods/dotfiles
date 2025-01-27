@@ -59,6 +59,7 @@ brew "ripgrep"
 brew "ruby"
 brew "shellcheck"
 brew "siege"
+brew "solargraph" # ruby language server
 brew "ssh-copy-id"
 brew "tig"
 brew "tldr"
