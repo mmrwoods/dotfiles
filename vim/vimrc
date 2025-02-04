@@ -115,9 +115,9 @@ endif
 " Define dictionary with prefix names for leader mappings
 call which_key#register(',', "g:which_key_map")
 let g:which_key_map =  {}
-let g:which_key_map.f = { 'name' : '+fzfind' }
+let g:which_key_map.f = { 'name' : '+fuzzyy' }
 let g:which_key_map.t = { 'name' : '+toggle' }
-let g:which_key_map.t = { 'name' : '+unicode' }
+let g:which_key_map.u = { 'name' : '+unicode' }
 let g:which_key_map.w = { 'name' : '+window' }
 
 " Disable caching of WhichKey menus - allow for buffer local mappings
