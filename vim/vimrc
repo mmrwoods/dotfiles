@@ -293,9 +293,6 @@ let g:signify_disable_by_default = 1
 let g:go_def_mapping_enabled = 0
 
 " Fuzzyy configuration
-" Based on my quite large open PR which I'm hoping will be merged soon
-" See https://github.com/Donaldttt/fuzzyy/pull/49
-let g:fuzzyy_enable_mappings = 0
 let g:fuzzyy_follow_symlinks = 1
 let g:fuzzyy_ripgrep_options = [
   \ "--no-config",
@@ -698,12 +695,16 @@ nnoremap <leader>un :UnicodeName<CR>
 " Print Unicode Table in new window
 nnoremap <leader>ut :UnicodeTable<CR>
 
-nnoremap <leader>ff :FuzzyFiles<CR>
-nnoremap <leader>fb :FuzzyBuffers<CR>
-nnoremap <leader>fg :FuzzyGrep<CR>
-nnoremap <leader>fr :FuzzyMruCwd<CR>
-nnoremap <leader>fm :FuzzyMru<CR>
-" nnoremap <leader>ft :call FZFind('Tag')<CR>
+" Additional Fuzzyy commands and mappings
+command! -nargs=? FuzzyFilesAll call fuzzyy#files#Start({'cwd': fuzzyy#utils#selector#GetRootDir(), 'command': 'rg -uu --files'})
+nnoremap <leader>fa :FuzzyFilesAll<CR>
+nnoremap <leader>fF :FuzzyFilesRoot<CR>
+nnoremap <leader>fG :FuzzyGrepRoot<CR>
+nnoremap <leader>fR :FuzzyMruRoot<CR>
+nnoremap <leader>ft :FuzzyTags<CR>
+nnoremap <leader>fT :FuzzyTagsRoot<CR>
+" FuzzyGrep current word
+nnoremap <leader>fw :FuzzyGrep <C-R><C-W><CR>
 
 " Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
 " silently to avoid the "Press ENTER to continue" prompt after running external
