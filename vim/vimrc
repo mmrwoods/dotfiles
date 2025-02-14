@@ -294,6 +294,7 @@ let g:go_def_mapping_enabled = 0
 
 " Fuzzyy configuration
 let g:fuzzyy_follow_symlinks = 1
+let g:fuzzyy_reuse_windows = ['netrw', 'bufexplorer', 'mru']
 let g:fuzzyy_ripgrep_options = [
   \ "--no-config",
   \ "--no-ignore-parent",
