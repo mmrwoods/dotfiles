@@ -56,9 +56,10 @@ autocmd VimEnter,ColorScheme *
 " Only show cursorline in active window, easy to locate active window
 " Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
 " various edge cases with popups, same buffer in multiple windows etc.
+" Add exception to work alongside hack to auto reveal file in NERDTree
 set nocursorline
 autocmd WinEnter,BufEnter * setlocal cursorline
-autocmd WinLeave,BufLeave * setlocal nocursorline
+autocmd WinLeave,BufLeave * if &filetype != 'nerdtree' | setlocal nocursorline | endif
 
 " map leader to comma so it's in the same position on all of my keyboards
 " breaks comma for navigation, probably a bad idea, but I'm used to it now
@@ -549,10 +550,10 @@ nnoremap <leader>l :call LocationListToggle()<CR>
 function! NERDTreeToggle()
   if g:NERDTree.IsOpen()
     NERDTreeClose
-  elseif empty(expand('%'))
-    NERDTreeFocus
-  else
+  elseif filereadable(expand('%'))
     NERDTreeFind
+  else
+    NERDTreeFocus
   endif
 endfunction
 nnoremap <leader>d :call NERDTreeToggle()<CR>
@@ -899,6 +900,13 @@ if exists("+omnifunc")
     \	  setlocal omnifunc=syntaxcomplete#Complete |
     \	endif
 endif
+
+" Experimental: Automatically reveal current file in NERDTree
+autocmd WinEnter,BufEnter *
+  \ if empty(&buftype) && g:NERDTree.IsOpen()
+  \ && filereadable(expand('%')) && stridx(fnamemodify(expand('%'), ':p'), getcwd()) == 0 |
+  \   noautocmd NERDTreeFind | exe "norm! zz" | noautocmd wincmd p |
+  \ end
 
 " Highlight long lines in active window rather than display colorcolumn
 function! <SID>HighlightLongLines()
