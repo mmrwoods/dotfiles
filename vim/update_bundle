@@ -85,6 +85,8 @@ plug 'rhysd/committia.vim', :optional
 plug 'tpope/vim-characterize'
 plug 'tpope/vim-unimpaired'
 plug 'chrisbra/unicode.vim'
+plug 'ryanoasis/vim-devicons'
+plug 'lambdalisue/vim-glyph-palette'
 
 # colours
 plug 'NLKNguyen/papercolor-theme'

@@ -301,6 +301,10 @@ let g:fuzzyy_ripgrep_options = [
   \ "--ignore-file " . expand('~/.vim/rgignore')
   \ ]
 
+" Same devicon colors in NERDTree, BufExplorer, and Fuzzyy
+let g:fuzzyy_devicons_color_func = 'glyph_palette#apply'
+autocmd FileType nerdtree,bufexplorer call glyph_palette#apply()
+
 " Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
 " top level namespace and makes it easier to find and complete FZF commands)
 " Only using this for testing now, I've switch to Fuzzyy as my default finder
