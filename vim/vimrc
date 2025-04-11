@@ -306,6 +306,17 @@ let g:fuzzyy_ripgrep_options = [
 let g:fuzzyy_devicons_color_func = 'glyph_palette#apply'
 autocmd FileType nerdtree,bufexplorer call glyph_palette#apply()
 
+" Update devicon glyphs for nerd fonts v3
+" See https://github.com/ryanoasis/vim-devicons/issues/452
+" And https://github.com/ryanoasis/vim-devicons/pull/454
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tex']    = '󰙧'  " nf-md-stop_circle_outline
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['cs']     = '󰌛'  " nf-md-language_csharp
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['r']      = '󰟔'  " nf-md-language_r
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['rproj']  = '󰗆'  " nf-md-vector_rectangle
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sol']    = '󰡪'  " nf-md-ethereum
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['pem']    = '󰌋'  " nf-md-key_variant
+
 " Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
 " top level namespace and makes it easier to find and complete FZF commands)
 " Only using this for testing now, I've switch to Fuzzyy as my default finder
