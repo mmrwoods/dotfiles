@@ -303,7 +303,6 @@ let g:fuzzyy_ripgrep_options = [
   \ ]
 
 " Same devicon colors in NERDTree, BufExplorer, and Fuzzyy
-let g:fuzzyy_devicons_color_func = 'glyph_palette#apply'
 autocmd FileType nerdtree,bufexplorer call glyph_palette#apply()
 
 " Update devicon glyphs for nerd fonts v3
