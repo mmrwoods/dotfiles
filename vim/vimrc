@@ -1,4 +1,5 @@
 source ~/.vim/vimrc.minimal
+scriptencoding utf-8
 set loadplugins
 
 set nomodeline                    " No modelines (potential for security issues)
@@ -303,7 +304,20 @@ let g:fuzzyy_ripgrep_options = [
   \ ]
 
 " Same devicon colors in NERDTree, BufExplorer, and Fuzzyy
-autocmd FileType nerdtree,bufexplorer call glyph_palette#apply()
+let g:fuzzyy_devicons_color_table = {
+  \ '*.coffee': 'chocolate',
+  \ '*.exs': 'mediumpurple',
+  \ '*.hs': 'mediumpurple',
+  \ '*.jl': 'mediumpurple',
+  \ '*.pl': 'teal'
+  \ }
+hi link NERDTreeFlags Normal
+function! ApplyFuzzyyColors()
+  let directories = ['', '', '', '', '', '']
+  call matchadd('Directory', printf('\%%(%s\)', join(directories, '\|')))
+  call fuzzyy#utils#devicons#AddColor(win_getid())
+endfunction
+autocmd FileType nerdtree,bufexplorer call ApplyFuzzyyColors()
 
 " Update devicon glyphs for nerd fonts v3
 " See https://github.com/ryanoasis/vim-devicons/issues/452
