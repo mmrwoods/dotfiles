@@ -576,6 +576,7 @@ function! NERDTreeToggle()
     NERDTreeClose
   elseif filereadable(expand('%'))
     NERDTreeFind
+    exe "norm! zz"
   else
     NERDTreeFocus
   endif
