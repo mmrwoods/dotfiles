@@ -303,6 +303,11 @@ let g:fuzzyy_ripgrep_options = [
   \ "--ignore-file " . expand('~/.vim/rgignore')
   \ ]
 
+" For testing - use vim-nerdfont for fuzzyy glyphs if installed
+autocmd VimEnter * if exists("g:loaded_nerdfont") |
+  \   let g:fuzzyy_devicons_glyph_func = 'nerdfont#find' |
+  \ endif
+
 " Same devicon colors in NERDTree, BufExplorer, and Fuzzyy
 let g:fuzzyy_devicons_color_table = {
   \ '*.coffee': 'chocolate',
