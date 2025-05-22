@@ -235,23 +235,6 @@ let g:coc_start_at_startup = 0
 " Disable coc.nvim warnings on old vim versions
 let g:coc_disable_startup_warning = 1
 
-" Don't automagically colorize text, use <leader>tc to toggle
-let g:Hexokinase_ftEnabled = []
-
-" Include triple hex when colorizing text (missing from default)
-let g:Hexokinase_optInPatterns = [
-  \ 'full_hex',
-  \ 'triple_hex',
-  \ 'rgb',
-  \ 'rgba',
-  \ 'hsl',
-  \ 'hsla',
-  \ 'colour_names'
-  \ ]
-
-" Use background to highlight colours, ugly, but clearly visible
-let g:Hexokinase_highlighters = ['backgroundfull']
-
 " Tell NERDTree to respect wildignore
 let NERDTreeRespectWildIgnore = 1
 
@@ -872,8 +855,7 @@ nnoremap <Leader>ts :setlocal spell!<CR>
 nnoremap <Leader>tw :setlocal list!<CR>
 
 " Toggle colorizing of color codes and names
-" Note: Hexokinase requires termguicolors
-nnoremap <leader>th :set termguicolors!<CR>:HexokinaseToggle<CR>
+nnoremap <leader>tC :ColorToggle<CR>
 
 " Toggle indent guides / lines
 nnoremap <leader>ti :IndentLinesToggle<CR>
