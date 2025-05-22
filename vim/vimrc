@@ -107,6 +107,9 @@ let g:qfenter_excluded_action = 'next'
 
 " Open WhichKey menu for leader mappings after timeoutlen (500ms)
 nnoremap <silent> , :WhichKey ','<CR>
+" And for square bracket mappings from vim-unimpaired and friends
+nnoremap <silent> ] :WhichKey ']'<CR>
+nnoremap <silent> [ :WhichKey '['<CR>
 
 " Add which-key to runtimepath on old vim versions to use which_key#register
 " In newer versions autoload searches packpath in addition to runtimepath
@@ -117,7 +120,11 @@ endif
 " Define dictionary with prefix names for leader mappings
 call which_key#register(',', "g:which_key_map")
 let g:which_key_map =  {}
+let g:which_key_map.a = { 'name' : '+actions' }
+let g:which_key_map.c = { 'name' : '+coc/lsp' }
 let g:which_key_map.f = { 'name' : '+fuzzyy' }
+let g:which_key_map.g = { 'name' : '+git' }
+let g:which_key_map.j = { 'name' : '+jumpto' }
 let g:which_key_map.t = { 'name' : '+toggle' }
 let g:which_key_map.u = { 'name' : '+unicode' }
 let g:which_key_map.w = { 'name' : '+window' }
@@ -504,9 +511,6 @@ vmap <expr> ++ VMATH_YankAndAnalyse()
 noremap <C-Tab> :tabnext<cr>
 noremap <S-C-Tab> :tabprevious<cr>
 
-" Open plugin defined alternate file, e.g. unit test for model
-nnoremap <leader>a :A<CR>
-
 " Open vim alternate file, i.e. previously edited file in window
 nnoremap <Leader># :edit#<CR>
 
@@ -743,6 +747,51 @@ nnoremap <leader>ft :FuzzyTags<CR>
 nnoremap <leader>fT :FuzzyTagsRoot<CR>
 " FuzzyGrep current word
 nnoremap <leader>fw :FuzzyGrep <C-R><C-W><CR>
+
+" git/fugitive mappings
+nmap <leader>gb :Git blame<CR>
+nmap <leader>gd :Git diff %<CR>
+nmap <leader>gD :Git diff<CR>
+nmap <leader>gg :Git<CR>
+nmap <leader>gl :Git log --oneline --follow %<CR>
+nmap <leader>gL :Git log --oneline<CR>
+nmap <leader>gs :Git status<CR>
+nmap <leader>gv :Gvdiffsplit<CR>
+
+" coc.nvim lsp code action mappings
+nmap <leader>ac <Plug>(coc-codeaction-cursor)
+nmap <leader>aa <Plug>(coc-codeaction)
+nmap <leader>as <Plug>(coc-codeaction-source)
+nmap <leader>ar <Plug>(coc-codeaction-refactor)
+nmap <leader>al <Plug>(coc-codeaction-line)
+vmap <leader>ar <Plug>(coc-codeaction-refactor-selected)
+
+" coc.nvim specific feature mappings
+nmap <leader>cd :CocList diagnostics<CR>
+nmap <leader>cf <Plug>(coc-format)
+nmap <leader>cl :CocList lists<CR>
+nmap <leader>co :CocOutline<CR>
+nmap <leader>cq <Plug>(coc-fix-current)
+nmap <leader>cr <Plug>(coc-refactor)
+nmap <leader>cs :CocList -I symbols<CR>
+vmap <leader>cf <Plug>(coc-format-selected)
+
+" coc.nvim lsp jump/goto navigation mappings
+" gd, gD, etc. not mapped because coc.nvim not always enabled
+nmap <leader>jd <Plug>(coc-definition)
+nmap <leader>jD <Plug>(coc-declaration)
+nmap <leader>jt <Plug>(coc-type-definition)
+nmap <leader>ji <Plug>(coc-implementation)
+nmap <leader>jr <Plug>(coc-references)
+nmap <leader>ju <Plug>(coc-references-used)
+
+" diagnostics navigation mappings
+nmap <silent><nowait> [g <Plug>(coc-diagnostic-prev)
+nmap <silent><nowait> ]g <Plug>(coc-diagnostic-next)
+nmap <silent><nowait> [a :ALEPreviousWrap<CR>
+nmap <silent><nowait> ]a :ALENextWrap<CR>
+nmap <silent><nowait> [A :ALEFirst<CR>
+nmap <silent><nowait> ]A :ALELast<CR>
 
 " Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
 " silently to avoid the "Press ENTER to continue" prompt after running external

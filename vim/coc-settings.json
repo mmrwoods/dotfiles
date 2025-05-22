@@ -1,8 +1,11 @@
 {
-  "coc.preferences.colorSupport": false,
-  "suggest.floatEnable": true,
+  "list.height": 15,
+  "list.source.diagnostics.defaultOptions": ["--height=15"],
+  "list.source.symbols.defaultOptions": ["--height=15"],
+  "list.source.location.defaultOptions": ["--height=15"],
+  "list.source.location.defaultOptions": ["--height=15"],
   "suggest.noselect": true,
-  "diagnostic.displayByAle": false,
   "diagnostic.enableSign": false,
-  "tsserver.disableAutomaticTypeAcquisition": true
+  "tsserver.disableAutomaticTypeAcquisition": true,
+  "solargraph.useBundler": true
 }
