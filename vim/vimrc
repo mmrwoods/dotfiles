@@ -278,11 +278,8 @@ let g:scratch_insert_autohide = 0
 " Highlight JSX embedded in javascript files
 let g:jsx_ext_required = 0
 
-" Disable signify by default, enable as needed using gd mapping (see below)
-let g:signify_disable_by_default = 1
-
-" Disable gd mapping for GoDef command, gd = git diff, use CTRL-[ for GoDef
-let g:go_def_mapping_enabled = 0
+" Disable gitgutter by default, toggle using <leader>tg
+let g:gitgutter_enabled = 0
 
 " Fuzzyy configuration
 let g:fuzzyy_follow_symlinks = 1
@@ -698,8 +695,8 @@ function! JumpToTagInSplit()
 endfunction
 nnoremap <leader>] :call JumpToTagInSplit()<CR>
 
-" Show/hide diff/changes in sign column
-nnoremap <leader>td :SignifyToggle<CR>
+" Toggle git gutter, diff markers in sign column etc.
+nnoremap <leader>tg :GitGutterToggle<CR>
 
 " Toggle file explorer (Netrw)
 function! NetrwToggle()
