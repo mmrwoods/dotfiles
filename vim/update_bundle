@@ -67,7 +67,6 @@ plug 'mhinz/vim-signify'
 plug 'zirrostig/vim-schlepp'
 plug 'ciaranm/securemodelines'
 plug 'dense-analysis/ale'
-plug 'regedarek/ZoomWin' # fork that tracks upstream unstable/unreleased
 plug 'neoclide/coc.nvim', branch: :release
 plug 'liuchengxu/vim-which-key'
 plug 'yssl/QFEnter'
