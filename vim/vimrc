@@ -368,6 +368,9 @@ let g:Lf_MruWildIgnore = {
 " Just using public function FindRootDirectory() with MRU mappings
 let g:rooter_manual_only = 1
 
+" Use built in terminal to run tests using vim-test
+let g:test#strategy = 'vimterminal'
+
 " Override indent level for continuation lines in vimscript
 " Default is shiftwidth() * 3, see $VIMRUNTIME/ftplugin/vim.vim
 let g:vim_indent_cont = 2

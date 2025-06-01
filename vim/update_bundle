@@ -85,6 +85,7 @@ plug 'tpope/vim-characterize'
 plug 'tpope/vim-unimpaired'
 plug 'chrisbra/unicode.vim'
 plug 'ryanoasis/vim-devicons'
+plug 'vim-test/vim-test'
 
 # colours
 plug 'NLKNguyen/papercolor-theme'
