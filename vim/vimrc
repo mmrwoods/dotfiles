@@ -62,10 +62,6 @@ set nocursorline
 autocmd WinEnter,BufEnter * setlocal cursorline
 autocmd WinLeave,BufLeave * if &filetype != 'nerdtree' | setlocal nocursorline | endif
 
-" map leader to comma so it's in the same position on all of my keyboards
-" breaks comma for navigation, probably a bad idea, but I'm used to it now
-let mapleader = ","
-
 " use normal rather than hanging indent for multiline ruby assignment, i.e.
 " let x = if foo    --NOT--    let x = if foo
 "   bar                                  bar
@@ -75,7 +71,7 @@ let g:ruby_indent_assignment_style = 'variable'
 " Disable vim-visual-multi mappings, except CTRL-n (see :h vm-find-word)
 let g:VM_default_mappings = 0
 
-" Disable indentLine plugin by default, toggle with <leader>ti
+" Disable indentLine plugin by default, toggle with <leader>pi
 let g:indentLine_enabled = 0
 
 " Use same highlighting for indent lines as used for whitespace listchars
@@ -106,10 +102,14 @@ let g:qfenter_exclude_filetypes = ['nerdtree', 'tagbar', 'scratch']
 let g:qfenter_excluded_action = 'next'
 
 " Open WhichKey menu for leader mappings after timeoutlen (500ms)
-nnoremap <silent> , :WhichKey ','<CR>
+nnoremap <silent> <leader> :WhichKey '\'<CR>
 " And for square bracket mappings from vim-unimpaired and friends
 nnoremap <silent> ] :WhichKey ']'<CR>
 nnoremap <silent> [ :WhichKey '['<CR>
+" Workaround for WhichKey bug affecting unimpaired option mappings
+" Writes part of RHS of map to buffer, so hide from WHichKey menu
+nnoremap <silent> ]o :WhichKey ''<CR>
+nnoremap <silent> [o :WhichKey ''<CR>
 
 " Add which-key to runtimepath on old vim versions to use which_key#register
 " In newer versions autoload searches packpath in addition to runtimepath
@@ -118,16 +118,20 @@ if !has("nvim-0.4.0") && !has("patch-8.2.4275")
 endif
 
 " Define dictionary with prefix names for leader mappings
-call which_key#register(',', "g:which_key_map")
+call which_key#register('\', "g:which_key_map")
 let g:which_key_map =  {}
 let g:which_key_map.a = { 'name' : '+actions' }
 let g:which_key_map.c = { 'name' : '+coc/lsp' }
+let g:which_key_map.d = { 'name' : '+debug' }
 let g:which_key_map.f = { 'name' : '+fuzzyy' }
 let g:which_key_map.g = { 'name' : '+git' }
+let g:which_key_map.h = { 'name' : '+hunks' }
 let g:which_key_map.j = { 'name' : '+jumpto' }
-let g:which_key_map.t = { 'name' : '+toggle' }
+let g:which_key_map.p = { 'name' : '+plugins' }
+let g:which_key_map.t = { 'name' : '+test' }
+let g:which_key_map.y = { 'name' : '+options' }
 let g:which_key_map.u = { 'name' : '+unicode' }
-let g:which_key_map.w = { 'name' : '+window' }
+let g:which_key_map.w = { 'name' : '+windows' }
 
 " Disable caching of WhichKey menus - allow for buffer local mappings
 let g:which_key_run_map_on_popup = 1
@@ -278,7 +282,7 @@ let g:scratch_insert_autohide = 0
 " Highlight JSX embedded in javascript files
 let g:jsx_ext_required = 0
 
-" Disable gitgutter by default, toggle using <leader>tg
+" Disable gitgutter by default, toggle using <leader>pg
 let g:gitgutter_enabled = 0
 
 " Fuzzyy configuration
@@ -379,6 +383,10 @@ let g:vim_indent_cont = 2
 " navigation plugins, sleuth uses :redir, which cannot be used inside execute()
 " Instead add a BufReadPost autocmd to run Sleuth if EditorConfig not applied
 let g:sleuth_automatic = 0
+
+" Additional VS code style mappings for VimSpector, not using huamn mode as
+" it adds leader mappings, and I already have some with <leader>d prefix
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
 " Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
 " Allows other autocmds to check what has been applied by EditorConfig
@@ -521,8 +529,20 @@ function! CocStatus()
 endfunction
 autocmd User CocStatusChange redrawstatus
 
+" Toggle git gutter, diff markers in sign column etc.
+nnoremap <leader>pg :GitGutterToggle<CR>
+
+" Highlight whitespace
+nnoremap <leader>pw :ToggleWhitespace<CR>
+
+" Toggle colorizing of color codes and names
+nnoremap <leader>pC :ColorToggle<CR>
+
+" Toggle indent guides / lines
+nnoremap <leader>pl :IndentLinesToggle<CR>
+
 " Toggle ALE linting (disabled by default)
-function! ALEToggle()
+function! ToggleALE()
   if g:ale_enabled
     ALEDisable
     echohl MoreMsg | echom 'ALE disabled' | echohl None
@@ -531,10 +551,11 @@ function! ALEToggle()
     echohl MoreMsg | echom 'ALE enabled' | echohl None
   endif
 endfunction
-nnoremap <Leader>ta :call ALEToggle()<CR>
+command! ToggleALE call ToggleALE()
+nnoremap <silent><leader>pa :ToggleALE<CR>
 
 " Toggle coc.nvim service (disabled by default)
-function! CocToggle()
+function! ToggleCoC()
   if coc#rpc#ready()
     echohl MoreMsg | echom 'stopping coc.nvim service' | echohl None
     call coc#rpc#stop()
@@ -543,10 +564,11 @@ function! CocToggle()
     call coc#rpc#start_server()
   endif
 endfunction
-nnoremap <leader>tc :call CocToggle()<CR>
+command! ToggleCoC call ToggleCoC()
+nnoremap <silent><leader>pc :ToggleCoC<CR>
 
 " Toggle quickfix list
-function! QuickfixListToggle()
+function! ToggleQuickfixList()
   if get(getqflist({'winid': 1}), 'winid') != 0
     cclose
   elseif getqflist() != []
@@ -557,10 +579,11 @@ function! QuickfixListToggle()
     echohl None
   endif
 endfunction
-nnoremap <leader>q :call QuickfixListToggle()<CR>
+command! ToggleQuickfixList call ToggleQuickfixList()
+nnoremap <silent><leader>q :ToggleQuickfixList<CR>
 
 " Toggle location list
-function! LocationListToggle()
+function! ToggleLocationList()
   if get(getloclist(winnr(), {'winid': 1}), 'winid') != 0
     lclose
   elseif getloclist(winnr()) != []
@@ -571,11 +594,12 @@ function! LocationListToggle()
     echohl None
   endif
 endfunction
-nnoremap <leader>l :call LocationListToggle()<CR>
+command! ToggleLocationList call ToggleLocationList()
+nnoremap <silent><leader>l :ToggleLocationList<CR>
 
 " Toggle project drawer / tree view, but unlike NERDTreeToggle
 " command, locate the current file in the tree when opening
-function! NERDTreeToggle()
+function! ToggleNERDTree()
   if g:NERDTree.IsOpen()
     NERDTreeClose
   elseif filereadable(expand('%'))
@@ -585,13 +609,14 @@ function! NERDTreeToggle()
     NERDTreeFocus
   endif
 endfunction
-nnoremap <leader>d :call NERDTreeToggle()<CR>
+command! ToggleNERDTree call ToggleNERDTree()
+nnoremap <silent><leader>e :ToggleNERDTree<CR>
 
 " Toggle terminal - for default shell only, other terms ignored
 function! TerminalToggle()
   let termbufs = filter(term_list(), { _, bufnr -> stridx(bufname(bufnr), $SHELL) > 0 })
   if empty(termbufs)
-    terminal
+    call Terminal()
   else
     let termwins = filter(map(copy(termbufs), { _, bufnr -> bufwinnr(bufnr) }), 'v:val != -1')
     if empty(termwins)
@@ -605,11 +630,20 @@ nnoremap <C-W>` :call TerminalToggle()<CR>
 tnoremap <C-W>` <C-W>:call TerminalToggle()<CR>
 
 " Open terminal in directory of current file
-function! OpenInTerminal()
-  let $OLDPWD = getcwd()
-  split | silent lcd %:p:h | terminal ++curwin
+function! Terminal()
+  if getcwd() ==# expand('%:p:h')
+    terminal
+  else
+    let $OLDPWD = getcwd()
+    split | silent lcd %:p:h | terminal ++curwin
+    echohl WarningMsg
+    echo "Terminal started relative to current file, cd - returns to cwd"
+    echohl None
+    call timer_start(3000, { -> execute("echo ''", "") })
+  endif
 endfunction
-nnoremap <leader>` :call OpenInTerminal()<CR>
+command Terminal call Terminal()
+nnoremap <silent><leader>` :Terminal<CR>
 
 " Custom terminal statusline, not a normal editor window
 if exists('##TerminalWinOpen')
@@ -634,21 +668,20 @@ nnoremap <leader>wm :WindowMode<CR>
 nnoremap <leader>w# :vsplit#<CR>
 " open plugin defined alternate file in new vertial split
 nnoremap <leader>wa :AV<CR>
-" shortcuts for opening new splits
+" horizontal and vertical splits
 nnoremap <leader>ws :wincmd s<CR>
 nnoremap <leader>wv :wincmd v<CR>
 " rotate and exchange windows
 nnoremap <leader>wr :wincmd r<CR>
 nnoremap <leader>wx :wincmd x<CR>
-" move horizonal split to vertical
-nnoremap <leader>w\| :wincmd L<CR>
-" move vertical split to horizontal
-nnoremap <leader>w_ :wincmd J<CR>
-" resize all windows equally
+" shortcuts for common commands
 nnoremap <leader>= :wincmd =<CR>
+nnoremap <leader>_ :wincmd s<CR>
+nnoremap <leader>\| :wincmd v<CR>
+nnoremap <leader>] :wincmd L<CR>
 " increase/decrease window width
-nnoremap > :wincmd ><CR>
-nnoremap < :wincmd <<CR>
+nnoremap > :10wincmd ><CR>
+nnoremap < :10wincmd <<CR>
 
 " indentation text objects, visual, select, and operator-pending modes
 let g:vindent_object_XX_ii = 'ii' " inner indent level, including blank lines
@@ -670,8 +703,8 @@ let g:vindent_motion_less_next = ']-' " jump to next line with less indent.
 " Tag navigation
 " remap CTRL-] to show list when multiple matches, see :h g_CTRL-]
 nnoremap <C-]> g<C-]>
-" use <leader>] jump to tag in next window (and split if necessary)
-function! JumpToTagInSplit()
+" use g] jump to tag in next window (and split if necessary)
+function! TJumpNextWin()
   let currword = expand("<cword>")
   let startwin = winnr()
   " Move to next window with a normal buffer
@@ -696,27 +729,26 @@ function! JumpToTagInSplit()
     echoerr v:exception
   endtry
 endfunction
-nnoremap <leader>] :call JumpToTagInSplit()<CR>
-
-" Toggle git gutter, diff markers in sign column etc.
-nnoremap <leader>tg :GitGutterToggle<CR>
-
-" Toggle file explorer (Netrw)
-function! NetrwToggle()
-  if &ft == 'netrw'
-    Rexplore
-  else
-    Explore
-  end
-endfunction
-nnoremap <Leader>e :call NetrwToggle()<CR>
+command! TJumpNextWin call TJumpNextWin()
+nnoremap g] :TJumpNextWin<CR>
 
 " I think I needed to set this for VimspectorInstall to work properly
 " FIXME: investigate why this was necessary, docs suggest it should not be
 let g:vimspector_base_dir = expand('~/.vim/pack/bundle/start/vimspector')
 
 " Launch graphical debugger/inspector (vimspector)
-nmap <Leader>i <Plug>VimspectorLaunch
+nmap <Leader>dl <Plug>VimspectorLaunch
+nmap <leader>db <Plug>VimspectorBreakpoints
+nmap <leader>dd <Plug>VimspectorToggleBreakpoint
+nmap <leader>dh :help vimspector-visual-studio-vscode<CR>
+nmap ]` <Plug>VimspectorJumpToNextBreakpoint
+nmap [` <Plug>VimspectorJumpToPreviousBreakpoint
+
+nmap <leader>tn :TestNearest<CR>
+nmap <leader>tf :TestFile<CR>
+nmap <leader>ta :TestSuite<CR>
+nmap <leader>tl :TestLast<CR>
+nmap <leader>tv :TestVisit<CR>
 
 " Unicode mappings (use <C-X><C-Z> for ins-completion of unicode chars)
 " Search for specific digraph char
@@ -729,6 +761,15 @@ nnoremap <leader>ui :UnicodeSearch!<SPACE>
 nnoremap <leader>un :UnicodeName<CR>
 " Print Unicode Table in new window
 nnoremap <leader>ut :UnicodeTable<CR>
+nnoremap <leader>uh :help unicode-commands<CR>
+
+" Toggle options, <leader>y inspired by vim-unimpaired (y kinda like a switch)
+nnoremap <leader>yc :setlocal cursorcolumn!<CR>
+nnoremap <leader>yl :setlocal list!<CR>
+nnoremap <leader>yn :setlocal number!<CR>
+nnoremap <leader>yr :setlocal relativenumber!<CR>
+nnoremap <leader>ys :setlocal spell!<CR>
+nnoremap <leader>yw :setlocal wrap!<CR>
 
 " Additional Fuzzyy commands and mappings
 command! -nargs=? FuzzyFilesAll call fuzzyy#files#Start({'cwd': fuzzyy#utils#selector#GetRootDir(), 'command': 'rg -uu --files'})
@@ -779,12 +820,12 @@ nmap <leader>jr <Plug>(coc-references)
 nmap <leader>ju <Plug>(coc-references-used)
 
 " diagnostics navigation mappings
-nmap <silent><nowait> [g <Plug>(coc-diagnostic-prev)
-nmap <silent><nowait> ]g <Plug>(coc-diagnostic-next)
-nmap <silent><nowait> [a :ALEPreviousWrap<CR>
-nmap <silent><nowait> ]a :ALENextWrap<CR>
-nmap <silent><nowait> [A :ALEFirst<CR>
-nmap <silent><nowait> ]A :ALELast<CR>
+nmap [d <Plug>(coc-diagnostic-prev)
+nmap ]d <Plug>(coc-diagnostic-next)
+nmap <silent> [a :ALEPreviousWrap<CR>
+nmap <silent> ]a :ALENextWrap<CR>
+nmap <silent> [A :ALEFirst<CR>
+nmap <silent> ]A :ALELast<CR>
 
 " Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
 " silently to avoid the "Press ENTER to continue" prompt after running external
@@ -814,12 +855,8 @@ function! GrepComplete(lead, _line, _pos)
 endfun
 
 " Search in files using grep program, see :help grepprg and :help grep
-nnoremap <leader>s :call GrepPrompt()<CR>
-
-" Search in files for word or WORD under cursor
-nnoremap <leader>y :call GrepPrompt(expand('<cword>'))<CR>
-" Note: shell escape WORD to prevent expansion
-nnoremap <leader>Y :call GrepPrompt(shellescape(expand('<cWORD>')))<CR>
+command! GrepPrompt call GrepPrompt()
+nnoremap <leader>s :GrepPrompt<CR>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
@@ -832,8 +869,12 @@ nnoremap <leader>b :ToggleBufExplorer<CR>
 " List most recently used files
 nnoremap <leader>m :MRUToggle<CR>
 
-" List most recently used files within project root directory
-nnoremap <leader>r :exec ':MRU ' . FindRootDirectory()<CR>
+" Most recently used files within current working directory
+command! MRUCwd execute 'MRU ' . getcwd()
+nnoremap <leader>r :MRUCwd<CR>
+" And most recently used files within project root directory
+command! MRURoot execute 'MRU ' . FindRootDirectory()
+nnoremap <leader>R :MRURoot<CR>
 
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<CR>
@@ -853,26 +894,8 @@ function! ExpandWin() abort
   endif
 endfunction
 autocmd WinLeave * if exists('w:expanded') && w:expanded | call ExpandWin() | endif
-nnoremap <Leader>x :call ExpandWin()<CR>
-
-" Highlight whitespace
-nnoremap <leader><space> :ToggleWhitespace<CR>
-
-" Toggle spell checking
-nnoremap <Leader>ts :setlocal spell!<CR>
-
-" Toggle list mode (show whitespace)
-nnoremap <Leader>tw :setlocal list!<CR>
-
-" Toggle colorizing of color codes and names
-nnoremap <leader>tC :ColorToggle<CR>
-
-" Toggle indent guides / lines
-nnoremap <leader>ti :IndentLinesToggle<CR>
-
-" Some extra mappings for convenience/speed
-" Single key to toggle bufexplorer, I use this all the time
-nnoremap ; :ToggleBufExplorer<CR>
+command! ExpandWin call ExpandWin()
+nnoremap <Leader>x :ExpandWin<CR>
 
 " Remap gs to open Scratch window in normal rather than insert mode
 let g:scratch_no_mappings = 1 " must disable plugin mappings first
