@@ -375,6 +375,11 @@ let g:rooter_manual_only = 1
 " Use built in terminal to run tests using vim-test
 let g:test#strategy = 'vimterminal'
 
+" Workaround for monorepo with multiple packages, finds nearest package.json
+" Use lambda as FindRootDirectory() not defined until vim-rooter plugin loaded
+" Note: this still assumes node_modules/.bin/jest can be found relative to cwd
+let test#project_root = { -> FindRootDirectory() }
+
 " Override indent level for continuation lines in vimscript
 " Default is shiftwidth() * 3, see $VIMRUNTIME/ftplugin/vim.vim
 let g:vim_indent_cont = 2
