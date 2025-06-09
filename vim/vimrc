@@ -285,6 +285,10 @@ let g:jsx_ext_required = 0
 " Disable gitgutter by default, toggle using <leader>pg
 let g:gitgutter_enabled = 0
 
+" Enable Vim popup win with git-messenger (currently relies on my fork)
+let g:git_messenger_vimpopup_enabled = 1
+let g:git_messenger_always_into_popup = 1
+
 " Fuzzyy configuration
 let g:fuzzyy_follow_symlinks = 1
 let g:fuzzyy_reuse_windows = ['netrw', 'bufexplorer', 'mru']
