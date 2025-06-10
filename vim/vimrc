@@ -681,6 +681,14 @@ nnoremap <leader>wv :wincmd v<CR>
 " rotate and exchange windows
 nnoremap <leader>wr :wincmd r<CR>
 nnoremap <leader>wx :wincmd x<CR>
+" move current window to top
+nnoremap <leader>w<Up> :wincmd K<CR>
+" move current window to bottom
+nnoremap <leader>w<Down> :wincmd J<CR>
+" move current window to far left
+nnoremap <leader>w<Left> :wincmd H<CR>
+" move current window to far right
+nnoremap <leader>w<Right> :wincmd L<CR>
 " shortcuts for common commands
 nnoremap <leader>= :wincmd =<CR>
 nnoremap <leader>_ :wincmd s<CR>
