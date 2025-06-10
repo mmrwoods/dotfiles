@@ -37,7 +37,6 @@ plug 'Donaldttt/fuzzyy', :ssh, :full
 plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'
-plug 'MTDL9/vim-window-mode'
 plug 'tpope/vim-projectionist'
 
 # syntax and formatters
