@@ -89,6 +89,7 @@ plug 'tpope/vim-unimpaired'
 plug 'chrisbra/unicode.vim'
 plug 'ryanoasis/vim-devicons'
 plug 'vim-test/vim-test'
+plug 'wellle/targets.vim'
 
 # colours
 plug 'NLKNguyen/papercolor-theme'
