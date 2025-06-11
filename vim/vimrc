@@ -695,8 +695,8 @@ nnoremap <leader>_ :wincmd s<CR>
 nnoremap <leader>\| :wincmd v<CR>
 nnoremap <leader>] :wincmd L<CR>
 " increase/decrease window width
-nnoremap > :10wincmd ><CR>
-nnoremap < :10wincmd <<CR>
+nnoremap <leader>> :10wincmd ><CR>
+nnoremap <leader>< :10wincmd <<CR>
 
 " indentation text objects, visual, select, and operator-pending modes
 let g:vindent_object_XX_ii = 'ii' " inner indent level, including blank lines
