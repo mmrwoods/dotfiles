@@ -1027,6 +1027,7 @@ endif
 " provided as argument, otherwise cwd to root of project/package if possible.
 " Note: uses vim-rooter, and works nicely with monorepos (not reliant on VCS)
 function! <SID>SetWorkingDir()
+  let $OLDPWD = getcwd()
   if argc() == 1 && len(argv()) == 1
     if isdirectory(argv(0))
       exec 'cd' argv(0)
@@ -1039,6 +1040,10 @@ function! <SID>SetWorkingDir()
       exec 'cd' l:root
     endif
   endif
-  exec 'pwd'
+  if $OLDPWD !=# getcwd()
+    echohl WarningMsg
+    echo "vimrc: cwd changed to '" . getcwd() . "', :cd - returns to '" . $OLDPWD . "'"
+    echohl None
+  endif
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
