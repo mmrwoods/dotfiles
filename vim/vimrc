@@ -1034,7 +1034,7 @@ function! <SID>SetWorkingDir()
     elseif filereadable(argv(0))
       exec 'cd %:p:h'
     end
-  elseif len(argv()) == 0
+  elseif len(argv()) == 0 && stridx(getcwd(), $HOME) == 0
     let l:root = FindRootDirectory()
     if !empty(l:root) && l:root !=# getcwd()
       exec 'cd' l:root
