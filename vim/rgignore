@@ -10,7 +10,6 @@ tags.{files,lock,temp}
 **/.hg
 **/bower_components
 **/build
-**/dist
 **/node_modules
 **/tmp
 **/vendor
