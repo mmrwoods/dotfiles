@@ -807,6 +807,19 @@ nmap <leader>gL :Git log --oneline<CR>
 nmap <leader>gs :Git status<CR>
 nmap <leader>gv :Gvdiffsplit<CR>
 
+" GitGutter normally conflicts with vim comment plugin (or the reverse)
+" Both use ic and ac mappings for text objects, so use h with GitGutter
+if maparg('[c', 'n') =~# 'GitGutter'
+  nunmap [c
+  nunmap ]c
+endif
+nmap [h <Plug>(GitGutterPrevHunk)
+nmap ]h <Plug>(GitGutterNextHunk)
+omap ih <Plug>(GitGutterTextObjectInnerPending)
+omap ah <Plug>(GitGutterTextObjectOuterPending)
+xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+xmap ah <Plug>(GitGutterTextObjectOuterVisual)
+
 " coc.nvim lsp code action mappings
 nmap <leader>ac <Plug>(coc-codeaction-cursor)
 nmap <leader>aa <Plug>(coc-codeaction)
