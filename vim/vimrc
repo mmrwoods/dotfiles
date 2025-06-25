@@ -1007,6 +1007,9 @@ autocmd FileType xml setlocal formatprg=xmllint\ --format\ --recover\ -\ 2>/dev/
 " Use jsonlint as external program for formatting json
 autocmd FileType json setlocal formatprg=jsonlint\ --pretty-print\ 2>/dev/null
 
+" Use js-beautify as external program for formatting javascript
+autocmd FileType javascript set formatprg=js-beautify\ -\ 2>/dev/null
+
 " Use auopep8 for formatting python, customise using ~/.config/pycodestyle
 " TODO: automatically use black formatter if configured in pyproject.toml,
 " and consider passing textwidth as max line length (changed by editorconfig)
