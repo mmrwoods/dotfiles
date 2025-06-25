@@ -520,6 +520,10 @@ nnoremap <Leader><leader> <C-^>
 " Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
 nnoremap <leader>/ /\V
 
+" Convenient mapping to open command history
+command! CmdHistory call feedkeys(":\<C-F>")
+nnoremap <silent> <leader>: :CmdHistory<CR>
+
 " CoC aware mapping to accept completion with CR. Necessary because some
 " plugins wrap CR mappings, so CoC does not detect an existing CR mapping to
 " accept completion as it cannnot see pumvislble() in the existing map expr.
@@ -821,22 +825,24 @@ xmap ih <Plug>(GitGutterTextObjectInnerVisual)
 xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 
 " coc.nvim lsp code action mappings
-nmap <leader>ac <Plug>(coc-codeaction-cursor)
 nmap <leader>aa <Plug>(coc-codeaction)
-nmap <leader>as <Plug>(coc-codeaction-source)
-nmap <leader>ar <Plug>(coc-codeaction-refactor)
+nmap <leader>ac <Plug>(coc-codeaction-cursor)
+nmap <leader>af :ALEFix<CR>
 nmap <leader>al <Plug>(coc-codeaction-line)
+nmap <leader>ar <Plug>(coc-codeaction-refactor)
+nmap <leader>as <Plug>(coc-codeaction-source)
 vmap <leader>ar <Plug>(coc-codeaction-refactor-selected)
 
 " coc.nvim specific feature mappings
 nmap <leader>cd :CocList diagnostics<CR>
-nmap <leader>cf <Plug>(coc-format)
+nmap <leader>cf <Plug>(coc-fix-current)
 nmap <leader>cl :CocList lists<CR>
 nmap <leader>co :CocOutline<CR>
-nmap <leader>cq <Plug>(coc-fix-current)
+nmap <leader>cq <Plug>(coc-format)
 nmap <leader>cr <Plug>(coc-refactor)
+nmap <leader>crn <Plug>(coc-rename)
 nmap <leader>cs :CocList -I symbols<CR>
-vmap <leader>cf <Plug>(coc-format-selected)
+vmap <leader>cq <Plug>(coc-format-selected)
 
 " coc.nvim lsp jump/goto navigation mappings
 " gd, gD, etc. not mapped because coc.nvim not always enabled
