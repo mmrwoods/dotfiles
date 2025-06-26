@@ -2,9 +2,8 @@
 !.node-version
 *.*~
 *.swp
-pack
-plugin
-sessions
-tmp
-ruby/command-t
-spell
+/pack
+/plugin
+/sessions
+/tmp
+/spell
