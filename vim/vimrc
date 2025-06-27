@@ -40,9 +40,15 @@ endif
 " Custom status line, show relative file path and file type
 set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r\ %=\ %{CocStatus()}\ %{substitute(SleuthIndicator(),',','\ ','')}\ %{&ft}\ %l\:\%-c\ %P
 
-" Keep timeoutlen short enough to make WhichKey menu appear promptly, but not
-" so short that it makes it almost impossible to complete multi-key mappings
-set timeoutlen=500
+if exists('##ModeChanged')
+  " Keep timeoutlen short enough to make WhichKey menu appear promptly, but not
+  " so short that it makes it almost impossible to complete multi-key mappings
+  set timeoutlen=500
+  " But increase timeoutlen for visual mode as I don't use WhichKeyVisual
+  " This is mostly so my visual gJ mapping doesn't fall back to the default
+  autocmd ModeChanged n:[vV\x16]* let &timeoutlen = 3000
+  autocmd ModeChanged [vV\x16]*:n let &timeoutlen = 500
+endif
 
 " Clean, consistent highlighting of tabline, statusline and vertical splits
 set fillchars+=vert:\ ,
@@ -399,6 +405,10 @@ let g:sleuth_automatic = 0
 " it adds leader mappings, and I already have some with <leader>d prefix
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
+" Disable default splitjoin mappings, avoid fallback to built-in gJ
+let g:splitjoin_join_mapping = ''
+let g:splitjoin_split_mapping = ''
+
 " Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
 " Allows other autocmds to check what has been applied by EditorConfig
 function! <SID>EditorConfigHook(config)
@@ -499,6 +509,21 @@ if exists('##ModeChanged')
     \   exe "normal! `[" |
     \ endif
 endif
+
+" Readable splitjoin mappings with no fallback to built in gJ
+nmap gJ <plug>SplitjoinJoin
+nmap gS <plug>SplitjoinSplit
+
+" Quickly remove indent in visual mode
+vmap 0 99<<
+
+" Remap visual gJ to remove indent when joining lines
+function! VisualJoinRemoveIndent()
+  normal! gv99<<
+  normal! gvgJ
+  normal! gv=
+endfunction
+vnoremap gJ :<C-u>call VisualJoinRemoveIndent()<CR>
 
 " Move block selections around in visual mode with schlepp plugin
 vmap <C-Up> <Plug>SchleppUp
