@@ -26,6 +26,7 @@ end
 
 # baseline config
 plug 'mmrwoods/vim-friendly', :ssh, :full, :opt
+plug 'tpope/vim-sensible', :opt # for testing only
 
 # navigation
 plug 'scrooloose/nerdtree'

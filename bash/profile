@@ -234,6 +234,7 @@ alias v='vim'
 alias vi='vim'
 alias mvim='vim -u ~/.vim/vimrc.minimal'
 alias pvim='vim -u ~/.vim/vimrc.private'
+alias svim='vim -u ~/.vim/vimrc.sensible'
 
 alias h='history'
 alias hs='history'

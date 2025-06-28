@@ -1,0 +1,4 @@
+" vim: set syntax=vim:
+set nocompatible
+set noloadplugins
+packadd sensible
