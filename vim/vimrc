@@ -47,7 +47,7 @@ if exists('##ModeChanged')
   " But increase timeoutlen for visual mode as I don't use WhichKeyVisual
   " This is mostly so my visual gJ mapping doesn't fall back to the default
   autocmd ModeChanged n:[vV\x16]* let &timeoutlen = 3000
-  autocmd ModeChanged [vV\x16]*:n let &timeoutlen = 500
+  autocmd ModeChanged *:n let &timeoutlen = 500
 endif
 
 " Clean, consistent highlighting of tabline, statusline and vertical splits
