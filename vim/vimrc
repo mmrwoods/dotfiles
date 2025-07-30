@@ -723,8 +723,8 @@ nnoremap <leader>w<Left> :wincmd H<CR>
 nnoremap <leader>w<Right> :wincmd L<CR>
 " shortcuts for common commands
 nnoremap <leader>= :wincmd =<CR>
-nnoremap <leader>_ :wincmd s<CR>
-nnoremap <leader>\| :wincmd v<CR>
+nnoremap <leader>_ :wincmd _<CR>
+nnoremap <leader>\| :wincmd \|<CR>
 nnoremap <leader>] :wincmd L<CR>
 " increase/decrease window width
 nnoremap <leader>> :10wincmd ><CR>
