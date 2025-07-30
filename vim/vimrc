@@ -786,7 +786,7 @@ let g:vimspector_base_dir = expand('~/.vim/pack/bundle/start/vimspector')
 " Launch graphical debugger/inspector (vimspector)
 nmap <Leader>dl <Plug>VimspectorLaunch
 nmap <leader>db <Plug>VimspectorBreakpoints
-nmap <leader>dd <Plug>VimspectorToggleBreakpoint
+nmap <leader>dt <Plug>VimspectorToggleBreakpoint
 nmap <leader>dh :help vimspector-visual-studio-vscode<CR>
 nmap ]` <Plug>VimspectorJumpToNextBreakpoint
 nmap [` <Plug>VimspectorJumpToPreviousBreakpoint
