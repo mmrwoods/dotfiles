@@ -34,7 +34,7 @@ plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'Yggdroot/LeaderF', build: './install.sh'
-plug 'Donaldttt/fuzzyy', :ssh, :full
+plug 'vim-fuzzbox/fuzzbox.vim', :ssh, :full
 plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'

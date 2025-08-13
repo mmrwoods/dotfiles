@@ -131,7 +131,7 @@ let g:which_key_map =  {}
 let g:which_key_map.a = { 'name' : '+actions' }
 let g:which_key_map.c = { 'name' : '+coc/lsp' }
 let g:which_key_map.d = { 'name' : '+debug' }
-let g:which_key_map.f = { 'name' : '+fuzzyy' }
+let g:which_key_map.f = { 'name' : '+fuzzy' }
 let g:which_key_map.g = { 'name' : '+git' }
 let g:which_key_map.h = { 'name' : '+hunks' }
 let g:which_key_map.j = { 'name' : '+jumpto' }
@@ -297,22 +297,22 @@ let g:gitgutter_enabled = 0
 let g:git_messenger_vimpopup_enabled = 1
 let g:git_messenger_always_into_popup = 1
 
-" Fuzzyy configuration
-let g:fuzzyy_follow_symlinks = 1
-let g:fuzzyy_reuse_windows = ['netrw', 'bufexplorer', 'mru']
-let g:fuzzyy_ripgrep_options = [
+" Fuzzbox configuration
+let g:fuzzbox_follow_symlinks = 1
+let g:fuzzbox_reuse_windows = ['netrw', 'bufexplorer', 'mru']
+let g:fuzzbox_ripgrep_options = [
   \ "--no-config",
   \ "--no-ignore-parent",
   \ "--ignore-file " . expand('~/.vim/rgignore')
   \ ]
 
-" For testing - use vim-nerdfont for fuzzyy glyphs if installed
+" For testing - use vim-nerdfont for fuzzbox glyphs if installed
 autocmd VimEnter * if exists("g:loaded_nerdfont") |
-  \   let g:fuzzyy_devicons_glyph_func = 'nerdfont#find' |
+  \   let g:fuzzbox_devicons_glyph_func = 'nerdfont#find' |
   \ endif
 
-" Same devicon colors in NERDTree, BufExplorer, and Fuzzyy
-let g:fuzzyy_devicons_color_table = {
+" Same devicon colors in NERDTree, BufExplorer, and Fuzzbox
+let g:fuzzbox_devicons_color_table = {
   \ '*.coffee': 'chocolate',
   \ '*.exs': 'mediumpurple',
   \ '*.hs': 'mediumpurple',
@@ -320,16 +320,12 @@ let g:fuzzyy_devicons_color_table = {
   \ '*.pl': 'teal'
   \ }
 hi link NERDTreeFlags Normal
-function! ApplyFuzzyyColors()
+function! ApplyFuzzboxColors()
   let directories = ['', '', '', '', '', '']
   call matchadd('Directory', printf('\%%(%s\)', join(directories, '\|')))
-  try
-    call fuzzyy#utils#devicons#AddColor(win_getid())
-  catch /\v:(E700|E117):/
-    call fuzzbox#utils#devicons#AddColor(win_getid())
-  endtry
+  call fuzzbox#utils#devicons#AddColor(win_getid())
 endfunction
-autocmd FileType nerdtree,bufexplorer call ApplyFuzzyyColors()
+autocmd FileType nerdtree,bufexplorer call ApplyFuzzboxColors()
 
 " Update devicon glyphs for nerd fonts v3
 " See https://github.com/ryanoasis/vim-devicons/issues/452
@@ -822,8 +818,8 @@ nnoremap <leader>yr :setlocal relativenumber!<CR>
 nnoremap <leader>ys :setlocal spell!<CR>
 nnoremap <leader>yw :setlocal wrap!<CR>
 
-" Additional Fuzzyy commands and mappings
-command! -nargs=? FuzzyFilesAll call fuzzyy#files#Start({'cwd': fuzzyy#utils#selector#GetRootDir(), 'command': 'rg -uu --files'})
+" Additional Fuzzbox commands and mappings
+command! -nargs=? FuzzyFilesAll call fuzzbox#builtin#files#Start({'cwd': fuzzbox#utils#helpers#GetRootDir(), 'command': 'rg -uu --files'})
 nnoremap <leader>fa :FuzzyFilesAll<CR>
 nnoremap <leader>fF :FuzzyFilesRoot<CR>
 nnoremap <leader>fG :FuzzyGrepRoot<CR>
