@@ -941,23 +941,41 @@ nnoremap <leader>R :MRURoot<CR>
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<CR>
 
-" Expand/maximize current window
-" See https://stackoverflow.com/a/26551079/17278003
-function! ExpandWin() abort
-  if winnr('$') == 1 | return | endif
-  if exists('w:expanded') && w:expanded
-    execute w:expand_winrestcmd
-    let w:expanded = 0
+" Focus the current window for distraction free reading and/or writing
+let g:goyo_width = 100
+function! FocusWin() abort
+  if exists('#goyo')
+    execute 'Goyo'
   else
-    let w:expand_winrestcmd = winrestcmd()
-    resize
-    vertical resize
-    let w:expanded = 1
+    let width = g:goyo_width
+    if empty(&buftype) && &textwidth > 0
+      if (&tw + (&tw / 20)) > width
+        let width = (&tw + (&tw / 20))
+      endif
+    endif
+    execute 'Goyo' .. width
   endif
 endfunction
-autocmd WinLeave * if exists('w:expanded') && w:expanded | call ExpandWin() | endif
-command! ExpandWin call ExpandWin()
-nnoremap <Leader>x :ExpandWin<CR>
+command! FocusWin call FocusWin()
+nnoremap <Leader>x :FocusWin<CR>
+
+" Expand/maximize current window (similar to tmux zoom pane)
+" See https://stackoverflow.com/a/26551079/17278003
+function! ZoomWin() abort
+  if winnr('$') == 1 | return | endif
+  if exists('w:zoomed') && w:zoomed
+    execute w:zoom_winrestcmd
+    let w:zoomed = 0
+  else
+    let w:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let w:zoomed = 1
+  endif
+endfunction
+autocmd WinLeave * if exists('w:zoomed') && w:zoomed | call ZoomWin() | endif
+command! ZoomWin call ZoomWin()
+nnoremap <Leader>z :ZoomWin<CR>
 
 " Remap gs to open Scratch window in normal rather than insert mode
 let g:scratch_no_mappings = 1 " must disable plugin mappings first
@@ -1059,12 +1077,20 @@ autocmd WinEnter,BufEnter *
   \ end
 
 " Highlight long lines in active window rather than display colorcolumn
+" Note: set custom hlgroup as goyo.vim overrides CursorColumn when active
+function! <SID>SetLongLineHl()
+  let hlgroup_attrs = hlget('ColorColumn')[0]
+  let hlgroup_attrs['name'] = 'LongLine'
+  call hlset([hlgroup_attrs])
+endfunction
+call <SID>SetLongLineHl()
+autocmd ColorScheme * call <SID>SetLongLineHl()
 function! <SID>HighlightLongLines()
   if exists('w:long_lines_mid')
     silent! call matchdelete(w:long_lines_mid)
   endif
   if empty(&buftype) && &textwidth > 0
-    let w:long_lines_mid = matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1)
+    let w:long_lines_mid = matchadd('LongLine', '\%'.(&tw+1).'v.\+', -1)
   endif
 endfunction
 autocmd WinEnter,BufEnter * call <SID>HighlightLongLines()

@@ -39,6 +39,7 @@ plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'
 plug 'tpope/vim-projectionist'
+plug 'junegunn/goyo.vim'
 
 # syntax and formatters
 plug 'kchmck/vim-coffee-script'
