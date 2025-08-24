@@ -429,15 +429,28 @@ autocmd BufReadPost *
     \ endif
 augroup END
 
-if executable('mdcat')
-  " Mapping to load markdown preview in popup window
-  command! MarkdownPreview :silent execute 'FloatermNew --disposable --title='. expand('%:~:.') . ' mdcat -p %'
-  autocmd FileType markdown
-    \ nnoremap <buffer> <leader>v :MarkdownPreview<CR>
-else
-  " FIXME should this error only appear when attempting to preview markdown???
-  echoerr "WARNING: no markdown preview executable found, install mdcat to fix this, see https://github.com/swsnr/mdcat"
-endif
+function! FileViewer()
+  if !empty(&buftype) || empty(bufname('%')) || !filereadable(expand('%'))
+    echoerr "Cannot view file: invalid buffer type or file not found"
+    return
+  endif
+  let cmd = ''
+  if &ft == 'markdown' && executable('mdcat')
+    let cmd = 'mdcat -p %'
+  elseif &ft =~ '\v(x)?html' && executable('w3m')
+    let cmd = 'w3m %'
+  elseif executable('bat') && system('file -b ' . expand('%')) =~ 'text'
+    let cmd = 'bat --theme base16 %'
+  endif
+  if empty(cmd)
+    echoerr "Cannot view file: no viewer found for filetype " .. &filetype
+    return
+  endif
+  let title = expandcmd(cmd, '%:~:.')
+  silent execute 'FloatermNew --disposable --titleposition=center --title=\ ' . substitute(title, ' ', '\\ ', 'g')  .  '\  ' . cmd
+endfunction
+command! FileViewer call FileViewer()
+nnoremap <Leader>v :FileViewer<CR>
 
 if executable('rg')
   exe 'set grepprg=rg\ --vimgrep\ ' . substitute(join(g:Lf_RgConfig, ' '), ' ', '\\ ', 'g')
