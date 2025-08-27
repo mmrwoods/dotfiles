@@ -902,36 +902,38 @@ nmap <silent> ]a :ALENextWrap<CR>
 nmap <silent> [A :ALEFirst<CR>
 nmap <silent> ]A :ALELast<CR>
 
-" Custom grep prompt, inspired by vim-grepper, but simpler, just runs grepprg
-" silently to avoid the "Press ENTER to continue" prompt after running external
-" commands and escapes cmdline special chars to avoid expansion of # and friends
-function! GrepPrompt(...)
-  let inputstr = trim(input('grep> ', (a:0 > 0 ? a:1 : ''), 'customlist,GrepComplete'))
-  if empty(inputstr) | redraw! | return | end
+" Custom grep prompt, inspired by vim-grepper, but simpler, runs grepprg in a
+" subshell to avoid the "Press ENTER to continue" prompt when running external
+" commands, and also allow use of cmdline special characters without escaping
+function! Grepper(...)
+  let args = trim(input('grep> ', join(a:000, ' '), 'customlist,GrepperComplete'))
+  if empty(args) | redraw! | return | end
+  let grepcmd = &grepprg . ' ' . args
+  redraw!
+  echohl WarningMsg | echo grepcmd | echohl None
   try
-    exec 'silent grep! '. escape(inputstr, '#%')
-  catch /E40:/ " shell error, re-run unsilent to see error output
-    try
-      exec 'unsilent grep! '. escape(inputstr, '#%')
-    catch /E40:/
-      call setqflist([], 'r', {'title': &grepprg . ' ' . inputstr, 'items': []})
-    endtry
+    cgetexpr system(grepcmd)
+    call setqflist([], 'r', #{title: grepcmd})
+  catch /^Vim:Interrupt$/
+    call setqflist([], 'r', #{title: grepcmd . ' (Interrupted)'})
+    echoerr "Interrupted: " . grepcmd
+  finally
+    redraw! | copen
   endtry
-  redraw! | copen
 endfunction
 
 " Simple completion for grep prompt, also inspired by vim-grepper
-function! GrepComplete(lead, _line, _pos)
+function! GrepperComplete(lead, _line, _pos)
   let args = split(a:lead, '.*\s\zs', 1)
   if len(args) < 2 | return [] | end
   let path = args[-1]
   let head = join(args[0:-2])
-  return map(getcompletion(args[-1], 'file'), 'head . fnameescape(v:val)')
+  return map(getcompletion(args[-1], 'dir'), 'head . fnameescape(v:val)')
 endfun
 
 " Search in files using grep program, see :help grepprg and :help grep
-command! GrepPrompt call GrepPrompt()
-nnoremap <leader>s :GrepPrompt<CR>
+command! Grepper call Grepper()
+nnoremap <leader>s :Grepper<CR>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
