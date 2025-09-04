@@ -194,6 +194,9 @@ let g:netrw_nobeval = 1
 " Show relative paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
+" Never jump to another window when opening a buffer from bufexplorer
+let g:bufExplorerFindActive = 0
+
 " Show no name buffers in bufexplorer, I want to be able to find them easily
 " Note: BufExplorer lists quickfix and location list buffers as [No Name] if
 " it finds them in the buffer list. This is confusing and makes it easy to
