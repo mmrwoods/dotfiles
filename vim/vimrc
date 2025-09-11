@@ -1136,7 +1136,7 @@ function! <SID>SetWorkingDir()
   endif
   if $OLDPWD !=# getcwd()
     echohl WarningMsg
-    echo "vimrc: cwd changed to '" . getcwd() . "', :cd - returns to '" . $OLDPWD . "'"
+    echo "vimrc: cwd changed to '" . getcwd() . "', :cd - returns to previous cwd"
     echohl None
   endif
 endfunction
