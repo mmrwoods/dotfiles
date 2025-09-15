@@ -440,6 +440,8 @@ function! FileViewer()
   let cmd = ''
   if &ft == 'markdown' && executable('mdcat')
     let cmd = 'mdcat -p %'
+  elseif &ft == 'markdown' && executable('glow')
+    let cmd = 'glow -w 120 -p %'
   elseif &ft =~ '\v(x)?html' && executable('w3m')
     let cmd = 'w3m %'
   elseif executable('bat') && system('file -b ' . expand('%')) =~ 'text'
