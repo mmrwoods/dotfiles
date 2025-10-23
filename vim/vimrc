@@ -336,7 +336,7 @@ hi link NERDTreeFlags Normal
 function! ApplyFuzzboxColors()
   let directories = ['', '', '', '', '', '']
   call matchadd('Directory', printf('\%%(%s\)', join(directories, '\|')))
-  call fuzzbox#utils#devicons#AddColor(win_getid())
+  call fuzzbox#internal#devicons#AddColor(win_getid())
 endfunction
 autocmd FileType nerdtree,bufexplorer call ApplyFuzzboxColors()
 
