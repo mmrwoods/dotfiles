@@ -847,7 +847,7 @@ nnoremap <leader>ys :setlocal spell!<CR>
 nnoremap <leader>yw :setlocal wrap!<CR>
 
 " Additional Fuzzbox commands and mappings
-command! -nargs=? FuzzyFilesAll call fuzzbox#builtin#files#Start({'cwd': fuzzbox#utils#helpers#GetRootDir(), 'command': 'rg -uu --files'})
+command! FuzzyFilesAll call fuzzbox#Launch('files', #{command: 'rg -uu --files'})
 nnoremap <leader>fa :FuzzyFilesAll<CR>
 nnoremap <leader>fF :FuzzyFilesRoot<CR>
 nnoremap <leader>fG :FuzzyGrepRoot<CR>
