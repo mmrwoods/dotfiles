@@ -38,7 +38,17 @@ else
 endif
 
 " Custom status line, show relative file path and file type
-set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r\ %=\ %{CocStatus()}\ %{substitute(SleuthIndicator(),',','\ ','')}\ %{&ft}\ %l\:\%-c\ %P
+set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r\ %=\ %{LspStatus()}\ %{IndentStatus()}\ %{&ft}\ %l\:\%-c\ %P
+function! LspStatus()
+  if exists('*CocStatus')
+    return CocStatus()
+  endif
+endfunction
+function! IndentStatus()
+  if exists('*SleuthIndicator')
+    return substitute(SleuthIndicator(),',','\ ','')
+  endif
+endfunction
 
 if exists('##ModeChanged')
   " Keep timeoutlen short enough to make WhichKey menu appear promptly, but not
@@ -428,7 +438,7 @@ autocmd BufReadPost *
 " Disable better whitespace plugin when configured via EditorConfig
 autocmd BufReadPost *
     \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
-    \   exe 'DisableStripWhitespaceOnSave' |
+    \   exe 'silent! DisableStripWhitespaceOnSave' |
     \ endif
 augroup END
 
@@ -1091,7 +1101,7 @@ endif
 
 " Experimental: Automatically reveal current file in NERDTree
 autocmd WinEnter,BufEnter *
-  \ if empty(&buftype) && g:NERDTree.IsOpen()
+  \ if empty(&buftype) && exists('g:NERDTree') && g:NERDTree.IsOpen()
   \ && filereadable(expand('%')) && stridx(fnamemodify(expand('%'), ':p'), getcwd()) == 0 |
   \   noautocmd NERDTreeFind | exe "norm! zz" | noautocmd wincmd p |
   \ end
@@ -1123,6 +1133,9 @@ endif
 " provided as argument, otherwise cwd to root of project/package if possible.
 " Note: uses vim-rooter, and works nicely with monorepos (not reliant on VCS)
 function! <SID>SetWorkingDir()
+  if !exists('*FindRootDirectory')
+    return
+  endif
   let $OLDPWD = getcwd()
   if argc() == 1 && len(argv()) == 1
     if isdirectory(argv(0))
