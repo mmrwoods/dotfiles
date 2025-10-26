@@ -921,13 +921,15 @@ nmap <silent> ]A :ALELast<CR>
 " subshell to avoid the "Press ENTER to continue" prompt when running external
 " commands, and also allow use of cmdline special characters without escaping
 function! Grepper(...)
+  echohl Question
   let args = trim(input('grep> ', join(a:000, ' '), 'customlist,GrepperComplete'))
+  echohl None
   if empty(args) | redraw! | return | end
   let grepcmd = &grepprg . ' ' . args
   redraw!
-  echohl WarningMsg | echo grepcmd | echohl None
+  echohl MessageWindow | echo "Running: " .. grepcmd | echohl None
   try
-    cgetexpr system(grepcmd)
+    noautocmd cgetexpr system(grepcmd)
     call setqflist([], 'r', #{title: grepcmd})
   catch /^Vim:Interrupt$/
     call setqflist([], 'r', #{title: grepcmd . ' (Interrupted)'})
