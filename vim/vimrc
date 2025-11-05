@@ -327,9 +327,6 @@ autocmd VimEnter * if exists("g:loaded_nerdfont") |
 " Same devicon colors in NERDTree, BufExplorer, and Fuzzbox
 let g:fuzzbox_devicons_color_table = {
   \ '*.coffee': 'chocolate',
-  \ '*.hs': 'mediumpurple',
-  \ '*.jl': 'mediumpurple',
-  \ '*.lisp': 'darkred',
   \ }
 hi link NERDTreeFlags Normal
 function! ApplyFuzzboxColors()
@@ -352,6 +349,8 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['pem']    = '󰌋'  " 
 " And other nerd font glyphs that are missing from vim-devicons
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['kt']     = '󱈙' " nf-md-language_kotlin
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['lisp']   = '' " nf-custom-common_lisp
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['ps1']    = '󰨊' " nf-md-powershell
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['zig']    = '' " nf-seti-zig
 
 " Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
 " top level namespace and makes it easier to find and complete FZF commands)
