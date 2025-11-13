@@ -404,6 +404,9 @@ let g:test#strategy = 'vimterminal'
 " Note: this still assumes node_modules/.bin/jest can be found relative to cwd
 let test#project_root = { -> FindRootDirectory() }
 
+" Fix jest executable to work with turborepo
+let test#javascript#jest#executable = 'npx jest'
+
 " Override indent level for continuation lines in vimscript
 " Default is shiftwidth() * 3, see $VIMRUNTIME/ftplugin/vim.vim
 let g:vim_indent_cont = 2
