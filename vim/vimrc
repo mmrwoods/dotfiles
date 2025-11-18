@@ -28,6 +28,8 @@ set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
+set path+=**                      " Include subdirectories when finding files
+
 " Sign column configuration - condition copied from coc.nvim readme
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Merge sign column and number column if supported
