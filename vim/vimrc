@@ -329,12 +329,10 @@ let g:fuzzbox_devicons_color_table = {
   \ '*.coffee': 'chocolate',
   \ }
 hi link NERDTreeFlags Normal
-function! ApplyFuzzboxColors()
-  let directories = ['', '', '', '', '', '']
-  call matchadd('Directory', printf('\%%(%s\)', join(directories, '\|')))
-  call fuzzbox#internal#devicons#AddColor(win_getid())
-endfunction
-autocmd FileType nerdtree,bufexplorer call ApplyFuzzboxColors()
+augroup ApplyFuzzboxColors
+  autocmd! *
+  autocmd FileType nerdtree,bufexplorer call fuzzbox#devicons#Colorize()
+augroup END
 
 " Update devicon glyphs for nerd fonts v3
 " See https://github.com/ryanoasis/vim-devicons/issues/452
@@ -442,7 +440,6 @@ autocmd BufReadPost *
     \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
     \   exe 'silent! DisableStripWhitespaceOnSave' |
     \ endif
-augroup END
 
 function! FileViewer()
   if !empty(&buftype) || empty(bufname('%')) || !filereadable(expand('%'))
