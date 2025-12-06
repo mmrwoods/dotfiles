@@ -95,6 +95,8 @@ plug 'vim-test/vim-test'
 plug 'wellle/targets.vim'
 plug 'AndrewRadev/splitjoin.vim'
 plug 'junegunn/vim-easy-align'
+plug 'vim-airline/vim-airline'
+plug 'vim-airline/vim-airline-themes'
 
 # colours
 plug 'NLKNguyen/papercolor-theme'

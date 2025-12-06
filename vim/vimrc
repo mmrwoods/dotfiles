@@ -48,7 +48,7 @@ function! LspStatus()
 endfunction
 function! IndentStatus()
   if exists('*SleuthIndicator')
-    return substitute(SleuthIndicator(),',','\ ','')
+    return substitute(SleuthIndicator(),',',' ','g')
   endif
 endfunction
 
@@ -355,6 +355,30 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['kt']     = '󱈙' " n
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['lisp']   = '' " nf-custom-common_lisp
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['ps1']    = '󰨊' " nf-md-powershell
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['zig']    = '' " nf-seti-zig
+
+" Airline configuration, less noise please, thank you :-)
+let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#coc#error_symbol = ''
+let g:airline#extensions#coc#warn_symbol = ''
+let g:airline#extensions#coc#stl_format_err = ''
+let g:airline#extensions#coc#stl_format_warn = ''
+let g:airline#extensions#ale#show_line_numbers = 0
+let g:airline_section_y = "%{IndentStatus()}"
+let g:airline_section_z = '%2l:%-c %p%%'
+let g:webdevicons_enable_airline_statusline = 0
+" Toned down powerlineish theme
+let g:airline_theme = 'powerlineish'
+let g:airline_theme_patch_func = 'AirlineThemePatch'
+function! AirlineThemePatch(palette)
+  if g:airline_theme == 'powerlineish'
+    let a:palette.normal.airline_c = a:palette.normal.airline_b
+    let a:palette.normal.airline_x = a:palette.normal.airline_b
+    let a:palette.replace.airline_c = a:palette.replace.airline_b
+    let a:palette.replace.airline_x = a:palette.replace.airline_b
+    let a:palette.inactive = airline#themes#generate_color_map(a:palette.normal.airline_b, a:palette.normal.airline_b, a:palette.normal.airline_b)
+  endif
+endfunction
 
 " Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
 " top level namespace and makes it easier to find and complete FZF commands)
