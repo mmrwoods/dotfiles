@@ -94,6 +94,7 @@ plug 'ryanoasis/vim-devicons'
 plug 'vim-test/vim-test'
 plug 'wellle/targets.vim'
 plug 'AndrewRadev/splitjoin.vim'
+plug 'junegunn/vim-easy-align'
 
 # colours
 plug 'NLKNguyen/papercolor-theme'

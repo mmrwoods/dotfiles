@@ -503,6 +503,9 @@ autocmd VimEnter,ColorScheme *
   \   hi Spellbad guibg=NONE guifg=NONE |
   \ endif
 
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
 " Add cut/move mappings (delete operations overridden by vim-cutlass to just
 " delete, not yank and delete, see https://github.com/svermeulen/vim-cutlass)
 " Warning: breaks "m{a-zA-Z}" command to set named marks, and "M" to move to
