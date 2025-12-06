@@ -333,7 +333,11 @@ let g:fuzzbox_devicons_color_table = {
 hi link NERDTreeFlags Normal
 augroup ApplyFuzzboxColors
   autocmd! *
-  autocmd FileType nerdtree,bufexplorer call fuzzbox#devicons#Colorize()
+  autocmd FileType nerdtree,bufexplorer
+    \ try |
+    \   call fuzzbox#devicons#Colorize() |
+    \   catch /\v:(E700|E117):/ |
+    \ endtry
 augroup END
 
 " Update devicon glyphs for nerd fonts v3
