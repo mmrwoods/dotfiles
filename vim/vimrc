@@ -1190,3 +1190,7 @@ function! <SID>SetWorkingDir()
   endif
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
+
+if filereadable(expand("~/.vim/vimrc.local"))
+  source ~/.vim/vimrc.local
+endif
