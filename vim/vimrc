@@ -128,8 +128,6 @@ nnoremap <silent> [ :WhichKey '['<CR>
 " Writes part of RHS of map to buffer, so hide from WHichKey menu
 nnoremap <silent> ]o :WhichKey ''<CR>
 nnoremap <silent> [o :WhichKey ''<CR>
-" Also trigger WhichKey menu for g prefix mappings, some plugins
-nnoremap <silent> g :WhichKey 'g'<CR>
 
 " Add which-key to runtimepath on old vim versions to use which_key#register
 " In newer versions autoload searches packpath in addition to runtimepath
