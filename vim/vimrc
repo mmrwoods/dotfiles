@@ -28,7 +28,7 @@ set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
-" Sign column configuration - condition copied from coc.nvim readme
+" Sign column configuration
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Merge sign column and number column if supported
   set signcolumn=number
@@ -38,12 +38,7 @@ else
 endif
 
 " Custom status line, show relative file path and file type
-set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r\ %=\ %{LspStatus()}\ %{IndentStatus()}\ %{&ft}\ %l\:\%-c\ %P
-function! LspStatus()
-  if exists('*CocStatus')
-    return CocStatus()
-  endif
-endfunction
+set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r\ %=\ %{IndentStatus()}\ %{&ft}\ %l\:\%-c\ %P
 function! IndentStatus()
   if exists('*SleuthIndicator')
     return substitute(SleuthIndicator(),',',' ','g')
@@ -136,13 +131,10 @@ endif
 " Define dictionary with prefix names for leader mappings
 call which_key#register('\', "g:which_key_map")
 let g:which_key_map =  {}
-let g:which_key_map.a = { 'name' : '+actions' }
-let g:which_key_map.c = { 'name' : '+coc/lsp' }
 let g:which_key_map.d = { 'name' : '+debug' }
-let g:which_key_map.f = { 'name' : '+fuzzy' }
+let g:which_key_map.f = { 'name' : '+find' }
 let g:which_key_map.g = { 'name' : '+git' }
 let g:which_key_map.h = { 'name' : '+hunks' }
-let g:which_key_map.j = { 'name' : '+jumpto' }
 let g:which_key_map.p = { 'name' : '+plugins' }
 let g:which_key_map.t = { 'name' : '+test' }
 let g:which_key_map.y = { 'name' : '+options' }
@@ -248,15 +240,8 @@ let g:ale_fixers = {
   \ 'ruby': ['rubocop']
   \ }
 
-" Only use ALE to run linters, use coc.nvim with language servers
-" Note: Coc.nvim configured to send disgnostics to ALE for display
+" Only use ALE to run linters, use separate plugin for lsp features
 let g:ale_disable_lsp = 1
-
-" Disable coc.nvim service at startup, use CocStart to enable
-let g:coc_start_at_startup = 0
-
-" Disable coc.nvim warnings on old vim versions
-let g:coc_disable_startup_warning = 1
 
 " Tell NERDTree to respect wildignore
 let NERDTreeRespectWildIgnore = 1
@@ -355,10 +340,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['zig']    = '' " nf
 " Airline configuration, less noise please, thank you :-)
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#coc#error_symbol = ''
-let g:airline#extensions#coc#warn_symbol = ''
-let g:airline#extensions#coc#stl_format_err = ''
-let g:airline#extensions#coc#stl_format_warn = ''
+let g:airline#extensions#vim9lsp#enabled = 0
 let g:airline#extensions#ale#show_line_numbers = 0
 let g:airline_section_y = "%{IndentStatus()}"
 let g:airline_section_z = '%2l:%-c %p%%'
@@ -510,8 +492,6 @@ endif
 
 " Tweak some highilghting from colour schemes
 autocmd VimEnter,ColorScheme *
-  \ hi clear CocUnusedHighlight |
-  \ hi! link CocUnusedHighlight CocHintHighlight |
   \ hi clear QuickFixLine |
   \ hi QuickFixLine ctermfg=red guifg=red |
   \ if get(g:, 'colors_name', v:null) ==# 'onedark' |
@@ -612,24 +592,6 @@ nnoremap <leader>/ /\V
 command! CmdHistory call feedkeys(":\<C-F>")
 nnoremap <silent> <leader>: :CmdHistory<CR>
 
-" CoC aware mapping to accept completion with CR. Necessary because some
-" plugins wrap CR mappings, so CoC does not detect an existing CR mapping to
-" accept completion as it cannnot see pumvislble() in the existing map expr.
-if match(execute('imap <CR>'), 'FriendlyCR') != -1
-  inoremap <silent><expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
-    \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-]><C-R>=FriendlyCR()<CR>' )
-endif
-
-" Custom function to show correct CoC status in statusline
-" coc#status() returns last status even after service stopped
-function! CocStatus()
-  if coc#rpc#ready()
-    return coc#status()
-  endif
-  return ''
-endfunction
-autocmd User CocStatusChange redrawstatus
-
 " Toggle git gutter, diff markers in sign column etc.
 nnoremap <leader>pg :GitGutterToggle<CR>
 
@@ -654,19 +616,6 @@ function! ToggleALE()
 endfunction
 command! ToggleALE call ToggleALE()
 nnoremap <silent><leader>pa :ToggleALE<CR>
-
-" Toggle coc.nvim service (disabled by default)
-function! ToggleCoC()
-  if coc#rpc#ready()
-    echohl MoreMsg | echom 'stopping coc.nvim service' | echohl None
-    call coc#rpc#stop()
-  else
-    echohl MoreMsg | echom 'starting coc.nvim service' | echohl None
-    call coc#rpc#start_server()
-  endif
-endfunction
-command! ToggleCoC call ToggleCoC()
-nnoremap <silent><leader>pc :ToggleCoC<CR>
 
 " Toggle quickfix list
 function! ToggleQuickfixList()
@@ -750,16 +699,6 @@ nnoremap <silent><leader>` :Terminal<CR>
 if exists('##TerminalWinOpen')
   autocmd TerminalWinOpen * setlocal statusline=%f
 endif
-
-" Use K to show documentation from CoC in preview window.
-function! ShowDocumentation()
-  if coc#rpc#ready() && CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-nnoremap <silent> K :call ShowDocumentation()<CR>
 
 " Additional window mappings
 " Minimal vimrc includes CTRL + arrow key mappings
@@ -902,7 +841,7 @@ nmap <leader>gv :Gvdiffsplit<CR>
 
 " GitGutter normally conflicts with vim comment plugin (or the reverse)
 " Both use ic and ac mappings for text objects, so use h with GitGutter
-if maparg('[c', 'n') =~# 'GitGutter'
+if maparg('[c', 'n') =~# 'GitGutter' " if gitgutter loaded before here
   nunmap [c
   nunmap ]c
 endif
@@ -913,38 +852,14 @@ omap ah <Plug>(GitGutterTextObjectOuterPending)
 xmap ih <Plug>(GitGutterTextObjectInnerVisual)
 xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 
-" coc.nvim lsp code action mappings
-nmap <leader>aa <Plug>(coc-codeaction)
-nmap <leader>ac <Plug>(coc-codeaction-cursor)
-nmap <leader>af :ALEFix<CR>
-nmap <leader>al <Plug>(coc-codeaction-line)
-nmap <leader>ar <Plug>(coc-codeaction-refactor)
-nmap <leader>as <Plug>(coc-codeaction-source)
-vmap <leader>ar <Plug>(coc-codeaction-refactor-selected)
+" additional lsp mappings
+" See lsp-settings.vim for defaults
+nmap <leader>D :LspDiagShow<CR>
+nmap <leader>O :LspOutline<CR>
+nmap <leader>S :LspSymbolSearch<CR>
 
-" coc.nvim specific feature mappings
-nmap <leader>cd :CocList diagnostics<CR>
-nmap <leader>cf <Plug>(coc-fix-current)
-nmap <leader>cl :CocList lists<CR>
-nmap <leader>co :CocOutline<CR>
-nmap <leader>cq <Plug>(coc-format)
-nmap <leader>cr <Plug>(coc-refactor)
-nmap <leader>crn <Plug>(coc-rename)
-nmap <leader>cs :CocList -I symbols<CR>
-vmap <leader>cq <Plug>(coc-format-selected)
-
-" coc.nvim lsp jump/goto navigation mappings
-" gd, gD, etc. not mapped because coc.nvim not always enabled
-nmap <leader>jd <Plug>(coc-definition)
-nmap <leader>jD <Plug>(coc-declaration)
-nmap <leader>jt <Plug>(coc-type-definition)
-nmap <leader>ji <Plug>(coc-implementation)
-nmap <leader>jr <Plug>(coc-references)
-nmap <leader>ju <Plug>(coc-references-used)
-
-" diagnostics navigation mappings
-nmap [d <Plug>(coc-diagnostic-prev)
-nmap ]d <Plug>(coc-diagnostic-next)
+" linter mappings
+nmap <leader>F :ALEFix<CR>
 nmap <silent> [a :ALEPreviousWrap<CR>
 nmap <silent> ]a :ALENextWrap<CR>
 nmap <silent> [A :ALEFirst<CR>
@@ -1072,7 +987,7 @@ augroup filetypedetect
 
   " Additional ruby syntax highlighting
   autocmd BufRead,BufNewFile {Berksfile,Brewfile,Capfile,Thorfile,.pryrc,pryrc,*.cap,*.thor}
-    \ setfiletype ruby |
+    \ setfiletype ruby
 
   " Set cloudformation filetypes to enable linting in ALE
   autocmd Filetype yaml,json
@@ -1191,6 +1106,10 @@ function! <SID>SetWorkingDir()
   endif
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
+
+if filereadable(expand("~/.vim/lsp-settings.vim"))
+  source ~/.vim/lsp-settings.vim
+endif
 
 if filereadable(expand("~/.vim/vimrc.local"))
   source ~/.vim/vimrc.local

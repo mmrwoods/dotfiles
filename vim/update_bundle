@@ -74,7 +74,7 @@ plug 'mmrwoods/git-messenger.vim', :ssh, :full, branch: 'vim-popupwin'
 plug 'zirrostig/vim-schlepp'
 plug 'ciaranm/securemodelines'
 plug 'dense-analysis/ale'
-plug 'neoclide/coc.nvim', branch: :release
+plug 'mmrwoods/lsp', :ssh, :full, :opt
 plug 'liuchengxu/vim-which-key'
 plug 'yssl/QFEnter'
 plug 'ludovicchabant/vim-gutentags'
