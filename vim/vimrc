@@ -455,7 +455,11 @@ let g:splitjoin_split_mapping = ''
 function! <SID>EditorConfigHook(config)
   let b:editorconfig = a:config
 endfunction
-call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
+if exists('g:loaded_EditorConfig')
+  call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
+else
+  echoerr "WARNING: EditorConfig plugin not loaded, Sleuth will be used to detect indentation settings"
+endif
 
 " Only use Sleuth as fallback to detect indent when EditorConfig not applied
 autocmd BufReadPost *
