@@ -1114,27 +1114,25 @@ endif
 " Use html omnicompletion for xhtml documents
 autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
 
-" Use xmllint as exernal program for formatting xml
-autocmd FileType xml setlocal formatprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+" Use syntax based completion as fallback for omnicompletion
+autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
 
-" Use jsonlint as external program for formatting json
-autocmd FileType json setlocal formatprg=jsonlint\ --pretty-print\ 2>/dev/null
+" Use xmllint as exernal program for formatting xml
+autocmd FileType xml exec 'setlocal formatprg=XMLLINT_INDENT=' . &sw . '\ xmllint\ --format\ --recover\ -'
+
+" Use jq as external program for formatting json
+" Note: jq preferred to jsonhint simply because easier to set indent level
+autocmd FileType json exec 'setlocal formatprg=jq\ --indent\ ' . &sw . '\ .'
 
 " Use js-beautify as external program for formatting javascript
-autocmd FileType javascript set formatprg=js-beautify\ -\ 2>/dev/null
+autocmd FileType javascript exec 'setlocal formatprg=js-beautify\ --indent-size=' . &sw . '\ -'
 
-" Use auopep8 for formatting python, customise using ~/.config/pycodestyle
-" TODO: automatically use black formatter if configured in pyproject.toml,
-" and consider passing textwidth as max line length (changed by editorconfig)
-autocmd FileType python setlocal formatprg=autopep8\ -\ 2>/dev/null
+" Use black formatter as external program for formatting python
+autocmd FileType python exec 'setlocal formatprg=black\ --quiet\ --line-length=' . &tw . '\ -'
 
-" Use syntax based completion when no omnicompletion available
-if exists("+omnifunc")
-  autocmd Filetype *
-    \	if &omnifunc == "" |
-    \	  setlocal omnifunc=syntaxcomplete#Complete |
-    \	endif
-endif
+" Use rubocop as external program for formatting ruby
+" Note: --stdin FILE ignored, not needed for formatting
+autocmd FileType ruby setlocal formatprg=rubocop\ -x\ --stdin\ _\ --stderr\ 2>/dev/null
 
 " Experimental: Automatically reveal current file in NERDTree
 autocmd WinEnter,BufEnter *
