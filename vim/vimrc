@@ -898,6 +898,7 @@ nmap <leader>gD :Git diff<CR>
 nmap <leader>gg :Git<CR>
 nmap <leader>gl :Git log --oneline --follow %<CR>
 nmap <leader>gL :Git log --oneline<CR>
+nmap <leader>gp :Git peek<CR>
 nmap <leader>gs :Git status<CR>
 nmap <leader>gv :Gvdiffsplit<CR>
 
