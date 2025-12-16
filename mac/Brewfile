@@ -60,7 +60,6 @@ brew 'rbenv-default-gems'
 brew 'redis'
 brew 'ripgrep'
 brew 'ruby'
-brew 'rubocop'
 brew 'shellcheck'
 brew 'siege'
 brew 'solargraph' # ruby language server
