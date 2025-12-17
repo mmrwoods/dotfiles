@@ -1131,8 +1131,10 @@ autocmd FileType javascript exec 'setlocal formatprg=js-beautify\ --indent-size=
 autocmd FileType python exec 'setlocal formatprg=black\ --quiet\ --line-length=' . &tw . '\ -'
 
 " Use rubocop as external program for formatting ruby
-" Note: --stdin FILE ignored, not needed for formatting
-autocmd FileType ruby setlocal formatprg=rubocop\ -x\ --stdin\ _\ --stderr\ 2>/dev/null
+if executable('rubocop') " check if exists as redirecting stderr to /dev/null
+  " Note: --stdin FILE ignored, not needed for formatting
+  autocmd FileType ruby setlocal formatprg=rubocop\ -x\ --stdin\ _\ --stderr\ 2>/dev/null
+endif
 
 " Experimental: Automatically reveal current file in NERDTree
 autocmd WinEnter,BufEnter *
