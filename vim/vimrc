@@ -489,7 +489,7 @@ function! FileViewer()
     let cmd = 'bat --theme base16 %'
   endif
   if empty(cmd)
-    echoerr "Cannot view file: no viewer found for filetype " .. &filetype
+    echoerr "Cannot view file: no viewer found for filetype " . &filetype
     return
   endif
   let title = expandcmd(cmd, '%:~:.')
@@ -962,7 +962,7 @@ function! Grepper(...)
   if empty(args) | redraw! | return | end
   let grepcmd = &grepprg . ' ' . args
   redraw!
-  echohl MessageWindow | echo "Running: " .. grepcmd | echohl None
+  echohl MessageWindow | echo "Running: " . grepcmd | echohl None
   try
     noautocmd cgetexpr system(grepcmd)
     call setqflist([], 'r', #{title: grepcmd})
@@ -1020,7 +1020,7 @@ function! FocusWin() abort
         let width = (&tw + (&tw / 20))
       endif
     endif
-    execute 'Goyo' .. width
+    execute 'Goyo' . width
   endif
 endfunction
 command! FocusWin call FocusWin()
