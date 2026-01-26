@@ -82,8 +82,11 @@ let g:ruby_indent_assignment_style = 'variable'
 " Disable vim-visual-multi mappings, except CTRL-n (see :h vm-find-word)
 let g:VM_default_mappings = 0
 
-" Disable indentLine plugin by default, toggle with <leader>pi
+" Disable indentLine plugin by default, toggle with <leader>i
 let g:indentLine_enabled = 0
+
+" Override indentLine char to ensure unbroken vertical lines
+let g:indentLine_char = '▎'
 
 " Use same highlighting for indent lines as used for whitespace listchars
 let g:indentLine_defaultGroup = 'SpecialKey'
@@ -133,13 +136,11 @@ call which_key#register('\', "g:which_key_map")
 let g:which_key_map =  {}
 let g:which_key_map.d = { 'name' : '+debug' }
 let g:which_key_map.f = { 'name' : '+find' }
-let g:which_key_map.g = { 'name' : '+git' }
-let g:which_key_map.h = { 'name' : '+hunks' }
-let g:which_key_map.p = { 'name' : '+plugins' }
+let g:which_key_map.g = { 'name' : '+git', 'h' : { 'name' : '+hunks' } }
 let g:which_key_map.t = { 'name' : '+test' }
-let g:which_key_map.y = { 'name' : '+options' }
 let g:which_key_map.u = { 'name' : '+unicode' }
 let g:which_key_map.w = { 'name' : '+windows' }
+let g:which_key_map.y = { 'name' : '+toggles' }
 
 " Disable caching of WhichKey menus - allow for buffer local mappings
 let g:which_key_run_map_on_popup = 1
@@ -286,12 +287,15 @@ let g:scratch_insert_autohide = 0
 " Highlight JSX embedded in javascript files
 let g:jsx_ext_required = 0
 
-" Disable gitgutter by default, toggle using <leader>pg
+" Disable gitgutter by default, toggle using <leader>gg
 let g:gitgutter_enabled = 0
 
 " Enable Vim popup win with git-messenger (currently relies on my fork)
 let g:git_messenger_vimpopup_enabled = 1
 let g:git_messenger_always_into_popup = 1
+
+" Disable default <leader>gm mapping (set to :GitMessenger below)
+let g:git_messenger_no_default_mappings = 1
 
 " Fuzzbox configuration
 let g:fuzzbox_follow_symlinks = 1
@@ -582,6 +586,9 @@ noremap <S-C-Tab> :tabprevious<cr>
 " Open vim alternate file, i.e. previously edited file in window
 nnoremap <Leader># :edit#<CR>
 
+" Close preview window (easier than CTRL-W CTRL-Z)
+nnoremap <Leader>p :pclose<CR>
+
 " Additional mapping for quick switching between alternate files
 nnoremap <Leader><leader> <C-^>
 
@@ -592,17 +599,14 @@ nnoremap <leader>/ /\V
 command! CmdHistory call feedkeys(":\<C-F>")
 nnoremap <silent> <leader>: :CmdHistory<CR>
 
-" Toggle git gutter, diff markers in sign column etc.
-nnoremap <leader>pg :GitGutterToggle<CR>
-
 " Highlight whitespace
-nnoremap <leader>pw :ToggleWhitespace<CR>
+nnoremap <leader>yW :ToggleWhitespace<CR>
 
 " Toggle colorizing of color codes and names
-nnoremap <leader>pC :ColorToggle<CR>
+nnoremap <leader>yC :ColorToggle<CR>
 
 " Toggle indent guides / lines
-nnoremap <leader>pl :IndentLinesToggle<CR>
+nnoremap <leader>i :IndentLinesToggle<CR>
 
 " Toggle ALE linting (disabled by default)
 function! ToggleALE()
@@ -615,7 +619,7 @@ function! ToggleALE()
   endif
 endfunction
 command! ToggleALE call ToggleALE()
-nnoremap <silent><leader>pa :ToggleALE<CR>
+nnoremap <silent><leader>a :ToggleALE<CR>
 
 " Toggle quickfix list
 function! ToggleQuickfixList()
@@ -819,25 +823,36 @@ nnoremap <leader>yw :setlocal wrap!<CR>
 
 " Additional Fuzzbox commands and mappings
 command! FuzzyFilesAll call fuzzbox#Launch('files', #{command: 'rg -uu --files'})
-nnoremap <leader>fa :FuzzyFilesAll<CR>
+nnoremap <leader>fa :FuzzyArglist<CR>
+nnoremap <leader>fA :FuzzyFilesAll<CR>
 nnoremap <leader>fF :FuzzyFilesRoot<CR>
 nnoremap <leader>fG :FuzzyGrepRoot<CR>
+nnoremap <leader>fj :FuzzyJumps<CR>
+nnoremap <leader>fm :FuzzyMarks<CR>
 nnoremap <leader>fR :FuzzyMruRoot<CR>
 nnoremap <leader>ft :FuzzyTags<CR>
 nnoremap <leader>fT :FuzzyTagsRoot<CR>
 " FuzzyGrep current word
 nnoremap <leader>fw :FuzzyGrep <C-R><C-W><CR>
 
-" git/fugitive mappings
+" fugitive/gitgutter mappings
 nmap <leader>gb :Git blame<CR>
 nmap <leader>gd :Git diff %<CR>
 nmap <leader>gD :Git diff<CR>
-nmap <leader>gg :Git<CR>
+nmap <leader>gg :GitGutterToggle<CR>
 nmap <leader>gl :Git log --oneline --follow %<CR>
 nmap <leader>gL :Git log --oneline<CR>
+nmap <leader>gm :GitMessenger<CR>
 nmap <leader>gp :Git peek<CR>
-nmap <leader>gs :Git status<CR>
+nmap <leader>gq :GitGutterQuickFix<CR>:copen<CR>
+command! GitStatus :exe ":Git"
+nmap <leader>gs :GitStatus<CR>
 nmap <leader>gv :Gvdiffsplit<CR>
+
+" gitgutter hunk mappings, normally <leader>h{s,u,p}
+nmap <leader>ghs <Plug>(GitGutterStageHunk)
+nmap <leader>ghu <Plug>(GitGutterUndoHunk)
+nmap <leader>ghp <Plug>(GitGutterPreviewHunk)
 
 " GitGutter normally conflicts with vim comment plugin (or the reverse)
 " Both use ic and ac mappings for text objects, so use h with GitGutter
@@ -902,7 +917,7 @@ nnoremap <leader>s :Grepper<CR>
 
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
-  nnoremap <leader>p :SessionSave<CR>:SessionList<CR>
+  nnoremap <leader>P :SessionSave<CR>:SessionList<CR>
 endif
 
 " List open files/buffers
