@@ -98,11 +98,13 @@ autocmd User LspSetup call LspAddServer([#{
   \ }])
 
 " brew install bash-language-server
+" use ALE to get shellcheck diagnostics
 autocmd User LspSetup call LspAddServer([#{
   \   name: 'bashls',
   \   filetype: ['bash', 'sh'],
   \   path: 'bash-language-server',
-  \   args: ['start']
+  \   args: ['start'],
+  \   features: #{ diagnostics: v:false }
   \ }])
 
 " brew install solargraph
