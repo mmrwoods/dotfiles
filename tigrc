@@ -1,4 +1,5 @@
-set ignore-case	= yes
+set mouse = yes
+set ignore-case = yes
 set git-colors = no
 set diff-highlight = ~/dotfiles/git/diff-highlight
 
