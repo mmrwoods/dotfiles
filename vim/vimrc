@@ -823,8 +823,7 @@ nnoremap <leader>yw :setlocal wrap!<CR>
 
 " Additional Fuzzbox commands and mappings
 command! FuzzyFilesAll call fuzzbox#Launch('files', #{command: 'rg -uu --files'})
-nnoremap <leader>fa :FuzzyArglist<CR>
-nnoremap <leader>fA :FuzzyFilesAll<CR>
+nnoremap <leader>fa :FuzzyFilesAll<CR>
 nnoremap <leader>fF :FuzzyFilesRoot<CR>
 nnoremap <leader>fG :FuzzyGrepRoot<CR>
 nnoremap <leader>fj :FuzzyJumps<CR>
