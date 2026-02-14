@@ -349,6 +349,21 @@ let g:airline#extensions#ale#show_line_numbers = 0
 let g:airline_section_y = "%{IndentStatus()}"
 let g:airline_section_z = '%2l:%-c %p%%'
 let g:webdevicons_enable_airline_statusline = 0
+" shorten topic branch names, e.g. 'foo/bar/baz' -> 'f/b/baz'
+let g:airline#extensions#branch#format = 2
+" truncate long branch names to a fixed length
+let g:airline#extensions#branch#displayed_head_limit = 35
+" truncate sha when in detatched head state
+let g:airline#extensions#branch#sha1_len = 10
+" shrink branch section when total width < 100 (othhers same as defaults)
+let g:airline#extensions#default#section_truncate_width = {
+  \ 'b': 100,
+  \ 'x': 60,
+  \ 'y': 80,
+  \ 'z': 45,
+  \ 'warning': 80,
+  \ 'error': 80,
+  \ }
 " Toned down powerlineish theme
 let g:airline_theme = 'powerlineish'
 let g:airline_theme_patch_func = 'AirlineThemePatch'
