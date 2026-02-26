@@ -787,7 +787,7 @@ function! TJumpNextWin()
     exec 'wincmd v'
   endif
   try
-    exec "tjump ".currword
+    exec "tag " . currword
   catch
     " Go back to startwin on error
     exec startwin . "wincmd w"
