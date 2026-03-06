@@ -10,6 +10,9 @@ nnoremap grr :LspShowReferences<cr>
 nnoremap grt :LspGotoTypeDef<cr>
 nnoremap gO :LspDocumentSymbol<cr>
 nnoremap <C-S> :LspShowSignature<cr>
+" and additions of mine for vim9lsp
+nnoremap grd :LspDiag show<cr>
+nnoremap gro :LspOutline toggle<cr>
 
 nnoremap [d :LspDiagPrevWrap<CR>
 nnoremap ]d :LspDiagNextWrap<CR>

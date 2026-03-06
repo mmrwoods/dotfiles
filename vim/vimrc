@@ -848,6 +848,9 @@ nnoremap <leader>ft :FuzzyTags<CR>
 nnoremap <leader>fT :FuzzyTagsRoot<CR>
 " FuzzyGrep current word
 nnoremap <leader>fw :FuzzyGrep <C-R><C-W><CR>
+" https://github.com/vim-fuzzbox/fuzzbox-lsp.vim
+nnoremap <leader>fo :FuzzyLspDocumentSymbols<CR>
+nnoremap <leader>fs :FuzzyLspWorkspaceSymbols<CR>
 
 " fugitive/gitgutter mappings
 nmap <leader>gb :Git blame<CR>
