@@ -1,0 +1,22 @@
+# Recent versions of universal ctags include basic support for vim9script
+# This adds currently missing support for exports, globals, constants etc.
+# Taken from comments on: https://groups.google.com/g/vim_use/c/hp4KeIsDlFU
+#
+# For Homebrew installed ctags, this currently requires the HEAD version
+#
+#     brew install universal-ctags --HEAD
+#
+# WARNING: this will probably break subtly as support is improved in ctags
+
+--kinddef-vim=e,vim9exports,Vim 9 exports
+--kinddef-vim=g,vim9global,Vim 9 globals
+--kinddef-vim=K,vim9const,Vim 9 constants
+--kinddef-vim=L,vim9class,Vim 9 class
+--kinddef-vim=I,vim9interface,Vim 9 interface
+--regex-vim=/^export\s+def\s+([^(]+)/\1/e/
+--regex-vim=/^export\s+var\s+([^(]+)/\1/e/
+--regex-vim=/^export\s+const\s+([^(]+)/\1/e/
+--regex-vim=/^\s*(g:\w+)\b/\1/g,vim9global/
+--regex-vim=/^(export\s+)?(const|final)\s+(\w+)/\3/K,vim9const/
+--regex-vim=/^\s*(export\s+)?(abstract\s+)?class\s+(\w+)/\3/L,vim9class/
+--regex-vim=/^\s*(export\s+)?interface\s+(\w+)/\2/I,vim9interface/

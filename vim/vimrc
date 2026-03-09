@@ -181,6 +181,20 @@ let MRU_FuzzyMatch = 0
 " Tell tagbar to stop enabling ballooneval
 let g:tagbar_show_balloon = 0
 
+" Custom tagbar config for vim9script (see ~/.ctags.d/vim.ctags)
+let g:tagbar_type_vim = {
+  \ 'kinds': [
+  \   'L:classes',
+  \   'e:exports:1:0',
+  \   'f:functions',
+  \   'v:variables:1:0',
+  \   'g:globals:1:0',
+  \   'K:constants:1:0',
+  \   'c:commands:1:0',
+  \   'a:autocommand groups:1',
+  \   'm:maps:1:0',
+  \ ]}
+
 " Don't auto-generate tags files in every source code repo
 let g:gutentags_generate_on_new = 0
 let g:gutentags_generate_on_missing = 0
