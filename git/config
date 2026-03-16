@@ -115,13 +115,13 @@
   ; select-remote = "!select ref in $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' \
   ;   | head -n10 | sed 's/^origin\\///'); do git checkout $ref; break; done"
   ; select-tag = "!select ref in $(git tag --sort=-taggerdate | head -n10); do git checkout $ref; break; done"
-  select = "!subcmd=$(gum choose mru branch remote tag) && git select-$subcmd;"
-  select-mru = "!ref=$(gum choose $(git mru)) && git checkout $ref;"
-  select-branch = "!ref=$(gum choose $(git branch --sort=-committerdate --color=never --format='%(refname:short)' \
+  select = "!subcmd=$(gum choose --header='' mru branch remote tag) && git select-$subcmd;"
+  select-mru = "!ref=$(gum choose --header='' $(git mru)) && git checkout $ref;"
+  select-branch = "!ref=$(gum choose --header='' $(git branch --sort=-committerdate --color=never --format='%(refname:short)' \
     | head -n10)) && git checkout $ref;"
-  select-remote = "!ref=$(gum choose $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' --no-contains \
+  select-remote = "!ref=$(gum choose --header='' $(git branch --remote --sort=-committerdate --color=never --format='%(refname:short)' --no-contains \
     | head -n10 | sed 's/^origin\\///')) && git checkout $ref;"
-  select-tag = "!ref=$(gum choose $(git tag --sort=-taggerdate | head -n10)) && git checkout $ref;"
+  select-tag = "!ref=$(gum choose --header='' $(git tag --sort=-taggerdate | head -n10)) && git checkout $ref;"
 
   # switch to most recently checked out branch
   # useful for toggling between a feature branch and the main branch
