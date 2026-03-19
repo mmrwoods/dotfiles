@@ -116,7 +116,8 @@ autocmd User LspSetup call LspAddServer([#{
   \   filetype: 'ruby',
   \   path: 'solargraph',
   \   args: ['stdio'],
-  \   initializationOptions: #{ formatting: v:true }
+  \   initializationOptions: #{ formatting: v:true },
+  \   features: #{ diagnostics: v:false }
   \ }])
 
 " brew install ruby-lsp
