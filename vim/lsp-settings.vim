@@ -39,7 +39,7 @@ autocmd User LspSetup call LspOptionsSet(#{
   \   outlineWinSize: 40,
   \   showDiagOnStatusLine: v:true,
   \   showDiagWithSign: v:false,
-  \   useBufferCompletion: v:true,
+  \   useBufferCompletion: v:false,
   \   usePopupInCodeAction: v:true,
   \   useQuickfixForLocations: v:true,
   \   formatFallback: v:true,
