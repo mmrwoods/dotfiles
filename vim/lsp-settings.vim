@@ -130,14 +130,6 @@ autocmd User LspSetup call LspAddServer([#{
   \   args: [],
   \ }])
 
-"brew install ruff
-autocmd User LspSetup call LspAddServer([#{
-  \   name: 'ruff',
-  \   filetype: 'python',
-  \   path: 'ruff',
-  \   args: ['server'],
-  \ }])
-
 " brew install llvm, full path required as llvm is key-only
 autocmd User LspSetup call LspAddServer([#{
   \   name: 'clangd',
