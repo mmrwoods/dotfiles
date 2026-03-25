@@ -111,6 +111,8 @@ autocmd User LspSetup call LspAddServer([#{
   \ }])
 
 " brew install solargraph
+" Note: ruby-lsp not supported by yegappan/lsp (does not support
+" pull diagnostics or incremental text did change notifications)
 autocmd User LspSetup call LspAddServer([#{
   \   name: 'solargraph',
   \   filetype: 'ruby',
@@ -119,16 +121,6 @@ autocmd User LspSetup call LspAddServer([#{
   \   initializationOptions: #{ formatting: v:true },
   \   features: #{ diagnostics: v:false }
   \ }])
-
-" brew install ruby-lsp
-" Disabled for now, doesn't work well with outdated app dependencies
-" autocmd User LspSetup call LspAddServer([#{
-"   \   name: 'ruby-lsp',
-"   \   filetype: 'ruby',
-"   \   path: 'ruby-lsp',
-"   \   args: ['stdio'],
-"   \   debug: v:true,
-"   \ }])
 
 " pipx install jedi-language-server
 autocmd User LspSetup call LspAddServer([#{
