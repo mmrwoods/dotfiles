@@ -358,6 +358,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['zig']    = '' " nf
 " Airline configuration, less noise please, thank you :-)
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#lsp#enabled = 0
 let g:airline#extensions#vim9lsp#enabled = 0
 let g:airline#extensions#ale#show_line_numbers = 0
 let g:airline_section_y = "%{IndentStatus()}"
@@ -1152,10 +1153,6 @@ function! <SID>SetWorkingDir()
   endif
 endfunction
 autocmd VimEnter * call <SID>SetWorkingDir()
-
-if filereadable(expand("~/.vim/lsp-settings.vim"))
-  source ~/.vim/lsp-settings.vim
-endif
 
 if filereadable(expand("~/.vim/vimrc.local"))
   source ~/.vim/vimrc.local

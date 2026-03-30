@@ -1,6 +1,6 @@
 " yegappan/lsp (aka vim9lsp) config
 
-" global mappings, copied from Neovim defaults
+" global mappings copied from Neovim defaults
 " see https://neovim.io/doc/user/lsp.html
 nnoremap gra :LspCodeAction<cr>
 xnoremap gra :LspCodeAction<cr>
@@ -10,20 +10,19 @@ nnoremap grr :LspShowReferences<cr>
 nnoremap grt :LspGotoTypeDef<cr>
 nnoremap gO :LspDocumentSymbol<cr>
 nnoremap <C-S> :LspShowSignature<cr>
-" and additions of mine for vim9lsp
+" and additions of mine
 nnoremap grd :LspDiag show<cr>
 nnoremap gro :LspOutline toggle<cr>
-
 nnoremap [d :LspDiagPrevWrap<CR>
 nnoremap ]d :LspDiagNextWrap<CR>
 nnoremap [D :LspDiagFirst<CR>
 nnoremap ]D :LspDiagLast<CR>
 
 " Turn down the diagnostic dials!
-hi link LspDiagInlineError Underlined
-hi link LspDiagInlineHint Underlined
-hi link LspDiagInlineInfo Underlined
-hi link LspDiagInlineWarning Underlined
+hi! link LspDiagInlineError Underlined
+hi! link LspDiagInlineHint Underlined
+hi! link LspDiagInlineInfo Underlined
+hi! link LspDiagInlineWarning Underlined
 
 " TODO: add server info to statusline, something like this:
 " copy(lsp#buffer#CurbufGetServers())->map('v:val.name')
@@ -35,6 +34,7 @@ autocmd User LspSetup call LspOptionsSet(#{
   \   definitionFallback: v:true,
   \   hoverFallback: v:true,
   \   noNewlineInCompletion: v:true,
+  \   omniComplete: v:true,
   \   outlineOnRight: v:true,
   \   outlineWinSize: 40,
   \   showDiagOnStatusLine: v:true,
@@ -48,7 +48,7 @@ autocmd User LspSetup call LspOptionsSet(#{
 " Note: vim-language-server hover data is generated from Neovim
 autocmd User LspAttached
   \ if &filetype !=# 'vim' && !lsp#buffer#BufLspServerGet(bufnr(), 'hover')->empty() |
-  \   nnoremap <buffer> K <cmd>LspHover<cr> |
+  \   nnoremap <buffer> K <cmd>LspHover<cr>|
   \ endif
 
 " Use CTRL-] and other tag related commands to jump to symbol locations
