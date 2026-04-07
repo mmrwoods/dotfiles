@@ -55,5 +55,13 @@ autocmd User lsp_buffer_enabled
   \   nnoremap <buffer> K <plug>(lsp-hover)|
   \ endif
 
+let g:lsp_settings = {
+  \   'vim-language-server': {
+  \     'initialization_options': {
+  \       'diagnostic': { 'enable': v:false },
+  \     },
+  \   }
+  \}
+
 packadd vim-lsp
 packadd vim-lsp-settings
