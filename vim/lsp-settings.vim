@@ -45,9 +45,8 @@ autocmd User LspSetup call LspOptionsSet(#{
   \   formatFallback: v:true,
   \ })
 
-" Note: vim-language-server hover data is generated from Neovim
 autocmd User LspAttached
-  \ if &filetype !=# 'vim' && !lsp#buffer#BufLspServerGet(bufnr(), 'hover')->empty() |
+  \ if !lsp#buffer#BufLspServerGet(bufnr(), 'hover')->empty() |
   \   nnoremap <buffer> K <cmd>LspHover<cr>|
   \ endif
 
@@ -95,9 +94,9 @@ autocmd User LspSetup call LspAddServer([#{
 autocmd User LspSetup call LspAddServer([#{
   \   name: 'vimls',
   \   filetype: 'vim',
-  \   path: 'vim-language-server',
+  \   path: '~/code/vim-language-server/bin/index.js',
   \   args: ['--stdio'],
-  \   initializationOptions: #{ diagnostic: #{ enable: v:false } }
+  \   initializationOptions: #{ diagnostic: #{ enable: v:true } }
   \ }])
 
 " brew install bash-language-server
