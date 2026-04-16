@@ -129,7 +129,7 @@ autocmd User LspSetup call LspAddServer([#{
   \   args: [],
   \ }])
 
-" brew install llvm, full path required as llvm is key-only
+" brew install llvm, full path required as llvm is keg-only
 autocmd User LspSetup call LspAddServer([#{
   \   name: 'clangd',
   \   filetype: ['c', 'cpp'],
