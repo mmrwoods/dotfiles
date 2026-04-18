@@ -8,7 +8,7 @@ nnoremap grn <plug>(lsp-rename)
 nnoremap grr <plug>(lsp-references)
 nnoremap grt <plug>(lsp-type-definition)
 nnoremap gO <plug>(lsp-document-symbol)
-nnoremap <C-S> <plug>(lsp-signature-help)
+inoremap <C-S> <plug>(lsp-signature-help)
 " and additions of mine
 nnoremap grd <plug>(lsp-document-diagnostics)
 nnoremap [d :LspPreviousDiagnostic<CR>
@@ -26,6 +26,7 @@ let g:lsp_diagnostics_echo_delay = 0
 let g:lsp_diagnostics_signs_enabled = 0
 let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_signature_help_enabled = 0
 
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('/tmp/vim-lsp.log')

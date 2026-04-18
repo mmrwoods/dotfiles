@@ -9,7 +9,7 @@ nnoremap grn :LspRename<cr>
 nnoremap grr :LspShowReferences<cr>
 nnoremap grt :LspGotoTypeDef<cr>
 nnoremap gO :LspDocumentSymbol<cr>
-nnoremap <C-S> :LspShowSignature<cr>
+inoremap <C-S> <cmd>LspShowSignature<cr>
 " and additions of mine
 nnoremap grd :LspDiag show<cr>
 nnoremap gro :LspOutline toggle<cr>
@@ -39,6 +39,8 @@ autocmd User LspSetup call LspOptionsSet(#{
   \   outlineWinSize: 40,
   \   showDiagOnStatusLine: v:true,
   \   showDiagWithSign: v:false,
+  \   showSignature: v:false,
+  \   showSignatureDocs: v:true,
   \   useBufferCompletion: v:false,
   \   usePopupInCodeAction: v:true,
   \   useQuickfixForLocations: v:true,
