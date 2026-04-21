@@ -35,6 +35,8 @@ let g:lsp_signature_help_enabled = 0
 autocmd User lsp_buffer_enabled
   \ if lsp#get_server_names()->filter("lsp#capabilities#has_completion_provider(v:val)")->len() > 0 |
   \   setlocal omnifunc=lsp#complete |
+  \   setlocal complete-=t |
+  \   setlocal complete+=o |
   \ endif
 
 " Use CTRL-] and other tag related commands to jump to symbol locations

@@ -53,6 +53,12 @@ autocmd User LspAttached
   \   nnoremap <buffer> K <cmd>LspHover<cr>|
   \ endif
 
+autocmd User LspAttached
+  \ if !lsp#buffer#BufLspServerGet(bufnr(), 'completion')->empty() |
+  \   setlocal complete-=t |
+  \   setlocal complete+=o |
+  \ endif
+
 " Use CTRL-] and other tag related commands to jump to symbol locations
 " Note: don't mess with gd, jumps to local declaration (e.g. imports)
 autocmd User LspAttached
