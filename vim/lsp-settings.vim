@@ -33,6 +33,7 @@ autocmd User LspSetup call LspOptionsSet(#{
   \   autoComplete: v:false,
   \   definitionFallback: v:true,
   \   hoverFallback: v:true,
+  \   incrementalSync: v:true,
   \   noNewlineInCompletion: v:true,
   \   omniComplete: v:true,
   \   outlineOnRight: v:true,
@@ -70,7 +71,9 @@ autocmd User LspSetup call LspAddServer([#{
   \   name: 'typescriptls',
   \   filetype: ['typescript', 'javascript', 'typescriptreact', 'javascriptreact'],
   \   path: 'typescript-language-server',
-  \   args: ['--stdio']
+  \   args: ['--stdio'],
+  \   debug: v:false,
+  \   initializationOptions: #{ tsserver: #{ trace: 'off' } }
   \  }])
 
 " npm i -g vscode-langservers-extracted
