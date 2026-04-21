@@ -8,7 +8,7 @@ nnoremap grn <plug>(lsp-rename)
 nnoremap grr <plug>(lsp-references)
 nnoremap grt <plug>(lsp-type-definition)
 nnoremap gO <plug>(lsp-document-symbol)
-inoremap <C-S> <plug>(lsp-signature-help)
+inoremap <C-S> <cmd>LspSignatureHelp<cr>
 " and additions of mine
 nnoremap grd <plug>(lsp-document-diagnostics)
 nnoremap [d :LspPreviousDiagnostic<CR>
