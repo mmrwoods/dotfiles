@@ -49,7 +49,7 @@ autocmd User LspSetup call LspOptionsSet(#{
   \ })
 
 autocmd User LspAttached
-  \ if !lsp#buffer#BufLspServerGet(bufnr(), 'hover')->empty() |
+  \ if &filetype !=# 'vim' && !lsp#buffer#BufLspServerGet(bufnr(), 'hover')->empty() |
   \   nnoremap <buffer> K <cmd>LspHover<cr>|
   \ endif
 
