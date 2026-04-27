@@ -875,8 +875,10 @@ nmap <leader>gg :GitGutterToggle<CR>
 nmap <leader>gl :Git log --oneline --follow %<CR>
 nmap <leader>gL :Git log --oneline<CR>
 nmap <leader>gm :GitMessenger<CR>
-nmap <leader>gp :Git peek<CR>
-nmap <leader>gq :GitGutterQuickFix<CR>:copen<CR>
+nmap <leader>gp :Git peek %<CR>
+nmap <leader>gP :Git peek<CR>
+nmap <leader>gq :GitGutterQuickFixCurrentFile<CR>:copen<CR>
+nmap <leader>gQ :GitGutterQuickFix<CR>:copen<CR>
 command! GitStatus :exe ":Git"
 nmap <leader>gs :GitStatus<CR>
 nmap <leader>gv :Gvdiffsplit<CR>
