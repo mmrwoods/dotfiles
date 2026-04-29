@@ -58,8 +58,9 @@ autocmd User lsp_buffer_enabled
 
 let g:lsp_settings = {
   \   'vim-language-server': {
+  \     'cmd': ['/Users/mwoods/code/vim-language-server/bin/index.js', '--stdio'],
   \     'initialization_options': {
-  \       'diagnostic': { 'enable': v:false },
+  \       'diagnostic': { 'enable': v:true },
   \     },
   \   }
   \}
