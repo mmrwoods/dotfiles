@@ -788,7 +788,7 @@ function! TJumpNextWin()
   let currword = expand("<cword>")
   let startwin = winnr()
   " Move to next window with a normal buffer
-  let c = 0
+  let c = winnr()
   let n = winnr('$')
   while c < n
     exec 'wincmd w'
