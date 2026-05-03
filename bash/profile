@@ -63,6 +63,11 @@ if ! echo $PATH | grep /usr/local/bin &> /dev/null; then
   export PATH=${PATH/\/usr\/bin//usr/local/bin:/usr/bin}
 fi
 
+# add binaries installed via `go install` to PATH
+if which go &> /dev/null; then
+  export PATH="$PATH:$(go env GOPATH)/bin"
+fi
+
 export PATH=$HOME/bin:$PATH
 
 # add nodenv shims to path and enable nodenv autocompletion
