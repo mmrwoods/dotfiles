@@ -425,29 +425,17 @@ function! AirlineThemePatch(palette)
   endif
 endfunction
 
-" Prefix fzf commands with FZF, e.g. Files becomes FZFFiles (avoids polluting
-" top level namespace and makes it easier to find and complete FZF commands)
-" Only using this for testing now, I've switch to Fuzzyy as my default finder
+" FZF.vim configuration, only used for testing
+" Prefix fzf commands with FZF, e.g. Files becomes FZFFiles
 let g:fzf_command_prefix = 'FZF'
 
-" Leaderf configuration
-" Only using this for testing now, I've switch to Fuzzyy as my default finder
+" Leaderf configuration, only used for testing
 " Disable default <leader>f mapping
 let g:Lf_ShortcutF = ''
-" Add LeaderfGrep command to perform live grep
-command! LeaderfGrep :silent exe 'Leaderf rg --live'
 " Use up/down rather than CTRL-K/J to browse results
 let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
 " Open in popup by default
 let g:Lf_WindowPosition = 'popup'
-" Would like to disable status line, but doesn't work with popup window,
-" causes vim.error E121: Undefined variable: g:Lf_File_StlResultsCount
-" let g:Lf_DisableStl = 1
-" Don't bother with devicons, I'm happy with lean and mean
-let g:Lf_ShowDevIcons = 0
-" Would like to flip the order of the results, more like FZF.vim or
-" telescope.nvim, but this currently has no effect with popup windows
-let g:Lf_ReverseOrder = 1
 " Don't shrink the results window when filtering
 let g:Lf_PopupAutoAdjustHeight = 0
 let g:Lf_RgConfig = [
@@ -546,15 +534,10 @@ command! FileViewer call FileViewer()
 nnoremap <Leader>v :FileViewer<CR>
 
 if executable('rg')
-  exe 'set grepprg=rg\ --vimgrep\ ' . substitute(join(g:Lf_RgConfig, ' '), ' ', '\\ ', 'g')
+  set grepprg=rg\ --vimgrep\ -S\ -M1000\ --no-config\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
   set grepformat=%f:%l:%c:%m
 else
-  echoerr "WARNING: grep alternative not found, finding in files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
-endif
-
-if !executable('fd')
-  " Note: Leaderf and Fuzzyy will use fd if installed, but don't warn if not
-  echoerr "WARNING: find alternative not found, fuzzy finding files will be slow, install fd to fix this, see https://github.com/sharkdp/fd"
+  echoerr "WARNING: ripgrep not found, finding files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
 endif
 
 " Tweak some highilghting from colour schemes

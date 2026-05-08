@@ -33,7 +33,6 @@ plug 'scrooloose/nerdtree'
 plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
-plug 'Yggdroot/LeaderF', build: './install.sh'
 plug 'vim-fuzzbox/fuzzbox.vim', :ssh, :full
 plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
@@ -86,7 +85,7 @@ plug 'mg979/vim-visual-multi'
 plug 'nixon/vim-vmath' # calculate sum, avg, min, and max of visual selection
 plug 'tommcdo/vim-exchange'
 plug 'tweekmonster/helpful.vim'
-plug 'rhysd/committia.vim', :optional
+plug 'rhysd/committia.vim', :opt
 plug 'tpope/vim-characterize'
 plug 'tpope/vim-unimpaired'
 plug 'chrisbra/unicode.vim'
