@@ -4,7 +4,6 @@ vimrc.local
 *.*~
 *.swp
 /pack
-/plugin
 /sessions
 /tmp
 /spell

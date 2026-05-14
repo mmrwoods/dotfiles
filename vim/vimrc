@@ -9,16 +9,6 @@ set textwidth=80                  " Default textwidth, override using .editorcon
 set directory=$HOME/.vim/tmp//    " Keep swap files in one location
 set backupdir=$HOME/.vim/tmp//    " And backups in the same place
 
-if has('gui_running')
-  colorscheme PaperColor          " High contrast light bg colors for gui
-elseif $TERM_PROGRAM =~# 'iTerm'
-  colorscheme onedark             " Match dark iTerm color scheme locally
-elseif $SSH_CLIENT != ''
-  colorscheme elflord             " Distinct color scheme for ssh sessions
-else
-  colorscheme dim                 " Default IMproved color scheme elsewhere
-endif
-
 set nofoldenable                  " Open all folds by default
 set foldlevel=99                  " Don't open/close all folds at same indent
 set foldlevelstart=99             " Reset fold level when opening new files
@@ -28,13 +18,13 @@ set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
-" Sign column configuration
+" Keep timeoutlen short for plugins that rely on it (e.g. WhichKey), but not
+" so short that it makes it almost impossible to complete multi-key mappings
+set timeoutlen=1000
+
+" Merge sign column and number column if supported
 if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Merge sign column and number column if supported
   set signcolumn=number
-else
-  " Otherwise at least use same colours as number column
-  hi! link SignColumn LineNr
 endif
 
 " Custom status line, show relative file path and file type
@@ -45,39 +35,107 @@ function! IndentStatus()
   endif
 endfunction
 
-if exists('##ModeChanged')
-  " Keep timeoutlen short enough to make WhichKey menu appear promptly, but not
-  " so short that it makes it almost impossible to complete multi-key mappings
-  set timeoutlen=500
-  " But increase timeoutlen for visual mode as I don't use WhichKeyVisual
-  " This is mostly so my visual gJ mapping doesn't fall back to the default
-  autocmd ModeChanged n:[vV\x16]* let &timeoutlen = 3000
-  autocmd ModeChanged *:n let &timeoutlen = 500
+" Autocmd group for all autocmds in this file, cleared on reload
+augroup vimrc | au! | augroup END
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ -S\ -M1000\ --no-config\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
+  set grepformat=%f:%l:%c:%m
 endif
 
-" Clean, consistent highlighting of tabline, statusline and vertical splits
-set fillchars+=vert:\ ,
-autocmd VimEnter,ColorScheme *
-  \ hi! link VertSplit StatusLineNC |
-  \ hi! link Tablinefill StatusLineNC |
-  \ hi! link TablineSel StatusLine |
-  \ hi! link Tabline StatusLineNC |
-  \ hi! link StatusLineTerm StatusLine |
-  \ hi! link StatusLineTermNC StatusLineNC
+" Use syntax based completion as fallback for omnicompletion
+autocmd vimrc Filetype *
+  \ if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
 
-" Only show cursorline in active window, easy to locate active window
-" Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
-" various edge cases with popups, same buffer in multiple windows etc.
-" Add exception to work alongside hack to auto reveal file in NERDTree
-set nocursorline
-autocmd WinEnter,BufEnter * setlocal cursorline
-autocmd WinLeave,BufLeave * if &filetype != 'nerdtree' | setlocal nocursorline | endif
-
-" use normal rather than hanging indent for multiline ruby assignment, i.e.
-" let x = if foo    --NOT--    let x = if foo
-"   bar                                  bar
-" end                                  end
+" no hanging indent for ruby assignment, see $VIMRUNTIME/indent/ruby.vim
+" THIS-> │ let x = if foo     NOT-> │ let x = if foo
+"        │   bar                    │           bar
+"        │ end                      │         end
 let g:ruby_indent_assignment_style = 'variable'
+
+" Mark previous cursor position when entering visual mode, this abuses the
+" first character of previously changed text mark to allow for deletion from
+" visual mode, otherise we might jump to a position where text was deleted.
+" For consistency, also set the mark for the end of changed text, see :h `[
+" And set the last known cursor pos mark to detect deletion of text, see :h ``
+nnoremap v m`m[m]v
+nnoremap V m`m[m]V
+nnoremap <C-v> m`m[m]<C-v>
+nnoremap <2-LeftMouse> m`m[m]<2-LeftMouse>
+nnoremap <LeftDrag> m`m[m]<LeftDrag>
+
+" And return to previous cursor position when leaving visual mode
+" ModeChanged pattern derived from https://github.com/vim/vim/commit/25def2c8
+" After deletion in visual line mode, jump to the first non-blank character,
+" consistent with the default behaviour without these mappings and autocmds
+if exists('##ModeChanged')
+  autocmd vimrc ModeChanged [vV\x16]*:n
+    \ if ( getpos("'`") != getpos("'[") ) && ( v:event['old_mode'] ==# 'V' ) |
+    \   exe "normal! '[" |
+    \ else |
+    \   exe "normal! `[" |
+    \ endif
+endif
+
+" Remap visual gJ to remove indent when joining lines
+function! VisualJoinRemoveIndent()
+  normal! gv99<<
+  normal! gvgJ
+  normal! gv=
+endfunction
+vnoremap gJ :<C-u>call VisualJoinRemoveIndent()<CR>
+
+" Quickly remove indent in visual mode
+vmap 0 99<<
+
+" Additional window mappings
+" Minimal vimrc includes CTRL + arrow key mappings
+" open vim defined alternate file in new vertial split
+nnoremap <leader>w# :vsplit#<CR>
+" open plugin defined alternate file in new vertial split
+nnoremap <leader>wa :AV<CR>
+" horizontal and vertical splits
+nnoremap <leader>ws :wincmd s<CR>
+nnoremap <leader>wv :wincmd v<CR>
+" rotate and exchange windows
+nnoremap <leader>wr :wincmd r<CR>
+nnoremap <leader>wx :wincmd x<CR>
+" move current window to top
+nnoremap <leader>w<Up> :wincmd K<CR>
+" move current window to bottom
+nnoremap <leader>w<Down> :wincmd J<CR>
+" move current window to far left
+nnoremap <leader>w<Left> :wincmd H<CR>
+" move current window to far right
+nnoremap <leader>w<Right> :wincmd L<CR>
+" shortcuts for common commands
+nnoremap <leader>= :wincmd =<CR>
+nnoremap <leader>_ :wincmd _<CR>
+nnoremap <leader>\| :wincmd \|<CR>
+nnoremap <leader>] :wincmd L<CR>
+" increase/decrease window width
+nnoremap <leader>> :10wincmd ><CR>
+nnoremap <leader>< :10wincmd <<CR>
+
+" Tab navigation with Ctrl-Tab (only works in gui vim)
+noremap <C-Tab> :tabnext<cr>
+noremap <S-C-Tab> :tabprevious<cr>
+
+" Open vim alternate file, i.e. previously edited file in window
+nnoremap <Leader># :edit#<CR>
+
+" Quick switching between alternate files
+nnoremap <Leader><leader> <C-^>
+
+" Close preview window (easier than CTRL-W CTRL-Z)
+nnoremap <Leader>p :pclose<CR>
+
+" Search with nomagic, see :h nomagic
+nnoremap <leader>/ /\V
+
+" Convenient mapping to open command history
+command! CmdHistory call feedkeys(":\<C-F>")
+nnoremap <silent> <leader>: :CmdHistory<CR>
 
 " Disable vim-visual-multi mappings, except CTRL-n (see :h vm-find-word)
 let g:VM_default_mappings = 0
@@ -298,6 +356,9 @@ let g:jsx_ext_required = 0
 " Disable gitgutter by default, toggle using <leader>gg
 let g:gitgutter_enabled = 0
 
+" Disablde default gitgutter mappings, custom mappings set below
+let g:gitgutter_map_keys = 0
+
 " Enable Vim popup win with git-messenger (currently relies on my fork)
 let g:git_messenger_vimpopup_enabled = 1
 let g:git_messenger_always_into_popup = 1
@@ -323,70 +384,6 @@ autocmd VimEnter * if exists("g:loaded_nerdfont") |
 let g:fuzzbox_devicons_color_table = {
   \ '*.coffee': 'chocolate',
   \ }
-hi link NERDTreeFlags Normal
-augroup vimrc_fuzzbox
-  autocmd! *
-  autocmd FileType nerdtree,bufexplorer
-    \ try |
-    \   call fuzzbox#devicons#Colorize() |
-    \   catch /\v:(E700|E117):/ |
-    \ endtry
-augroup END
-
-" Custom basic auto-closing pair rules for Lexima, fewer than the defaults in
-" Lexima and stricter, cursor must be before whitespace or one of ;:.,=})>]
-let g:lexima_enable_basic_rules = 0
-let s:lexima_before_pattern = '\([;:.,=})>]\|\]\|\s\|\n\)'
-let s:lexima_closing_pairs = { '[': ']', '(': ')', '{': '}', '"': '"', '''': '''', '`': '`' }
-let s:lexima_filetype_rules = [
-\ {'char': '"', 'at': '^\s*\%#', 'filetype': 'vim'},
-\ {'char': '"', 'at': '\%#\s*$', 'filetype': 'vim'},
-\ {'char': "'", 'filetype': ['haskell', 'lisp', 'clojure', 'ocaml', 'reason', 'scala', 'rust']},
-\ {'char': '`', 'filetype': ['ocaml', 'reason']},
-\ {'char': '"', 'at': '""\%#'. s:lexima_before_pattern, 'input_after': '"""', 'filetype': ['python', 'scala', 'java', 'kotlin']},
-\ {'char': '"', 'at': '\%#"""'. s:lexima_before_pattern, 'leave': 3, 'filetype': ['python', 'scala', 'java', 'kotlin']},
-\ {'char': '`', 'at': '``\%#' . s:lexima_before_pattern, 'input_after': '```', 'filetype': ['markdown']},
-\ {'char': '`', 'at': '\%#```'. s:lexima_before_pattern, 'leave': 3, 'filetype': ['markdown']},
-\]
-" don''t leave me this way, one apostrophe pls
-let s:lexima_apostrophe_rule = {'char': "'", 'at': '\w\%#''\@!', 'priority': 1}
-" workarund for duplicate 'augroup END' on CR
-let s:lexima_augroup_end_rule = {'char': '<CR>', 'at': '^\s*\(aug\|augroup\) END\s*\%#$', 'filetype': 'vim'}
-function! ApplyLeximaRules()
-  for [open, close] in items(s:lexima_closing_pairs)
-    let insert_at = '\%#' . s:lexima_before_pattern
-    let delete_at = ( open == '[' ? '\[\%#\]' : $'{open}\%#{close}' ) . s:lexima_before_pattern
-    call lexima#add_rule({'char': open, 'at': insert_at, 'input_after': close})
-    call lexima#add_rule({'char': '<BS>', 'at': delete_at, 'delete': 1})
-    call lexima#add_rule({'char': close, 'at': $'\%#{close}', 'leave': 1})
-    call lexima#add_rule({'char': open, 'at': '\%#', 'syntax': 'String'})
-  endfor
-  call lexima#add_rule(s:lexima_apostrophe_rule)
-  call lexima#add_rule(s:lexima_augroup_end_rule)
-  for rule in s:lexima_filetype_rules
-    call lexima#add_rule(rule)
-  endfor
-endfunction
-augroup vimrc_lexima
-  au!
-  autocmd VimEnter * if exists('g:loaded_lexima') | call ApplyLeximaRules() | endif
-augroup END
-
-" Update devicon glyphs for nerd fonts v3
-" See https://github.com/ryanoasis/vim-devicons/issues/452
-" And https://github.com/ryanoasis/vim-devicons/pull/454
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tex']    = '󰙧'  " nf-md-stop_circle_outline
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['cs']     = '󰌛'  " nf-md-language_csharp
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['r']      = '󰟔'  " nf-md-language_r
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['rproj']  = '󰗆'  " nf-md-vector_rectangle
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sol']    = '󰡪'  " nf-md-ethereum
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['pem']    = '󰌋'  " nf-md-key_variant
-" And other nerd font glyphs that are missing from vim-devicons
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['kt']     = '󱈙' " nf-md-language_kotlin
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['lisp']   = '' " nf-custom-common_lisp
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['ps1']    = '󰨊' " nf-md-powershell
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['zig']    = '' " nf-seti-zig
 
 " Airline configuration, less noise please, thank you :-)
 let g:airline#extensions#tagbar#enabled = 0
@@ -485,300 +482,6 @@ let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 let g:splitjoin_join_mapping = ''
 let g:splitjoin_split_mapping = ''
 
-" Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
-" Allows other autocmds to check what has been applied by EditorConfig
-function! <SID>EditorConfigHook(config)
-  let b:editorconfig = a:config
-endfunction
-if exists('g:loaded_EditorConfig')
-  call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
-else
-  echoerr "WARNING: EditorConfig plugin not loaded, Sleuth will be used to detect indentation settings"
-endif
-
-" Only use Sleuth as fallback to detect indent when EditorConfig not applied
-autocmd BufReadPost *
-    \ if !exists('b:editorconfig') || (type(b:editorconfig) == 4 && b:editorconfig->get('indent_size', 'unset') ==# 'unset') |
-    \   exe ':silent! Sleuth' |
-    \ endif
-
-" Disable better whitespace plugin when configured via EditorConfig
-autocmd BufReadPost *
-    \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
-    \   exe 'silent! DisableStripWhitespaceOnSave' |
-    \ endif
-
-function! FileViewer()
-  if !empty(&buftype) || empty(bufname('%')) || !filereadable(expand('%'))
-    echoerr "Cannot view file: invalid buffer type or file not found"
-    return
-  endif
-  let cmd = ''
-  if &ft == 'markdown' && executable('glow')
-    let cmd = 'glow -w 120 -p %'
-  elseif &ft == 'markdown' && executable('mdcat')
-    let cmd = 'mdcat -p %'
-  elseif &ft =~ '\v(x)?html' && executable('w3m')
-    let cmd = 'w3m %'
-  elseif executable('bat') && system('file -b ' . expand('%')) =~ 'text'
-    let cmd = 'bat --theme base16 %'
-  endif
-  if empty(cmd)
-    echoerr "Cannot view file: no viewer found for filetype " . &filetype
-    return
-  endif
-  let title = expandcmd(cmd, '%:~:.')
-  silent execute 'FloatermNew --disposable --titleposition=center --title=\ ' . substitute(title, ' ', '\\ ', 'g')  .  '\  ' . cmd
-endfunction
-command! FileViewer call FileViewer()
-nnoremap <Leader>v :FileViewer<CR>
-
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ -S\ -M1000\ --no-config\ --hidden\ --no-ignore-parent\ --ignore-file\ ~/.vim/rgignore
-  set grepformat=%f:%l:%c:%m
-else
-  echoerr "WARNING: ripgrep not found, finding files will be slow, install ripgrep to fix this, see https://github.com/BurntSushi/ripgrep"
-endif
-
-" Tweak some highilghting from colour schemes
-autocmd VimEnter,ColorScheme *
-  \ hi clear QuickFixLine |
-  \ hi QuickFixLine ctermfg=red guifg=red |
-  \ if get(g:, 'colors_name', v:null) ==# 'onedark' |
-  \   hi Visual ctermbg=64 |
-  \   hi Comment ctermfg=243 |
-  \   hi SpecialComment ctermfg=243 |
-  \   hi StatusLine ctermbg=242 |
-  \   hi StatusLineNC ctermbg=237 |
-  \   hi Search ctermfg=235 ctermbg=108 |
-  \   hi IncSearch ctermfg=235 ctermbg=215 |
-  \   hi! link CurSearch IncSearch |
-  \ elseif get(g:, 'colors_name', v:null) ==# 'PaperColor' |
-  \   hi Spellbad guibg=NONE guifg=NONE |
-  \ endif
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Add cut/move mappings (delete operations overridden by vim-cutlass to just
-" delete, not yank and delete, see https://github.com/svermeulen/vim-cutlass)
-" Warning: breaks "m{a-zA-Z}" command to set named marks, and "M" to move to
-" the middle of screen. Use alternate mappings gm and Z for these instead.
-nnoremap gm m
-nnoremap Z M
-nnoremap m d
-xnoremap m d
-nnoremap mm dd
-nnoremap M D
-
-" Use q to close the quickfix window and return to the previous window
-autocmd FileType qf nnoremap <silent> <buffer> q :wincmd p<CR>:cclose<CR>:wincmd =<CR>
-
-" Fix previous window navigation when existing quickfix window re-used
-autocmd QuickFixCmdPre * if &ft == 'qf' | wincmd p | end
-
-" Mark previous cursor position when entering visual mode, this abuses the
-" first character of previously changed text mark to allow for deletion from
-" visual mode, otherise we might jump to a position where text was deleted.
-" For consistency, also set the mark for the end of changed text, see :h `[
-" And set the last known cursor pos mark to detect deletion of text, see :h ``
-nnoremap v m`m[m]v
-nnoremap V m`m[m]V
-nnoremap <C-v> m`m[m]<C-v>
-nnoremap <2-LeftMouse> m`m[m]<2-LeftMouse>
-nnoremap <LeftDrag> m`m[m]<LeftDrag>
-
-" And return to previous cursor position when leaving visual mode
-" ModeChanged pattern derived from https://github.com/vim/vim/commit/25def2c8
-" After deletion in visual line mode, jump to the first non-blank character,
-" consistent with the default behaviour without these mappings and autocmds
-if exists('##ModeChanged')
-  autocmd ModeChanged [vV\x16]*:n
-    \ if ( getpos("'`") != getpos("'[") ) && ( v:event['old_mode'] ==# 'V' ) |
-    \   exe "normal! '[" |
-    \ else |
-    \   exe "normal! `[" |
-    \ endif
-endif
-
-" Readable splitjoin mappings with no fallback to built in gJ
-nmap gJ <plug>SplitjoinJoin
-nmap gS <plug>SplitjoinSplit
-
-" Quickly remove indent in visual mode
-vmap 0 99<<
-
-" Remap visual gJ to remove indent when joining lines
-function! VisualJoinRemoveIndent()
-  normal! gv99<<
-  normal! gvgJ
-  normal! gv=
-endfunction
-vnoremap gJ :<C-u>call VisualJoinRemoveIndent()<CR>
-
-" Move block selections around in visual mode with schlepp plugin
-vmap <C-Up> <Plug>SchleppUp
-vmap <C-Down> <Plug>SchleppDown
-vmap <C-Left> <Plug>SchleppLeft
-vmap <C-Right> <Plug>SchleppRight
-
-" Calculate sum, avg, min, and max of visual selection using vmath plugin
-vmap <expr> ++ VMATH_YankAndAnalyse()
-
-" Tab navigation with Ctrl-Tab (only works in gui vim)
-noremap <C-Tab> :tabnext<cr>
-noremap <S-C-Tab> :tabprevious<cr>
-
-" Open vim alternate file, i.e. previously edited file in window
-nnoremap <Leader># :edit#<CR>
-
-" Close preview window (easier than CTRL-W CTRL-Z)
-nnoremap <Leader>p :pclose<CR>
-
-" Additional mapping for quick switching between alternate files
-nnoremap <Leader><leader> <C-^>
-
-" Search with nomagic, almost like fgrep/grep --fixed-strings, see :h nomagic
-nnoremap <leader>/ /\V
-
-" Convenient mapping to open command history
-command! CmdHistory call feedkeys(":\<C-F>")
-nnoremap <silent> <leader>: :CmdHistory<CR>
-
-" Highlight whitespace
-nnoremap <leader>yW :ToggleWhitespace<CR>
-
-" Toggle colorizing of color codes and names
-nnoremap <leader>yC :ColorToggle<CR>
-
-" Toggle indent guides / lines
-nnoremap <leader>i :IndentLinesToggle<CR>
-
-" Toggle ALE linting (disabled by default)
-function! ToggleALE()
-  if g:ale_enabled
-    ALEDisable
-    echohl MoreMsg | echom 'ALE disabled' | echohl None
-  else
-    ALEEnable
-    echohl MoreMsg | echom 'ALE enabled' | echohl None
-  endif
-endfunction
-command! ToggleALE call ToggleALE()
-nnoremap <silent><leader>a :ToggleALE<CR>
-
-" Toggle quickfix list
-function! ToggleQuickfixList()
-  if get(getqflist({'winid': 1}), 'winid') != 0
-    cclose
-  elseif getqflist() != []
-    copen
-  else
-    echohl ErrorMsg
-    echo "Quickfix List is empty."
-    echohl None
-  endif
-endfunction
-command! ToggleQuickfixList call ToggleQuickfixList()
-nnoremap <silent><leader>q :ToggleQuickfixList<CR>
-
-" Toggle location list
-function! ToggleLocationList()
-  if get(getloclist(winnr(), {'winid': 1}), 'winid') != 0
-    lclose
-  elseif getloclist(winnr()) != []
-    lopen
-  else
-    echohl ErrorMsg
-    echo "Location List is empty."
-    echohl None
-  endif
-endfunction
-command! ToggleLocationList call ToggleLocationList()
-nnoremap <silent><leader>l :ToggleLocationList<CR>
-
-" Toggle project drawer / tree view, but unlike NERDTreeToggle
-" command, locate the current file in the tree when opening
-function! ToggleNERDTree()
-  if g:NERDTree.IsOpen()
-    NERDTreeClose
-  elseif filereadable(expand('%'))
-    NERDTreeFind
-    exe "norm! zz"
-  else
-    NERDTreeFocus
-  endif
-endfunction
-command! ToggleNERDTree call ToggleNERDTree()
-nnoremap <silent><leader>e :ToggleNERDTree<CR>
-
-" Toggle terminal - for default shell only, other terms ignored
-function! TerminalToggle()
-  let termbufs = filter(term_list(), { _, bufnr -> stridx(bufname(bufnr), $SHELL) > 0 })
-  if empty(termbufs)
-    call Terminal()
-  else
-    let termwins = filter(map(copy(termbufs), { _, bufnr -> bufwinnr(bufnr) }), 'v:val != -1')
-    if empty(termwins)
-      for bufnr in termbufs | exe 'sbuffer ' . bufnr | endfor
-    else
-      for winnr in reverse(sort(termwins)) | exe winnr . 'wincmd c' | endfor
-    endif
-  endif
-endfunction
-nnoremap <C-W>` :call TerminalToggle()<CR>
-tnoremap <C-W>` <C-W>:call TerminalToggle()<CR>
-
-" Open terminal in directory of current file
-function! Terminal()
-  if getcwd() ==# expand('%:p:h')
-    terminal
-  else
-    let $OLDPWD = getcwd()
-    split | silent lcd %:p:h | terminal ++curwin
-    echohl WarningMsg
-    echo "Terminal started relative to current file, cd - returns to cwd"
-    echohl None
-    call timer_start(3000, { -> execute("echo ''", "") })
-  endif
-endfunction
-command Terminal call Terminal()
-nnoremap <silent><leader>` :Terminal<CR>
-
-" Custom terminal statusline, not a normal editor window
-if exists('##TerminalWinOpen')
-  autocmd TerminalWinOpen * setlocal statusline=%f
-endif
-
-" Additional window mappings
-" Minimal vimrc includes CTRL + arrow key mappings
-" open vim defined alternate file in new vertial split
-nnoremap <leader>w# :vsplit#<CR>
-" open plugin defined alternate file in new vertial split
-nnoremap <leader>wa :AV<CR>
-" horizontal and vertical splits
-nnoremap <leader>ws :wincmd s<CR>
-nnoremap <leader>wv :wincmd v<CR>
-" rotate and exchange windows
-nnoremap <leader>wr :wincmd r<CR>
-nnoremap <leader>wx :wincmd x<CR>
-" move current window to top
-nnoremap <leader>w<Up> :wincmd K<CR>
-" move current window to bottom
-nnoremap <leader>w<Down> :wincmd J<CR>
-" move current window to far left
-nnoremap <leader>w<Left> :wincmd H<CR>
-" move current window to far right
-nnoremap <leader>w<Right> :wincmd L<CR>
-" shortcuts for common commands
-nnoremap <leader>= :wincmd =<CR>
-nnoremap <leader>_ :wincmd _<CR>
-nnoremap <leader>\| :wincmd \|<CR>
-nnoremap <leader>] :wincmd L<CR>
-" increase/decrease window width
-nnoremap <leader>> :10wincmd ><CR>
-nnoremap <leader>< :10wincmd <<CR>
-
 " indentation text objects, visual, select, and operator-pending modes
 let g:vindent_object_XX_ii = 'ii' " inner indent level, including blank lines
 let g:vindent_object_OX_ii = 'iI' " inner indent level, excluding blank lines
@@ -796,41 +499,75 @@ let g:vindent_motion_more_next = ']+' " jump to next line with more indent.
 let g:vindent_motion_less_prev = '[-' " jump to prev line with less indent.
 let g:vindent_motion_less_next = ']-' " jump to next line with less indent.
 
-" Tag navigation
-" remap CTRL-] to show list when multiple matches, see :h g_CTRL-]
-nnoremap <C-]> g<C-]>
-" use g] jump to tag in next window (and split if necessary)
-function! TJumpNextWin()
-  let currword = expand("<cword>")
-  let startwin = winnr()
-  " Move to next window with a normal buffer
-  let c = winnr()
-  let n = winnr('$')
-  while c < n
-    exec 'wincmd w'
-    if empty(getbufvar(+expand("<abuf>"), "&buftype"))
-      break
-    endif
-    let c = c + 1
-  endwhile
-  " Back where we started? Open a new split
-  if winnr() == startwin
-    exec 'wincmd v'
-  endif
-  try
-    exec "tag " . currword
-  catch
-    " Go back to startwin on error
-    exec startwin . "wincmd w"
-    echoerr v:exception
-  endtry
-endfunction
-command! TJumpNextWin call TJumpNextWin()
-nnoremap g] :TJumpNextWin<CR>
-
 " I think I needed to set this for VimspectorInstall to work properly
 " FIXME: investigate why this was necessary, docs suggest it should not be
 let g:vimspector_base_dir = expand('~/.vim/pack/bundle/start/vimspector')
+
+" Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
+" Allows other autocmds to check what has been applied by EditorConfig
+function! <SID>EditorConfigHook(config)
+  let b:editorconfig = a:config
+endfunction
+" Note: editorconfig plugin loaded automatically by friendly.vim
+if exists('g:loaded_EditorConfig')
+  call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
+
+  " Use Sleuth as fallback to detect indent when EditorConfig not applied
+  autocmd vimrc BufReadPost *
+    \ if !exists('b:editorconfig') || (type(b:editorconfig) == 4 && b:editorconfig->get('indent_size', 'unset') ==# 'unset') |
+    \   exe ':silent! Sleuth' |
+    \ endif
+
+  " Disable better whitespace plugin when configured via EditorConfig
+  autocmd vimrc BufReadPost *
+    \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
+    \   exe 'silent! DisableStripWhitespaceOnSave' |
+    \ endif
+else
+  echoerr "WARNING: EditorConfig plugin not loaded, Sleuth will be used to detect indentation settings"
+endif
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Add cut/move mappings (delete operations overridden by vim-cutlass to just
+" delete, not yank and delete, see https://github.com/svermeulen/vim-cutlass)
+" Warning: breaks "m{a-zA-Z}" command to set named marks, and "M" to move to
+" the middle of screen. Use alternate mappings gm and Z for these instead.
+nnoremap gm m
+nnoremap Z M
+nnoremap m d
+xnoremap m d
+nnoremap mm dd
+nnoremap M D
+
+" Readable splitjoin mappings with no fallback to built in gJ
+nmap gJ <plug>SplitjoinJoin
+nmap gS <plug>SplitjoinSplit
+
+" Move block selections around in visual mode with schlepp plugin
+vmap <C-Up> <Plug>SchleppUp
+vmap <C-Down> <Plug>SchleppDown
+vmap <C-Left> <Plug>SchleppLeft
+vmap <C-Right> <Plug>SchleppRight
+
+" Calculate sum, avg, min, and max of visual selection using vmath plugin
+vmap <expr> ++ VMATH_YankAndAnalyse()
+
+" Highlight whitespace
+nnoremap <leader>yW :ToggleWhitespace<CR>
+
+" Toggle colorizing of color codes and names
+nnoremap <leader>yC :ColorToggle<CR>
+
+" Toggle indent guides / lines
+nnoremap <leader>i :IndentLinesToggle<CR>
+
+" Toggle ALE linting (disabled by default)
+nnoremap <silent><leader>a :ALEToggle<CR>
+
+" Toggle file explorer (NERDTree)
+nnoremap <silent><leader>e :NERDTreeToggle<CR>
 
 " Launch graphical debugger/inspector (vimspector)
 nmap <Leader>dl <Plug>VimspectorLaunch
@@ -930,41 +667,6 @@ nmap <silent> ]a :ALENextWrap<CR>
 nmap <silent> [A :ALEFirst<CR>
 nmap <silent> ]A :ALELast<CR>
 
-" Custom grep prompt, inspired by vim-grepper, but simpler, runs grepprg in a
-" subshell to avoid the "Press ENTER to continue" prompt when running external
-" commands, and also allow use of cmdline special characters without escaping
-function! Grepper(...)
-  echohl Question
-  let args = trim(input('grep> ', join(a:000, ' '), 'customlist,GrepperComplete'))
-  echohl None
-  if empty(args) | redraw! | return | end
-  let grepcmd = &grepprg . ' ' . args
-  redraw!
-  echohl MessageWindow | echo "Running: " . grepcmd | echohl None
-  try
-    noautocmd cgetexpr system(grepcmd)
-    call setqflist([], 'r', #{title: grepcmd})
-  catch /^Vim:Interrupt$/
-    call setqflist([], 'r', #{title: grepcmd . ' (Interrupted)'})
-    echoerr "Interrupted: " . grepcmd
-  finally
-    redraw! | copen
-  endtry
-endfunction
-
-" Simple completion for grep prompt, also inspired by vim-grepper
-function! GrepperComplete(lead, _line, _pos)
-  let args = split(a:lead, '.*\s\zs', 1)
-  if len(args) < 2 | return [] | end
-  let path = args[-1]
-  let head = join(args[0:-2])
-  return map(getcompletion(args[-1], 'dir'), 'head . fnameescape(v:val)')
-endfun
-
-" Search in files using grep program, see :help grepprg and :help grep
-command! Grepper call Grepper()
-nnoremap <leader>s :Grepper<CR>
-
 " List projects, only used in GUI vim, see gvimrc
 if has('gui_running')
   nnoremap <leader>P :SessionSave<CR>:SessionList<CR>
@@ -986,191 +688,13 @@ nnoremap <leader>R :MRURoot<CR>
 " Outline view of current file
 nnoremap <leader>o :TagbarToggle<CR>
 
-" Focus the current window for distraction free reading and/or writing
-let g:goyo_width = 100
-function! FocusWin() abort
-  if exists('#goyo')
-    execute 'Goyo'
-  else
-    let width = g:goyo_width
-    if empty(&buftype) && &textwidth > 0
-      if (&tw + (&tw / 20)) > width
-        let width = (&tw + (&tw / 20))
-      endif
-    endif
-    execute 'Goyo' . width
-  endif
-endfunction
-command! FocusWin call FocusWin()
-nnoremap <Leader>x :FocusWin<CR>
-
-" Expand/maximize current window (similar to tmux zoom pane)
-" See https://stackoverflow.com/a/26551079/17278003
-function! ZoomWin() abort
-  if winnr('$') == 1 | return | endif
-  if exists('w:zoomed') && w:zoomed
-    execute w:zoom_winrestcmd
-    let w:zoomed = 0
-  else
-    let w:zoom_winrestcmd = winrestcmd()
-    resize
-    vertical resize
-    let w:zoomed = 1
-  endif
-endfunction
-autocmd WinLeave * if exists('w:zoomed') && w:zoomed | call ZoomWin() | endif
-command! ZoomWin call ZoomWin()
-nnoremap <Leader>z :ZoomWin<CR>
-
 " Remap gs to open Scratch window in normal rather than insert mode
 let g:scratch_no_mappings = 1 " must disable plugin mappings first
 nnoremap gs :Scratch<CR>
 
-if exists('##TerminalWinOpen')
-  " Make p paste from unanmed register in terminal normal mode
-  au TerminalWinOpen *
-    \ nnoremap <silent> <buffer> p :call term_sendkeys('', getreg()) \| normal! A<CR>
-endif
-
 " Workaround for vim-vinegar not working with g:netrw_altfile = 1
 " See https://github.com/tpope/vim-vinegar/issues/137
 nnoremap - :Explore<CR>:silent! call search('^' . expand('#:t'), 'wc')<CR>
-
-" Custom filetype detection, runs after built in filetype detection
-" Using augroup filetypedetect means this re-runs on :filetype detect,
-" which means it works after restoring a macvim session (see gvimrc).
-augroup filetypedetect
-  " Set .asc to AsciiDoc as this is recognised by GitHub (Vim only recognises
-  " .asciidoc and .adoc extensions by default, see $VIMRUNTIME/filetype.vim)
-  " Regex allows for armoured ascii PGP public key files with .asc extension
-  " AGS script files also use .asc extension, but checking for this is more
-  " complicated and vim doesn't recognise the filetype, so ignoring for now.
-  autocmd BufRead,BufNewFile *.asc
-    \ if getline(1) !~# '^-----BEGIN/' |
-    \   setfiletype asciidoc |
-    \ endif
-
-  " Additional ruby syntax highlighting
-  autocmd BufRead,BufNewFile {Berksfile,Brewfile,Capfile,Thorfile,.pryrc,pryrc,*.cap,*.thor}
-    \ setfiletype ruby
-
-  " Set cloudformation filetypes to enable linting in ALE
-  autocmd Filetype yaml,json
-    \ let lines = getline(1, min([line("$"), 10])) |
-    \ if match(lines, 'AWSTemplateFormatVersion') != -1 |
-    \   let &ft=&ft . '.cloudformation' |
-    \ endif
-
-  " Set conf.local filetype to conf
-  autocmd BufRead,BufNewFile *.conf.local setfiletype conf
-augroup END
-
-" Set dict as keywordprg for text, markdown etc. if installed, but load dict
-" program output in preview window rather than simply run an external command
-if executable("dict")
-  function! <SID>Dict(word)
-    silent! exe "noautocmd pedit dict \\\"" . a:word . "\\\""
-    noautocmd wincmd P
-    setlocal modifiable
-    setlocal buftype=nofile
-    setlocal nobuflisted
-    setlocal nofoldenable
-    setlocal statusline=%f
-    setlocal keywordprg=:Dict
-    nnoremap <buffer><silent> q :bw!<CR>
-
-    silent! exe "noautocmd r! dict \"" . a:word . "\""
-    silent! exe "1d_"
-    silent! exe "gg"
-    setlocal nomodifiable
-  endfunction
-  command! -nargs=1 Dict :call <SID>Dict(<q-args>)
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
-    \ setlocal keywordprg=:Dict
-endif
-
-" Use html omnicompletion for xhtml documents
-autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
-
-" Use syntax based completion as fallback for omnicompletion
-autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
-
-" Use xmllint as exernal program for formatting xml
-autocmd FileType xml exec 'setlocal formatprg=XMLLINT_INDENT=' . &sw . '\ xmllint\ --format\ --recover\ -'
-
-" Use jq as external program for formatting json
-" Note: jq preferred to jsonhint simply because easier to set indent level
-autocmd FileType json exec 'setlocal formatprg=jq\ --indent\ ' . &sw . '\ .'
-
-" Use js-beautify as external program for formatting javascript
-autocmd FileType javascript exec 'setlocal formatprg=js-beautify\ --indent-size=' . &sw . '\ -'
-
-" Use black formatter as external program for formatting python
-autocmd FileType python exec 'setlocal formatprg=black\ --quiet\ --line-length=' . &tw . '\ -'
-
-" Use rubocop as external program for formatting ruby
-if executable('rubocop') " check if exists as redirecting stderr to /dev/null
-  " Note: --stdin FILE ignored, not needed for formatting
-  autocmd FileType ruby setlocal formatprg=rubocop\ -x\ --stdin\ _\ --stderr\ 2>/dev/null
-endif
-
-" Experimental: Automatically reveal current file in NERDTree
-autocmd WinEnter,BufEnter *
-  \ if empty(&buftype) && exists('g:NERDTree') && g:NERDTree.IsOpen()
-  \ && filereadable(expand('%')) && stridx(fnamemodify(expand('%'), ':p'), getcwd()) == 0 |
-  \   noautocmd NERDTreeFind | exe "norm! zz" | noautocmd wincmd p |
-  \ end
-
-" Highlight long lines in active window rather than display colorcolumn
-" Note: set custom hlgroup as goyo.vim overrides CursorColumn when active
-function! <SID>SetLongLineHl()
-  let hlgroup_attrs = hlget('ColorColumn')[0]
-  let hlgroup_attrs['name'] = 'LongLine'
-  call hlset([hlgroup_attrs])
-endfunction
-call <SID>SetLongLineHl()
-autocmd ColorScheme * call <SID>SetLongLineHl()
-function! <SID>HighlightLongLines()
-  if exists('w:long_lines_mid')
-    silent! call matchdelete(w:long_lines_mid)
-  endif
-  if empty(&buftype) && &textwidth > 0
-    let w:long_lines_mid = matchadd('LongLine', '\%'.(&tw+1).'v.\+', -1)
-  endif
-endfunction
-autocmd WinEnter,BufEnter * call <SID>HighlightLongLines()
-autocmd WinLeave,BufLeave * silent! call matchdelete(w:long_lines_mid)
-if exists('##OptionSet')
-  autocmd OptionSet textwidth call <SID>HighlightLongLines()
-endif
-
-" Set working directory when opening vim, use directory of current file when
-" provided as argument, otherwise cwd to root of project/package if possible.
-" Note: uses vim-rooter, and works nicely with monorepos (not reliant on VCS)
-function! <SID>SetWorkingDir()
-  if !exists('*FindRootDirectory')
-    return
-  endif
-  let $OLDPWD = getcwd()
-  if argc() == 1 && len(argv()) == 1
-    if isdirectory(argv(0))
-      exec 'cd' argv(0)
-    elseif filereadable(argv(0))
-      exec 'cd %:p:h'
-    end
-  elseif len(argv()) == 0 && stridx(getcwd(), $HOME) == 0
-    let l:root = FindRootDirectory()
-    if !empty(l:root) && l:root !=# getcwd()
-      exec 'cd' l:root
-    endif
-  endif
-  if $OLDPWD !=# getcwd()
-    echohl WarningMsg
-    echo "vimrc: cwd changed to '" . getcwd() . "', :cd - returns to previous cwd"
-    echohl None
-  endif
-endfunction
-autocmd VimEnter * call <SID>SetWorkingDir()
 
 if filereadable(expand("~/.vim/vimrc.local"))
   source ~/.vim/vimrc.local
