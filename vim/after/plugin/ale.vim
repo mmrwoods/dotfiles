@@ -14,3 +14,10 @@ function! ALEToggle()
   endif
 endfunction
 command! ALEToggle call ALEToggle()
+
+nnoremap <silent><leader>a :ALEToggle<CR>
+
+nmap <silent> [a :ALEPreviousWrap<CR>
+nmap <silent> ]a :ALENextWrap<CR>
+nmap <silent> [A :ALEFirst<CR>
+nmap <silent> ]A :ALELast<CR>

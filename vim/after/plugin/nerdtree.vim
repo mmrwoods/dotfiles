@@ -15,6 +15,8 @@ function! NERDTreeToggle()
 endfunction
 command! NERDTreeToggle call NERDTreeToggle()
 
+nnoremap <silent><leader>e :NERDTreeToggle<CR>
+
 " Automatically reveal current file in NERDTree
 augroup vimrc_nerdtree
   au!

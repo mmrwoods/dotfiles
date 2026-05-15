@@ -13,6 +13,9 @@ else
   set lines=999 columns=999
 endif
 
+" Autocmd group for all autocmds in this file, cleared on reload
+augroup gvimrc | au! | augroup END
+
 " save session data on exit
 let sessionman_save_on_exit=1
 
@@ -35,7 +38,10 @@ function! <SID>LoadLastSession()
   " may be cleared above, but will be re-created if a session is opened later.
   let &titlestring = "%f - %{v:servername} %{exists('g:LAST_SESSION')?'('.(g:LAST_SESSION).')':''}"
 endfunction
-autocmd VimEnter * call <SID>LoadLastSession()
+autocmd gvimrc VimEnter * call <SID>LoadLastSession()
+
+" List saved sessions / projects
+nnoremap <leader>S :SessionSave<CR>:SessionList<CR>
 
 if has("mac")
 
@@ -121,7 +127,7 @@ if has("mac")
   vnoremap § #
 
   " Automatically resize all windows when vim container window resized
-  autocmd VimResized * call <SID>EqualWindows()
+  autocmd gvimrc VimResized * call <SID>EqualWindows()
 
   " Rerun filetype detection after starting vim and loading session
   " Note: does not work on VimEnter or SessionLoadPost, so use timer
@@ -130,7 +136,7 @@ if has("mac")
       windo if empty(&filetype) | filetype detect | endif
       1 wincmd w
     endfunction
-    autocmd VimEnter * call timer_start(100, '_VimEnterPost', {'repeat':0})
+    autocmd gvimrc VimEnter * call timer_start(100, '_VimEnterPost', {'repeat':0})
   endif
 
 endif

@@ -47,12 +47,6 @@ endif
 autocmd vimrc Filetype *
   \ if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
 
-" no hanging indent for ruby assignment, see $VIMRUNTIME/indent/ruby.vim
-" THIS-> │ let x = if foo     NOT-> │ let x = if foo
-"        │   bar                    │           bar
-"        │ end                      │         end
-let g:ruby_indent_assignment_style = 'variable'
-
 " Mark previous cursor position when entering visual mode, this abuses the
 " first character of previously changed text mark to allow for deletion from
 " visual mode, otherise we might jump to a position where text was deleted.
@@ -117,6 +111,14 @@ nnoremap <leader>] :wincmd L<CR>
 nnoremap <leader>> :10wincmd ><CR>
 nnoremap <leader>< :10wincmd <<CR>
 
+" Toggle options, inspired by vim-unimpaired (y kinda like a switch)
+nnoremap <leader>yc :setlocal cursorcolumn!<CR>
+nnoremap <leader>yl :setlocal list!<CR>
+nnoremap <leader>yn :setlocal number!<CR>
+nnoremap <leader>yr :setlocal relativenumber!<CR>
+nnoremap <leader>ys :setlocal spell!<CR>
+nnoremap <leader>yw :setlocal wrap!<CR>
+
 " Tab navigation with Ctrl-Tab (only works in gui vim)
 noremap <C-Tab> :tabnext<cr>
 noremap <S-C-Tab> :tabprevious<cr>
@@ -172,16 +174,6 @@ let g:qfenter_exclude_filetypes = ['nerdtree', 'tagbar', 'scratch']
 " Tell QFEnter to move to next usable window rather than simply echo an error
 " when attempting to open a file in a window matching an excluded filetype
 let g:qfenter_excluded_action = 'next'
-
-" Open WhichKey menu for leader mappings after timeoutlen (500ms)
-nnoremap <silent> <leader> :WhichKey '\'<CR>
-" And for square bracket mappings from vim-unimpaired and friends
-nnoremap <silent> ] :WhichKey ']'<CR>
-nnoremap <silent> [ :WhichKey '['<CR>
-" Workaround for WhichKey bug affecting unimpaired option mappings
-" Writes part of RHS of map to buffer, so hide from WHichKey menu
-nnoremap <silent> ]o :WhichKey ''<CR>
-nnoremap <silent> [o :WhichKey ''<CR>
 
 " Add which-key to runtimepath on old vim versions to use which_key#register
 " In newer versions autoload searches packpath in addition to runtimepath
@@ -375,11 +367,6 @@ let g:fuzzbox_ripgrep_options = [
   \ "--ignore-file " . expand('~/.vim/rgignore')
   \ ]
 
-" For testing - use vim-nerdfont for fuzzbox glyphs if installed
-autocmd VimEnter * if exists("g:loaded_nerdfont") |
-  \   let g:fuzzbox_devicons_glyph_func = 'nerdfont#find' |
-  \ endif
-
 " Same devicon colors in NERDTree, BufExplorer, and Fuzzbox
 let g:fuzzbox_devicons_color_table = {
   \ '*.coffee': 'chocolate',
@@ -465,10 +452,6 @@ let test#project_root = { -> FindRootDirectory() }
 " Fix jest executable to work with turborepo
 let test#javascript#jest#executable = 'npx jest'
 
-" Override indent level for continuation lines in vimscript
-" Default is shiftwidth() * 3, see $VIMRUNTIME/ftplugin/vim.vim
-let g:vim_indent_cont = 2
-
 " Don't automatically use sleuth to detect indent etc., conflicts with some file
 " navigation plugins, sleuth uses :redir, which cannot be used inside execute()
 " Instead add a BufReadPost autocmd to run Sleuth if EditorConfig not applied
@@ -526,175 +509,6 @@ if exists('g:loaded_EditorConfig')
 else
   echoerr "WARNING: EditorConfig plugin not loaded, Sleuth will be used to detect indentation settings"
 endif
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Add cut/move mappings (delete operations overridden by vim-cutlass to just
-" delete, not yank and delete, see https://github.com/svermeulen/vim-cutlass)
-" Warning: breaks "m{a-zA-Z}" command to set named marks, and "M" to move to
-" the middle of screen. Use alternate mappings gm and Z for these instead.
-nnoremap gm m
-nnoremap Z M
-nnoremap m d
-xnoremap m d
-nnoremap mm dd
-nnoremap M D
-
-" Readable splitjoin mappings with no fallback to built in gJ
-nmap gJ <plug>SplitjoinJoin
-nmap gS <plug>SplitjoinSplit
-
-" Move block selections around in visual mode with schlepp plugin
-vmap <C-Up> <Plug>SchleppUp
-vmap <C-Down> <Plug>SchleppDown
-vmap <C-Left> <Plug>SchleppLeft
-vmap <C-Right> <Plug>SchleppRight
-
-" Calculate sum, avg, min, and max of visual selection using vmath plugin
-vmap <expr> ++ VMATH_YankAndAnalyse()
-
-" Highlight whitespace
-nnoremap <leader>yW :ToggleWhitespace<CR>
-
-" Toggle colorizing of color codes and names
-nnoremap <leader>yC :ColorToggle<CR>
-
-" Toggle indent guides / lines
-nnoremap <leader>i :IndentLinesToggle<CR>
-
-" Toggle ALE linting (disabled by default)
-nnoremap <silent><leader>a :ALEToggle<CR>
-
-" Toggle file explorer (NERDTree)
-nnoremap <silent><leader>e :NERDTreeToggle<CR>
-
-" Launch graphical debugger/inspector (vimspector)
-nmap <Leader>dl <Plug>VimspectorLaunch
-nmap <leader>db <Plug>VimspectorBreakpoints
-nmap <leader>dt <Plug>VimspectorToggleBreakpoint
-nmap <leader>dh :help vimspector-visual-studio-vscode<CR>
-nmap ]` <Plug>VimspectorJumpToNextBreakpoint
-nmap [` <Plug>VimspectorJumpToPreviousBreakpoint
-
-nmap <leader>tn :TestNearest<CR>
-nmap <leader>tf :TestFile<CR>
-nmap <leader>ta :TestSuite<CR>
-nmap <leader>tl :TestLast<CR>
-nmap <leader>tv :TestVisit<CR>
-
-" Unicode mappings (use <C-X><C-Z> for ins-completion of unicode chars)
-" Search for specific digraph char
-nnoremap <leader>ud :Digraphs<SPACE>
-" Search for specific Unicode char
-nnoremap <leader>us :UnicodeSearch<SPACE>
-" Search for specific Unicode char (and insert at current cursor position)
-nnoremap <leader>ui :UnicodeSearch!<SPACE>
-" Identify character under cursor (like ga command)
-nnoremap <leader>un :UnicodeName<CR>
-" Print Unicode Table in new window
-nnoremap <leader>ut :UnicodeTable<CR>
-nnoremap <leader>uh :help unicode-commands<CR>
-
-" Toggle options, <leader>y inspired by vim-unimpaired (y kinda like a switch)
-nnoremap <leader>yc :setlocal cursorcolumn!<CR>
-nnoremap <leader>yl :setlocal list!<CR>
-nnoremap <leader>yn :setlocal number!<CR>
-nnoremap <leader>yr :setlocal relativenumber!<CR>
-nnoremap <leader>ys :setlocal spell!<CR>
-nnoremap <leader>yw :setlocal wrap!<CR>
-
-" Additional Fuzzbox commands and mappings
-command! FuzzyFilesAll call fuzzbox#Launch('files', #{command: 'rg -uu --files'})
-nnoremap <leader>fa :FuzzyFilesAll<CR>
-nnoremap <leader>fF :FuzzyFilesRoot<CR>
-nnoremap <leader>fG :FuzzyGrepRoot<CR>
-nnoremap <leader>fj :FuzzyJumps<CR>
-nnoremap <leader>fm :FuzzyMarks<CR>
-nnoremap <leader>fR :FuzzyMruRoot<CR>
-nnoremap <leader>ft :FuzzyTags<CR>
-nnoremap <leader>fT :FuzzyTagsRoot<CR>
-" FuzzyGrep current word
-nnoremap <leader>fw :FuzzyGrep <C-R><C-W><CR>
-" https://github.com/vim-fuzzbox/fuzzbox-lsp.vim
-nnoremap <leader>fo :FuzzyLspDocumentSymbols<CR>
-nnoremap <leader>fs :FuzzyLspWorkspaceSymbols<CR>
-
-" fugitive/gitgutter mappings
-nmap <leader>gb :Git blame<CR>
-nmap <leader>gd :Git diff %<CR>
-nmap <leader>gD :Git diff<CR>
-nmap <leader>gg :GitGutterToggle<CR>
-nmap <leader>gl :Git log --oneline --follow %<CR>
-nmap <leader>gL :Git log --oneline<CR>
-nmap <leader>gm :GitMessenger<CR>
-nmap <leader>gp :Git peek %<CR>
-nmap <leader>gP :Git peek<CR>
-nmap <leader>gq :GitGutterQuickFixCurrentFile<CR>:copen<CR>
-nmap <leader>gQ :GitGutterQuickFix<CR>:copen<CR>
-command! GitStatus :exe ":Git"
-nmap <leader>gs :GitStatus<CR>
-nmap <leader>gv :Gvdiffsplit<CR>
-
-" gitgutter hunk mappings, normally <leader>h{s,u,p}
-nmap <leader>ghs <Plug>(GitGutterStageHunk)
-nmap <leader>ghu <Plug>(GitGutterUndoHunk)
-nmap <leader>ghp <Plug>(GitGutterPreviewHunk)
-
-" GitGutter normally conflicts with vim comment plugin (or the reverse)
-" Both use ic and ac mappings for text objects, so use h with GitGutter
-if maparg('[c', 'n') =~# 'GitGutter' " if gitgutter loaded before here
-  nunmap [c
-  nunmap ]c
-endif
-nmap [h <Plug>(GitGutterPrevHunk)
-nmap ]h <Plug>(GitGutterNextHunk)
-omap ih <Plug>(GitGutterTextObjectInnerPending)
-omap ah <Plug>(GitGutterTextObjectOuterPending)
-xmap ih <Plug>(GitGutterTextObjectInnerVisual)
-xmap ah <Plug>(GitGutterTextObjectOuterVisual)
-
-" additional lsp mappings
-" See lsp-settings.vim for defaults
-nmap <leader>D :LspDiagShow<CR>
-nmap <leader>O :LspOutline<CR>
-nmap <leader>S :LspSymbolSearch<CR>
-
-" linter mappings
-nmap <leader>F :ALEFix<CR>
-nmap <silent> [a :ALEPreviousWrap<CR>
-nmap <silent> ]a :ALENextWrap<CR>
-nmap <silent> [A :ALEFirst<CR>
-nmap <silent> ]A :ALELast<CR>
-
-" List projects, only used in GUI vim, see gvimrc
-if has('gui_running')
-  nnoremap <leader>P :SessionSave<CR>:SessionList<CR>
-endif
-
-" List open files/buffers
-nnoremap <leader>b :ToggleBufExplorer<CR>
-
-" List most recently used files
-nnoremap <leader>m :MRUToggle<CR>
-
-" Most recently used files within current working directory
-command! MRUCwd execute 'MRU ' . getcwd()
-nnoremap <leader>r :MRUCwd<CR>
-" And most recently used files within project root directory
-command! MRURoot execute 'MRU ' . FindRootDirectory()
-nnoremap <leader>R :MRURoot<CR>
-
-" Outline view of current file
-nnoremap <leader>o :TagbarToggle<CR>
-
-" Remap gs to open Scratch window in normal rather than insert mode
-let g:scratch_no_mappings = 1 " must disable plugin mappings first
-nnoremap gs :Scratch<CR>
-
-" Workaround for vim-vinegar not working with g:netrw_altfile = 1
-" See https://github.com/tpope/vim-vinegar/issues/137
-nnoremap - :Explore<CR>:silent! call search('^' . expand('#:t'), 'wc')<CR>
 
 if filereadable(expand("~/.vim/vimrc.local"))
   source ~/.vim/vimrc.local
