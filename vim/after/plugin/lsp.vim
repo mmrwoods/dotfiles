@@ -1,4 +1,7 @@
-" yegappan/lsp (aka vim9lsp) config
+" yegappan/lsp (aka vim9lsp) customisation
+if !exists('g:loaded_lsp')
+  finish
+endif
 
 " global mappings copied from Neovim defaults
 " see https://neovim.io/doc/user/lsp.html
@@ -146,5 +149,3 @@ augroup vimrc_lsp
     \   args: ['--background-index', '--clang-tidy']
     \ }])
 augroup END
-
-packadd lsp

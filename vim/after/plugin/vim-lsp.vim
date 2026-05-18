@@ -1,4 +1,7 @@
-" prabirshrestha/vim-lsp config
+" prabirshrestha/vim-lsp customisation
+if !exists('g:lsp_loaded')
+  finish
+endif
 
 " global mappings copied from Neovim defaults
 " see https://neovim.io/doc/user/lsp.html
@@ -13,16 +16,6 @@ inoremap <C-S> <cmd>LspSignatureHelp<cr>
 nnoremap grd <plug>(lsp-document-diagnostics)
 nnoremap [d :LspPreviousDiagnostic<CR>
 nnoremap ]d :LspNextDiagnostic<CR>
-
-let g:lsp_use_native_client = 1
-let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_diagnostics_echo_delay = 0
-let g:lsp_diagnostics_signs_enabled = 0
-let g:lsp_diagnostics_virtual_text_enabled = 0
-let g:lsp_document_code_action_signs_enabled = 0
-let g:lsp_signature_help_enabled = 0
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('/tmp/vim-lsp.log')
 
 " Autocmd group for all autocmds in this file, cleared on reload
 augroup vimrc_vimlsp
@@ -69,6 +62,3 @@ augroup vimrc_vimlsp
     \   }
     \}
 augroup END
-
-packadd vim-lsp
-packadd vim-lsp-settings

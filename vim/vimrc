@@ -486,6 +486,40 @@ let g:vindent_motion_less_next = ']-' " jump to next line with less indent.
 " FIXME: investigate why this was necessary, docs suggest it should not be
 let g:vimspector_base_dir = expand('~/.vim/pack/bundle/start/vimspector')
 
+" yegappan/lsp (aka vim9lsp) settings - customisation in after/plugin/lsp.vim
+" Note: autoComplete disabled because it interferes with other <CR> mappings
+" by default, use Vim's new built in autocomplete option if desired instead
+let g:lsp_options = #{
+  \   autoComplete: v:false,
+  \   definitionFallback: v:true,
+  \   hoverFallback: v:true,
+  \   incrementalSync: v:true,
+  \   noNewlineInCompletion: v:true,
+  \   omniComplete: v:true,
+  \   outlineOnRight: v:true,
+  \   outlineWinSize: 40,
+  \   showDiagOnStatusLine: v:true,
+  \   showDiagWithSign: v:false,
+  \   showSignature: v:false,
+  \   showSignatureDocs: v:true,
+  \   useBufferCompletion: v:false,
+  \   usePopupInCodeAction: v:true,
+  \   useQuickfixForLocations: v:true,
+  \   formatFallback: v:true,
+  \ }
+
+" prabirshrestha/vim-lsp settings - customisation in after/plugin/vim-lsp.vim
+" For tesing only, I normally use yegappan/lsp
+let g:lsp_use_native_client = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_echo_delay = 0
+let g:lsp_diagnostics_signs_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
+let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_signature_help_enabled = 0
+let g:lsp_log_file = expand('/tmp/vim-lsp.log')
+" let g:lsp_log_verbose = 1
+
 " Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
 " Allows other autocmds to check what has been applied by EditorConfig
 function! <SID>EditorConfigHook(config)
