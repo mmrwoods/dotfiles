@@ -21,6 +21,9 @@ let s:lexima_filetype_rules = [
 let s:lexima_apostrophe_rule = {'char': "'", 'at': '\w\%#''\@!', 'priority': 1}
 " workarund for duplicate 'augroup END' on CR
 let s:lexima_augroup_end_rule = {'char': '<CR>', 'at': '^\s*\(aug\|augroup\) END\s*\%#$', 'filetype': 'vim'}
+" exported vim9script functions
+let s:lexima_export_def_rule = {'char': '<CR>', 'at': '^\s*export def\>.*\%#$', 'input_after': '<CR>' . 'enddef',
+  \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1' . 'enddef', 'filetype': 'vim'}
 
 function! AddLeximaRules()
   for [open, close] in items(s:lexima_closing_pairs)
@@ -33,6 +36,7 @@ function! AddLeximaRules()
   endfor
   call lexima#add_rule(s:lexima_apostrophe_rule)
   call lexima#add_rule(s:lexima_augroup_end_rule)
+  call lexima#add_rule(s:lexima_export_def_rule)
   for rule in s:lexima_filetype_rules
     call lexima#add_rule(rule)
   endfor
