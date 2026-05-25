@@ -5,6 +5,7 @@ endif
 " Custom basic auto-closing pair rules for Lexima, fewer than the defaults in
 " Lexima and stricter, cursor must be before whitespace or one of ;:.,=})>]
 let g:lexima_enable_basic_rules = 0
+let g:lexima_enable_endwise_rules = 0
 let s:lexima_before_pattern = '\([;:.,=})>]\|\]\|\s\|\n\)'
 let s:lexima_closing_pairs = { '[': ']', '(': ')', '{': '}', '"': '"', '''': '''', '`': '`' }
 let s:lexima_filetype_rules = [
@@ -19,13 +20,8 @@ let s:lexima_filetype_rules = [
 \]
 " don''t leave me this way, one apostrophe pls
 let s:lexima_apostrophe_rule = {'char': "'", 'at': '\w\%#''\@!', 'priority': 1}
-" workarund for duplicate 'augroup END' on CR
-let s:lexima_augroup_end_rule = {'char': '<CR>', 'at': '^\s*\(aug\|augroup\) END\s*\%#$', 'filetype': 'vim'}
-" exported vim9script functions
-let s:lexima_export_def_rule = {'char': '<CR>', 'at': '^\s*export def\>.*\%#$', 'input_after': '<CR>' . 'enddef',
-  \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1' . 'enddef', 'filetype': 'vim'}
 
-function! AddLeximaRules()
+function! s:lexima_basic_rules()
   for [open, close] in items(s:lexima_closing_pairs)
     let insert_at = '\%#' . s:lexima_before_pattern
     let delete_at = ( open == '[' ? '\[\%#\]' : $'{open}\%#{close}' ) . s:lexima_before_pattern
@@ -35,11 +31,69 @@ function! AddLeximaRules()
     call lexima#add_rule({'char': open, 'at': '\%#', 'syntax': 'String'})
   endfor
   call lexima#add_rule(s:lexima_apostrophe_rule)
-  call lexima#add_rule(s:lexima_augroup_end_rule)
-  call lexima#add_rule(s:lexima_export_def_rule)
   for rule in s:lexima_filetype_rules
     call lexima#add_rule(rule)
   endfor
+endfunction
+
+function! s:lexima_endwise_rules()
+  let rules = []
+  " vim
+  for at in ['function', 'while', 'for', 'def']
+    call lexima#add_rule(s:make_endwise_rule('^\s*' . at . '\>.*\%#$', 'end' . at, 'vim', []))
+  endfor
+  call lexima#add_rule(s:make_endwise_rule('^\s*export def\>.*\%#$', 'enddef', 'vim', []))
+  call lexima#add_rule(s:make_endwise_rule('^\s*try\>.*\%#$', 'endtry', 'vim', [], 'catch'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'endif', 'vim', [], 'else', 'elseif'))
+  for at in ['aug', 'augroup']
+    call lexima#add_rule(s:make_endwise_rule('^\s*' . at . '\s\+.\+\%#$', at . ' END', 'vim', []))
+  endfor
+  " workarund for duplicate 'augroup END' on CR
+  call lexima#add_rule({'char': '<CR>', 'at': '^\s*\(aug\|augroup\) END\s*\%#$', 'filetype': 'vim'})
+
+  " ruby
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(module\|class\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', []))
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(if\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', [], 'else', 'elsif'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(def\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', [], 'rescue'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(begin\)\s*\%#$', 'end', 'ruby', [], 'rescue'))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\%(\s*|.*|\)\?\s*\%#$', 'end', 'ruby', []))
+
+  " elixir
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\s*\%#$', 'end', 'elixir', [], 'rescue'))
+
+  " sh
+  call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'fi', ['sh', 'zsh'], [], 'else', 'elif'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*case\>.*\%#$', 'esac', ['sh', 'zsh'], []))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\>.*\%#$', 'done', ['sh', 'zsh'], []))
+
+  " julia
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\<\%(module\|struct\|function\|for\|while\|do\|let\|macro\)\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'julia', []))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\<\%(if\)\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'julia', [], 'else', 'elseif'))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\s*\<\%(begin\|quote\)\s*\%#$', 'end', 'julia', []))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\s*\<try\s*\%#$', 'end', 'julia', [], 'catch'))
+
+  " lua
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*--.*\)\@<!\<function\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'lua', []))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*--.*\)\@<!\<do\s*\%#$', 'end', 'lua', []))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*--.*\)\@<!\<then\s*\%#$', 'end', 'lua', []))
+endfunction
+
+function! s:make_endwise_rule(at, end, filetype, syntax, ...)
+  let not = [a:end] + a:000
+  return {
+    \ 'char': '<CR>',
+    \ 'input': '<CR>',
+    \ 'input_after': '<CR>' . a:end,
+    \ 'at': a:at,
+    \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1(' . not->join('|') . ')',
+    \ 'filetype': a:filetype,
+    \ 'syntax': a:syntax,
+    \ }
+endfunction
+
+function! AddLeximaRules()
+  call s:lexima_basic_rules()
+  call s:lexima_endwise_rules()
 endfunction
 
 augroup vimrc_lexima
