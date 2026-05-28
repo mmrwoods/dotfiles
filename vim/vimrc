@@ -447,7 +447,9 @@ let g:test#strategy = 'vimterminal'
 " Workaround for monorepo with multiple packages, finds nearest package.json
 " Use lambda as FindRootDirectory() not defined until vim-rooter plugin loaded
 " Note: this still assumes node_modules/.bin/jest can be found relative to cwd
-let test#project_root = { -> FindRootDirectory() }
+if v:version >= 901 " E704: Funcref variable name must start with a capital on Vim 9.0
+  let test#project_root = { -> FindRootDirectory() }
+endif
 
 " Fix jest executable to work with turborepo
 let test#javascript#jest#executable = 'npx jest'
@@ -506,8 +508,6 @@ if exists('g:loaded_EditorConfig')
     \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
     \   exe 'silent! DisableStripWhitespaceOnSave' |
     \ endif
-else
-  echoerr "WARNING: EditorConfig plugin not loaded, Sleuth will be used to detect indentation settings"
 endif
 
 if filereadable(expand("~/.vim/vimrc.local"))
