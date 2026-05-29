@@ -23,7 +23,7 @@ augroup vimrc_fuzzbox
 augroup END
 
 " Additional Fuzzbox commands and mappings
-command! FuzzyFilesAll call fuzzbox#Launch('files', #{command: 'rg -uu --files'})
+command! FuzzyFilesAll call fuzzbox#Launch('files', #{command: 'rg -uu --files', title: 'All Files'})
 nnoremap <leader>fa :FuzzyFilesAll<CR>
 nnoremap <leader>fF :FuzzyFilesRoot<CR>
 nnoremap <leader>fG :FuzzyGrepRoot<CR>
