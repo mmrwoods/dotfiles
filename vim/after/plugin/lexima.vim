@@ -46,10 +46,8 @@ function! s:lexima_endwise_rules()
   call lexima#add_rule(s:make_endwise_rule('^\s*try\>.*\%#$', 'endtry', 'vim', [], 'catch'))
   call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'endif', 'vim', [], 'else', 'elseif'))
   for at in ['aug', 'augroup']
-    call lexima#add_rule(s:make_endwise_rule('^\s*' . at . '\s\+.\+\%#$', at . ' END', 'vim', []))
+    call lexima#add_rule(s:make_endwise_rule('^\s*' . at . '\s\+\(END\)\@!.\+\%#$', at . ' END', 'vim', []))
   endfor
-  " workarund for duplicate 'augroup END' on CR
-  call lexima#add_rule({'char': '<CR>', 'at': '^\s*\(aug\|augroup\) END\s*\%#$', 'filetype': 'vim'})
 
   " ruby
   call lexima#add_rule(s:make_endwise_rule('^\s*\%(module\|class\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', []))
