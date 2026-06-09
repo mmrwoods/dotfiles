@@ -43,32 +43,32 @@ function! s:lexima_endwise_rules()
     call lexima#add_rule(s:make_endwise_rule('^\s*' . at . '\>.*\%#$', 'end' . at, 'vim', []))
   endfor
   call lexima#add_rule(s:make_endwise_rule('^\s*export def\>.*\%#$', 'enddef', 'vim', []))
-  call lexima#add_rule(s:make_endwise_rule('^\s*try\>.*\%#$', 'endtry', 'vim', [], 'catch'))
-  call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'endif', 'vim', [], 'else', 'elseif'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*try\>.*\%#$', 'endtry', 'vim', [], ['catch']))
+  call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'endif', 'vim', [], ['else', 'elseif']))
   for at in ['aug', 'augroup']
     call lexima#add_rule(s:make_endwise_rule('^\s*' . at . '\s\+\(END\)\@!.\+\%#$', at . ' END', 'vim', []))
   endfor
 
   " ruby
   call lexima#add_rule(s:make_endwise_rule('^\s*\%(module\|class\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', []))
-  call lexima#add_rule(s:make_endwise_rule('^\s*\%(if\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', [], 'else', 'elsif'))
-  call lexima#add_rule(s:make_endwise_rule('^\s*\%(def\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', [], 'rescue'))
-  call lexima#add_rule(s:make_endwise_rule('^\s*\%(begin\)\s*\%#$', 'end', 'ruby', [], 'rescue'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(if\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', [], ['else', 'elsif']))
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(def\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$', 'end', 'ruby', [], ['rescue']))
+  call lexima#add_rule(s:make_endwise_rule('^\s*\%(begin\)\s*\%#$', 'end', 'ruby', [], ['rescue']))
   call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\%(\s*|.*|\)\?\s*\%#$', 'end', 'ruby', []))
 
   " elixir
-  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\s*\%#$', 'end', 'elixir', [], 'rescue'))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\s*\%#$', 'end', 'elixir', [], ['rescue']))
 
   " sh
-  call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'fi', ['sh', 'zsh'], [], 'else', 'elif'))
+  call lexima#add_rule(s:make_endwise_rule('^\s*if\>.*\%#$', 'fi', ['sh', 'zsh'], [], ['else', 'elif']))
   call lexima#add_rule(s:make_endwise_rule('^\s*case\>.*\%#$', 'esac', ['sh', 'zsh'], []))
   call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!do\>.*\%#$', 'done', ['sh', 'zsh'], []))
 
   " julia
   call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\<\%(module\|struct\|function\|for\|while\|do\|let\|macro\)\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'julia', []))
-  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\<\%(if\)\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'julia', [], 'else', 'elseif'))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\<\%(if\)\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'julia', [], ['else', 'elseif']))
   call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\s*\<\%(begin\|quote\)\s*\%#$', 'end', 'julia', []))
-  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\s*\<try\s*\%#$', 'end', 'julia', [], 'catch'))
+  call lexima#add_rule(s:make_endwise_rule('\%(^\s*#.*\)\@<!\s*\<try\s*\%#$', 'end', 'julia', [], ['catch']))
 
   " lua
   call lexima#add_rule(s:make_endwise_rule('\%(^\s*--.*\)\@<!\<function\>\%(.*\<end\>\)\@!.*\%#$', 'end', 'lua', []))
@@ -77,13 +77,13 @@ function! s:lexima_endwise_rules()
 endfunction
 
 function! s:make_endwise_rule(at, end, filetype, syntax, ...)
-  let not = [a:end] + a:000
+  let not_before = empty(a:000) ? [a:end] : [a:end] + a:1
   return {
     \ 'char': '<CR>',
     \ 'input': '<CR>',
     \ 'input_after': '<CR>' . a:end,
     \ 'at': a:at,
-    \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1(' . not->join('|') . ')',
+    \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1(' . not_before->join('|') . ')',
     \ 'filetype': a:filetype,
     \ 'syntax': a:syntax,
     \ }
