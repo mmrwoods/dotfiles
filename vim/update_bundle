@@ -34,6 +34,8 @@ plug 'jlanzarotta/bufexplorer'
 plug 'mmrwoods/sessionman.vim'
 plug 'majutsushi/tagbar'
 plug 'vim-fuzzbox/fuzzbox.vim', :ssh, :full
+plug 'vim-fuzzbox/fuzzbox-lsp.vim', :ssh, :full
+plug 'vim-fuzzbox/fuzzbox-unicode.vim', :ssh, :full
 plug 'tpope/vim-vinegar'
 plug 'yegappan/mru'
 plug 'romainl/vim-qf'

@@ -37,3 +37,5 @@ nnoremap <leader>fw :FuzzyGrep <C-R><C-W><CR>
 " https://github.com/vim-fuzzbox/fuzzbox-lsp.vim
 nnoremap <leader>fo :FuzzyLspDocumentSymbols<CR>
 nnoremap <leader>fs :FuzzyLspWorkspaceSymbols<CR>
+" https://github.com/vim-fuzzbox/fuzzbox-unicode.vim
+nnoremap <leader>fu :FuzzyUnicode<CR>
