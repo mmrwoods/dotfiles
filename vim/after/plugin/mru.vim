@@ -6,7 +6,7 @@ endif
 nnoremap <leader>m :MRUToggle<CR>
 
 " Most recently used files within current working directory
-command! MRUCwd execute 'MRU ' . getcwd()
+command! MRUCwd execute 'MRU ' . getcwd() . '/'
 nnoremap <leader>r :MRUCwd<CR>
 
 " Most recently used files within project root directory
