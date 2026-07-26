@@ -360,6 +360,7 @@ let g:git_messenger_no_default_mappings = 1
 
 " Fuzzbox configuration
 let g:fuzzbox_follow_symlinks = 1
+let g:fuzzbox_mru_cwd_only = 1
 let g:fuzzbox_reuse_windows = ['netrw', 'bufexplorer', 'mru']
 let g:fuzzbox_ripgrep_options = [
   \ "--no-config",
