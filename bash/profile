@@ -181,6 +181,9 @@ if [ "${TERM%%-*}" == xterm ]; then
   PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 fi
 
+# enable direnv if installed (must come after other changes to $PROMPT_COMMAND)
+if which direnv &> /dev/null; then eval "$(direnv hook bash)"; fi
+
 # Allow CTRL-s to be used to search history forward
 # Disables CTRL-s mapping to stop terminal output (not needed)
 stty -ixon
