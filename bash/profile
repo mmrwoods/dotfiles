@@ -124,7 +124,7 @@ function d() {
   # old_columns=$COLUMNS
   # COLUMNS=10; select dir in $(builtin dirs -l -p | head -n10); do cd "$dir" || break; break; done
   # COLUMNS=$old_columns
-  dir=$(gum choose $(builtin dirs -l -p | head -n10)) && cd "$dir"
+  dir=$(gum choose --header='' --no-show-help $(builtin dirs -l -p | head -n10)) && cd "$dir"
 }
 
 # Select from VIM MRU files and edit
@@ -132,7 +132,7 @@ function f() {
   # old_columns=$COLUMNS
   # COLUMNS=10; select file in $(head -n11 ~/.vim_mru_files | tail -n10); do vim $file; break; done
   # COLUMNS=$old_columns
-  file=$(gum choose $(head -n11 ~/.vim_mru_files | tail -n10)) && vim "$file"
+  file=$(gum choose --header='' --no-show-help $(head -n11 ~/.vim_mru_files | tail -n10)) && vim "$file"
 }
 
 # bash completion
