@@ -28,6 +28,7 @@ augroup vimrc_colors
 
   autocmd ColorScheme PaperColor
     \ hi! Spellbad guibg=NONE guifg=NONE |
+    \ hi! link Special Identifier |
 augroup END
 
 if has('gui_running')
