@@ -47,6 +47,9 @@ endif
 autocmd vimrc Filetype *
   \ if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
 
+" Automatically replace :H with :help in cmdline, fat fingers auto-correct
+cnoreabbrev <expr> H (getcmdtype() ==# ':' && getcmdline() ==# 'H')  ? 'help'  : 'H'
+
 " Mark previous cursor position when entering visual mode, this abuses the
 " first character of previously changed text mark to allow for deletion from
 " visual mode, otherise we might jump to a position where text was deleted.
