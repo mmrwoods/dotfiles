@@ -8,13 +8,6 @@ augroup vimrc_fuzzbox
   " Disable default devicons highlighting in nerdtree
   autocmd VimEnter * hi! link NERDTreeFlags Normal
 
-  " Use same devicon colors in fuzzbox, nerdtree, and bufexplorer
-  autocmd FileType nerdtree,bufexplorer
-    \ try |
-    \   call fuzzbox#devicons#Colorize() |
-    \   catch /\v:(E700|E117):/ |
-    \ endtry
-
   " For testing - prefer vim-nerdfont to vim-devicons if both installed
   autocmd VimEnter *
     \ if exists("g:loaded_nerdfont") |

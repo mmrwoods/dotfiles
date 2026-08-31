@@ -370,8 +370,8 @@ let g:fuzzbox_ripgrep_options = [
   \ "--no-ignore-parent",
   \ "--ignore-file " . expand('~/.vim/rgignore')
   \ ]
-
 " Same devicon colors in NERDTree, BufExplorer, and Fuzzbox
+let g:fuzzbox_devicons_colorize = ['fuzzbox_menu', 'nerdtree', 'bufexplorer']
 let g:fuzzbox_devicons_color_table = {
   \ '*.coffee': 'chocolate',
   \ }
