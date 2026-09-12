@@ -259,6 +259,10 @@ let g:gutentags_generate_on_write = 1
 " Tell netrw to also stop enabling ballooneval
 let g:netrw_nobeval = 1
 
+" Disable netrw mouse mappings, confusing
+" Double mouse click mapped to CR in after/ftplugin/netrw.vim
+let g:netrw_mousemaps = 0
+
 " Show relative paths by default in bufexplorer
 let g:bufExplorerShowRelativePath = 1
 
