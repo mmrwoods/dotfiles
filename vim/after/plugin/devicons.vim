@@ -2,6 +2,9 @@ if !exists('g:loaded_webdevicons')
   finish
 endif
 
+" Don't append space to devicons in gui vim
+let g:DevIconsAppendArtifactFix = v:false
+
 " Update devicon glyphs for nerd fonts v3
 " See https://github.com/ryanoasis/vim-devicons/issues/452
 " And https://github.com/ryanoasis/vim-devicons/pull/454
