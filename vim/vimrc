@@ -532,8 +532,12 @@ let g:lsp_log_file = expand('/tmp/vim-lsp.log')
 
 " Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
 " Allows other autocmds to check what has been applied by EditorConfig
+" Note: EditorConfig also runs on BufNew, e.g. when opening a new file, or when
+" populating the quickfix list, and the buffer it is configuring is <abuf>,
+" which is not necessarily the current buffer, so don't just set b:editorconfig
 function! <SID>EditorConfigHook(config)
-  let b:editorconfig = a:config
+  let bufnr = str2nr(expand('<abuf>'))
+  call setbufvar(bufnr > 0 ? bufnr : bufnr('%'), 'editorconfig', a:config)
 endfunction
 " Note: editorconfig plugin loaded automatically by friendly.vim
 if exists('g:loaded_EditorConfig')
