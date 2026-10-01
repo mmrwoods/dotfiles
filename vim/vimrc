@@ -18,6 +18,8 @@ set foldtext=getline(v:foldstart) " Minimalist fold text, no line count etc.
 
 set updatetime=1000               " Default updatetime for gitgutter and friends
 
+set spellsuggest=best,10          " Don't fill the screen with spelling suggestions
+
 " Keep timeoutlen short for plugins that rely on it (e.g. WhichKey), but not
 " so short that it makes it almost impossible to complete multi-key mappings
 set timeoutlen=1000
