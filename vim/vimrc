@@ -532,31 +532,47 @@ let g:lsp_signature_help_enabled = 0
 let g:lsp_log_file = expand('/tmp/vim-lsp.log')
 " let g:lsp_log_verbose = 1
 
-" Use an EditorConfig hook to set b:editorconfig, kinda like Neovim
-" Allows other autocmds to check what has been applied by EditorConfig
-" Note: EditorConfig also runs on BufNew, e.g. when opening a new file, or when
-" populating the quickfix list, and the buffer it is configuring is <abuf>,
-" which is not necessarily the current buffer, so don't just set b:editorconfig
-function! <SID>EditorConfigHook(config)
-  let bufnr = str2nr(expand('<abuf>'))
-  call setbufvar(bufnr > 0 ? bufnr : bufnr('%'), 'editorconfig', a:config)
+" Strip whitespace on all lines if enabled via editorconfig, otherwise strip
+" whitespace on changed lines, or strip single space at EOL in markdown files.
+" Uses b:editorconfig set by EditorConfigHook in after/plugin/editorconfig.vim
+function! <SID>StripWhitespaceOnSave()
+  if !&modifiable
+    return
+  endif
+  " Allow better-whitespace command DisableStripWhitespaceOnSave
+  if !get(b:, 'strip_whitespace_guess', 1) && !get(b:, 'strip_whitespace_on_save', 1)
+    return
+  endif
+  let trim_trailing_whitespace = type(get(b:, 'editorconfig')) == v:t_dict ? b:editorconfig->get('trim_trailing_whitespace', 'unset') : 'unset'
+  if trim_trailing_whitespace ==# 'false'
+    return
+  elseif trim_trailing_whitespace ==# 'true'
+    exe 'silent! StripWhitespace!'
+  elseif exists('g:better_whitespace_filetypes_blacklist') && index(g:better_whitespace_filetypes_blacklist, &ft) == -1
+    exe 'silent! StripWhitespaceOnChangedLines!'
+  elseif &ft ==# 'markdown'
+    let view = winsaveview()
+    try
+      silent keeppatterns keepjumps %s/\v(^|\S)\zs\s$//e
+    finally
+      call winrestview(view)
+    endtry
+  endif
 endfunction
-" Note: editorconfig plugin loaded automatically by friendly.vim
-if exists('g:loaded_EditorConfig')
-  call editorconfig#AddNewHook(function('<SID>EditorConfigHook'))
 
-  " Use Sleuth as fallback to detect indent when EditorConfig not applied
-  autocmd vimrc BufReadPost *
-    \ if !exists('b:editorconfig') || (type(b:editorconfig) == 4 && b:editorconfig->get('indent_size', 'unset') ==# 'unset') |
-    \   exe ':silent! Sleuth' |
-    \ endif
-
-  " Disable better whitespace plugin when configured via EditorConfig
-  autocmd vimrc BufReadPost *
-    \ if exists('b:editorconfig') && type(b:editorconfig) == 4 && b:editorconfig->get('trim_trailing_whitespace', 'unset') !=# 'unset' |
-    \   exe 'silent! DisableStripWhitespaceOnSave' |
-    \ endif
+" Disable EditorConfig and better-whitespace and use custom function
+if exists('g:EditorConfig_disable_rules') && index(g:EditorConfig_disable_rules, 'trim_trailing_whitespace') < 0
+  call add(g:EditorConfig_disable_rules, 'trim_trailing_whitespace')
 endif
+let g:strip_whitespace_on_save = 0
+autocmd vimrc BufWritePre * call <SID>StripWhitespaceOnSave()
+
+" Use Sleuth as fallback to detect indent when EditorConfig not applied
+autocmd vimrc BufReadPost *
+  \ if !exists('b:editorconfig') ||
+  \     (type(b:editorconfig) == v:t_dict && b:editorconfig->get('indent_size', 'unset') ==# 'unset') |
+  \   exe ':silent! Sleuth' |
+  \ endif
 
 if filereadable(expand("~/.vim/vimrc.local"))
   source ~/.vim/vimrc.local
