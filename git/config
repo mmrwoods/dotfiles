@@ -1,14 +1,9 @@
 # vim: set ft=gitconfig:
 [init]
   defaultBranch = main
-[apply]
-  whitespace = fix
 [core]
   editor = vim -u ~/dotfiles/vim/vimrc.minimal
-  autocrlf = input
-  excludesfile = ~/.gitignore
-  attributesfile = ~/.gitattributes
-  # warn about tabs and trailing spaces
+  # warn about tabs in indent (the others are enabled by default)
   whitespace = space-before-tab,tab-in-indent,trailing-space
 [color]
   ui = true
