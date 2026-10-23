@@ -6,4 +6,5 @@ dir=$(cd `dirname $0` && pwd)
 
 git config --global include.path $dir/config
 
-cd ~ && ln -s $dir/ignore .gitignore
+mkdir -p ~/.config/git/
+cd ~ && ln -s $dir/ignore ~/.config/git/ignore
