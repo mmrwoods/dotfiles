@@ -303,6 +303,7 @@ let g:ale_virtualtext_cursor = 'current'
 
 " Configure some fixers for ALEFix (easier than ':!eslint --fix %' etc.)
 let g:ale_fixers = {
+  \ 'json': ['fixjson'],
   \ 'javascript': ['eslint'],
   \ 'python': ['autopep8'],
   \ 'ruby': ['rubocop']
