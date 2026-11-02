@@ -80,7 +80,10 @@ augroup vimrc_lsp
     \   path: 'typescript-language-server',
     \   args: ['--stdio'],
     \   debug: v:false,
-    \   initializationOptions: #{ tsserver: #{ trace: 'off' } }
+    \   initializationOptions: #{
+    \     tsserver: #{ trace: 'off' },
+    \     preferences: #{ importModuleSpecifierPreference: 'relative' }
+    \   }
     \  }])
 
   " npm i -g vscode-langservers-extracted
